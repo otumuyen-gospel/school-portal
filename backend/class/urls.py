@@ -18,6 +18,6 @@ Including another URLconf
 from django.urls import path
 from .views import *
 urlpatterns = [
-    path('lists/', class_list, name='lists'),
-    path('class/<int:pk>/', class_detail, name='detail'),
+    path('lists/', ClassList.as_view(), name=ClassList.name),
+    path('class/<int:pk>/', ClassDetail.as_view(), name=ClassDetail.name),
 ]
