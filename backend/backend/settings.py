@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'classes',
     'subjects',
     'quizzes',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -130,6 +131,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#custom user
+AUTH_USER_MODEL = 'account.User'
 
 #rest framework settings
 
@@ -143,3 +146,4 @@ REST_FRAMEWORK = {
 'rest_framework.filters.SearchFilter',
 ),
 }
+
