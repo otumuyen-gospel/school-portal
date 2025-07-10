@@ -23,5 +23,9 @@ urlpatterns = [
     path('subjects/', include('subjects.urls'), name='subjects'),
     path('quizzes/', include('quizzes.urls'), name='quizzes'),
     path('accounts/', include('account.urls'), name='accounts'),
+    path('marks/', include('marks.urls'), name='marks'),
+    path('complaints/', include('complaint.urls'), name='complaints'),
+    path('attendance/', include('attendance.urls'), name='attendance'),
+     path('schedule/', include('schedule.urls'), name='schedule'),
 
 ]

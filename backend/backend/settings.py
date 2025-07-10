@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     'subjects',
     'quizzes',
     'account',
+    'marks',
+    'complaint',
+    'attendance',
+    'schedule',
 ]
 
 MIDDLEWARE = [

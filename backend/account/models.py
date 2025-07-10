@@ -8,15 +8,12 @@ from .usermanager import AccountManager
 from classes.models import Class
 
 class User(AbstractBaseUser, PermissionsMixin):
-    userId = models.UUIDField(db_index=True, 
-                                 unique=True, 
-                                 editable=False,
-                                 default=uuid.uuid4)
-    classId = models.CharField(blank=True)
-    childId = models.CharField(max_length=255, blank=True)
-    firstName = models.CharField(max_length=255)
-    lastName = models.CharField(max_length=255)
     email = models.EmailField(db_index=True, unique=True)
+    last_login = models.DateTimeField(auto_now_add=True, editable=True)
+    entrance = models.DateTimeField(auto_now_add=True, editable=True)
+    dob = models.DateTimeField(blank=False)
+    firstName = models.CharField(max_length=255, blank=False)
+    lastName = models.CharField(max_length=255, blank=False)
     ROLE_TEACHER = 'T'
     ROLE_PARENT = 'P'
     ROLE_ADMIN = 'A'
@@ -41,8 +38,8 @@ class User(AbstractBaseUser, PermissionsMixin):
                                default=GENDER_MALE)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
-    entrance = models.DateTimeField(auto_now_add=True, editable=True)
-    dob = models.DateTimeField(blank=True)
+    classId = models.CharField(blank=True)
+    childId = models.CharField(max_length=255, blank=True)
     address = models.CharField(max_length=400, blank=True)
     nationality = models.CharField(max_length=70 , blank=True)
     state = models.CharField(max_length=70, blank=True)

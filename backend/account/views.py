@@ -1,4 +1,7 @@
 from django.shortcuts import render
+
+# Create your views here.
+from django.shortcuts import render
 from rest_framework import status
 from .models import User
 from .serializers import UserSerializers
@@ -25,17 +28,17 @@ class UserList(generics.ListCreateAPIView):
     name = 'list'
 
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filter_fields = ('userId','childId','classId',
+    filter_fields = ('id','childId','classId',
                      'firstName','lastName','email',
                      'role', 'gender') 
 
      #you can search using the "search" keyword
-    search_fields = ('userId','childId','classId',
+    search_fields = ('id','childId','classId',
                      'firstName','lastName','email',
                      'role', 'gender') 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('userId','childId','classId',
+    ordering_fields = ('id','childId','classId',
                      'firstName','lastName','email',
                      'role', 'gender')  
 
