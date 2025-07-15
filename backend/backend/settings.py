@@ -38,11 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt',
     'django_filters',
     'classes',
     'subjects',
     'quizzes',
     'account',
+    'auth',
     'marks',
     'complaint',
     'attendance',
@@ -157,6 +159,9 @@ REST_FRAMEWORK = {
 'django_filters.rest_framework.DjangoFilterBackend',
 'rest_framework.filters.OrderingFilter',
 'rest_framework.filters.SearchFilter',
+),
+'DEFAULT_AUTHENTICATION_CLASSES': (
+'rest_framework_simplejwt.authentication.JWTAuthentication',
 ),
 }
 

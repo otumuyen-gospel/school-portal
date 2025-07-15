@@ -6,6 +6,7 @@ from rest_framework.reverse import reverse
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import filters
+from rest_framework.permissions import IsAdminUser,IsAuthenticated,AllowAny
 from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter
 
 '''
@@ -22,6 +23,7 @@ NOTE: that a global pagination has been set on this generic api
 class ClassList(generics.ListCreateAPIView):
     queryset = Class.objects.all()
     serializer_class = ClassSerializers
+    permission_classes = [IsAuthenticated, ]
     name = 'list'
 
     #you can filter by field names specified here keyword e.g url?className='primary one'
@@ -38,6 +40,7 @@ class ClassList(generics.ListCreateAPIView):
 class ClassDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Class.objects.all()
     serializer_class = ClassSerializers
+    permission_classes = [IsAuthenticated, ]
     name = 'detail'
 
 class ApiRoot(generics.GenericAPIView):

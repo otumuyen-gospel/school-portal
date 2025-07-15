@@ -14,6 +14,9 @@ class Quiz(models.Model):
     answer = models.CharField(blank=False, null=False)
     classId = models.ForeignKey(Class, on_delete=models.CASCADE)
     subjectId = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    setAsQuiz = models.BooleanField(default=False)
+    startDate = models.DateField(editable=True)
+    endDate = models.DateField(editable=True)
     
     class Meta:
         ordering = ('question',)

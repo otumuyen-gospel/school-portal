@@ -30,5 +30,6 @@ urlpatterns = [
     path('attendance/', include('attendance.urls'), name='attendance'),
     path('schedule/', include('schedule.urls'), name='schedule'),
     path('homework/', include('homework.urls'), name='homework'),
+    path('auth/', include('auth.urls'), name='auth'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

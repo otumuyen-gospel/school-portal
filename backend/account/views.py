@@ -9,6 +9,7 @@ from rest_framework.reverse import reverse
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import filters
+from rest_framework.permissions import IsAuthenticated, IsAdminUser,AllowAny
 from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter
 
 '''
@@ -25,28 +26,27 @@ NOTE: that a global pagination has been set on this generic api
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializers
+    permission_classes = [IsAuthenticated,]
     name = 'list'
 
     #you can filter by field names specified here keyword e.g url?className='primary one'
     filter_fields = ('id','childId','classId',
-                     'firstName','lastName','email',
-                     'role', 'gender') 
+                     'firstName','lastName','email','gender') 
 
      #you can search using the "search" keyword
     search_fields = ('id','childId','classId',
-                     'firstName','lastName','email',
-                     'role', 'gender') 
+                     'firstName','lastName','email','gender') 
 
     #you can order using the "ordering" keyword
     ordering_fields = ('id','childId','classId',
-                     'firstName','lastName','email',
-                     'role', 'gender')  
+                     'firstName','lastName','email','gender')  
 
     
 #this generic class will handle GET(list 1 item), PUT(new class) and DELETE(1 item) Request
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializers
+    permission_classes = [IsAuthenticated,]
     name = 'detail'
 
 class ApiRoot(generics.GenericAPIView):
