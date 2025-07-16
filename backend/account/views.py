@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework import filters
 from rest_framework.permissions import IsAuthenticated, IsAdminUser,AllowAny
 from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter
+from django.shortcuts import redirect
 
 '''
 NOTE: that a global pagination has been set on this generic api 
@@ -40,6 +41,17 @@ class UserList(generics.ListCreateAPIView):
     #you can order using the "ordering" keyword
     ordering_fields = ('id','childId','classId',
                      'firstName','lastName','email','gender')  
+    
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.has_perm('account.view_User'):
+            return redirect('/auth/login/') # Redirect to a suitable page
+        elif not request.user.has_perm('account.change_User'):
+            return redirect('/auth/login/') # Redirect to a suitable page
+        elif not request.user.has_perm('account.delete_User'):
+            return redirect('/auth/login/') # Redirect to a suitable page
+        elif not request.user.has_perm('account.add_User'):
+            return redirect('/auth/login/') # Redirect to a suitable page
+        return super().dispatch(request, *args, **kwargs)
 
     
 #this generic class will handle GET(list 1 item), PUT(new class) and DELETE(1 item) Request
