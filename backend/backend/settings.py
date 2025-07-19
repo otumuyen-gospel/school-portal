@@ -142,6 +142,16 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # test on your console instead
+EMAIL_HOST = 'smtp.gmail.com'  # Or your email provider's SMTP host
+EMAIL_PORT = 587  # Common port for TLS
+EMAIL_USE_TLS = True  # Use TLS encryption
+EMAIL_HOST_USER = 'mygmail@gmail.com'  # Your email address
+EMAIL_HOST_PASSWORD = 'gmail123'  # An app-specific password if using Gmail/similar
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER # Optional: Sets the default 'from' address
+
+
 # Actual directory user files go to
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'uploads')
 

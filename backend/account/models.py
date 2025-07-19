@@ -4,6 +4,9 @@ BaseUserManager, PermissionsMixin)
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.http import Http404
+import random 
+from datetime import timedelta
+from django.utils import timezone
 from .usermanager import AccountManager
 from classes.models import Class
 
@@ -53,9 +56,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     zipCode = models.CharField(max_length=8, blank=True)
     telephone = models.CharField(max_length=11, blank=True)
 
+    otp = models.CharField(max_length=6, blank=True, null=True, default=None)
+    otp_exp = models.DateTimeField(blank=True, null=True, default=None) 
+    otp_verified = models.BooleanField(default=False)
+
     objects = AccountManager()
     class Meta:
         ordering = ('firstName','lastName',)
+    def generate_otp(self):
+        self.otp = str(random.randint(100000, 999999))  # Generate 6-digit OTP
+        self.otp_exp = timezone.now() + timedelta(minutes=10)
+        self.otp_verified = False
+        self.save()
     def __str__(self):
         return f"{self.firstName} {self.lastName}"
     @property
