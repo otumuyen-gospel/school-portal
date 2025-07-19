@@ -12,7 +12,7 @@ class SignupViewset(ViewSet):
     in our case(school portal) only an admin can 
     register a new user
     '''
-    permission_classes = (IsAdminUser, IsAuthenticated,) 
+    permission_classes = (IsAuthenticated,) 
     http_method_names = ['post']
 
     def getUserGroup(self, request):
