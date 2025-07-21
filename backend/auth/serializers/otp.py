@@ -17,7 +17,7 @@ class PasswordResetRequestSerializer(serializers.Serializer):
         send_mail(
             "Password Reset OTP",
             f"Your OTP for password reset is {user.otp}",
-            "mygmail@gmail.com",  # Change this to your email
+            "portal@school.com",  # Change this to your email
             [user.email],
             fail_silently=False,
         )
