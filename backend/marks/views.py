@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework import filters
 from rest_framework.permissions import IsAdminUser,IsAuthenticated,AllowAny
 from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter
+from account.permissions import IsInGroup
 
 '''
 NOTE: that a global pagination has been set on this generic api 
@@ -26,7 +27,8 @@ NOTE: that a global pagination has been set on this generic api
 class MarkList(generics.ListCreateAPIView):
     queryset = Mark.objects.all()
     serializer_class = MarkSerializers
-    permission_classes = [IsAuthenticated,]
+    permission_classes = [IsAuthenticated, IsInGroup, IsAdminUser,]
+    required_groups = ['admin']
     name = 'list'
 
     #you can filter by field names specified here keyword e.g url?className='primary one'
@@ -46,7 +48,8 @@ class MarkList(generics.ListCreateAPIView):
 class MarkDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Mark.objects.all()
     serializer_class = MarkSerializers
-    permission_classes = [IsAuthenticated,]
+    permission_classes = [IsAuthenticated, IsInGroup, IsAdminUser,]
+    required_groups = ['admin']
     name = 'detail'
 
 class ApiRoot(generics.GenericAPIView):

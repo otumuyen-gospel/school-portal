@@ -11,8 +11,8 @@ from rest_framework.response import Response
 from rest_framework import filters
 from rest_framework.permissions import IsAuthenticated, IsAdminUser,AllowAny
 from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter
-#from django.contrib.auth.mixins import PermissionRequiredMixin
-#from braces.views import GroupRequiredMixin
+from .permissions import IsInGroup
+
 '''
 NOTE: that a global pagination has been set on this generic api 
       classes below you can find the settings in global settings for
@@ -27,7 +27,8 @@ NOTE: that a global pagination has been set on this generic api
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializers
-    permission_classes = [IsAuthenticated,]
+    permission_classes = [IsAuthenticated, IsInGroup, IsAdminUser,]
+    required_groups = ['admin']
     name = 'list'
 
     #you can filter by field names specified here keyword e.g url?className='primary one'
@@ -41,16 +42,15 @@ class UserList(generics.ListCreateAPIView):
     #you can order using the "ordering" keyword
     ordering_fields = ('id','childId','classId',
                      'firstName','lastName','email','gender')  
-   
     
 #this generic class will handle GET(list 1 item), PUT(new class) and DELETE(1 item) Request
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializers
-    permission_classes = [IsAuthenticated,]
+    permission_classes = [IsAuthenticated,IsInGroup,]
+    required_groups = ['admin', 'teacher','student','parent',]
     name = 'detail'
     
-
 class ApiRoot(generics.GenericAPIView):
     name = 'api-root'
     def get(self, request, *args, **kwargs):

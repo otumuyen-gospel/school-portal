@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from ..serializers.register import SignupSerializer
 from django.contrib.auth.models import Group
+from account.permissions import IsInGroup
 
 class SignupViewset(ViewSet):
     serializer_class = SignupSerializer
@@ -12,7 +13,8 @@ class SignupViewset(ViewSet):
     in our case(school portal) only an admin can 
     register a new user
     '''
-    permission_classes = (IsAuthenticated,) 
+    permission_classes = [IsAuthenticated, IsInGroup, IsAdminUser,]
+    required_groups = ['admin']
     http_method_names = ['post']
 
     def getUserGroup(self, request):

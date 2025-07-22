@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework import filters
 from rest_framework.permissions import IsAuthenticated, IsAdminUser,AllowAny
 from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter
-
+from account.permissions import IsInGroup
 '''
 NOTE: that a global pagination has been set on this generic api 
       classes below you can find the settings in global settings for
@@ -26,7 +26,8 @@ NOTE: that a global pagination has been set on this generic api
 class AttendanceList(generics.ListCreateAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializers
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [IsAuthenticated, IsInGroup, IsAdminUser,]
+    required_groups = ['admin']
     name = 'list'
 
     #you can filter by field names specified here keyword e.g url?className='primary one'
@@ -43,7 +44,8 @@ class AttendanceList(generics.ListCreateAPIView):
 class AttendanceDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializers
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [IsAuthenticated, IsInGroup, IsAdminUser,]
+    required_groups = ['admin']
     name = 'detail'
 
 class ApiRoot(generics.GenericAPIView):

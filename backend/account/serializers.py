@@ -6,5 +6,6 @@ class UserSerializers(serializers.ModelSerializer):
     class Meta:
         model = User
        # fields = '__all__'
-        exclude = ('id','user_permissions','groups','last_login')
+        exclude = ('id','user_permissions','groups','last_login','otp',
+                   'otp_exp','otp_verified')
         
