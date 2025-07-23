@@ -28,7 +28,7 @@ class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializers
     permission_classes = [IsAuthenticated, IsInGroup, IsAdminUser,]
-    required_groups = ['admin']
+    required_groups = ['admin',]
     name = 'list'
 
     #you can filter by field names specified here keyword e.g url?className='primary one'
@@ -48,7 +48,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializers
     permission_classes = [IsAuthenticated,IsInGroup,]
-    required_groups = ['admin', 'teacher','student','parent',]
+    required_groups = ['admin',]
     name = 'detail'
     
 class ApiRoot(generics.GenericAPIView):

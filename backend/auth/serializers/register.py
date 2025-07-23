@@ -11,7 +11,8 @@ class SignupSerializer(UserSerializers):
     class Meta:
         model = User
         # fields = '__all__'
-        exclude = ('id','user_permissions','groups','last_login')
+        exclude = ('id','user_permissions','groups','last_login','otp',
+                   'otp_exp','otp_verified')
     
     def create(self, validated_data):
         '''call the create_user  method objects instance of 

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'django_filters',
+    'rest_framework_simplejwt.token_blacklist',
     'classes',
     'subjects',
     'quizzes',
@@ -51,7 +52,9 @@ INSTALLED_APPS = [
     'attendance',
     'schedule',
     'homework',
-    'rest_framework_simplejwt.token_blacklist',
+    'parent',
+    'student',
+    'teacher',
 ]
 
 MIDDLEWARE = [
