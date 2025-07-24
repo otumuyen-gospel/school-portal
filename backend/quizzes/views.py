@@ -24,6 +24,8 @@ NOTE: that a global pagination has been set on this generic api
 class QuizList(generics.ListCreateAPIView):
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializers
+    '''before or after adding new quiz expire older quiz that due for expiration'''
+    serializer_class.expireQuizzes()
     permission_classes = [IsAuthenticated, IsInGroup, IsAdminUser,]
     required_groups = ['admin']
     name = 'list'
@@ -54,3 +56,4 @@ class ApiRoot(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         return Response({'list': reverse(QuizList.name,
             request=request)})
+

@@ -4,11 +4,9 @@ from classes.models import Class
 
 # Create your models here.
 class Subject(models.Model):
-    subjectName = models.CharField(unique=True,
-                                  max_length=100, 
+    subjectName = models.CharField(max_length=100, 
                                   blank=False, null=False)
-    subjectCode = models.CharField(unique=True,
-                                  max_length=7, 
+    subjectCode = models.CharField(max_length=7, 
                                   blank=False, null=False)
     classId = models.ForeignKey(Class, on_delete=models.CASCADE)
     

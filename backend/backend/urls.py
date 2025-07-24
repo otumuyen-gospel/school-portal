@@ -31,8 +31,5 @@ urlpatterns = [
     path('schedule/', include('schedule.urls'), name='schedule'),
     path('homework/', include('homework.urls'), name='homework'),
     path('auth/', include('auth.urls'), name='auth'),
-    path('parent/', include('parent.urls'), name='parent'),
-    path('student/', include('student.urls'), name='student'),
-    path('teacher/', include('teacher.urls'), name='teacher'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
