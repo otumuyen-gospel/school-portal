@@ -18,6 +18,10 @@ Including another URLconf
 from django.urls import path
 from .views import *
 urlpatterns = [
-    path('lists/', HomeworkList.as_view(), name=HomeworkList.name),
-    path('user/<int:pk>/', HomeworkDetail.as_view(), name=HomeworkDetail.name),
+    path('homework-list/', HomeworkList.as_view(), name=HomeworkList.name),
+    path('class-homework-list/<int:classId>/', ClassHomework.as_view(), name=ClassHomework.name),
+    path('user-homework-list//<int:userId>/', UserHomework.as_view(), name=UserHomework.name),
+    path('create-homework/', HomeworkCreate.as_view(), name=HomeworkCreate.name),
+    path('delete-homework/<int:id>/', HomeworkDelete.as_view(), name=HomeworkDelete.name),
+    path('update-homework/<int:id>/', HomeworkUpdate.as_view(), name=HomeworkUpdate.name),
 ]

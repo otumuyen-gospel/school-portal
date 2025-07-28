@@ -18,6 +18,10 @@ Including another URLconf
 from django.urls import path
 from .views import *
 urlpatterns = [
-    path('lists/', ComplaintList.as_view(), name=ComplaintList.name),
-    path('complaint/<int:pk>/', ComplaintDetail.as_view(), name=ComplaintDetail.name),
+    path('complaint-list/', ComplaintList.as_view(), name=ComplaintList.name),
+    path('class-complaint-list/<int:classId>/', ClassComplaint.as_view(), name=ClassComplaint.name),
+    path('user-complaint-list/<int:userId>/', UserComplaint.as_view(), name=UserComplaint.name),
+    path('create-complaint/', ComplaintCreate.as_view(), name=ComplaintCreate.name),
+    path('delete-complaint/<int:id>/', ComplaintDelete.as_view(), name=ComplaintDelete.name),
+    path('update-complaint/<int:id>/', ComplaintUpdate.as_view(), name=ComplaintUpdate.name),
 ]

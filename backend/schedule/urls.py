@@ -18,6 +18,8 @@ Including another URLconf
 from django.urls import path
 from .views import *
 urlpatterns = [
-    path('lists/', ScheduleList.as_view(), name=ScheduleList.name),
-    path('user/<int:pk>/', ScheduleDetail.as_view(), name=ScheduleDetail.name),
+    path('schedule-list/', ScheduleList.as_view(), name=ScheduleList.name),
+    path('create-schedule/', ScheduleCreate.as_view(), name=ScheduleCreate.name),
+    path('delete-schedule/<int:id>/', ScheduleDelete.as_view(), name=ScheduleDelete.name),
+    path('update-schedule/<int:id>/', ScheduleUpdate.as_view(), name=ScheduleUpdate.name),
 ]

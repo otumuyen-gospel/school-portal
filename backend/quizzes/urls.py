@@ -18,6 +18,10 @@ Including another URLconf
 from django.urls import path
 from .views import *
 urlpatterns = [
-    path('lists/', QuizList.as_view(), name=QuizList.name),
-    path('quiz/<int:pk>/', QuizDetail.as_view(), name=QuizDetail.name),
+    path('class-quiz/<int:classId>/', ClassQuiz.as_view(), name=ClassQuiz.name),
+    path('quiz-list/', QuizList.as_view(), name=QuizList.name),
+    path('user-quiz/<int:classId>/', UserQuiz.as_view(), name=UserQuiz.name),
+    path('create-quiz/', QuizCreate.as_view(), name=QuizCreate.name),
+    path('delete-quiz/<int:id>/', QuizDelete.as_view(), name=QuizDelete.name),
+    path('update-quiz/<int:id>/', QuizUpdate.as_view(), name=QuizUpdate.name),
 ]

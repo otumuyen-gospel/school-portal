@@ -1,17 +1,18 @@
-from django.shortcuts import render
 
-# Create your views here.
 from django.shortcuts import render
 from rest_framework import status
 from .models import Schedule
 from .serializers import ScheduleSerializers
-from rest_framework.reverse import reverse
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import filters
-from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
+from django_filters.rest_framework import DjangoFilterBackend
+from urllib.parse import urlparse
+from rest_framework.permissions import IsAuthenticated, IsAdminUser,AllowAny
 from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter
 from account.permissions import IsInGroup
+from rest_framework.exceptions import PermissionDenied
+
 
 '''
 NOTE: that a global pagination has been set on this generic api 
@@ -21,36 +22,66 @@ NOTE: that a global pagination has been set on this generic api
       API class used below it may not work on other API view that
       not from the generic classes. Also added is the django filters
       app for ordering, search and filtering
-'''
+'''    
 
-#this generic class will handle GET(to list all class) and POST(new class) Request
-class ScheduleList(generics.ListCreateAPIView):
+#this generic class will handle GET method to be used by the admin alone
+class ScheduleList(generics.ListAPIView):
     queryset = Schedule.objects.all()
     serializer_class = ScheduleSerializers
-    permission_classes = [IsAuthenticated, IsInGroup, IsAdminUser,]
-    required_groups = ['admin']
-    name = 'list'
+    permission_classes = [IsAuthenticated, IsInGroup,]
+    required_groups = ['admin','teacher','student','parent']
+    name = 'schedule-list'
 
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filter_fields = ('pk','userId','title','dateTime',) 
+    filterset_fields = ('userId','title','dateTime',) 
 
      #you can search using the "search" keyword
-    search_fields =  ('pk','userId','title','dateTime',)
+    search_fields =  ('userId','title','dateTime',)
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('pk','userId','title','dateTime',)
-
+    ordering_fields = ('userId','title','dateTime',)
     
-#this generic class will handle GET(list 1 item), PUT(new class) and DELETE(1 item) Request
-class ScheduleDetail(generics.RetrieveUpdateDestroyAPIView):
+#this generic class will handle UPDATE(list 1 item) by admin and teacher only 
+class ScheduleUpdate(generics.UpdateAPIView):
     queryset = Schedule.objects.all()
     serializer_class = ScheduleSerializers
-    permission_classes = [IsAuthenticated, IsInGroup, IsAdminUser,]
-    required_groups = ['admin']
-    name = 'detail'
+    permission_classes = [IsAuthenticated,IsInGroup,]
+    required_groups = ['admin','teacher']
+    name = 'schedule-update'
+    lookup_field = 'id'
+    def get_object(self):
+        obj = super().get_object()
+        if self.request.user.is_superuser or \
+            obj.classId == self.request.user.classId:
+             return obj
+        else:
+            raise PermissionDenied("You do not have permission to edit this object.")
 
-class ApiRoot(generics.GenericAPIView):
-    name = 'api-root'
-    def get(self, request, *args, **kwargs):
-        return Response({'list': reverse(ScheduleList.name,
-            request=request)})
+
+#this generic class will handle DELETE(list 1 item) ONly Admin and teacher
+class ScheduleDelete(generics.DestroyAPIView):
+    queryset = Schedule.objects.all()
+    serializer_class = ScheduleSerializers
+    permission_classes = [IsAuthenticated,IsInGroup,]
+    required_groups = ['admin','teacher']
+    name = 'remove-schedule'
+    lookup_field = 'id'
+    def get_object(self):
+        obj = super().get_object()
+        if self.request.user.is_superuser or \
+            obj.classId == self.request.user.classId:
+             return obj
+        else:
+            raise PermissionDenied("You do not have permission to edit this object.")
+
+
+#this generic class will handle Creation(list 1 item) only admin and teacher
+class ScheduleCreate(generics.CreateAPIView):
+    queryset = Schedule.objects.all()
+    serializer_class = ScheduleSerializers
+    permission_classes = [IsAuthenticated,IsInGroup,]
+    required_groups = ['admin','teacher']
+    name = 'schedule-create'
+ 

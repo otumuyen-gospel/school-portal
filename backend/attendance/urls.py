@@ -18,6 +18,10 @@ Including another URLconf
 from django.urls import path
 from .views import *
 urlpatterns = [
-    path('lists/', AttendanceList.as_view(), name=AttendanceList.name),
-    path('user/<int:pk>/', AttendanceDetail.as_view(), name=AttendanceDetail.name),
+    path('class-attendance/<int:classId>/', ClassAttendance.as_view(), name=ClassAttendance.name),
+    path('attendance-list/', AttendanceList.as_view(), name=AttendanceList.name),
+    path('user-attendance/<int:userId>/', UserAttendance.as_view(), name=UserAttendance.name),
+    path('create-attendance/', AttendanceCreate.as_view(), name=AttendanceCreate.name),
+    path('delete-attendance/<int:id>/', AttendanceDelete.as_view(), name=AttendanceDelete.name),
+    path('update-attendance/<int:id>/', AttendanceUpdate.as_view(), name=AttendanceUpdate.name),
 ]

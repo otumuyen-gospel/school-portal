@@ -18,6 +18,10 @@ Including another URLconf
 from django.urls import path
 from .views import *
 urlpatterns = [
-    path('lists/', MarkList.as_view(), name=MarkList.name),
-    path('mark/<int:pk>/', MarkDetail.as_view(), name=MarkDetail.name),
+    path('class-marks/<int:classId>/', ClassMark.as_view(), name=ClassMark.name),
+    path('mark-list/', MarkList.as_view(), name=MarkList.name),
+    path('user-marks/<int:id>/', UserMark.as_view(), name=UserMark.name),
+    path('create-marks/', MarkCreate.as_view(), name=MarkCreate.name),
+    path('delete-mark/<int:id>/', MarkDelete.as_view(), name=MarkDelete.name),
+    path('update-mark/<int:id>/', MarkUpdate.as_view(), name=MarkUpdate.name),
 ]

@@ -18,6 +18,9 @@ Including another URLconf
 from django.urls import path
 from .views import *
 urlpatterns = [
-    path('lists/', ClassList.as_view(), name=ClassList.name),
-    path('class/<int:pk>/', ClassDetail.as_view(), name=ClassDetail.name),
+    path('class-list/', ClassList.as_view(), name=ClassList.name),
+    path('user-class/<int:id>/', UserClass.as_view(), name=UserClass.name),
+    path('create-class/', ClassCreate.as_view(), name=ClassCreate.name),
+    path('delete-class/<int:id>/', ClassDelete.as_view(), name=ClassDelete.name),
+    path('update-class/<int:id>/', ClassUpdate.as_view(), name=ClassUpdate.name),
 ]
