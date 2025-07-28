@@ -24,7 +24,7 @@ this project is the design and implementation of a school web portal using pytho
 ```cmd
   pip install -r requirements.txt
 ```
-* Ensure to have postgresql database installed and have created the necessary database and database user account. Please see (database settings) [/backend/backend/settings.py] in the project settings for more information.
+* Ensure to have postgresql database installed and have created the necessary database and database user account. Please see [database settings] (/backend/backend/settings.py) in the project settings for more information.
 * then run django migrations to create database tables.
 ```cmd
   python manage.py makemigrations
