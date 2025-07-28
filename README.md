@@ -31,6 +31,47 @@ this project is the design and implementation of a school web portal using pytho
   python manage.py migrate
 ```
 
+### App usage
+* navigate to the backend app root folder then run the code below to start django server.
+```cmd
+  python manage.py runserver
+```
+* You can access the API endpoints using postman or Curl or any other Rest client of own choosen on port 8000.
+
+## API Endpoints
+
+### Users Account Endpoints
+| HTTP Verbs | Endpoints | Action |
+| --- | --- | --- |
+
+| GET | /accounts/users-list/ | list all users account; accessible by admin only |
+
+| GET | /accounts/class-users/classId/ | users belonging to a class; accessible by admin & teacher only;remember to use a valid class id |
+
+| GET | /accounts/retrieve-user/userId/ | retrieve user's own account ; accessible by all authenticated user;remember to use a valid user id |
+
+| POST | /accounts/create-user/ | new user; accessible by admin only; this should not be accessed directly instead create a new user account through the Auth API |
+
+| DELETE | /accounts/remove-user/userId/ | delete user; accessible by admin only;remember to use a valid user id |
+
+| PUT | /accounts/user-update/userId/ | update user own account; accessible by all;remember to use a valid user id |
+
+#### Example request from Curl Client
+Only authenticated users can access this API - specify your Bearer token
+```cmd
+  curl --request PUT --url "http://127.0.0.1:8000/accounts/user-update/158/" --header "Authorization: Bearer yourToken"
+```
+
+
+### Technologies
+* Python Django and Django rest framework
+* Postgresql database
+
+### Authors
+* [otumuyen-gospel](https://github.com/otumuyen-gospel)
+
+
+
 
 
 ## FRONTEND
