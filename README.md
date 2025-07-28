@@ -44,20 +44,35 @@ this project is the design and implementation of a school web portal using pytho
 | HTTP Verbs | Endpoints | Action |
 | --- | --- | --- |
 
-| GET | /accounts/users-list/ | list all users account; accessible by admin only |
+| GET | /accounts/users-list/ | list all users account; access[admin] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/accounts/users-list/" --header "Authorization: Bearer yourToken"
+```
 
-| GET | /accounts/class-users/classId/ | users belonging to a class; accessible by admin & teacher only;remember to use a valid class id |
+| GET | /accounts/class-users/classId/ | users belonging to a class; access[Admin,Teacher] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/accounts/class-users/50/" --header "Authorization: Bearer yourToken"
+```
 
-| GET | /accounts/retrieve-user/userId/ | retrieve user's own account ; accessible by all authenticated user;remember to use a valid user id |
+| GET | /accounts/retrieve-user/userId/ | retrieve user's own account ; access[Any] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/accounts/retrieve-user/158/" --header "Authorization: Bearer yourToken"
+```
 
-| POST | /accounts/create-user/ | new user; accessible by admin only; this should not be accessed directly instead create a new user account through the Auth API |
+| POST | /accounts/create-user/ | new user; access[admin] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/accounts/create-user/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+ - Note this method should not be accessed directly instead use the Auth API
 
-| DELETE | /accounts/remove-user/userId/ | delete user; accessible by admin only;remember to use a valid user id |
+| DELETE | /accounts/remove-user/userId/ | delete user; [access:admin] |
+```cmd
+  curl --request DELETE --url "http://127.0.0.1:8000/accounts/remove-user/158/" --header "Authorization: Bearer yourToken"
+```
 
 | PUT | /accounts/user-update/userId/ | update user own account; [access:Any] |
-Example request from Curl Client- specify your Bearer token
 ```cmd
-  curl --request PUT --url "http://127.0.0.1:8000/accounts/user-update/158/" --header "Authorization: Bearer yourToken"
+  curl --request PUT --url "http://127.0.0.1:8000/accounts/user-update/158/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
 ```
 
 
