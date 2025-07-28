@@ -94,7 +94,7 @@ class AttendanceUpdate(generics.UpdateAPIView):
     def get_object(self):
         obj = super().get_object()
         if self.request.user.is_superuser or \
-            obj.classId == self.request.user.classId:
+            obj.classId.id == self.request.user.classId.id:
              return obj
         else:
             raise PermissionDenied("You do not have permission to edit this object.")
@@ -104,14 +104,14 @@ class AttendanceUpdate(generics.UpdateAPIView):
 class AttendanceDelete(generics.DestroyAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializers
-    permission_classes = [IsAuthenticated,IsInGroup, IsAdminUser]
+    permission_classes = [IsAuthenticated,IsInGroup,]
     required_groups = ['admin','teacher']
     name = 'remove-attendance'
     lookup_field = 'id'
     def get_object(self):
         obj = super().get_object()
         if self.request.user.is_superuser or \
-            obj.classId == self.request.user.classId:
+            obj.classId.id == self.request.user.classId.id:
              return obj
         else:
             raise PermissionDenied("You do not have permission to edit this object.")
@@ -120,7 +120,7 @@ class AttendanceDelete(generics.DestroyAPIView):
 class AttendanceCreate(generics.CreateAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializers
-    permission_classes = [IsAuthenticated,IsInGroup, IsAdminUser]
+    permission_classes = [IsAuthenticated,IsInGroup,]
     required_groups = ['admin','teacher']
     name = 'create-attendance'
     

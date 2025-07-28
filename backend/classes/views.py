@@ -94,9 +94,8 @@ class UserClass(generics.RetrieveAPIView):
 
         # Example: Filter by classId
         val = int(self.get_url_values())
-        userClass = self.request.user.classId
-        print(userClass.id)
-        if (userClass != None and val == userClass.id):
+        classId = self.request.user.classId.id
+        if (classId != None and val == classId):
             return self.queryset.filter(id=val)
         else:
             raise PermissionDenied("You don't have access right")

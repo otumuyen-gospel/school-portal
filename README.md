@@ -15,7 +15,9 @@ this project is the design and implementation of a school web portal using pytho
 * Non-authenticated users are not authorize or granted access to any application-features.
 * The app is made of a django rest Api for the backend and react app for the frontend.
 
-## BACKEND APP
+
+
+# Backend App
 
 ### Installation Guide
 * Clone this repository (school-portal) [https://github.com/otumuyen-gospel/school-portal.git]
@@ -40,7 +42,7 @@ this project is the design and implementation of a school web portal using pytho
 
 ## API Endpoints
 
-### Users Account Endpoints
+### Account API
 | HTTP Verbs | Endpoints | Action |
 | --- | --- | --- |
 
@@ -75,6 +77,40 @@ this project is the design and implementation of a school web portal using pytho
   curl --request PUT --url "http://127.0.0.1:8000/accounts/user-update/158/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
 ```
 
+### Attendance API
+| HTTP Verbs | Endpoints | Action |
+| --- | --- | --- |
+
+| GET | /attendance/attendance-list/ | list all attendance account; access[admin] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/attendance/attendance-list/" --header "Authorization: Bearer yourToken"
+```
+
+| GET | /attendance/class-attendance/classId/ | class attendance; access[Admin,Teacher] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/attendance/class-attendance/50/" --header "Authorization: Bearer yourToken"
+```
+
+| GET | attendance/user-attendance/userId/ | retrieve user's own attendance ; access[Any] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/attendance/user-attendance/158/" --header "Authorization: Bearer yourToken"
+```
+
+| POST | attendance/create-attendance/ | new attendance; access[admin,Teacher] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/attendance/create-attendance/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+| DELETE | attendance/delete-attendance/userId/ | delete attendance; access[admin,Teacher] |
+```cmd
+  curl --request DELETE --url "http://127.0.0.1:8000/attendance/delete-attendance/158/" --header "Authorization: Bearer yourToken"
+```
+
+| PUT | attendance/update-attendance/userId/ | update user attendance; access[Admin,Teacher] |
+```cmd
+  curl --request PUT --url "http://127.0.0.1:8000/attendance/update-attendance/158/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
 
 
 ### Technologies
@@ -88,4 +124,4 @@ this project is the design and implementation of a school web portal using pytho
 
 
 
-## FRONTEND
+# Frontend App
