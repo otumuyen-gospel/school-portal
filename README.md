@@ -54,13 +54,12 @@ this project is the design and implementation of a school web portal using pytho
 
 | DELETE | /accounts/remove-user/userId/ | delete user; accessible by admin only;remember to use a valid user id |
 
-| PUT | /accounts/user-update/userId/ | update user own account; accessible by all;remember to use a valid user id |
-
-#### Example request from Curl Client
-Only authenticated users can access this API - specify your Bearer token
+| PUT | /accounts/user-update/userId/ | update user own account; [access:Any] |
+Example request from Curl Client- specify your Bearer token
 ```cmd
   curl --request PUT --url "http://127.0.0.1:8000/accounts/user-update/158/" --header "Authorization: Bearer yourToken"
 ```
+
 
 
 ### Technologies
