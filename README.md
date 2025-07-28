@@ -111,6 +111,71 @@ this project is the design and implementation of a school web portal using pytho
   curl --request PUT --url "http://127.0.0.1:8000/attendance/update-attendance/158/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
 ```
 
+### Auth API
+| HTTP Verbs | Endpoints | Action |
+| --- | --- | --- |
+
+| POST | auth/register/ | new account; access[admin] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/auth/register/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+| POST | auth/login/ | new login, new refresh & access token; access[Any] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/auth/login/"  --data "key1=value1&key2=value2" 
+```
+| POST | auth/refresh/ | refresh auth access token; access[Any] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/auth/refresh/"  --data "key1=value1&key2=value2" 
+```
+| POST | auth/logout/ | invalidate access token; access[Any] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/auth/logout/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2" 
+```
+- Note to completely logout stored authenticated user credentials in the frontend must be deleted.
+
+| POST | auth/reset/request/ | request password reset token via email; access[Any] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/auth/reset/request/"  --data "key1=value1&key2=value2" 
+```
+| POST | auth/reset/verify/ | verify password reset token; access[Any] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/auth/reset/request/"  --data "key1=value1&key2=value2" 
+```
+| POST | auth/reset/password/ | reset password; access[Any] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/auth/reset/password/"  --data "key1=value1&key2=value2" 
+```
+
+### Class API
+| HTTP Verbs | Endpoints | Action |
+| --- | --- | --- |
+
+| GET | classes/class-list/ | list all classes; access[admin,Teacher] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/classes/class-list/" --header "Authorization: Bearer yourToken"
+```
+
+| GET | classes/user-class/classId/ | users own class; access[student,parent] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/classes/user-class/50/" --header "Authorization: Bearer yourToken"
+```
+
+| POST | classes/create-class/ | new class; access[admin] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/classes/create-class/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+| DELETE | classes/delete-class/classId/ | delete attendance; access[admin] |
+```cmd
+  curl --request DELETE --url "http://127.0.0.1:8000/classes/create-class/158/" --header "Authorization: Bearer yourToken"
+```
+
+| PUT | classes/update-class/classId/ | update class; access[Admin] |
+```cmd
+  curl --request PUT --url "http://127.0.0.1:8000/classes/update-class/158/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+
 
 
 ### Technologies

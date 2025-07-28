@@ -78,7 +78,7 @@ class UserClass(generics.RetrieveAPIView):
     queryset = Class.objects.all()
     serializer_class = ClassSerializers
     permission_classes = [IsAuthenticated,IsInGroup,]
-    required_groups = ['student','parent']
+    required_groups = ['student','parent',]
     name = 'user-class'
     lookup_field = 'id'
 
