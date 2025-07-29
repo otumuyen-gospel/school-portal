@@ -19,6 +19,6 @@ class Quiz(models.Model):
     endDate = models.DateField(editable=True)
     
     class Meta:
-        ordering = ('question',)
+        ordering = ('subjectId','classId')
     def __str__(self):
         return self.question

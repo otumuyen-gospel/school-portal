@@ -52,8 +52,6 @@ class ClassComplaint(generics.ListAPIView):
     required_groups = ['admin','teacher']
     name = 'class-complaint'
 
-    lookup_field='classId'
-
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
@@ -89,7 +87,7 @@ class ComplaintUpdate(generics.UpdateAPIView):
     queryset = Complaint.objects.all()
     serializer_class = ComplaintSerializers
     permission_classes = [IsAuthenticated, IsInGroup,]
-    required_groups = ['admin','parent','student']
+    required_groups = ['admin','parent','student',]
     name = 'complaint-update'
     lookup_field = 'id'
     def get_object(self):
@@ -107,7 +105,7 @@ class ComplaintDelete(generics.DestroyAPIView):
     queryset = Complaint.objects.all()
     serializer_class = ComplaintSerializers
     permission_classes = [IsAuthenticated,IsInGroup,]
-    required_groups = ['admin','student','parent']
+    required_groups = ['admin','student','parent',]
     name = 'remove-complaint'
     lookup_field = 'id'
     def get_object(self):
@@ -123,7 +121,7 @@ class ComplaintCreate(generics.CreateAPIView):
     queryset = Complaint.objects.all()
     serializer_class = ComplaintSerializers
     permission_classes = [IsAuthenticated,IsInGroup,]
-    required_groups = ['student','parent',]
+    required_groups = ['student','parent','admin']
     name = 'create-class'
     
 #this generic class will handle GET(list 1 item) - can be accessed by all user
@@ -157,8 +155,8 @@ class UserComplaint(generics.ListAPIView):
 
         # Example: Filter by userId
         val = int(self.get_url_values())
-        userClass = self.request.user.id
-        if (userClass != None and val == userClass) or \
+        id = self.request.user.id
+        if (id != None and val == id) or \
         self.request.user.is_superuser:
             return self.queryset.filter(userId=val)
         else:

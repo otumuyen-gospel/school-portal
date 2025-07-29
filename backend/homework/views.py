@@ -53,8 +53,6 @@ class ClassHomework(generics.ListAPIView):
     required_groups = ['admin','teacher']
     name = 'class-homework'
 
-    lookup_field='classId'
-
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
@@ -97,7 +95,7 @@ class HomeworkUpdate(generics.UpdateAPIView):
     def get_object(self):
         obj = super().get_object()
         if self.request.user.is_superuser or \
-            obj.userId == self.request.user.id:
+            obj.userId.id == self.request.user.id:
              return obj
         else:
             raise PermissionDenied("You do not have permission to edit this object.")
@@ -110,13 +108,13 @@ class HomeworkDelete(generics.DestroyAPIView):
     queryset = Homework.objects.all()
     serializer_class = HomeworkSerializers
     permission_classes = [IsAuthenticated,IsInGroup,]
-    required_groups = ['student']
+    required_groups = ['admin','student']
     name = 'remove-homework'
     lookup_field = 'id'
     def get_object(self):
         obj = super().get_object()
         if self.request.user.is_superuser or \
-            obj.userId == self.request.user.id:
+            obj.userId.id == self.request.user.id:
              return obj
         else:
             raise PermissionDenied("You do not have permission to edit this object.")
@@ -134,9 +132,8 @@ class UserHomework(generics.ListAPIView):
     queryset = Homework.objects.all()
     serializer_class = HomeworkSerializers
     permission_classes = [IsAuthenticated,IsInGroup,]
-    required_groups = ['student',]
+    required_groups = ['student','admin']
     name = 'user-homework'
-    lookup_field = 'userId'
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
@@ -161,8 +158,8 @@ class UserHomework(generics.ListAPIView):
 
         # Example: Filter by classId
         val = int(self.get_url_values())
-        userId = self.request.user.id
-        if (userId != None and val == userId) or \
+        id = self.request.user.id
+        if (id != None and val == id) or \
         self.request.user.is_superuser:
             return self.queryset.filter(userId=val)
         else:

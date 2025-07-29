@@ -101,12 +101,12 @@ this project is the design and implementation of a school web portal using pytho
   curl --request POST --url "http://127.0.0.1:8000/attendance/create-attendance/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
 ```
 
-| DELETE | attendance/delete-attendance/userId/ | delete attendance; access[admin,Teacher] |
+| DELETE | attendance/delete-attendance/id/ | delete attendance; access[admin,Teacher] |
 ```cmd
   curl --request DELETE --url "http://127.0.0.1:8000/attendance/delete-attendance/158/" --header "Authorization: Bearer yourToken"
 ```
 
-| PUT | attendance/update-attendance/userId/ | update user attendance; access[Admin,Teacher] |
+| PUT | attendance/update-attendance/id/ | update user attendance; access[Admin,Teacher] |
 ```cmd
   curl --request PUT --url "http://127.0.0.1:8000/attendance/update-attendance/158/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
 ```
@@ -173,6 +173,195 @@ this project is the design and implementation of a school web portal using pytho
 | PUT | classes/update-class/classId/ | update class; access[Admin] |
 ```cmd
   curl --request PUT --url "http://127.0.0.1:8000/classes/update-class/158/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+
+### Complaint API
+| HTTP Verbs | Endpoints | Action |
+| --- | --- | --- |
+
+| GET | complaints/complaint-list/ | list all user complaint; access[admin] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/complaints/complaint-list/" --header "Authorization: Bearer yourToken"
+```
+
+| GET | /complaints/class-complaint-list/classId/ | class complaint; access[Admin,Teacher] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/complaints/class-complaint-list/50/" --header "Authorization: Bearer yourToken"
+```
+
+| GET | complaints/user-complaint-list/userId/ | retrieve user's complaint ; access[Any] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/complaints/user-complaint-list/158/" --header "Authorization: Bearer yourToken"
+```
+
+| POST | complaints/create-complaint/ | new complaint; access[Admin,Parent,Student] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/complaints/create-complaint/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+| DELETE | complaints/delete-complaint/id/ | delete complaint; access[admin,Student,Parent] |
+```cmd
+  curl --request DELETE --url "http://127.0.0.1:8000/complaints/delete-complaint/158/" --header "Authorization: Bearer yourToken"
+```
+
+| PUT | complaints/update-complaint/id/ | update user complaints; access[Admin,Student,Parent] |
+```cmd
+  curl --request PUT --url "http://127.0.0.1:8000/complaints/update-complaint/1/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+
+### Homework API
+| HTTP Verbs | Endpoints | Action |
+| --- | --- | --- |
+
+| GET | homework/homework-list/ | list all user homework; access[admin] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/homework/homework-list/" --header "Authorization: Bearer yourToken"
+```
+
+| GET | /homework/class-homework-list/classId/ | class homework; access[Admin,Teacher] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/homework/class-homework-list/50/" --header "Authorization: Bearer yourToken"
+```
+
+| GET | homework/user-homework-list/userId/ | retrieve user's homework ; access[Admin,Student] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/homework/user-homework-list/158/" --header "Authorization: Bearer yourToken"
+```
+
+| POST | homework/create-homework/ | new homework; access[Admin,Student] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/homework/create-homework/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+| DELETE | homework/delete-homework/id/ | delete homework; access[admin,Student] |
+```cmd
+  curl --request DELETE --url "http://127.0.0.1:8000/homework/delete-homework/158/" --header "Authorization: Bearer yourToken"
+```
+
+| PUT | homework/update-homework/id/ | update user homework; access[Admin,Student] |
+```cmd
+  curl --request PUT --url "http://127.0.0.1:8000/homework/update-homework/1/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+  ```
+
+
+### Marks API
+| HTTP Verbs | Endpoints | Action |
+| --- | --- | --- |
+
+| GET | /marks/mark-list/ | list all student marks; access[admin] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/marks/mark-list/" --header "Authorization: Bearer yourToken"
+```
+
+| GET | /marks/class-marks/classId/ | class marks; access[Admin,Teacher] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/marks/class-marks/50/" --header "Authorization: Bearer yourToken"
+```
+
+| GET | marks/user-marks/userId/ | retrieve user's own marks ; access[Student,Parent] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/marks/user-marks/158/" --header "Authorization: Bearer yourToken"
+```
+
+| POST | marks/create-marks/ | new marks; access[admin,Teacher] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/marks/create-marks/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+| DELETE | marks/delete-mark/id/ | delete marks; access[admin,Teacher] |
+```cmd
+  curl --request DELETE --url "http://127.0.0.1:8000/marks/delete-mark/158/" --header "Authorization: Bearer yourToken"
+```
+
+| PUT | marks/update-mark/id/ | update user marks; access[Admin,Teacher] |
+```cmd
+  curl --request PUT --url "http://127.0.0.1:8000/marks/update-mark/158/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+
+### Quiz API
+| HTTP Verbs | Endpoints | Action |
+| --- | --- | --- |
+
+| GET | quizzes/quiz-list/ | list all quizzes; access[admin] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/quizzes/quiz-list/" --header "Authorization: Bearer yourToken"
+```
+
+| GET | quizzes/class-quiz/classId/ | class specific quiz; access[Admin,Teacher] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/quizzes/class-quiz/50/" --header "Authorization: Bearer yourToken"
+```
+
+| GET | quizzes/user-quiz/classId/ | retrieve user's class active quizzes ; access[Student] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/quizzes/user-quiz/158/" --header "Authorization: Bearer yourToken"
+```
+
+| POST | quizzes/create-quiz/ | new quiz; access[admin,Teacher] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/quizzes/create-quiz/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+| DELETE | quizzes/delete-quiz/id/ | delete quiz; access[admin,Teacher] |
+```cmd
+  curl --request DELETE --url "http://127.0.0.1:8000/quizzes/delete-quiz/158/" --header "Authorization: Bearer yourToken"
+```
+
+| PUT | quizzes/update-quiz/id/ | update quiz; access[Admin,Teacher] |
+```cmd
+  curl --request PUT --url "http://127.0.0.1:8000/quizzes/update-quiz/158/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+### Schedule API
+| HTTP Verbs | Endpoints | Action |
+| --- | --- | --- |
+
+| GET | schedule/schedule-list/ | list all schedule; access[any] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/schedule/schedule-list/" --header "Authorization: Bearer yourToken"
+```
+
+| POST | schedule/create-schedule/ | new schedule; access[admin,Teacher] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/schedule/create-schedule/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+| DELETE | schedule/delete-schedule/id/ | delete schedule; access[admin,Teacher] |
+```cmd
+  curl --request DELETE --url "http://127.0.0.1:8000/schedule/delete-schedule/158/" --header "Authorization: Bearer yourToken"
+```
+
+| PUT |  schedule/update-schedule/id/ | update schedule; access[Admin,Teacher] |
+```cmd
+  curl --request PUT --url "http://127.0.0.1:8000/schedule/update-schedule/158/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+
+### Subjects API
+| HTTP Verbs | Endpoints | Action |
+| --- | --- | --- |
+
+| GET | subjects/subject-list/ | list all subject; access[admin,teacher,student] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/subjects/subject-list/" --header "Authorization: Bearer yourToken"
+```
+
+| POST | subjects/create-subject/ | new subject; access[admin] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000/subjects/create-subject/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+| DELETE | subjects/delete-subject/id/ | delete subject; access[admin] |
+```cmd
+  curl --request DELETE --url "http://127.0.0.1:8000/subjects/delete-subject/158/" --header "Authorization: Bearer yourToken"
+```
+
+| PUT |  subjects/update-subject/id/ | update subject; access[Admin] |
+```cmd
+  curl --request PUT --url "http://127.0.0.1:8000/subjects/update-subject/158/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
 ```
 
 

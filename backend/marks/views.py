@@ -99,7 +99,7 @@ class MarkUpdate(generics.UpdateAPIView):
     def get_object(self):
         obj = super().get_object()
         if self.request.user.is_superuser or \
-            obj.classId == self.request.user.classId:
+            obj.classId.id == self.request.user.classId.id:
              return obj
         else:
             raise PermissionDenied("You do not have permission to edit this object.")
@@ -116,7 +116,7 @@ class MarkDelete(generics.DestroyAPIView):
     def get_object(self):
         obj = super().get_object()
         if self.request.user.is_superuser or \
-            obj.classId == self.request.user.classId:
+            obj.classId.id == self.request.user.classId.id:
              return obj
         else:
             raise PermissionDenied("You do not have permission to edit this object.")
@@ -134,9 +134,8 @@ class UserMark(generics.ListAPIView):
     queryset = Mark.objects.all()
     serializer_class = MarkSerializers
     permission_classes = [IsAuthenticated,IsInGroup,]
-    required_groups = ['student','parent']
+    required_groups = ['student','parent',]
     name = 'user-mark'
-    lookup_field = 'userId'
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
@@ -162,16 +161,14 @@ class UserMark(generics.ListAPIView):
         return pathList[len(pathList)-2] #last word
 
     def get_queryset(self):
-
-        # Example: Filter by classId
+         # Example: Filter by classId
         val = int(self.get_url_values())
         userId = self.request.user.id
         childId = self.request.user.childId
         if (userId != None and val == userId) or \
-        (childId != None and val == childId):
+         (childId != None and val == childId):
             return self.queryset.filter(userId=val)
         else:
             raise PermissionDenied("You don't have access right")
-
    
    

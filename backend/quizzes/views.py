@@ -28,21 +28,21 @@ class ClassQuiz(generics.ListAPIView):
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializers
     permission_classes = [IsAuthenticated, IsInGroup,]
-    required_groups = ['admin','teacher']
+    required_groups = ['admin','teacher',]
     name = 'class-quiz'
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
-    #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('question','option1','option2','option3',
+   #you can filter by field names specified here keyword e.g url?className='primary one'
+    filterset_fields = ('subjectId','question','option1','option2','option3',
                      'answer',) 
 
      #you can search using the "search" keyword
-    search_fields = ('question','option1','option2','option3',
+    search_fields = ('subjectId','question','option1','option2','option3',
                      'answer',) 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('question','option1','option2','option3',
+    ordering_fields = ('subjectId','question','option1','option2','option3',
                      'answer',)
 
     def get_url_values(self):
@@ -76,15 +76,15 @@ class QuizList(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('question','option1','option2','option3',
+    filterset_fields = ('subjectId','question','option1','option2','option3',
                      'answer',) 
 
      #you can search using the "search" keyword
-    search_fields = ('question','option1','option2','option3',
+    search_fields = ('subjectId','question','option1','option2','option3',
                      'answer',) 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('question','option1','option2','option3',
+    ordering_fields = ('subjectId','question','option1','option2','option3',
                      'answer',)
     
 #this generic class will handle UPDATE(list 1 item) by admin and teacher only 
@@ -98,7 +98,7 @@ class QuizUpdate(generics.UpdateAPIView):
     def get_object(self):
         obj = super().get_object()
         if self.request.user.is_superuser or \
-            obj.classId == self.request.user.classId:
+            obj.classId.id == self.request.user.classId.id:
              return obj
         else:
             raise PermissionDenied("You do not have permission to edit this object.")
@@ -116,7 +116,7 @@ class QuizDelete(generics.DestroyAPIView):
     def get_object(self):
         obj = super().get_object()
         if self.request.user.is_superuser or \
-            obj.classId == self.request.user.classId:
+            obj.classId.id == self.request.user.classId.id:
              return obj
         else:
             raise PermissionDenied("You do not have permission to edit this object.")
@@ -137,21 +137,20 @@ class UserQuiz(generics.ListAPIView):
     permission_classes = [IsAuthenticated,IsInGroup,]
     required_groups = ['student',]
     name = 'user-quiz'
-    lookup_field = 'classId'
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('question','option1','option2','option3',
+    filterset_fields = ('subjectId','question','option1','option2','option3',
                      'answer',) 
 
      #you can search using the "search" keyword
-    search_fields = ('question','option1','option2','option3',
+    search_fields = ('subjectId','question','option1','option2','option3',
                      'answer',) 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('question','option1','option2','option3',
-                     'answer',) 
+    ordering_fields = ('subjectId','question','option1','option2','option3',
+                     'answer',)
 
     def get_url_values(self):
         url = self.request.build_absolute_uri()
@@ -167,6 +166,7 @@ class UserQuiz(generics.ListAPIView):
         val = int(self.get_url_values())
         classId = self.request.user.classId
         if (classId != None and val == classId.id):
+            #return only quiz that are set by class teacher and still active as quiz
             return self.queryset.filter(classId=val, setAsQuiz=True)
         else:
             raise PermissionDenied("You don't have access right")
