@@ -23,13 +23,12 @@ NOTE: that a global pagination has been set on this generic api
       app for ordering, search and filtering
 '''    
 
-#this generic class will handle GET method to be used by the admin alone
-class SubjectList(generics.ListAPIView):
+class ClassSubjectsList(generics.ListAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializers
     permission_classes = [IsAuthenticated, IsInGroup,]
     required_groups = ['admin','teacher','student',]
-    name = 'subject-list'
+    name = 'class-subject-list'
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
@@ -89,3 +88,20 @@ class SubjectCreate(generics.CreateAPIView):
     required_groups = ['admin',]
     name = 'subject-create'
  
+class SubjectList(generics.ListAPIView):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializers
+    permission_classes = [IsAuthenticated, IsInGroup,]
+    required_groups = ['admin',]
+    name = 'subject-list'
+
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    
+    #you can filter by field names specified here keyword e.g url?className='primary one'
+    filterset_fields = ('subjectName','subjectCode','classId',) 
+
+     #you can search using the "search" keyword
+    search_fields = ('subjectName','subjectCode','classId',) 
+
+    #you can order using the "ordering" keyword
+    ordering_fields = ('subjectName','subjectCode','classId',) 

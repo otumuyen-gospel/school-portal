@@ -24,9 +24,6 @@ class AccountManager(BaseUserManager):
         user.set_password(password)
         user.firstName = kwargs.get('firstName')
         user.lastName = kwargs.get('lastName')
-        user.is_active = kwargs.get('is_active')
-        user.is_superuser = kwargs.get('is_superuser')
-        user.is_staff = kwargs.get('is_staff')
         user.gender = kwargs.get('gender')
         user.entrance = kwargs.get('entrance')
         user.dob = kwargs.get('dob')
@@ -38,6 +35,11 @@ class AccountManager(BaseUserManager):
         user.zipCode = kwargs.get('zipCode')
         user.telephone = kwargs.get('telephone')
         user.role =  kwargs.get('role')
+        user.is_active = True
+        if kwargs.get('role') == 'admin':
+            user.is_superuser = True
+            user.is_staff = True
+
         user.save(using=self._db)
         return user
      

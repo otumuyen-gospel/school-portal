@@ -12,7 +12,7 @@ class SignupSerializer(UserSerializers):
         model = User
         # fields = '__all__'
         exclude = ('id','user_permissions','groups','last_login','otp',
-                   'otp_exp','otp_verified')
+                   'otp_exp','otp_verified','is_active','is_superuser','is_staff')
     
     def create(self, validated_data):
         '''call the create_user  method objects instance of 

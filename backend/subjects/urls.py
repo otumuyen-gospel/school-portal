@@ -18,8 +18,9 @@ Including another URLconf
 from django.urls import path
 from .views import *
 urlpatterns = [
-    path('subject-list/', SubjectList.as_view(), name=SubjectList.name),
+    path('class-subject-list/<int:classId>/', ClassSubjectsList.as_view(), name=ClassSubjectsList.name),
     path('create-subject/', SubjectCreate.as_view(), name=SubjectCreate.name),
     path('delete-subject/<int:id>/', SubjectDelete.as_view(), name=SubjectDelete.name),
     path('update-subject/<int:id>/', SubjectUpdate.as_view(), name=SubjectUpdate.name),
+    path('subject-list/', SubjectList.as_view(), name=SubjectList.name),
 ]

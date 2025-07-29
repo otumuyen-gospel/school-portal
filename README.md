@@ -344,9 +344,14 @@ this project is the design and implementation of a school web portal using pytho
 | HTTP Verbs | Endpoints | Action |
 | --- | --- | --- |
 
-| GET | subjects/subject-list/ | list all subject; access[admin,teacher,student] |
+| GET | subjects/subject-list/ | list all subject; access[admin] |
 ```cmd
   curl --request GET --url "http://127.0.0.1:8000/subjects/subject-list/" --header "Authorization: Bearer yourToken"
+```
+
+| GET | subjects/class-subject-list/classId/ | list all subject offered in a class; access[admin,teacher,student] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/subjects/class-subject-list/4/" --header "Authorization: Bearer yourToken"
 ```
 
 | POST | subjects/create-subject/ | new subject; access[admin] |

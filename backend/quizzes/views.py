@@ -126,7 +126,7 @@ class QuizDelete(generics.DestroyAPIView):
 class QuizCreate(generics.CreateAPIView):
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializers
-    permission_classes = [IsAuthenticated,IsInGroup, IsAdminUser]
+    permission_classes = [IsAuthenticated,IsInGroup,]
     required_groups = ['admin','teacher']
     name = 'quiz-mark'
     

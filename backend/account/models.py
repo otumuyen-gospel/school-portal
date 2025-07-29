@@ -22,7 +22,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     '''this fields must be entered or unique'''
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email','firstName','lastName','is_staff','is_active',
+    REQUIRED_FIELDS = ['email','firstName','lastName','role','gender','is_staff','is_active',
                        'is_superuser']
     GENDER_MALE = 'M'
     GENDER_FEMALE = 'F'
@@ -46,15 +46,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     ]
     role = models.CharField(choices=USERS_ROLES,
                                default=ROLE_STUDENT)
-    entrance = models.DateTimeField(blank=True, null=True)
-    dob = models.DateField(blank=True, null=True)
+    entrance = models.DateTimeField(blank=True, null=True, default=None)
+    dob = models.DateField(blank=True, null=True, default=None)
     classId = models.ForeignKey(Class, on_delete=models.SET_NULL, blank=True, null=True)
-    childId = models.CharField(max_length=255, blank=True)
-    address = models.CharField(max_length=400, blank=True)
-    nationality = models.CharField(max_length=70 , blank=True)
-    state = models.CharField(max_length=70, blank=True)
-    zipCode = models.CharField(max_length=8, blank=True)
-    telephone = models.CharField(max_length=11, blank=True)
+    childId = models.CharField(max_length=255, blank=True, null=True, default=None)
+    address = models.CharField(max_length=400, blank=True, null=True, default=None)
+    nationality = models.CharField(max_length=70 , blank=True, null=True, default=None)
+    state = models.CharField(max_length=70, blank=True, null=True, default=None)
+    zipCode = models.CharField(max_length=8, blank=True, null=True, default=None)
+    telephone = models.CharField(max_length=11, blank=True, null=True, default=None)
 
     otp = models.CharField(max_length=6, blank=True, null=True, default=None)
     otp_exp = models.DateTimeField(blank=True, null=True, default=None) 

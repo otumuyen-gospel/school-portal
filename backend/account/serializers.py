@@ -7,5 +7,5 @@ class UserSerializers(serializers.ModelSerializer):
         model = User
        # fields = '__all__'
         exclude = ('id','user_permissions','groups','last_login','otp',
-                   'otp_exp','otp_verified')
+                   'otp_exp','otp_verified','is_active','is_superuser','is_staff')
         
