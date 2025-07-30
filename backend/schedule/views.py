@@ -12,6 +12,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser,AllowAny
 from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter
 from account.permissions import IsInGroup
 from rest_framework.exceptions import PermissionDenied
+from datetime import datetime
 
 
 '''
@@ -35,13 +36,21 @@ class ScheduleList(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('userId','title','dateTime',) 
+    filterset_fields = ('userId','title','startDateTime',) 
 
      #you can search using the "search" keyword
-    search_fields =  ('userId','title','dateTime',)
+    search_fields =  ('userId','title','startDateTime',)
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('userId','title','dateTime',)
+    ordering_fields = ('userId','title','startDateTime',)
+
+    def get_queryset(self):
+        #delete schedules that due for expiration
+        self.deleteSchedules()
+        return  self.queryset
+
+    def deleteSchedules(self):
+        self.queryset.filter(endDateTime__lt=datetime.today()).delete()
     
 #this generic class will handle UPDATE(list 1 item) by admin and teacher only 
 class ScheduleUpdate(generics.UpdateAPIView):

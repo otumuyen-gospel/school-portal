@@ -37,15 +37,15 @@ class ClassUsers(generics.ListAPIView):
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
     filterset_fields = ('id','childId','classId',
-                     'firstName','lastName','email','gender') 
+                     'firstName','lastName','email','gender','role') 
 
      #you can search using the "search" keyword
     search_fields = ('id','childId','classId',
-                     'firstName','lastName','email','gender') 
+                     'firstName','lastName','email','gender','role') 
 
     #you can order using the "ordering" keyword
     ordering_fields = ('id','childId','classId',
-                     'firstName','lastName','email','gender')  
+                     'firstName','lastName','email','gender','role')  
 
 
     def get_url_values(self):
@@ -82,15 +82,15 @@ class UsersList(generics.ListAPIView):
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
     filterset_fields = ('id','childId','classId',
-                     'firstName','lastName','email','gender') 
+                     'firstName','lastName','email','gender','role') 
 
      #you can search using the "search" keyword
     search_fields = ('id','childId','classId',
-                     'firstName','lastName','email','gender') 
+                     'firstName','lastName','email','gender','role') 
 
     #you can order using the "ordering" keyword
     ordering_fields = ('id','childId','classId',
-                     'firstName','lastName','email','gender')  
+                     'firstName','lastName','email','gender','role')  
 
     
 #this generic class will handle UPDATE(list 1 item) by users for their account alone
@@ -141,3 +141,25 @@ class UserRetrieve(generics.RetrieveAPIView):
              return obj
         else:
             raise PermissionDenied("You do not have permission to view this object.")
+
+'''
+ to update only the classId of the user
+  1. call the endpoint to this userId with a patch http method to update a single column
+  2. and set only classId in your json data to the new classId
+  3. e.g set your json:{'classId':newClassId}
+  4. and call /endpointUrl/userId/
+'''
+class UserPromotion(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializers
+    permission_classes = [IsAuthenticated,IsInGroup,]
+    required_groups = ['admin','teacher',]
+    name = 'user-promotion'
+    lookup_field = 'id'
+    def get_object(self):
+        obj = super().get_object()
+        if self.request.user.is_superuser or \
+            obj.classId.id == self.request.user.classId.id:
+             return obj
+        else:
+            raise PermissionDenied("You do not have permission to edit this object.")

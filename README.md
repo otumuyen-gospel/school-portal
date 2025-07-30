@@ -77,6 +77,12 @@ this project is the design and implementation of a school web portal using pytho
   curl --request PUT --url "http://127.0.0.1:8000/accounts/user-update/158/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
 ```
 
+| PATCH | /accounts/user-promotion/userId/ | update user's class; access[admin,teacher] |
+```cmd
+  curl --request PATCH --url "http://127.0.0.1:8000/accounts/user-promotion/158/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+
 ### Attendance API
 | HTTP Verbs | Endpoints | Action |
 | --- | --- | --- |

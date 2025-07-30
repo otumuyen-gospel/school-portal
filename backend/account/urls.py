@@ -21,6 +21,7 @@ urlpatterns = [
     path('class-users/<int:classId>/', ClassUsers.as_view(), name=ClassUsers.name),
     path('users-list/', UsersList.as_view(), name=UsersList.name),
     path('user-update/<int:id>/', UserUpdate.as_view(), name=UserUpdate.name),
+    path('user-promotion/<int:id>/', UserPromotion.as_view(), name=UserPromotion.name),
     path('remove-user/<int:id>/', UserDelete.as_view(), name=UserDelete.name),
     path('retrieve-user/<int:id>/', UserRetrieve.as_view(), name=UserRetrieve.name),
     path('create-user/', UserCreate.as_view(), name=UserCreate.name),

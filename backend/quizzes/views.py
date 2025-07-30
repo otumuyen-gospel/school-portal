@@ -11,6 +11,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser,AllowAny
 from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter
 from account.permissions import IsInGroup
 from rest_framework.exceptions import PermissionDenied
+from  datetime  import date
 
 
 '''
@@ -54,6 +55,8 @@ class ClassQuiz(generics.ListAPIView):
         return pathList[len(pathList)-2] #last word
 
     def get_queryset(self):
+         #expire quizzes that due for expiration
+        self.expireQuiz()
 
         # Example: Filter by classId
         val = int(self.get_url_values())
@@ -161,6 +164,8 @@ class UserQuiz(generics.ListAPIView):
         return pathList[len(pathList)-2] #last word
 
     def get_queryset(self):
+        #expire quizzes that due for expiration
+        self.expireQuiz()
 
         # Example: Filter by classId
         val = int(self.get_url_values())
@@ -170,3 +175,7 @@ class UserQuiz(generics.ListAPIView):
             return self.queryset.filter(classId=val, setAsQuiz=True)
         else:
             raise PermissionDenied("You don't have access right")
+    
+
+    def expireQuiz(self):
+        self.queryset.filter(endDate__lt=date.today()).update(setAsQuiz=False)
