@@ -125,7 +125,7 @@ class MarkDelete(generics.DestroyAPIView):
 class MarkCreate(generics.CreateAPIView):
     queryset = Mark.objects.all()
     serializer_class = MarkSerializers
-    permission_classes = [IsAuthenticated,IsInGroup, IsAdminUser]
+    permission_classes = [IsAuthenticated,IsInGroup,]
     required_groups = ['admin','teacher']
     name = 'create-mark'
     
@@ -161,13 +161,14 @@ class UserMark(generics.ListAPIView):
         return pathList[len(pathList)-2] #last word
 
     def get_queryset(self):
-         # Example: Filter by classId
+         # Example: Filter by userId
         val = int(self.get_url_values())
         userId = self.request.user.id
-        childId = self.request.user.childId
-        if (userId != None and val == userId) or \
-         (childId != None and val == childId):
-            return self.queryset.filter(userId=val)
+        childId = int(self.request.user.childId)
+        if userId != None and val == userId: #student
+          return self.queryset.filter(userId=val)
+        elif childId != None and val == childId: # parent
+            return self.queryset.filter(userId=childId)
         else:
             raise PermissionDenied("You don't have access right")
    
