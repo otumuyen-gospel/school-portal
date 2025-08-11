@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     'rest_framework_simplejwt.token_blacklist',
+    'corsheaders',
     'classes',
     'subjects',
     'quizzes',
@@ -63,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -186,3 +188,8 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(hours=12),
     'UPDATE_LAST_LOGIN': True,
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
