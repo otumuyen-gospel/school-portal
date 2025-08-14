@@ -1,9 +1,11 @@
 import LockIcon from "@mui/icons-material/Lock";
+import MuiAlert from '@mui/material/Alert';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import Snackbar from '@mui/material/Snackbar';
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
@@ -19,6 +21,20 @@ function Password(){
   const [confirmError, setConfirmError] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
+  const [open, setOpen] = useState(false); // State to control Snackbar visibility
+  const [popMsg, setPopMsg] = useState("")
+
+   const handleClick = () => {
+    setOpen(true); // Open the Snackbar
+  };
+
+  const handleClose = (event, reason) => {
+    // Prevent closing on 'clickaway' to allow user interaction with the Snackbar content
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false); // Close the Snackbar
+  };
 
   const handleSubmit=(event)=>{
     setIsDisabled(true)  //disable button
@@ -47,7 +63,8 @@ function Password(){
     axios.post("http://localhost:8000/auth/reset/password/",
       data).then((res) => {
         setIsLoading(false)
-        alert(res.data.message + ". you can login now")
+        setPopMsg(res.data.message + ". you can login now");
+        handleClick();
         setIsDisabled(false)  //re-enable button
       }).catch((err) => {
         setIsLoading(false)
@@ -62,8 +79,6 @@ function Password(){
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          boxShadow: 3,
-          borderRadius: 1,
           px: 4,
           py: 4,
           marginTop: 1,
@@ -147,6 +162,22 @@ function Password(){
         </Box>
       </Box>
       
+
+       <Snackbar
+        open={open}
+        autoHideDuration={6000} // Automatically close after 6 seconds
+        onClose={handleClose}
+        message={popMsg}
+        // Optional: Customize position
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+        {/* Optional: Use MuiAlert for styled alerts within the Snackbar */}
+        <MuiAlert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          {popMsg}
+        </MuiAlert>
+      </Snackbar>
+
+
     </Container>
     
   );

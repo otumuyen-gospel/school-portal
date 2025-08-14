@@ -63,8 +63,6 @@ function Login(){
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          boxShadow: 3,
-          borderRadius: 1,
           px: 4,
           py: 4,
           marginTop: 1,
