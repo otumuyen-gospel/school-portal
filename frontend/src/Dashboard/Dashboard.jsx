@@ -1,12 +1,13 @@
 import Button from "@mui/material/Button";
-function Home(){
+
+function Dashboard(){
   return (
     <>
       <Button color="secondary">Click Me</Button>
-      <input type="button" value="Click me"/>
+      <span>Dashboard</span>
    </>
 );
 
 }
 
-export default Home;
+export default Dashboard;

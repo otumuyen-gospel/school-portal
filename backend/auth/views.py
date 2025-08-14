@@ -5,6 +5,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers.otp import (PasswordResetRequestSerializer, 
                               OTPVerificationSerializer, 
                               PasswordResetSerializer)
+from rest_framework.permissions import AllowAny
 
 
 '''
@@ -25,7 +26,7 @@ class LogoutView(APIView):
 
 
 class PasswordResetRequestAPIView(APIView):
-
+    permission_classes = [AllowAny,]
     def post(self, request):
         serializer = PasswordResetRequestSerializer(data=request.data)
         if serializer.is_valid():
@@ -40,7 +41,7 @@ class PasswordResetRequestAPIView(APIView):
     
 
 class OTPVerificationAPIView(APIView):
-
+    permission_classes = [AllowAny,]
     def post(self, request):
         serializer = OTPVerificationSerializer(data=request.data)
         if serializer.is_valid():
@@ -54,7 +55,7 @@ class OTPVerificationAPIView(APIView):
         )
 
 class PasswordResetAPIView(APIView):
-
+    permission_classes = [AllowAny,]
     def post(self, request):
         serializer = PasswordResetSerializer(data=request.data)
         if serializer.is_valid():
