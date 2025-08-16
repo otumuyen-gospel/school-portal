@@ -3,13 +3,14 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-function Login(){
+function Verify(){
   const navigate = useNavigate();
   const location = useLocation()
   const receivedData = location.state;
@@ -51,29 +52,34 @@ function Login(){
   }
 
   return(
-    <Container component="main" maxWidth="xs">
-      <Box
+    <div className="holder">
+      <div className="overlay">
+    <Grid container direction="column">
+      <Grid item xs={6}>
+        <Container component="main" maxWidth="xs" sx={{
+          marginTop:{xs:"60px"},
+
+          }}>
+        <Box
         sx={{
           px: 4,
           py: 4,
-          marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           backgroundColor:"#FFFFFF",
-        }}
-      >
-        <Box
+          minWidth:{sm:"38%",md:"48%"},
+         }}
+         >
+         <Box
           sx={{
-            backgroundColor: 'primary.main', // Example background color from theme palette
-            borderRadius: '50%', // Makes it circular
             padding: '8px', // Add some padding around the icon
             display: 'inline-flex', // Ensures the box wraps tightly around the icon
             alignItems: 'center',
             justifyContent: 'center',
-            color: 'white', // Set icon color
-      }}
-        >
+            color: 'royalblue', // Set icon color
+          }}
+          >
           <EmailIcon></EmailIcon>  
         </Box>
          
@@ -87,7 +93,7 @@ function Login(){
           }}>
           {error ? error :"Verify the OTP sent to your email"}
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ width:{xs:"100%"},}}>
           <TextField
             margin="normal"
             required
@@ -109,7 +115,7 @@ function Login(){
             fullWidth
             variant="contained"
             disabled={isDisabled}
-            sx={{ mt: 3, mb: 2 }}>Verify</Button>
+            sx={{ mt: 4, mb: 2 }}>Verify</Button>
 
            <Link to="/">Login instead?</Link>
           {isLoading && <CircularProgress />}
@@ -117,9 +123,13 @@ function Login(){
       </Box>
       
     </Container>
+    </Grid>
+    </Grid>
+    </div>
+    </div>
     
   );
 
 }
 
-export default Login;
+export default Verify;

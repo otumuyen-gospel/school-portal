@@ -4,14 +4,13 @@ import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function Login(){
+function Request(){
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [error, setError] = useState(null);
@@ -37,49 +36,56 @@ function Login(){
         setIsLoading(false)
          setIsDisabled(false)  //re-enable button
         if (err.message) {
-          setError("Ensure to enter your correct email address for proper verification");
+          setError("Unable to verify this email");
         }
       })
   }
 
   return(
-    <Container component="main" maxWidth="xs">
-      <Box
+    <div className="holder">
+      <div className="overlay">
+    <Grid container direction="column">
+      <Grid item xs={6}>
+        <Container component="main" maxWidth="xs" sx={{
+          marginTop:{xs:"60px"},
+
+          }}>
+        <Box
         sx={{
           px: 4,
           py: 4,
-          marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           backgroundColor:"#FFFFFF",
-        }}
-      >
-        <Box
+          minWidth:{sm:"38%",md:"48%"},
+         }}
+         >
+         <Box
           sx={{
-            backgroundColor: 'primary.main', // Example background color from theme palette
-            borderRadius: '50%', // Makes it circular
             padding: '8px', // Add some padding around the icon
             display: 'inline-flex', // Ensures the box wraps tightly around the icon
             alignItems: 'center',
             justifyContent: 'center',
-            color: 'white', // Set icon color
-      }}
-        >
+            color: 'royalblue', // Set icon color
+          }}
+          >
           <EmailIcon></EmailIcon>  
-        </Box>
+          </Box>
          
          <Typography component="h1" variant="h5">
           Email Verification
-        </Typography>
+         </Typography>
          <Typography component="p" sx={{
           textAlign:"center",
           marginTop:1,
           color:error ? "red" : "primary",
           }}>
-          {error ? error :"Enter Your email address for verification of your account"}
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          {error ? error :"Enter Your email address"}
+         </Typography>
+         <Box component="form" onSubmit={handleSubmit} noValidate sx={{
+          width:{xs:"100%"},
+          }}>
           <TextField
             margin="normal"
             required
@@ -93,29 +99,31 @@ function Login(){
             name="email"
             autoComplete="email"
             autoFocus
-          />
-          <Button
+           />
+           <Button
             type="submit"
             fullWidth
             variant="contained"
             disabled={isDisabled}
-            sx={{ mt: 3, mb: 2 }}>Submit</Button>
+            sx={{ mt: 4, mb: 2 }}>Submit</Button>
 
-           <Grid container direction="row">
-              <Grid item>
-                 <Paper><Link to="/">Login instead?</Link></Paper>
-              </Grid>
-              <Grid item>
-                 <Paper>{isLoading && <CircularProgress />}</Paper>
-              </Grid>
-            </Grid>
-        </Box>
-      </Box>
+            <div className="linkContainer">
+              <Link to="/">Login instead?</Link>
+            </div>
+            <div className="loaderContainer">
+              {isLoading && <CircularProgress />}
+            </div>
+           
+            </Box>
+          </Box>
       
-    </Container>
-    
+        </Container>
+      </Grid>
+    </Grid>
+    </div>
+    </div>
   );
 
 }
 
-export default Login;
+export default Request;

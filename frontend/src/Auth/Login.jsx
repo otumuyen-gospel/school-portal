@@ -10,6 +10,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+
 function Login(){
   const navigate = useNavigate();
   const [form, setForm] = useState({username:"",password:""});
@@ -60,43 +61,49 @@ function Login(){
   }
 
   return(
-    <Container component="main" maxWidth="xs">
-      <Box
+    <div className="holder">
+    <div className="overlay">
+     <Grid container direction="column">
+      <Grid item xs={6}>
+        <Container component="main" maxWidth="xs" sx={{
+          marginTop:{xs:"15px", sm:"-10px"},
+
+          }}>
+        <Box
         sx={{
           px: 4,
-          py: 4,
-          marginTop: 1,
+          py: 5,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           backgroundColor:"#FFFFFF",
-        }}
-      >
-        <Box
+          minWidth:{sm:"38%",md:"48%"},
+         }}
+         >
+         <Box
           sx={{
-            backgroundColor: 'primary.main', // Example background color from theme palette
-            borderRadius: '50%', // Makes it circular
             padding: '8px', // Add some padding around the icon
             display: 'inline-flex', // Ensures the box wraps tightly around the icon
             alignItems: 'center',
             justifyContent: 'center',
-            color: 'white', // Set icon color
-      }}
-        >
+            color: 'royalblue', // Set icon color
+          }}
+          >
           <LockIcon></LockIcon>  
         </Box>
-         
          <Typography component="h1" variant="h5">
-          Login
-        </Typography>
+            Login
+          </Typography>
          <Typography component="p" sx={{
           textAlign:"center",
           marginTop:1,
           color:error ? "red" : "primary",
           }}>
-          {error ? error :"Welcome to the school portal log in your credentials to access your portal"}
+          {error ? error :"Login here to access the school portal "}
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{
+           width:{xs:"100%"},
+           }}>
           <TextField
             margin="normal"
             required
@@ -124,7 +131,7 @@ function Login(){
             value={form.password}
             onChange={(e) => setForm({ ...form,
                 password: e.target.value })}
-            autoComplete="current-password"
+            autoComplete="password"
           />
           <Button
             type="submit"
@@ -133,20 +140,21 @@ function Login(){
             disabled={isDisabled}
             sx={{ mt: 3, mb: 2 }}>Login</Button>
             
-            <Grid container direction="row">
-              <Grid item>
-                 <Link to="/request/">Forgot Password?</Link>
-              </Grid>
-              <Grid  item>
-                 {isLoading && <CircularProgress />}
-              </Grid>
-            </Grid>
-          
-         
+            <div className="linkContainer">
+            <Link to="/request">Forgot Password?</Link>
+         </div>
+        <div className="loaderContainer">
+           {isLoading && <CircularProgress />}
+        </div>
+        
         </Box>
       </Box>
       
     </Container>
+    </Grid>
+    </Grid>
+    </div>
+    </div>
     
   );
 

@@ -76,29 +76,34 @@ function Password(){
   }
 
   return(
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          px: 4,
-          py: 4,
-          marginTop: 1,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          backgroundColor:"#FFFFFF",
-        }}
-      >
-        <Box
-          sx={{
-            backgroundColor: 'primary.main', // Example background color from theme palette
-            borderRadius: '50%', // Makes it circular
-            padding: '8px', // Add some padding around the icon
-            display: 'inline-flex', // Ensures the box wraps tightly around the icon
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'white', // Set icon color
-      }}
-        >
+     <div className="holder">
+         <div className="overlay">
+          <Grid container direction="column">
+           <Grid item xs={6}>
+             <Container component="main" maxWidth="xs" sx={{
+               marginTop:{xs:"15px", sm:"-10px"},
+     
+               }}>
+             <Box
+             sx={{
+               px: 4,
+               py: 5,
+               display: "flex",
+               flexDirection: "column",
+               alignItems: "center",
+               backgroundColor:"#FFFFFF",
+               minWidth:{sm:"38%",md:"48%"},
+              }}
+              >
+              <Box
+               sx={{
+                 padding: '8px', // Add some padding around the icon
+                 display: 'inline-flex', // Ensures the box wraps tightly around the icon
+                 alignItems: 'center',
+                 justifyContent: 'center',
+                 color: 'royalblue', // Set icon color
+               }}
+               >
           <LockIcon></LockIcon>  
         </Box>
          
@@ -112,7 +117,7 @@ function Password(){
           }}>
           {error ? error :"Enter your new password and confirm it"}
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{  width:{xs:"100%"}, }}>
           <TextField
             margin="normal"
             required
@@ -179,6 +184,10 @@ function Password(){
 
 
     </Container>
+    </Grid>
+    </Grid>
+    </div>
+    </div>
     
   );
 
