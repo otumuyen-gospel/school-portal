@@ -12,15 +12,16 @@ const axiosInstance = axios.create({
    
 // add access token to every request
 axiosInstance.interceptors.request.use(request => {
-    const { accessToken } = JSON.parse(localStorage.getItem("auth"));
-    if (accessToken) {
-        request.headers['Authorization'] = `Bearer ${accessToken}`;
+    const { access } = JSON.parse(localStorage.getItem("auth"));
+    if (access) {
+        request.headers['Authorization'] = `Bearer ${access}`;
     }
     return request;
 }, error => {
     return Promise.reject(error);
 });
 
+//refresh user token that has expired
 const refreshAuthLogic = async (failedRequest) => {
     const { refresh } =JSON.parse(localStorage.getItem("auth"));
     return axios.post("/auth/refresh/", null, {
@@ -41,6 +42,6 @@ const refreshAuthLogic = async (failedRequest) => {
 };
 
 //create refresher intercepton
-createAuthRefreshInterceptor(this.axiosInstance, refreshAuthLogic);
+createAuthRefreshInterceptor(axiosInstance, refreshAuthLogic);
 
 export default axiosInstance;

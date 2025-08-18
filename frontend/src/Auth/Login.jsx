@@ -64,7 +64,7 @@ function Login(){
     <div className="holder">
     <div className="overlay">
      <Grid container direction="column">
-      <Grid item xs={6}>
+      <Grid>
         <Container component="main" maxWidth="xs" sx={{
           marginTop:{xs:"15px", sm:"-10px"},
 

@@ -6,6 +6,8 @@ import ProtectedRoute from './Auth/ProtectedRoute';
 import Request from './Auth/Request';
 import Verify from './Auth/Verify';
 import Dashboard from './Dashboard/Dashboard';
+import Profile from './Dashboard/Profile';
+import Schedule from './Dashboard/Schedule';
 
 function App() {
   return <Routes>
@@ -19,6 +21,16 @@ function App() {
      <Route path="/dashboard" element={
       <ProtectedRoute>
         <Dashboard />
+      </ProtectedRoute>
+     } />
+     <Route path="/profile" element={
+      <ProtectedRoute>
+        <Profile />
+      </ProtectedRoute>
+     } />
+     <Route path="/schedule" element={
+      <ProtectedRoute>
+        <Schedule />
       </ProtectedRoute>
      } />
   </Routes>

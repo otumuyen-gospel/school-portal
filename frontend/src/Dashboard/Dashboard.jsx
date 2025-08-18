@@ -1,11 +1,16 @@
-import Button from "@mui/material/Button";
-
+import Header from "../Util/Header";
+import Sidebar from "../Util/Sidebar";
 function Dashboard(){
   return (
-    <>
-      <Button color="secondary">Click Me</Button>
-      <span>Dashboard</span>
-   </>
+    <div sx={{backgroundColor:"#EEF"}}>
+      <Header title="Dashboard"/>
+      <Sidebar />
+      <ul>
+            {new Array(500).fill(null).map((v, i) => (
+                <li key={i}>{i}</li>
+            ))}
+        </ul>
+    </div>
 );
 
 }
