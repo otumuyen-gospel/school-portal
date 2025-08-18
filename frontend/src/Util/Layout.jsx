@@ -7,16 +7,22 @@ import Fade from '@mui/material/Fade';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axiosInstance from './ApiRefresher';
+import SideBar from "./Sidebar";
 
-function Header(props){
+function Layout(props){
    const [scrolling, setScrolling] = useState(false);
    const [scrollTop, setScrollTop] = useState(0);
    const [username,setUsername] = useState("username");
    const [role, setRole] = useState("role");
    const [badge, setBadge] = useState(0);
+   const [open, setOpen] = useState(true);
+
+   const openDrawer = ()=>{
+    setOpen(open ? false : true);
+   }
 
    const fetchNotification = async ()=>{
     axiosInstance.get("http://localhost:8000/schedule/schedule-list/").then((res) => {
@@ -53,11 +59,16 @@ function Header(props){
 
     return(
     <div sx={{flexGrow: 1}}>
+        {/* navigation sidebar */}
+        <SideBar open={open} />
+
+        {/* Header or app bar*/}
         <Fade in={!scrolling}>
-                <AppBar sx={{backgroundColor:"#FFFFFF"}} elevation={0}>
+                <AppBar sx={{backgroundColor:"#EEF"}} elevation={0}>
                     <Toolbar>
-                        <IconButton
-                           sx={{color:"royalblue", marginLeft:"-10px"}}
+                        <IconButton onClick={()=> openDrawer()}
+                           sx={{color:"royalblue",  
+                            marginLeft: open ? "15%" : "auto" }}
                            aria-label="Menu">
                             <MenuIcon />
                         </IconButton>
@@ -109,89 +120,18 @@ function Header(props){
                     </Toolbar>
                 </AppBar>
             </Fade>
-            <Toolbar /> {/*make space between appbar and other page content */}
+            <Toolbar /> {/*make space between appbar and page contents */}
+
+            {/* render page contents here at the bottom and pass new props to them */}
+            {React.Children.map(props.children, child=>{
+            return React.cloneElement(child,{
+                marginLeft: open ? "13%" : "auto",
+                width:"87%",
+            });
+
+            })}
     </div>
     );
 }
 
-
-
-
-
-
-/*
-const styles = theme => ({
-    root: {flexGrow: 1},
-    flex: {flex: 1},
-    menuButton: {
-       marginLeft: -12,
-       marginRight: 20
-    },
-    toolbarMargin: theme.mixins.toolbar
-});
-
-
-const ScrolledAppBar = makeStyles(styles)(
-    class extends Component {
-        state = {
-            scrolling: false,
-            scrollTop: 0
-        };
-        onScroll = e => {
-            this.setState(state => ({
-                scrollTop: e.target.documentElement.scrollTop,
-                scrolling: e.target.documentElement.scrollTop > state.scrollTop
-            }));
-        };
-        shouldComponentUpdate(props, state) {
-            return this.state.scrolling !== state.scrolling;
-        }
-        componentDidMount() {
-            window.addEventListener('scroll', this.onScroll);
-        }
-        componentWillUnmount() {
-            window.removeEventListener('scroll', this.onScroll);
-        }
-        render() {
-            const { classes } = this.props;
-            return (
-            <Fade in={!this.state.scrolling}>
-                <AppBar>
-                    <Toolbar>
-                        <IconButton
-                           className={classes.menuButton}
-                           color="inherit"
-                           aria-label="Menu">
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography
-                            variant="h6"
-                            color="inherit"
-                            className={classes.flex}>
-                            My Title
-                        </Typography>
-                        <Button color="inherit">Login</Button>
-                    </Toolbar>
-                </AppBar>
-            </Fade>
-            );
-        }
-    }
-);
-
-
-const AppBarWithButtons = makeStyles(styles)(
-    ({ classes, title, buttonText }) => (
-    <div className={classes.root}>
-        <ScrolledAppBar />
-        <div className={classes.toolbarMargin} />
-        <ul>
-            {new Array(500).fill(null).map((v, i) => (
-                <li key={i}>{i}</li>
-            ))}
-        </ul>
-    </div>
-    )
-);*/
-
-export default Header;
+export default Layout;

@@ -1,14 +1,25 @@
-import Header from "../Util/Header";
-import Sidebar from "../Util/Sidebar";
+import Container from "@mui/material/Container";
+import Layout from "../Util/Layout";
 function Schedule(){
+  const PageContent = (props)=>{
+    return (
+      <Container sx={{
+        marginLeft:props.marginLeft,
+        width:props.width,
+        }}>
+        <h1>Schedule</h1>
+      </Container>
+    );
+  }
   return (
-    <div sx={{backgroundColor:"#EEF"}}>
-      <Header title="Schedule"/>
-      <Sidebar />
-     <h1>Schedule</h1>
+    <div className="dashboard">
+      <Layout title="Schedule">
+        <PageContent/>
+      </Layout>
     </div>
 );
 
 }
+
 
 export default Schedule;
