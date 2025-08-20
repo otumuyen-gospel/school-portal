@@ -60,15 +60,17 @@ function Layout(props){
     return(
     <div sx={{flexGrow: 1}}>
         {/* navigation sidebar */}
-        <SideBar open={open} />
+        <SideBar open={open} onOpenDrawer={openDrawer}/>
 
         {/* Header or app bar*/}
         <Fade in={!scrolling}>
-                <AppBar sx={{backgroundColor:"#EEF"}} elevation={0}>
+                <AppBar sx={{backgroundColor:"#EEF",}} elevation={0}>
                     <Toolbar>
                         <IconButton onClick={()=> openDrawer()}
                            sx={{color:"royalblue",  
-                            marginLeft: open ? "15%" : "auto" }}
+                            marginLeft: {sm:open ? "15%" : "auto",
+                                xs:"-5%",
+                            } }}
                            aria-label="Menu">
                             <MenuIcon />
                         </IconButton>
@@ -114,7 +116,9 @@ function Layout(props){
                         <IconButton component={Link} 
                         to="/profile/"
                         sx={{backgroundColor:"#EEF",
-                            color:"royalblue",}}>
+                            color:"royalblue",
+                            marginRight: {sm:'auto',xs:"-3%"}
+                            }}>
                             <PersonOutline></PersonOutline>
                         </IconButton>
                     </Toolbar>
@@ -125,8 +129,9 @@ function Layout(props){
             {/* render page contents here at the bottom and pass new props to them */}
             {React.Children.map(props.children, child=>{
             return React.cloneElement(child,{
-                marginLeft: open ? "13%" : "auto",
-                width:"87%",
+                marginLeft: open ? "17.5%" : "3%",
+                width:open ? "79.5%" : "94.0%",
+                marginRight: open ? "3%" : "3%",
             });
 
             })}

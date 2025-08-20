@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Layout from "../Util/Layout";
-function Profile(){
+function Register(){
   const PageContent = (props)=>{
     return (
       <Box marginLeft={props.marginLeft}
@@ -9,14 +9,14 @@ function Profile(){
        sx={{
         minHeight:"100vh",
         }}>
-        <h1>Profile
+        <h1>New User
         </h1>
       </Box>
     );
   }
   return (
     <div className="dashboard">
-      <Layout title="Profile">
+      <Layout title="New User">
         <PageContent/>
       </Layout>
     </div>
@@ -25,4 +25,4 @@ function Profile(){
 }
 
 
-export default Profile;
+export default Register;

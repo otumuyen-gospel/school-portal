@@ -5,9 +5,12 @@ import Password from './Auth/Password';
 import ProtectedRoute from './Auth/ProtectedRoute';
 import Request from './Auth/Request';
 import Verify from './Auth/Verify';
+import ClassUsers from './Dashboard/ClassUsers';
 import Dashboard from './Dashboard/Dashboard';
 import Profile from './Dashboard/Profile';
+import Register from './Dashboard/Register';
 import Schedule from './Dashboard/Schedule';
+import UserLists from './Dashboard/UserLists';
 
 function App() {
   return <Routes>
@@ -19,9 +22,9 @@ function App() {
     
     {/* add all protected routes here*/}
      <Route path="/dashboard" element={
-      <ProtectedRoute>
+      
         <Dashboard />
-      </ProtectedRoute>
+      
      } />
      <Route path="/profile" element={
       <ProtectedRoute>
@@ -31,6 +34,21 @@ function App() {
      <Route path="/schedule" element={
       <ProtectedRoute>
         <Schedule />
+      </ProtectedRoute>
+     } />
+     <Route path="/register" element={
+      <ProtectedRoute>
+        <Register/>
+      </ProtectedRoute>
+     } />
+     <Route path="/classUsers" element={
+      <ProtectedRoute>
+        <ClassUsers />
+      </ProtectedRoute>
+     } />
+     <Route path="/userLists" element={
+      <ProtectedRoute>
+        <UserLists />
       </ProtectedRoute>
      } />
   </Routes>

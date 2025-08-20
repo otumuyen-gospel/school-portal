@@ -1,18 +1,17 @@
-import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
 import Layout from "../Util/Layout";
 function Dashboard(){
   const PageContent = (props)=>{
     return (
-      <Container sx={{
-        marginLeft:props.marginLeft,
-        width:props.width,
+      <Box marginLeft={props.marginLeft}
+       marginRight={props.marginRight}
+       width={props.width}
+       sx={{
+        minHeight:"100vh",
         }}>
-        <ul>
-          {new Array(500).fill(null).map((v, i) => (
-             <li key={i}>{i}</li>
-        ))}
-       </ul>
-      </Container>
+        <h1>Dashboard
+        </h1>
+      </Box>
     );
   }
   return (
