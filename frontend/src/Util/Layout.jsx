@@ -3,6 +3,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonOutline from "@mui/icons-material/PersonOutline";
 import AppBar from '@mui/material/AppBar';
 import Badge from '@mui/material/Badge';
+import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
@@ -36,7 +37,7 @@ function Layout(props){
    useEffect(()=>{
     fetchNotification(); // when component mounts
     //fetch data every 2 minute
-    const intervalId = setInterval(fetchNotification, '120000');
+    const intervalId = setInterval(fetchNotification, '1000');
 
     return ()=> clearInterval(intervalId); //clear interval when component unmount
    },[]);
@@ -68,7 +69,7 @@ function Layout(props){
                     <Toolbar>
                         <IconButton onClick={()=> openDrawer()}
                            sx={{color:"royalblue",  
-                            marginLeft: {sm:open ? "15%" : "auto",
+                            marginLeft: {sm:open ? "18%" : "auto",
                                 xs:"-5%",
                             } }}
                            aria-label="Menu">
@@ -91,8 +92,8 @@ function Layout(props){
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
-                        <Typography marginTop="3px">
-                            <Typography sx={{
+                        <Box sx={{marginTop:"3px"}}>
+                            <Box sx={{
                                 color:"#333",
                                 flex:1, 
                                 marginRight:"5px", 
@@ -110,9 +111,9 @@ function Layout(props){
                                 }}>
                                 {role}
                             </Typography>
-                            </Typography>
+                            </Box>
                             
-                        </Typography>
+                        </Box>
                         <IconButton component={Link} 
                         to="/profile/"
                         sx={{backgroundColor:"#EEF",
@@ -129,8 +130,8 @@ function Layout(props){
             {/* render page contents here at the bottom and pass new props to them */}
             {React.Children.map(props.children, child=>{
             return React.cloneElement(child,{
-                marginLeft: open ? "17.5%" : "3%",
-                width:open ? "79.5%" : "94.0%",
+                marginLeft: open ? "20.5%" : "3%",
+                width:open ? "76.5%" : "94.0%",
                 marginRight: open ? "3%" : "3%",
             });
 
