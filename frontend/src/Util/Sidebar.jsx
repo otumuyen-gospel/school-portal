@@ -21,18 +21,21 @@ import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "./ApiRefresher";
 import ConfirmDialogForm from "./ConfirmDialogForm";
 import MessageDialogForm from "./MessageDialogForm";
 
 function Sidebar(props){
   const navigate = useNavigate();    
+  const location = useLocation();
+  const isMobile = useMediaQuery('(max-width:600px)');
   const [openDialog, setOpenDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [error, setError] = useState("");
@@ -175,16 +178,19 @@ function Sidebar(props){
             { label, Icon, to, }, i) => (
             <ListItem 
                 button
-                key={i}
-                onClick={()=>{
-                    navigate(to);
-                }}   
+                key={i} 
                 sx={{cursor:"pointer"}}
             >
+                <ListItemButton
+                selected={ location.pathname === to }
+                component={NavLink}
+                to={to}
+                >
                 <ListItemIcon>
                     <Icon />
                 </ListItemIcon>
                 <ListItemText>{label}</ListItemText>
+                </ListItemButton>
             </ListItem>
             
         ));
@@ -206,9 +212,19 @@ function Sidebar(props){
                 <ListItems items={item} />
             </Collapse>
          </List>);
+    } 
+
+    const Categories = ()=>{
+       return Object.keys(sections).map((key, index)=>{
+           return <CreateCategory 
+               key={key}
+               item={items[key]} 
+               section={sections[key]}
+               sectionTitle={key}
+               sectionKey={key}
+         />;
+        });
     }
-    
-    const isMobile = useMediaQuery('(max-width:600px)'); 
 
     return <Drawer anchor="Left" open={props.open} 
     onClose={props.onOpenDrawer}
@@ -221,7 +237,7 @@ function Sidebar(props){
             backgroundColor:'#FFF',
             boxSizing:'border-box',
             color:'royalblue',
-            boxShadow:5,
+            boxShadow:1,
         },
         flexShrink:0,
         display:{sx:"none",sm:"block"}
@@ -246,73 +262,8 @@ function Sidebar(props){
               <ListItemText>Dashboard</ListItemText>  
          </ListItem>
 
-         {/*collapsible sections and categories*/}
-         <CreateCategory 
-         item={items.Account} 
-         section={sections.Account}
-         sectionTitle={"Accounts"}
-         sectionKey={"Account"}
-         />
-
-          <CreateCategory 
-         item={items.Attendance} 
-         section={sections.Attendance}
-         sectionTitle={"Attendance"}
-         sectionKey={"Attendance"}
-         />
-
-         <CreateCategory 
-         item={items.Classes} 
-         section={sections.Classes}
-         sectionTitle={"Classes"}
-         sectionKey={"Classes"}
-         />
-
-        {/* complaint and observation */}
-         <CreateCategory 
-         item={items.Ticket} 
-         section={sections.Ticket}
-         sectionTitle={"Ticket"}
-         sectionKey={"Ticket"}
-         />
-
-          <CreateCategory 
-         item={items.Homework} 
-         section={sections.Homework}
-         sectionTitle={"Homework"}
-         sectionKey={"Homework"}
-         />
-
-           {/* user marks or grades */}
-         <CreateCategory 
-         item={items.Assessment} 
-         section={sections.Assessment}
-         sectionTitle={"Grade"}
-         sectionKey={"Assessment"}
-         />
-
-
-          <CreateCategory 
-         item={items.Subject} 
-         section={sections.Subject}
-         sectionTitle={"Subject"}
-         sectionKey={"Subject"}
-         />
-
-         <CreateCategory 
-         item={items.Schedule} 
-         section={sections.Schedule}
-         sectionTitle={"Schedule"}
-         sectionKey={"Schedule"}
-         />
-
-         <CreateCategory 
-         item={items.Quizzes} 
-         section={sections.Quizzes}
-         sectionTitle={"Quizzes"}
-         sectionKey={"Quizzes"}
-         />
-
+         {/*Collapsible categories*/}
+        <Categories />
 
         {/*Dialog window */}
         <ConfirmDialogForm open={openDialog} 
@@ -339,6 +290,7 @@ function Sidebar(props){
             <ListItemIcon><LogoutIcon/></ListItemIcon>
             <ListItemText>Logout</ListItemText>
         </ListItem>
+    
     </Drawer>
 }
 

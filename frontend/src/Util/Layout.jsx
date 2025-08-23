@@ -37,7 +37,7 @@ function Layout(props){
    useEffect(()=>{
     fetchNotification(); // when component mounts
     //fetch data every 2 minute
-    const intervalId = setInterval(fetchNotification, '1000');
+    const intervalId = setInterval(fetchNotification, '120000');
 
     return ()=> clearInterval(intervalId); //clear interval when component unmount
    },[]);
@@ -65,11 +65,11 @@ function Layout(props){
 
         {/* Header or app bar*/}
         <Fade in={!scrolling}>
-                <AppBar sx={{backgroundColor:"#EEF",}} elevation={0}>
+                <AppBar sx={{backgroundColor:"#FFF"}} elevation={1}>
                     <Toolbar>
                         <IconButton onClick={()=> openDrawer()}
                            sx={{color:"royalblue",  
-                            marginLeft: {sm:open ? "18%" : "auto",
+                            marginLeft: {sm:open ? "21%" : "auto",
                                 xs:"-5%",
                             } }}
                            aria-label="Menu">
@@ -130,8 +130,8 @@ function Layout(props){
             {/* render page contents here at the bottom and pass new props to them */}
             {React.Children.map(props.children, child=>{
             return React.cloneElement(child,{
-                marginLeft: open ? "20.5%" : "3%",
-                width:open ? "76.5%" : "94.0%",
+                marginLeft: open ? "23%" : "3%",
+                width:open ? "74%" : "94.0%",
                 marginRight: open ? "3%" : "3%",
             });
 
