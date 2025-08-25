@@ -24,7 +24,13 @@ function Layout(props){
    const openDrawer = ()=>{
     setOpen(open ? false : true);
    }
-
+   const setUser = ()=>{
+    const auth = JSON.parse(localStorage.getItem("auth"));
+     if(auth){
+        setRole(auth['user'].role);
+        setUsername(auth['user'].username);
+     }
+   }
    const fetchNotification = async ()=>{
     axiosInstance.get("http://localhost:8000/schedule/schedule-list/").then((res) => {
         // grab notifications and schedules
@@ -33,21 +39,18 @@ function Layout(props){
         setBadge(0); //reset notification badge
       })
    }
-
+   useEffect(()=>{
+     setUser();
+   },[])
    useEffect(()=>{
     fetchNotification(); // when component mounts
-    //fetch data every 2 minute
-    const intervalId = setInterval(fetchNotification, '120000');
+    //fetch data every 1 hour
+    const intervalId = setInterval(fetchNotification, '3600000');
 
     return ()=> clearInterval(intervalId); //clear interval when component unmount
    },[]);
    
    useEffect(()=>{
-     const auth = JSON.parse(localStorage.getItem("auth"));
-     if(auth){
-        setRole(auth['user'].role);
-        setUsername(auth['user'].username);
-     }
     const onScroll = (e) => {
         setScrollTop(e.target.documentElement.scrollTop);
         setScrolling(e.target.documentElement.scrollTop > scrollTop);
@@ -56,7 +59,7 @@ function Layout(props){
     return ()=>{
         window.removeEventListener("scroll", onScroll); // component did unmount
     }
-   },[scrollTop]); // keep updating
+   },[scrollTop]); 
 
     return(
     <div sx={{flexGrow: 1}}>
@@ -136,6 +139,7 @@ function Layout(props){
             });
 
             })}
+            
     </div>
     );
 }
