@@ -240,8 +240,9 @@ function Sidebar(props){
             boxShadow:1,
         },
         flexShrink:0,
-        display:{sx:"none",sm:"block"}
-    }}>
+        display:{sx:"none",sm:"block"},
+    }}
+    >
         {/* header section*/}
         <ListItem alignItems="center" sx={{
             padding:"10px",

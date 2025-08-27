@@ -1,4 +1,4 @@
-import EmailIcon from "@mui/icons-material/Email";
+import LogoIcon from "@mui/icons-material/SchoolOutlined";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -20,18 +20,18 @@ function Verify(){
   const [isLoading, setIsLoading] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
 
+   const otpCodeRegex = (otpCode)=>{
+    const otpCodeRegex = /^\d{6}$/;
+    return otpCodeRegex.test(otpCode);
+  }
   const handleSubmit=(event)=>{
     setIsDisabled(true)  //disable button
     event.preventDefault();
-    if(!event.target.checkValidity()){
-      setOtpsError("Please enter the OTP sent to your email");
-      setIsDisabled(false) //re-enable button
-      return;
-    }else{
-       if(otps.length !== 6){
-        setOtpsError("Please enter the OTP sent to your email");
-        setIsDisabled(false) //re-enable button
-        return;
+    if(event.target.checkValidity()){
+      if(!otpCodeRegex(otps)){
+          setOtpsError("Please enter the OTP sent to your email");
+          setIsDisabled(false) //re-enable button
+          return;
       }
     }
     
@@ -80,7 +80,7 @@ function Verify(){
             color: 'royalblue', // Set icon color
           }}
           >
-          <EmailIcon></EmailIcon>  
+          <LogoIcon></LogoIcon>  
         </Box>
          
          <Typography component="h1" variant="h5">
@@ -93,7 +93,7 @@ function Verify(){
           }}>
           {error ? error :"Verify the OTP sent to your email"}
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ width:{xs:"100%"},}}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ width:{xs:"100%"},}}>
           <TextField
             margin="normal"
             required
@@ -118,7 +118,9 @@ function Verify(){
             sx={{ mt: 4, mb: 2 }}>Verify</Button>
 
            <Link to="/">Login instead?</Link>
-          {isLoading && <CircularProgress />}
+           <div className="loaderContainer">
+              {isLoading && <CircularProgress />}
+            </div>
         </Box>
       </Box>
       

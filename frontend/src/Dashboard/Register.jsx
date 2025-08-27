@@ -25,6 +25,10 @@ function Register(){
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [classList, setClassList] = useState([]);
   const [studentList, setStudentList] = useState([]);
+  const [telephone, setTelephone] = useState('');
+  const [zip, setZip] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [msg, setMsg] = useState("");
   const [form, setForm] = useState({
     username:"",
@@ -74,7 +78,7 @@ function Register(){
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
-       setMsg(`Oops! sorry can't load class List`);
+       setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
        handleOpenMsgBox();
      })
   },[])
@@ -107,20 +111,64 @@ function Register(){
      })
   },[])
   
-  const handleSubmit = (event)=>{
+  const validateZipCode = (zipCode)=>{
+    const zipCodeRegex = /^\d{6}$/;
+    return zipCodeRegex.test(zipCode);
+  }
+  const validateEmail = (email)=>{
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  }
+  const validateTelephone = (telephone)=>{
+    const telephoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$/;
+    return telephoneRegex.test(telephone);
+  }
+
+ const handleSubmit = (event)=>{
     event.preventDefault();
+    if(event.target.checkValidity()){
+        setUsername("");
+        setTelephone("");
+        setZip("");
+        setEmail("");
+        if(!validateTelephone(form.telephone)){
+          setTelephone("Telephone must be 11 digit");
+          setIsDisabled(false)  //re-enable button
+          return;
+        }
+        if((!validateZipCode(form.zipCode))){
+          setZip("invalid ZipCode")
+          setIsDisabled(false)  //re-enable button
+          return;
+        }
+        if(form.username.length > 11){
+          setUsername("Username must not exceed 11 digit");
+          setIsDisabled(false)  //re-enable button
+          return;
+        }
+        if(!validateEmail(form.email)){
+          setEmail("Enter a valid email address");
+          setIsDisabled(false)  //re-enable button
+          return;
+        }
+    }else{
+        setMsg("Please ensure to enter all your data correctly");
+        handleOpenMsgBox();
+        return;
+    }
+    
     const data = {
       username:form.username,
       password:form.password,
-      firstname:form.firstname,
-      lastname:form.lastname,
+      firstName:form.firstname,
+      lastName:form.lastname,
       email:form.email,
       address:form.address,
       telephone:form.telephone,
       state:form.state,
       nationality:form.nationality,
-      dob:form.dob,
-      entrance:form.entrance,
+      dob:dayjs(form.dob).format("YYYY-MM-DD"),
+      entrance:dayjs(form.entrance).format("YYYY-MM-DD hh:mm:ss"),
       role:form.role,
       gender:form.gender,
       childId:form.childId,
@@ -128,26 +176,22 @@ function Register(){
       zipCode:form.zipCode
 
     };
-        if(!event.target.checkValidity()){
-          setMsg("invalid data entries");
-          setIsDisabled(false)  //re-enable button
-          return;
-        }
-        setIsLoading(true);
-        axiosInstance.post("http://localhost:8000/auth/register/",
+
+    setIsLoading(true);
+    axiosInstance.post("http://localhost:8000/auth/register/",
           data).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button
             setMsg(res.data);
             handleOpenMsgBox();
-          }).catch((err) => {
+    }).catch((err) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button
             if (err) {
-              setMsg(`An error has occured please try again`);
+              setMsg(JSON.stringify(err.response.data));
                  handleOpenMsgBox();
             }
-          })
+    })
         
   }
   
@@ -179,6 +223,7 @@ function Register(){
                  required
                  id="username"
                  label="username"
+                 helperText={username}
                  type="text"
                  value={form.username}
                  onChange={(e) => setForm({ ...form,
@@ -195,6 +240,7 @@ function Register(){
                  id="email"
                  label="email"
                  type="email"
+                 helperText={email}
                  value={form.email}
                  onChange={(e) => setForm({ ...form,
                     email: e.target.value })}
@@ -304,6 +350,7 @@ function Register(){
                  id="zipCode"
                  label="zipCode"
                  type="text"
+                 helperText={zip}
                  value={form.zipCode}
                  onChange={(e) => setForm({ ...form,
                     zipCode: e.target.value })}
@@ -321,6 +368,7 @@ function Register(){
                  label="telephone"
                  type="text"
                  value={form.telephone}
+                 helperText={telephone}
                  onChange={(e) => setForm({ ...form,
                     telephone: e.target.value })}
                  name="telephone"
@@ -329,7 +377,7 @@ function Register(){
             </Grid>
             
            <Grid>
-              <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
+              <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
                 <InputLabel id="gender-label">{form.gender || "gender"}</InputLabel>
                 <Select
                     fullWidth
@@ -350,7 +398,7 @@ function Register(){
               </FormControl>
             </Grid>
             <Grid>
-              <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
+              <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
                 <InputLabel id="role-label">{form.role || "role"}</InputLabel>
                 <Select
                     fullWidth
@@ -416,7 +464,7 @@ function Register(){
                       {
                         studentList.map(student=>(
                           <MenuItem key={student.pk}
-                          value={student.pk}>{student.firstName+student.lastName}</MenuItem>
+                          value={student.pk}>{student.firstName+" "+student.lastName}</MenuItem>
                         ))
                         
                       }
@@ -425,15 +473,15 @@ function Register(){
             </Grid>
 
             <Grid>
-              <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%"}}>
+              <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%"}}>
                  <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
                  id="entrance"
                  label="entrance"
-                 value={form.entrance}
+                 value={dayjs(form.entrance)}
                  format="YYYY-MM-DD hh:mm:ss"
                  onChange={(e) => setForm({ ...form,
-                    entrance: dayjs(e).format("YYYY-MM-DD HH:mm:ss") })}
+                    entrance: e })}
                  name="entrance"
                  
               /></LocalizationProvider>
@@ -441,15 +489,14 @@ function Register(){
             </Grid>
             
             <Grid>
-              <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%"}}>
+              <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                  id="dob"
                  label="dob"
-                 value={form.dob}
+                 value={dayjs(form.dob)}
                  format="YYYY-MM-DD"
-                 onChange={(e) =>{setForm({ ...form,
-                    dob: dayjs(e).format("YYYY-MM-DD") });}}
+                 onChange={(e) =>setForm({ ...form, dob: e })}
                  name="dob"
                 
               /></LocalizationProvider>

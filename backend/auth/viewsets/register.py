@@ -31,6 +31,7 @@ class SignupViewset(ViewSet):
         '''check if user is added to a group otherwise 
         fetch user choosen group and add user to the group
         '''
+        
         grpName = self.getUserGroup(request=request)
         group = Group.objects.get(name=grpName)
         user.groups.add(group)

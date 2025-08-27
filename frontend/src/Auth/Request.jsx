@@ -1,4 +1,4 @@
-import EmailIcon from "@mui/icons-material/Email";
+import LogoIcon from "@mui/icons-material/SchoolOutlined";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -18,13 +18,22 @@ function Request(){
   const [isLoading, setIsLoading] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
 
+  const validateEmail = (email)=>{
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  }
+
   const handleSubmit=(event)=>{
+    setEmail("");
     setIsDisabled(true)  //disable button
     event.preventDefault();
-    if(!event.target.checkValidity()){
-      setEmailError("Please enter your correct email");
-      setIsDisabled(false)  //re-enable button
-      return;
+    if(event.target.checkValidity()){
+      if(!validateEmail(email)){
+          setEmailError("Please enter your correct email");
+           setIsDisabled(false)  //re-enable button
+           return;
+      }
+     
     }
     setIsLoading(true);
     axios.post("http://localhost:8000/auth/reset/request/",
@@ -70,7 +79,7 @@ function Request(){
             color: 'royalblue', // Set icon color
           }}
           >
-          <EmailIcon></EmailIcon>  
+          <LogoIcon></LogoIcon>  
           </Box>
          
          <Typography component="h1" variant="h5">
@@ -83,7 +92,7 @@ function Request(){
           }}>
           {error ? error :"Enter Your email address"}
          </Typography>
-         <Box component="form" onSubmit={handleSubmit} noValidate sx={{
+         <Box component="form" onSubmit={handleSubmit} sx={{
           width:{xs:"100%"},
           }}>
           <TextField

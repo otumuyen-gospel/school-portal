@@ -1,4 +1,4 @@
-import LockIcon from "@mui/icons-material/Lock";
+import LogoIcon from "@mui/icons-material/SchoolOutlined";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -15,8 +15,6 @@ function Login(){
   const navigate = useNavigate();
   const [form, setForm] = useState({username:"",password:""});
   const [error, setError] = useState(null);
-  const [nameError, setNameError] = useState(null)
-  const [passwordError, setPasswordError] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
 
@@ -28,12 +26,6 @@ function Login(){
       password:form.password,
     };
     if(!event.target.checkValidity()){
-      if(data.username.trim() === ""){
-         setNameError("Please enter your username");
-      }
-      if(data.password.trim() === ""){
-        setPasswordError("Please enter your password")
-      }
       setIsDisabled(false)  //re-enable button
       return;
     }
@@ -89,7 +81,7 @@ function Login(){
             color: 'royalblue', // Set icon color
           }}
           >
-          <LockIcon></LockIcon>  
+          <LogoIcon></LogoIcon>  
         </Box>
          <Typography component="h1" variant="h5">
             Login
@@ -101,7 +93,7 @@ function Login(){
           }}>
           {error ? error :"Login here to access the school portal "}
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{
+        <Box component="form" onSubmit={handleSubmit} sx={{
            width:{xs:"100%"},
            }}>
           <TextField
@@ -110,7 +102,6 @@ function Login(){
             fullWidth
             id="username"
             label="username"
-            helperText={nameError}
             type="text"
             value={form.username}
             onChange={(e) => setForm({ ...form,
@@ -127,7 +118,6 @@ function Login(){
             label="Password"
             type="password"
             id="password"
-            helperText={passwordError}
             value={form.password}
             onChange={(e) => setForm({ ...form,
                 password: e.target.value })}

@@ -74,7 +74,7 @@ class ClassUsers(generics.ListAPIView):
 class UsersList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializers
-    permission_classes = [IsAuthenticated, IsInGroup, IsAdminUser,]
+    permission_classes = [IsAuthenticated, IsInGroup,]
     required_groups = ['admin',]
     name = 'users-list'
 

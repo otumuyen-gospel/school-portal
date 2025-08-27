@@ -1,4 +1,4 @@
-import LockIcon from "@mui/icons-material/Lock";
+import LogoIcon from "@mui/icons-material/SchoolOutlined";
 import MuiAlert from '@mui/material/Alert';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -44,6 +44,8 @@ function Password(){
       new_password:form.password,
     };
     if(!event.target.checkValidity()){
+      setPasswordError("")
+      setConfirmError("");
       if(form.password.trim() === ""){
          setPasswordError("Please enter the new password");
       }
@@ -104,7 +106,7 @@ function Password(){
                  color: 'royalblue', // Set icon color
                }}
                >
-          <LockIcon></LockIcon>  
+          <LogoIcon></LogoIcon>  
         </Box>
          
          <Typography component="h1" variant="h5">
@@ -154,16 +156,10 @@ function Password(){
             disabled={isDisabled}
             sx={{ mt: 3, mb: 2 }}>Change Password</Button>
             
-            <Grid container direction="row">
-              <Grid item>
-                 <Link to="/">Login</Link>
-              </Grid>
-              <Grid  item>
-                 {isLoading && <CircularProgress />}
-              </Grid>
-            </Grid>
-          
-         
+            <Link to="/">Login</Link>
+            <div className="loaderContainer">
+               {isLoading && <CircularProgress />}
+            </div>
         </Box>
       </Box>
       
