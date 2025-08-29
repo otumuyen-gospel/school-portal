@@ -41,14 +41,9 @@ function Sidebar(props){
   const [error, setError] = useState("");
   const [sections, setSections] = useState({
     Account: false,
-    Attendance:false,
     Classes:false,
-    Subject:false,
     Assessment:false,
-    Ticket:false,
-    Homework:false,
-    Quizzes:false,
-    Schedule:false,
+    Others:false,
   });
   const [items] = useState({
         Account:[
@@ -60,16 +55,11 @@ function Sidebar(props){
                 to:"/class-users/", hidden:false},
             {label:"Profile", Icon:AccountIcon,
                  to:"/profile/", hidden:false},
-            
-        ],
-        Attendance:[
-            {label:"Add New", Icon:AddIcon, 
-                to:"/create-attendance/", hidden:false},
-            {label:"Class View", Icon:PeopleOutline, 
-                to:"/class-attendance/", hidden:false},
-            {label:"All View", Icon:AttendanceIcon, 
+             {label:"All Attendance", Icon:AttendanceIcon, 
                 to:"/attendance-lists/", hidden:false},
-            {label:"User View", Icon:AccountIcon,
+             {label:"Class Attendance", Icon:PeopleOutline, 
+                to:"/class-attendance/", hidden:false},
+            {label:"My Attendance", Icon:AccountIcon,
                  to:"/user-attendance/", hidden:false},
             
         ],
@@ -78,29 +68,12 @@ function Sidebar(props){
                 to:"/create-class/", hidden:false},
             {label:"Class View", Icon:ClassIcon, 
                 to:"/class-lists/", hidden:false},
-        ],
-
-        Ticket:[
-            {label:"New Ticket", Icon:AddIcon, 
-                to:"/create-complaint/", hidden:false},
-            {label:"Class Ticket", Icon:ClassIcon, 
-                to:"/class-complaint-list/", hidden:false},
-            {label:"View All", Icon:TicketIcon, 
-                to:"/complaint-list/", hidden:false},
-            {label:"My Tickets", Icon:AccountIcon,
-                 to:"/user-complaint-list/", hidden:false},
-            
-        ],
-        Homework:[
-            {label:"New Work", Icon:AddIcon, 
-                to:"/create-homework/", hidden:false},
-            {label:"Class Work", Icon:ClassHomwWork, 
-                to:"/class-homework-list/", hidden:false},
-            {label:"Homeworks", Icon:HomeWorkIcon, 
-                to:"/homework-list/", hidden:false},
-            {label:"My Work", Icon:AccountIcon,
-                 to:"/user-homework-list/", hidden:false},
-            
+            {label:"New Subject", Icon:AddIcon, 
+                to:"/create-subject/", hidden:false},
+            {label:"All Subject", Icon:SubjectIcon, 
+                to:"/subject-list/", hidden:false},
+            {label:"Class Subject", Icon:ClassIcon, 
+                to:"/class-subject-list/", hidden:false},
         ],
 
          Assessment:[
@@ -112,26 +85,14 @@ function Sidebar(props){
                 to:"/mark-list/", hidden:false},
             {label:"My Grades", Icon:AccountIcon,
                  to:"/user-marks/", hidden:false},
-            
-        ],
-
-        Subject:[
-            {label:"New Subject", Icon:AddIcon, 
-                to:"/create-subject/", hidden:false},
-            {label:"All Subject", Icon:SubjectIcon, 
-                to:"/subject-list/", hidden:false},
-            {label:"Class Subject", Icon:ClassIcon, 
-                to:"/class-subject-list/", hidden:false},
-        ],
-
-        Schedule:[
-            {label:"New Schedule", Icon:AddIcon, 
-                to:"/create-schedule/", hidden:false},
-            {label:"All Schedule", Icon:ScheduleIcon, 
-                to:"/schedule-list/", hidden:false},
-        ],
-
-        Quizzes:[
+            {label:"New work", Icon:AddIcon, 
+                to:"/create-homework/", hidden:false},
+            {label:"Class Work", Icon:ClassHomwWork, 
+                to:"/class-homework-list/", hidden:false},
+            {label:"All Work", Icon:HomeWorkIcon, 
+                to:"/homework-list/", hidden:false},
+            {label:"My Work", Icon:AccountIcon,
+                 to:"/user-homework-list/", hidden:false},
             {label:"Add Quiz", Icon:AddIcon, 
                 to:"/create-quiz/", hidden:false},
             {label:"Class Quiz", Icon:ClassIcon, 
@@ -140,6 +101,22 @@ function Sidebar(props){
                 to:"/quiz-list/", hidden:false},
             {label:"My Quiz", Icon:AccountIcon,
                  to:"/user-quiz/", hidden:false},
+            
+        ],
+
+        Others:[
+            {label:"New Schedule", Icon:AddIcon, 
+                to:"/create-schedule/", hidden:false},
+            {label:"All Schedule", Icon:ScheduleIcon, 
+                to:"/schedule-list/", hidden:false},
+            {label:"New Ticket", Icon:AddIcon, 
+                to:"/create-complaint/", hidden:false},
+            {label:"Class Ticket", Icon:ClassIcon, 
+                to:"/class-complaint-list/", hidden:false},
+            {label:"All Ticket", Icon:TicketIcon, 
+                to:"/complaint-list/", hidden:false},
+            {label:"My Tickets", Icon:AccountIcon,
+                 to:"/user-complaint-list/", hidden:false},
             
         ],
 
@@ -234,7 +211,7 @@ function Sidebar(props){
     }}
     sx={{
         '& .MuiDrawer-paper': {
-            backgroundColor:'#FFF',
+            backgroundColor:'#FFFFFF',
             boxSizing:'border-box',
             color:'royalblue',
             boxShadow:1,
@@ -246,11 +223,9 @@ function Sidebar(props){
         {/* header section*/}
         <ListItem alignItems="center" sx={{
             padding:"10px",
-             backgroundColor:"royalblue",
-             color:"#FFF"
              }}>
-            <ListItemIcon><StudentIcon style={{color:"#FFF"}} /></ListItemIcon>
-            <ListItemText>Portal</ListItemText>
+            <ListItemIcon><StudentIcon style={{color:"royalblue"}} /></ListItemIcon>
+            <ListItemText>SCHOOL PORTAL</ListItemText>
         </ListItem>
          <Divider/>
 

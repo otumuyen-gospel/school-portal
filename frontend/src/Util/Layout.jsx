@@ -68,11 +68,11 @@ function Layout(props){
 
         {/* Header or app bar*/}
         <Fade in={!scrolling}>
-                <AppBar sx={{backgroundColor:"#FFF"}} elevation={1}>
+                <AppBar sx={{backgroundColor:"#FFF"}} elevation={0}>
                     <Toolbar>
                         <IconButton onClick={()=> openDrawer()}
                            sx={{color:"royalblue",  
-                            marginLeft: {sm:open ? "21%" : "auto",
+                            marginLeft: {sm:open ? "23%" : "auto",
                                 xs:"-5%",
                             } }}
                            aria-label="Menu">
@@ -133,8 +133,8 @@ function Layout(props){
             {/* render page contents here at the bottom and pass new props to them */}
             {React.Children.map(props.children, child=>{
             return React.cloneElement(child,{
-                marginLeft: open ? "23%" : "3%",
-                width:open ? "74%" : "94.0%",
+                marginLeft: open ? "25%" : "3%",
+                width:open ? "72%" : "94.0%",
                 marginRight: open ? "3%" : "3%",
             });
 
