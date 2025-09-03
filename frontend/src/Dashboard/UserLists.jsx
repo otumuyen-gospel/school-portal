@@ -1,12 +1,14 @@
 import TrashIcon from "@mui/icons-material/DeleteOutline";
+import UpdateIcon from "@mui/icons-material/MarkChatReadOutlined";
 import SearchIcon from "@mui/icons-material/SearchOutlined";
-import UpdateIcon from "@mui/icons-material/UpdateOutlined";
+import PromoteIcon from "@mui/icons-material/UpgradeOutlined";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
+import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Paper from "@mui/material/Paper";
@@ -28,6 +30,7 @@ function UserLists(){
   const [userList, setUserList] = useState([]);
   const [msg, setMsg] = useState("");
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openPromoteDialog, setOpenPromoteDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [dialogMsg, setDialogMsg] = useState("");
   const [url,setUrl] = useState("http://localhost:8000/accounts/users-list/");
@@ -44,6 +47,12 @@ function UserLists(){
 
   const handleOpenDeleteDialog = ()=>{
     setOpenDeleteDialog(true);
+  }
+  const handleClosePromoteDialog = ()=>{
+    setOpenPromoteDialog(false);
+  }
+  const handleOpenPromoteDialog = ()=>{
+    setOpenPromoteDialog(true);
   }
   const handleCloseDeleteDialog = ()=>{
     setOpenDeleteDialog(false);
@@ -73,6 +82,28 @@ function UserLists(){
     }
       
    }
+
+   const promotes = async ()=>{
+    const endpoint = "http://localhost:8000/accounts/user-promotion/"+currUser.pk+"/"; 
+    setIsLoading(true);
+      try{
+          const response = await axiosInstance.patch(endpoint, {classId:classId});
+          const data = response.data.results;
+          if(data){
+            setDialogMsg(data);
+          }else{
+            setDialogMsg("this user promoted successfully");
+          }
+           handleOpenMsgBox();
+          setIsLoading(false);
+      }catch(error){
+          setIsLoading(false);
+          setDialogMsg(JSON.stringify(error.response.data));
+          handleOpenMsgBox();
+    }
+      
+   }
+
   const handleOpenMsgBox = ()=>{
     setOpenMsgBox(true);
   }
@@ -178,7 +209,7 @@ function UserLists(){
                  <TableCell>LastName</TableCell>
                  <TableCell>Class</TableCell>
                  <TableCell>Role</TableCell>
-                 <TableCell>Mark Attendance</TableCell>
+                 <TableCell>Attendance</TableCell>
                  <TableCell>Promote</TableCell>
                  <TableCell>Actions</TableCell>
               </TableRow>
@@ -208,49 +239,32 @@ function UserLists(){
                         </TableCell>
                       <TableCell>{user.role}</TableCell>
                       <TableCell>
-                        <Checkbox/>
+                        <Checkbox title="Mark Attendance"/>
                       </TableCell>
                       <TableCell>
-                         <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
-                              <InputLabel id="class-label"/>
-                               <Select
-                                  fullWidth
-                                  margin="normal"
-                                  labelId="class-label"
-                                  id="classId"
-                                  name="classId"
-                                  value={classId}
-                                  onChange={(e) => setClassId(e.target.value)} >
-                                  {
-                                   classList.map(classlist=>(
-                                   <MenuItem key={classlist.id}
-                                   value={classlist.id}>{classlist.classCode}</MenuItem>
-                                  ))
-                        
-                                }
-                              </Select>
-                            </FormControl>       
-                      </TableCell>
-                      <TableCell>
-                         <Button title="update"
-                         sx={{backgroundColor:"royalblue", 
-                          color:"#FFF", margin:"8px",
-                         borderRadius:"0px"}}
+                        <IconButton title="promote"
                          onClick={()=>{
-                            
+                             setCurrUser(user);
+                             handleOpenPromoteDialog();
+                          }}>
+                        <PromoteIcon></PromoteIcon>
+                        </IconButton>
+                      </TableCell>
+                      <TableCell>
+                         <IconButton title="update"
+                         onClick={()=>{
+                            setCurrUser(user);
+                            handleOpenDeleteDialog();
                           }}>
                           <UpdateIcon></UpdateIcon>
-                         </Button>
-                         <Button title="delete"
-                         sx={{backgroundColor:"red", 
-                          color:"#FFF", margin:"8px",
-                         borderRadius:"0px"}}
+                         </IconButton>
+                         <IconButton title="delete"
                          onClick={()=>{
                             setCurrUser(user);
                             handleOpenDeleteDialog();
                           }}>
                           <TrashIcon></TrashIcon>
-                         </Button>
+                         </IconButton>
                       </TableCell>
                     </TableRow>
                     
@@ -296,6 +310,33 @@ function UserLists(){
         onSubmit={()=>deletes()}
         formContent={<Typography>This action will delete this user</Typography>}
         title="Confirm Dialog"
+        />
+
+        <ConfirmDialogForm open={openPromoteDialog} 
+        onClose={handleClosePromoteDialog} 
+        onSubmit={()=>promotes()}
+        formContent={
+          <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
+              <InputLabel id="class-label"/>
+              <Select
+                  fullWidth
+                  margin="normal"
+                  labelId="class-label"
+                  id="classId"
+                  name="classId"
+                  value={classId}
+                  onChange={(e) => setClassId(e.target.value)} >
+                  {
+                    classList.map(classlist=>(
+                      <MenuItem key={classlist.id}
+                         value={classlist.id}>{classlist.classCode}</MenuItem>
+                    ))
+                        
+                  }
+              </Select>
+          </FormControl>
+        }
+        title="Select class from the dropdown list"
         />
 
         <MessageDialogForm open={openMsgBox} 
