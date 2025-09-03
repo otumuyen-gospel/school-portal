@@ -20,20 +20,64 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import axiosInstance from "../Util/ApiRefresher";
+import ConfirmDialogForm from "../Util/ConfirmDialogForm";
 import Layout from "../Util/Layout";
+import MessageDialogForm from "../Util/MessageDialogForm";
 function UserLists(){
    const [isLoading, setIsLoading] = useState(false);
   const [userList, setUserList] = useState([]);
   const [msg, setMsg] = useState("");
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openMsgBox, setOpenMsgBox] = useState(false);
+  const [dialogMsg, setDialogMsg] = useState("");
   const [url,setUrl] = useState("http://localhost:8000/accounts/users-list/");
   const [query,setQuery] =useState({});
   const [classList,setClassList] = useState([]);
   const [classId, setClassId] = useState("");
+  const [currUser, setCurrUser] = useState({});
   const [params, setParams] = useState("");
   const [nextPage,setNextPage] = useState(null);
   const [prevPage,setPrevPage] = useState(null);
   const search = (e)=>{
-    setParams(e.target.value );
+    setParams(e.target.value);
+  }
+
+  const handleOpenDeleteDialog = ()=>{
+    setOpenDeleteDialog(true);
+  }
+  const handleCloseDeleteDialog = ()=>{
+    setOpenDeleteDialog(false);
+  }
+  const deleteUserFromList = ()=>{
+   const remainingUsers = userList.filter(user => user.pk !== currUser.pk);
+    setUserList(remainingUsers);
+  }
+  const deletes= async ()=>{
+    const endpoint = "http://localhost:8000/accounts/remove-user/"+currUser.pk+"/"; 
+    setIsLoading(true);
+      try{
+          const response = await axiosInstance.delete(endpoint);
+          const data = response.data.results;
+          if(data){
+            setDialogMsg(data);
+          }else{
+            setDialogMsg("this user account was deleted successfully");
+          }
+           handleOpenMsgBox();
+          setIsLoading(false);
+          deleteUserFromList();
+      }catch(error){
+          setIsLoading(false);
+          setDialogMsg(JSON.stringify(error.response.data));
+          handleOpenMsgBox();
+    }
+      
+   }
+  const handleOpenMsgBox = ()=>{
+    setOpenMsgBox(true);
+  }
+  const handleCloseMsgBox = ()=>{
+    setOpenMsgBox(false);
   }
   useEffect(()=>{
     //fetch all paginated class data by recursively calling page by page
@@ -202,7 +246,8 @@ function UserLists(){
                           color:"#FFF", margin:"8px",
                          borderRadius:"0px"}}
                          onClick={()=>{
-                            
+                            setCurrUser(user);
+                            handleOpenDeleteDialog();
                           }}>
                           <TrashIcon></TrashIcon>
                          </Button>
@@ -243,6 +288,21 @@ function UserLists(){
         </Container>
         </Box>
       </Layout>
+
+
+        {/*Dialog window */}
+        <ConfirmDialogForm open={openDeleteDialog} 
+        onClose={handleCloseDeleteDialog} 
+        onSubmit={()=>deletes()}
+        formContent={<Typography>This action will delete this user</Typography>}
+        title="Confirm Dialog"
+        />
+
+        <MessageDialogForm open={openMsgBox} 
+        onClose={handleCloseMsgBox} 
+        formContent={<Typography>{dialogMsg}</Typography>}
+        title="Message Dialog"
+        />
     </div>
 );
 }
