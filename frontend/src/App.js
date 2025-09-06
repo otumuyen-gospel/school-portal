@@ -38,6 +38,7 @@ import UserHomeworkList from "./Dashboard/UserHomeworkList";
 import UserLists from './Dashboard/UserLists';
 import UserMarks from "./Dashboard/UserMarks";
 import UserQuiz from "./Dashboard/UserQuiz";
+import UpdateUser from './Dashboard/updateUser';
 
 
 function App() {
@@ -83,6 +84,11 @@ function App() {
      <Route path="/user-attendance" element={
       <ProtectedRoute>
         <UserAttendance />
+      </ProtectedRoute>
+     } />
+      <Route path="/user-update" element={
+      <ProtectedRoute>
+        <UpdateUser/>
       </ProtectedRoute>
      } />
      <Route path="/class-attendance" element={

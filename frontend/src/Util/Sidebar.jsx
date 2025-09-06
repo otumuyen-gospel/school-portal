@@ -26,7 +26,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "./ApiRefresher";
 import ConfirmDialogForm from "./ConfirmDialogForm";
@@ -39,7 +39,6 @@ function Sidebar(props){
   const [openDialog, setOpenDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [error, setError] = useState("");
-  const [owner, setOwner] = useState({});
   const [sections, setSections] = useState({
     Account: false,
     Classes:false,
@@ -47,97 +46,80 @@ function Sidebar(props){
     Others:false,
   });
 
-  const setUser = ()=>{
-    const auth = JSON.parse(localStorage.getItem("auth"));
-     if(auth){
-        setOwner(auth['user']);
-     }
-   }
-
-   useEffect(()=>{
-    setUser();
-   },[])
-
   const [items] = useState({
         Account:[
             {label:"New User", Icon:AddIcon, 
-                to:"/register/", hidden:owner.role !== "admin"},
+                to:"/register/", hidden:false},
             {label:"All Users", Icon:PeopleOutline, 
-                to:"/user-lists/", hidden:owner.role !== "admin"},
+                to:"/user-lists/", hidden:false},
             {label:"Class Users", Icon:childIcon, 
-                to:"/class-users/", hidden:owner.role !== "teacher"},
+                to:"/class-users/", hidden:false},
             {label:"Profile", Icon:AccountIcon,
                  to:"/profile/", hidden:false},
+            {label:"New Attendance", Icon:AddIcon, 
+                to:"/create-attendance/", hidden:false},
              {label:"All Attendance", Icon:AttendanceIcon, 
-                to:"/attendance-lists/", hidden:owner.role !== "admin"},
+                to:"/attendance-lists/", hidden:false},
              {label:"Class Attendance", Icon:PeopleOutline, 
-                to:"/class-attendance/", hidden:owner.role !== "teacher"},
+                to:"/class-attendance/", hidden:false},
             {label:"My Attendance", Icon:AccountIcon,
                  to:"/user-attendance/", hidden:false},
             
         ],
         Classes:[
             {label:"New Class", Icon:AddIcon, 
-                to:"/create-class/", hidden:owner.role !== "admin"},
+                to:"/create-class/", hidden:false},
             {label:"Class View", Icon:ClassIcon, 
-                to:"/class-lists/", hidden:(owner.role !== "admin" &&
-                     owner.role !== "teacher" )},
+                to:"/class-lists/", hidden:false},
             {label:"New Subject", Icon:AddIcon, 
-                to:"/create-subject/", hidden:owner.role !== "admin"},
+                to:"/create-subject/", hidden:false},
             {label:"All Subject", Icon:SubjectIcon, 
-                to:"/subject-list/", hidden:owner.role !== "admin"},
+                to:"/subject-list/", hidden:false},
             {label:"Class Subject", Icon:ClassIcon, 
-                to:"/class-subject-list/", hidden:(owner.role !== "student" &&
-                     owner.role !== "teacher" )},
+                to:"/class-subject-list/", hidden:false},
         ],
 
          Assessment:[
             {label:"Add Grade", Icon:AddIcon, 
-                to:"/create-marks/", hidden:(owner.role !== "admin" &&
-                     owner.role !== "teacher" )},
+                to:"/create-marks/", hidden:false},
             {label:"Class Grades", Icon:ClassIcon, 
-                to:"/class-marks/", hidden:owner.role !== "teacher"},
+                to:"/class-marks/", hidden:false},
             {label:"All Grades", Icon:GradeIcon, 
-                to:"/mark-list/", hidden:owner.role !== "admin"},
+                to:"/mark-list/", hidden:false},
             {label:"My Grades", Icon:AccountIcon,
-                 to:"/user-marks/", hidden:(owner.role !== "teacher" &&
-                     owner.role !== "parent" )},
+                 to:"/user-marks/", hidden:false},
             {label:"New work", Icon:AddIcon, 
-                to:"/create-homework/", hidden:owner.role !== "student"},
+                to:"/create-homework/", hidden:false},
             {label:"Class Work", Icon:ClassHomwWork, 
-                to:"/class-homework-list/", hidden:owner.role !== "teacher"},
+                to:"/class-homework-list/", hidden:false},
             {label:"All Work", Icon:HomeWorkIcon, 
-                to:"/homework-list/", hidden:owner.role !== "admin"},
+                to:"/homework-list/", hidden:false},
             {label:"My Work", Icon:AccountIcon,
-                 to:"/user-homework-list/", hidden:owner.role !== "student"},
+                 to:"/user-homework-list/", hidden:false},
             {label:"Add Quiz", Icon:AddIcon, 
-                to:"/create-quiz/", hidden:(owner.role !== "admin" &&
-                     owner.role !== "teacher" )},
+                to:"/create-quiz/", hidden:false},
             {label:"Class Quiz", Icon:ClassIcon, 
-                to:"/class-quiz/", hidden:owner.role !== "teacher"},
+                to:"/class-quiz/", hidden:false},
             {label:"All Quiz", Icon:QuizIcon, 
-                to:"/quiz-list/", hidden:owner.role !== "admin"},
+                to:"/quiz-list/", hidden:false},
             {label:"My Quiz", Icon:AccountIcon,
-                 to:"/user-quiz/", hidden:owner.role !== "student"},
+                 to:"/user-quiz/", hidden:false},
             
         ],
 
         Others:[
             {label:"New Schedule", Icon:AddIcon, 
-                to:"/create-schedule/", hidden:(owner.role !== "admin" &&
-                     owner.role !== "teacher" )},
+                to:"/create-schedule/", hidden:false},
             {label:"All Schedule", Icon:ScheduleIcon, 
                 to:"/schedule-list/", hidden:false},
             {label:"New Ticket", Icon:AddIcon, 
-                to:"/create-complaint/", hidden:(owner.role !== "student" &&
-                     owner.role !== "parent" )},
+                to:"/create-complaint/", hidden:false},
             {label:"Class Ticket", Icon:ClassIcon, 
-                to:"/class-complaint-list/", hidden:owner.role !== "teacher"},
+                to:"/class-complaint-list/", hidden:false},
             {label:"All Ticket", Icon:TicketIcon, 
-                to:"/complaint-list/", hidden:owner.role !== "admin"},
+                to:"/complaint-list/", hidden:false},
             {label:"My Tickets", Icon:AccountIcon,
-                 to:"/user-complaint-list/", hidden:(owner.role !== "student" &&
-                     owner.role !== "parent" )},
+                 to:"/user-complaint-list/", hidden:false},
             
         ],
 

@@ -14,12 +14,12 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
-
-
-function Register(){
+function UpdateUser(){
+  const user = useLocation().state;
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
@@ -31,22 +31,22 @@ function Register(){
   const [email, setEmail] = useState('');
   const [msg, setMsg] = useState("");
   const [form, setForm] = useState({
-    username:"",
-    firstname:"",
-    lastname:"",
-    password:"",
-    email:"",
-    gender:"",
-    role:"",
-    address:"",
-    nationality:"",
-    state:"",
-    zipCode:"",
-    telephone:"",
-    childId:"",
-    classId:"",
-    entrance:dayjs(),
-    dob:dayjs(),
+    username:user?.username,
+    firstname:user?.firstName,
+    lastname:user?.lastName,
+    password:user?.password,
+    email:user?.email,
+    gender:user?.gender,
+    role:user?.role,
+    address:user?.address,
+    nationality:user?.nationality,
+    state:user?.state,
+    zipCode:user?.zipCode,
+    telephone:user?.telephone,
+    childId:user?.childId,
+    classId:user?.classId,
+    entrance:dayjs(user?.entrance),
+    dob:dayjs(user?.dob),
 
   });
   const handleOpenMsgBox = ()=>{
@@ -176,13 +176,13 @@ function Register(){
       zipCode:form.zipCode
 
     };
-
+    
     setIsLoading(true);
-    axiosInstance.post("http://localhost:8000/auth/register/",
+    axiosInstance.put("http://localhost:8000/accounts/user-update/"+user?.pk+"/",
           data).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button
-            setMsg(res.data);
+            setMsg("User account updated successfully ");
             handleOpenMsgBox();
     }).catch((err) => {
             setIsLoading(false)
@@ -198,21 +198,21 @@ function Register(){
   return (
      <LocalizationProvider dateAdapter={AdapterDayjs}>
     <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="New User">
+      <Layout title="Update User">
         <Box 
        sx={{
           minHeight:"100vh",
           marginTop:"10px",
         }}
         >
-        <Typography component="h1" variant="h6">New User</Typography>
+        <Typography component="h1" variant="h6">Update User</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{
            width:{xs:"100%",}}}>
             <Typography component="p" sx={{
               textAlign:"center",
               color:"primary",
               }}>
-                Create New User
+                Update User
            </Typography>
 
            <Grid container width="sm" direction="column" spacing={4}>
@@ -509,7 +509,7 @@ function Register(){
               fullWidth
               variant="contained"
               disabled={isDisabled}
-              sx={{ mt: 3, mb: 2 }}>Register</Button>
+              sx={{ mt: 3, mb: 2 }}>Update Account</Button>
             
               <div className="loaderContainer">
                      {isLoading && <CircularProgress />}
@@ -536,4 +536,4 @@ function Register(){
 }
 
 
-export default Register;
+export default UpdateUser;

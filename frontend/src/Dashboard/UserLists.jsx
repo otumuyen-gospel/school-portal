@@ -4,7 +4,6 @@ import SearchIcon from "@mui/icons-material/SearchOutlined";
 import PromoteIcon from "@mui/icons-material/UpgradeOutlined";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
@@ -21,6 +20,7 @@ import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import ConfirmDialogForm from "../Util/ConfirmDialogForm";
 import Layout from "../Util/Layout";
@@ -28,6 +28,7 @@ import MessageDialogForm from "../Util/MessageDialogForm";
 function UserLists(){
    const [isLoading, setIsLoading] = useState(false);
   const [userList, setUserList] = useState([]);
+  const navigate = useNavigate();
   const [msg, setMsg] = useState("");
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openPromoteDialog, setOpenPromoteDialog] = useState(false);
@@ -57,6 +58,14 @@ function UserLists(){
   const handleCloseDeleteDialog = ()=>{
     setOpenDeleteDialog(false);
   }
+  const updateUserFromList = () => {
+    setCurrUser({...currUser,classId:classId });
+    setUserList(prevUsers =>
+      prevUsers.map(user =>
+        user.id === currUser.id ? { ...user, classId: classId } : user
+      )
+    );
+  };
   const deleteUserFromList = ()=>{
    const remainingUsers = userList.filter(user => user.pk !== currUser.pk);
     setUserList(remainingUsers);
@@ -96,6 +105,7 @@ function UserLists(){
           }
            handleOpenMsgBox();
           setIsLoading(false);
+          updateUserFromList();
       }catch(error){
           setIsLoading(false);
           setDialogMsg(JSON.stringify(error.response.data));
@@ -203,15 +213,15 @@ function UserLists(){
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Id</TableCell>
-                <TableCell>Username</TableCell>
-                <TableCell>FirstName</TableCell>
+                 <TableCell>Id</TableCell>
+                 <TableCell>Username</TableCell>
+                 <TableCell>FirstName</TableCell>
                  <TableCell>LastName</TableCell>
                  <TableCell>Class</TableCell>
                  <TableCell>Role</TableCell>
-                 <TableCell>Attendance</TableCell>
                  <TableCell>Promote</TableCell>
-                 <TableCell>Actions</TableCell>
+                 <TableCell>Update</TableCell>
+                 <TableCell>Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -225,7 +235,7 @@ function UserLists(){
                           whiteSpace:"normal", wordBreak:"break-word" }}>
                           {user.firstName}
                         </span>
-                        </TableCell>
+                      </TableCell>
                       <TableCell>
                         <span style={{ display: 'inline-block', 
                           whiteSpace:"normal", wordBreak:"break-word" }}>
@@ -236,11 +246,8 @@ function UserLists(){
                         {
                            getClassCode(user)
                         }
-                        </TableCell>
-                      <TableCell>{user.role}</TableCell>
-                      <TableCell>
-                        <Checkbox title="Mark Attendance"/>
                       </TableCell>
+                      <TableCell>{user.role}</TableCell>
                       <TableCell>
                         <IconButton title="promote"
                          onClick={()=>{
@@ -254,10 +261,13 @@ function UserLists(){
                          <IconButton title="update"
                          onClick={()=>{
                             setCurrUser(user);
-                            handleOpenDeleteDialog();
+                            navigate('/user-update',{state:user});
+                            
                           }}>
                           <UpdateIcon></UpdateIcon>
                          </IconButton>
+                      </TableCell>
+                      <TableCell>
                          <IconButton title="delete"
                          onClick={()=>{
                             setCurrUser(user);
@@ -302,7 +312,6 @@ function UserLists(){
         </Container>
         </Box>
       </Layout>
-
 
         {/*Dialog window */}
         <ConfirmDialogForm open={openDeleteDialog} 
