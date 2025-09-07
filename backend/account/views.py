@@ -36,15 +36,15 @@ class ClassUsers(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('id','childId','classId',
+    filterset_fields = ('id','childId','classId__id',
                      'firstName','lastName','email','gender','role') 
 
      #you can search using the "search" keyword
-    search_fields = ('id','childId','classId',
+    search_fields = ('id','childId','classId__id',
                      'firstName','lastName','email','gender','role') 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('id','childId','classId',
+    ordering_fields = ('id','childId','classId__id',
                      'firstName','lastName','email','gender','role')  
 
 
@@ -81,15 +81,15 @@ class UsersList(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('id','childId','classId',
+    filterset_fields = ('id','childId','classId__id',
                      'firstName','lastName','email','gender','role') 
 
      #you can search using the "search" keyword
-    search_fields = ('id','childId','classId',
+    search_fields = ('id','childId','classId__id',
                      'firstName','lastName','email','gender','role') 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('id','childId','classId',
+    ordering_fields = ('id','childId','classId__id',
                      'firstName','lastName','email','gender','role')  
 
     

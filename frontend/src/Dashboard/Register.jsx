@@ -182,7 +182,7 @@ function Register(){
           data).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button
-            setMsg(res.data);
+            setMsg("new user account created successfully");
             handleOpenMsgBox();
     }).catch((err) => {
             setIsLoading(false)

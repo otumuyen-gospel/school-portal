@@ -33,13 +33,13 @@ class ClassSubjectsList(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('subjectName','subjectCode','classId',) 
+    filterset_fields = ('subjectName','subjectCode','classId__id',) 
 
      #you can search using the "search" keyword
-    search_fields = ('subjectName','subjectCode','classId',) 
+    search_fields = ('subjectName','subjectCode','classId__id',) 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('subjectName','subjectCode','classId',) 
+    ordering_fields = ('subjectName','subjectCode','classId__id',) 
 
     def get_url_values(self):
         url = self.request.build_absolute_uri()
@@ -98,10 +98,10 @@ class SubjectList(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('subjectName','subjectCode','classId',) 
+    filterset_fields = ('subjectName','subjectCode','classId__id',) 
 
      #you can search using the "search" keyword
-    search_fields = ('subjectName','subjectCode','classId',) 
+    search_fields = ('subjectName','subjectCode','classId__id',) 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('subjectName','subjectCode','classId',) 
+    ordering_fields = ('subjectName','subjectCode','classId__id',) 

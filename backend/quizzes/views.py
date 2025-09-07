@@ -35,15 +35,15 @@ class ClassQuiz(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
    #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('subjectId','question','option1','option2','option3',
+    filterset_fields = ('subjectId__id','question','option1','option2','option3',
                      'answer',) 
 
      #you can search using the "search" keyword
-    search_fields = ('subjectId','question','option1','option2','option3',
+    search_fields = ('subjectId__id','question','option1','option2','option3',
                      'answer',) 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('subjectId','question','option1','option2','option3',
+    ordering_fields = ('subjectId__id','question','option1','option2','option3',
                      'answer',)
 
     def get_url_values(self):
@@ -79,15 +79,15 @@ class QuizList(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('subjectId','question','option1','option2','option3',
+    filterset_fields = ('subjectId__id','question','option1','option2','option3',
                      'answer',) 
 
      #you can search using the "search" keyword
-    search_fields = ('subjectId','question','option1','option2','option3',
+    search_fields = ('subjectId__id','question','option1','option2','option3',
                      'answer',) 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('subjectId','question','option1','option2','option3',
+    ordering_fields = ('subjectId__id','question','option1','option2','option3',
                      'answer',)
     
 #this generic class will handle UPDATE(list 1 item) by admin and teacher only 
@@ -144,15 +144,15 @@ class UserQuiz(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('subjectId','question','option1','option2','option3',
+    filterset_fields = ('subjectId__id','question','option1','option2','option3',
                      'answer',) 
 
      #you can search using the "search" keyword
-    search_fields = ('subjectId','question','option1','option2','option3',
+    search_fields = ('subjectId__id','question','option1','option2','option3',
                      'answer',) 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('subjectId','question','option1','option2','option3',
+    ordering_fields = ('subjectId__id','question','option1','option2','option3',
                      'answer',)
 
     def get_url_values(self):

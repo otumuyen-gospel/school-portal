@@ -37,14 +37,10 @@ function UserLists(){
   const [url,setUrl] = useState("http://localhost:8000/accounts/users-list/");
   const [query,setQuery] =useState({});
   const [classList,setClassList] = useState([]);
-  const [classId, setClassId] = useState("");
   const [currUser, setCurrUser] = useState({});
   const [params, setParams] = useState("");
   const [nextPage,setNextPage] = useState(null);
   const [prevPage,setPrevPage] = useState(null);
-  const search = (e)=>{
-    setParams(e.target.value);
-  }
 
   const handleOpenDeleteDialog = ()=>{
     setOpenDeleteDialog(true);
@@ -59,17 +55,18 @@ function UserLists(){
     setOpenDeleteDialog(false);
   }
   const updateUserFromList = () => {
-    setCurrUser({...currUser,classId:classId });
     setUserList(prevUsers =>
       prevUsers.map(user =>
-        user.id === currUser.id ? { ...user, classId: classId } : user
+        user.pk === currUser.pk ? { ...user, classId: currUser.classId } : user
       )
     );
   };
-  const deleteUserFromList = ()=>{
-   const remainingUsers = userList.filter(user => user.pk !== currUser.pk);
-    setUserList(remainingUsers);
+
+  const removeUserFromList = (theUser, data)=>{
+   const remainingUsers = data.filter(user => user.pk !== theUser.pk);
+    return remainingUsers;
   }
+  
   const deletes= async ()=>{
     const endpoint = "http://localhost:8000/accounts/remove-user/"+currUser.pk+"/"; 
     setIsLoading(true);
@@ -83,7 +80,9 @@ function UserLists(){
           }
            handleOpenMsgBox();
           setIsLoading(false);
-          deleteUserFromList();
+          //remove the currently deleted user from the list
+          const remainingUsers = removeUserFromList(currUser, userList);
+          setUserList(remainingUsers);
       }catch(error){
           setIsLoading(false);
           setDialogMsg(JSON.stringify(error.response.data));
@@ -96,7 +95,7 @@ function UserLists(){
     const endpoint = "http://localhost:8000/accounts/user-promotion/"+currUser.pk+"/"; 
     setIsLoading(true);
       try{
-          const response = await axiosInstance.patch(endpoint, {classId:classId});
+          const response = await axiosInstance.patch(endpoint, {classId:currUser.classId});
           const data = response.data.results;
           if(data){
             setDialogMsg(data);
@@ -150,27 +149,29 @@ function UserLists(){
     const classes = classList.filter(classlist=>(classlist.id === user.classId))[0];
     return classes ? classes.classCode : "None";
   }
-  
-  //fetch all paginated students data by recursively calling page by page
-  const users = async(endpoint, queries)=>{
-      setIsLoading(true);
-      try{
-          const response = await axiosInstance.get(endpoint,{params:queries})
-          const data = response.data.results;
-          setNextPage(response.data.next);
-          setPrevPage(response.data.previous);
-          if(data){
-            setUserList(data);
-          }
-          setIsLoading(false);
-      }catch(error){
-          setIsLoading(false);
-          setMsg(`Oops! sorry can't load users List`);
-    }
-  }
 
   useEffect(()=>{
-     users(url, query);
+     //fetch all paginated students data by recursively calling page by page
+      const users = async(endpoint, queries)=>{
+        setIsLoading(true);
+        try{
+           const response = await axiosInstance.get(endpoint,{params:queries})
+           const data = response.data.results;
+           setNextPage(response.data.next);
+           setPrevPage(response.data.previous);
+           if(data){
+            //remove the currently logged in user from the list
+            const auth = JSON.parse(localStorage.getItem("auth"));
+            const remainingUsers = removeUserFromList(auth['user'], data);
+            setUserList(remainingUsers);  
+           }
+           setIsLoading(false);
+          }catch(error){
+           setIsLoading(false);
+           setMsg(`Oops! sorry can't load users List`);
+          }
+      }
+      users(url, query);
   },[url, query])
   
   return (
@@ -192,7 +193,7 @@ function UserLists(){
                label="params"
                type="text"
                value={params}
-               onChange={(e) =>search(e)}
+               onChange={(e) =>setParams(e.target.value)}
                name="params"/>
                <Button 
                sx={{backgroundColor:"royalblue",
@@ -203,7 +204,7 @@ function UserLists(){
                 '& .hover':{backgroundColor:"dodgerblue"},
                 minHeight:"56px"}}
                 onClick={()=>{
-                   setQuery({username:params});
+                   setQuery({...query,search:params});
                 }}
                >
                 <SearchIcon></SearchIcon>
@@ -333,8 +334,8 @@ function UserLists(){
                   labelId="class-label"
                   id="classId"
                   name="classId"
-                  value={classId}
-                  onChange={(e) => setClassId(e.target.value)} >
+                  value={currUser.classId}
+                  onChange={(e) => setCurrUser({...currUser, classId:e.target.value})} >
                   {
                     classList.map(classlist=>(
                       <MenuItem key={classlist.id}

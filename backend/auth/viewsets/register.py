@@ -15,13 +15,7 @@ class SignupViewset(ViewSet):
     '''
     permission_classes = [IsAuthenticated, IsInGroup,]
     required_groups = ['admin']
-    http_method_names = ['post']
-
-    def getUserGroup(self, request):
-        for key in request.POST.keys():
-            if key == 'role':
-                return request.POST.get(key)
-        
+    http_method_names = ['post']        
     
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
@@ -31,8 +25,7 @@ class SignupViewset(ViewSet):
         '''check if user is added to a group otherwise 
         fetch user choosen group and add user to the group
         '''
-        
-        grpName = self.getUserGroup(request=request)
+        grpName = request.data['role'];
         group = Group.objects.get(name=grpName)
         user.groups.add(group)
 

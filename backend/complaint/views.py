@@ -36,13 +36,13 @@ class ComplaintList(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('userId','title','classId',)  
+    filterset_fields = ('userId__pk','title','classId__id',)  
 
      #you can search using the "search" keyword
-    search_fields = ('userId','title','classId',) 
+    search_fields = ('userId__pk','title','classId__id',) 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('userId','title','classId',) 
+    ordering_fields = ('userId__pk','title','classId__id',) 
 
     
 class ClassComplaint(generics.ListAPIView):
@@ -55,13 +55,13 @@ class ClassComplaint(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('userId','title',)  
+    filterset_fields = ('userId__pk','title',)  
 
      #you can search using the "search" keyword
-    search_fields = ('userId','title',) 
+    search_fields = ('userId__pk','title',) 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('userId','title',)
+    ordering_fields = ('userId__pk','title',)
 
     def get_url_values(self):
         url = self.request.build_absolute_uri()
@@ -135,13 +135,13 @@ class UserComplaint(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('userId','title',)  
+    filterset_fields = ('userId__pk','title',)  
 
      #you can search using the "search" keyword
-    search_fields = ('userId','title',) 
+    search_fields = ('userId__pk','title',) 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('userId','title',) 
+    ordering_fields = ('userId__pk','title',) 
 
     def get_url_values(self):
         url = self.request.build_absolute_uri()

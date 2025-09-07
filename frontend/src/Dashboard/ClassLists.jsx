@@ -23,8 +23,6 @@ function ClassList(){
   const [dialogMsg, setDialogMsg] = useState("");
   const [classList,setClassList] = useState([]);
   const [currClass, setCurrClass] = useState({});
-  const [classCode, setClassCode] = useState("");
-  const [className, setClassName] = useState("");
   const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
 
   const handleOpenUpdateDialog = ()=>{
@@ -42,11 +40,10 @@ function ClassList(){
   }
 
   const updateClassFromList = () => {
-    setCurrClass({...currClass,classCode:classCode, className:className });
     setClassList(prevClass =>
       prevClass.map(classes =>
         classes.id === currClass.id ? { ...classes, 
-          classCode:classCode, className:className } : classes
+          classCode:currClass.classCode, className:currClass.className } : classes
       )
     );
   };
@@ -55,8 +52,8 @@ function ClassList(){
       const endpoint = "http://localhost:8000/classes/update-class/"+currClass.id+"/"; 
       setIsLoading(true);
         try{
-            const response = await axiosInstance.patch(endpoint, 
-              {classId:currClass.id});
+            const response = await axiosInstance.put(endpoint, 
+              currClass);
             const data = response.data.results;
             if(data){
               setDialogMsg(data);
@@ -205,8 +202,9 @@ function ClassList(){
                           id="className"
                           name="className"
                           label="className"
-                          value={className || currClass.className}
-                          onChange={(e) => setClassName(e.target.value)} 
+                          value={currClass.className}
+                          onChange={(e) => setCurrClass({...currClass,
+                            className:e.target.value})} 
                           
                       />
                       <TextField
@@ -215,8 +213,9 @@ function ClassList(){
                           id="classCode"
                           name="classCode"
                           label="classCode"
-                          value={classCode || currClass.classCode}
-                          onChange={(e) => setClassCode(e.target.value)} 
+                          value={currClass.classCode}
+                          onChange={(e) => setCurrClass({...currClass,
+                            classCode:e.target.value})} 
                           
                       />
                   </FormControl>
