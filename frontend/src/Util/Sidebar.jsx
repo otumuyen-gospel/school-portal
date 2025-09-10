@@ -56,14 +56,12 @@ function Sidebar(props){
                 to:"/class-users/", hidden:false},
             {label:"Profile", Icon:AccountIcon,
                  to:"/profile/", hidden:false},
-            {label:"New Attendance", Icon:AddIcon, 
-                to:"/create-attendance/", hidden:false},
              {label:"All Attendance", Icon:AttendanceIcon, 
                 to:"/attendance-lists/", hidden:false},
              {label:"Class Attendance", Icon:PeopleOutline, 
                 to:"/class-attendance/", hidden:false},
-            {label:"My Attendance", Icon:AccountIcon,
-                 to:"/user-attendance/", hidden:false},
+             {label:"My Attendance", Icon:AccountIcon, 
+                to:"/my-attendance/", hidden:false},
             
         ],
         Classes:[

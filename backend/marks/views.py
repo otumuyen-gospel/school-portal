@@ -36,15 +36,15 @@ class ClassMark(generics.ListAPIView):
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
     filterset_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__pk',) 
+                     'test_score3','subjectId__id', 'userId__id',) 
 
      #you can search using the "search" keyword
     search_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__pk',)
+                     'test_score3','subjectId__id', 'userId__id',)
 
     #you can order using the "ordering" keyword
     ordering_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__pk',)
+                     'test_score3','subjectId__id', 'userId__id',)
 
     def get_url_values(self):
         url = self.request.build_absolute_uri()
@@ -78,15 +78,15 @@ class MarkList(generics.ListAPIView):
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
     filterset_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__pk',) 
+                     'test_score3','subjectId__id', 'userId__id',) 
 
      #you can search using the "search" keyword
     search_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId_id', 'userId__pk',)
+                     'test_score3','subjectId_id', 'userId__id',)
 
     #you can order using the "ordering" keyword
     ordering_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__pk',)
+                     'test_score3','subjectId__id', 'userId__id',)
     
 #this generic class will handle UPDATE(list 1 item) by admin and teacher only 
 class MarkUpdate(generics.UpdateAPIView):
@@ -141,15 +141,15 @@ class UserMark(generics.ListAPIView):
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
     filterset_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__pk',) 
+                     'test_score3','subjectId__id', 'userId__id',) 
 
      #you can search using the "search" keyword
     search_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__pk',)
+                     'test_score3','subjectId__id', 'userId__id',)
 
     #you can order using the "ordering" keyword
     ordering_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__pk',) 
+                     'test_score3','subjectId__id', 'userId__id',) 
     
 
     def get_url_values(self):

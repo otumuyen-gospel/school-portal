@@ -67,6 +67,11 @@ class ClassQuiz(generics.ListAPIView):
         else:
             raise PermissionDenied("You don't have access right")
     
+    def expireQuiz(self):
+         if self.queryset.count():
+            self.queryset.filter(endDate__lt=date.today()).update(setAsQuiz=False)
+
+
 
 #this generic class will handle GET method to be used by the admin alone
 class QuizList(generics.ListAPIView):
@@ -178,4 +183,5 @@ class UserQuiz(generics.ListAPIView):
     
 
     def expireQuiz(self):
-        self.queryset.filter(endDate__lt=date.today()).update(setAsQuiz=False)
+         if self.queryset.count():
+            self.queryset.filter(endDate__lt=date.today()).update(setAsQuiz=False)

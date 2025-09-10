@@ -15,7 +15,6 @@ import ClassQuiz from "./Dashboard/ClassQuiz";
 import ClassSubjectList from './Dashboard/ClassSubjectList';
 import ClassUsers from './Dashboard/ClassUsers';
 import ComplaintList from "./Dashboard/ComplaintList";
-import CreateAttendance from "./Dashboard/CreateAttendance";
 import CreateClass from './Dashboard/CreateClass';
 import CreateComplaint from "./Dashboard/CreateComplaint";
 import CreateHomework from "./Dashboard/CreateHomework";
@@ -32,13 +31,13 @@ import Register from './Dashboard/Register';
 import Schedule from './Dashboard/Schedule';
 import ScheduleList from './Dashboard/ScheduleList';
 import SubjectList from './Dashboard/SubjectList';
-import UserAttendance from './Dashboard/UserAttendance';
+import UpdateUser from './Dashboard/updateUser';
+import UserAttendance from "./Dashboard/UserAttendance";
 import UserComplaintList from "./Dashboard/UserComplaintList";
 import UserHomeworkList from "./Dashboard/UserHomeworkList";
 import UserLists from './Dashboard/UserLists';
 import UserMarks from "./Dashboard/UserMarks";
 import UserQuiz from "./Dashboard/UserQuiz";
-import UpdateUser from './Dashboard/updateUser';
 
 
 function App() {
@@ -81,11 +80,7 @@ function App() {
         <UserLists />
       </ProtectedRoute>
      } />
-     <Route path="/user-attendance" element={
-      <ProtectedRoute>
-        <UserAttendance />
-      </ProtectedRoute>
-     } />
+     
       <Route path="/user-update" element={
       <ProtectedRoute>
         <UpdateUser/>
@@ -96,11 +91,13 @@ function App() {
         <ClassAttendance />
       </ProtectedRoute>
      } />
-     <Route path="/create-attendance" element={
+     
+     <Route path="/my-attendance" element={
       <ProtectedRoute>
-        <CreateAttendance />
+        <UserAttendance/>
       </ProtectedRoute>
      } />
+
      <Route path="/attendance-lists" element={
       <ProtectedRoute>
         <Attendance />

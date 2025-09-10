@@ -36,13 +36,13 @@ class ScheduleList(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('userId__pk','title','startDateTime',) 
+    filterset_fields = ('userId__id','title','startDateTime',) 
 
      #you can search using the "search" keyword
-    search_fields =  ('userId__pk','title','startDateTime',)
+    search_fields =  ('userId__id','title','startDateTime',)
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('userId__pk','title','startDateTime',)
+    ordering_fields = ('userId__id','title','startDateTime',)
 
     def get_queryset(self):
         #delete schedules that due for expiration
@@ -50,7 +50,8 @@ class ScheduleList(generics.ListAPIView):
         return  self.queryset
 
     def deleteSchedules(self):
-        self.queryset.filter(endDateTime__lt=datetime.today()).delete()
+        if self.queryset.count():
+            self.queryset.filter(endDateTime__lt=datetime.today()).delete()
     
 #this generic class will handle UPDATE(list 1 item) by admin and teacher only 
 class ScheduleUpdate(generics.UpdateAPIView):
