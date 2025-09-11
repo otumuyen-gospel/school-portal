@@ -14,22 +14,18 @@ import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
-function ClassComplaintList(){
-  const [authUser] = useState(JSON.parse(localStorage.getItem('auth')));
+function UserSchedule(){
   const [isLoading, setIsLoading] = useState(false);
-  const [complaintList, setComplaintList] = useState([]);
+  const [scheduleList, setScheduleList] = useState([]);
   const [msg, setMsg] = useState("");
-  const [url,setUrl] = useState("http://localhost:8000/complaints/class-complaint-list/"+
-    authUser['user'].classId+"/"
-  );
+  const [url,setUrl] = useState("http://localhost:8000/schedule/schedule-list/");
   const [query,setQuery] =useState({});
   const [params, setParams] = useState("");
   const [nextPage,setNextPage] = useState(null);
   const [prevPage,setPrevPage] = useState(null);
-  
 
   useEffect(()=>{
-      const complaint = async(endpoint, queries)=>{
+      const schedule = async(endpoint, queries)=>{
         setIsLoading(true);
         try{
            const response = await axiosInstance.get(endpoint,{params:queries})
@@ -37,28 +33,28 @@ function ClassComplaintList(){
            setNextPage(response.data.next);
            setPrevPage(response.data.previous);
            if(data){
-           setComplaintList(data);
+           setScheduleList(data);
            }
            setIsLoading(false);
           }catch(error){
            setIsLoading(false);
-           setMsg(`Oops! sorry can't load complaint List`);
+           setMsg(`Oops! sorry can't load attendance List`);
           }
       }
 
-      complaint(url, query);
+      schedule(url, query);
   },[url, query])
   
   return (
     <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="Class Tickets">
+      <Layout title="My Schedules">
         <Box 
        sx={{
           minHeight:"100vh",
           marginTop:"10px",
         }}
         >
-        <Typography component="h1" variant="h6">Class Tickets</Typography>
+        <Typography component="h1" variant="h6">My Schedules</Typography>
         <Container sx={{textAlign:"right"}} >
           <TextField
                minWidth="200px"
@@ -91,35 +87,42 @@ function ClassComplaintList(){
               <TableRow>
                  <TableCell>Id</TableCell>
                  <TableCell>Title</TableCell>
-                 <TableCell>complaint</TableCell>
-                 <TableCell>Date</TableCell>
+                 <TableCell>Details</TableCell>
+                 <TableCell>Start Date</TableCell>
+                  <TableCell>End Date</TableCell>
                  
               </TableRow>
             </TableHead>
             <TableBody>
               {
-                  complaintList.map(complaint=>(
-                    <TableRow key={complaint.id}>
-                      <TableCell>{complaint.id}</TableCell>
+                  scheduleList.map(schedule=>(
+                    <TableRow key={schedule.id}>
+                      <TableCell>{schedule.id}</TableCell>
                       <TableCell>
                         <span style={{ display: 'inline-block', 
                           whiteSpace:"normal", wordBreak:"break-word" }}>
-                          {complaint.title}
+                          {schedule.title}
                         </span>
                       </TableCell>
                       <TableCell>
                         <span style={{ display: 'inline-block', 
                           whiteSpace:"normal", wordBreak:"break-word" }}>
-                          {complaint.complaint}
+                          {schedule.detail}
                         </span>
                       </TableCell>
                       <TableCell>
                         <span style={{ display: 'inline-block', 
                           whiteSpace:"normal", wordBreak:"break-word" }}>
-                          {complaint.date}
+                          {schedule.startDateTime}
                         </span>
                       </TableCell>
-                    
+                      <TableCell>
+                        <span style={{ display: 'inline-block', 
+                          whiteSpace:"normal", wordBreak:"break-word" }}>
+                          {schedule.endDateTime}
+                        </span>
+                      </TableCell>
+                      
                     </TableRow>
                     
                  ))
@@ -161,4 +164,4 @@ function ClassComplaintList(){
 }
 
 
-export default ClassComplaintList;
+export default UserSchedule;

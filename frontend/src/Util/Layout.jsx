@@ -89,7 +89,7 @@ function Layout(props){
                             marginRight:"30px"
                             }}
                             component={Link} 
-                            to="/schedule/"
+                            to="/user-schedule/"
                             >
                             <Badge badgeContent={badge} color="error">
                                 <NotificationsIcon />

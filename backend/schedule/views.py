@@ -36,13 +36,16 @@ class ScheduleList(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('userId__id','title','startDateTime',) 
+    filterset_fields = ('userId__id','userId__username','classId__classCode',
+                        'classId__className','title','detail','startDateTime',) 
 
      #you can search using the "search" keyword
-    search_fields =  ('userId__id','title','startDateTime',)
+    search_fields =  ('userId__id','userId__username','classId__classCode',
+                        'classId__className','title','detail','startDateTime',)
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('userId__id','title','startDateTime',)
+    ordering_fields = ('userId__id','userId__username','classId__classCode',
+                        'classId__className','title','detail','startDateTime',)
 
     def get_queryset(self):
         #delete schedules that due for expiration

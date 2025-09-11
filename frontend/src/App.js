@@ -28,9 +28,10 @@ import MarkList from "./Dashboard/MarkList";
 import Profile from './Dashboard/Profile';
 import QuizList from "./Dashboard/QuizList";
 import Register from './Dashboard/Register';
-import Schedule from './Dashboard/Schedule';
 import ScheduleList from './Dashboard/ScheduleList';
 import SubjectList from './Dashboard/SubjectList';
+import UpdateComplaint from './Dashboard/updateComplaint';
+import UpdateSchedule from './Dashboard/updateSchedule';
 import UpdateUser from './Dashboard/updateUser';
 import UserAttendance from "./Dashboard/UserAttendance";
 import UserComplaintList from "./Dashboard/UserComplaintList";
@@ -38,7 +39,7 @@ import UserHomeworkList from "./Dashboard/UserHomeworkList";
 import UserLists from './Dashboard/UserLists';
 import UserMarks from "./Dashboard/UserMarks";
 import UserQuiz from "./Dashboard/UserQuiz";
-
+import UserSchedule from "./Dashboard/UserSchedule";
 
 function App() {
   return <Routes>
@@ -58,11 +59,6 @@ function App() {
      <Route path="/profile" element={
       <ProtectedRoute>
         <Profile />
-      </ProtectedRoute>
-     } />
-     <Route path="/schedule" element={
-      <ProtectedRoute>
-        <Schedule />
       </ProtectedRoute>
      } />
      <Route path="/register" element={
@@ -86,6 +82,7 @@ function App() {
         <UpdateUser/>
       </ProtectedRoute>
      } />
+
      <Route path="/class-attendance" element={
       <ProtectedRoute>
         <ClassAttendance />
@@ -121,6 +118,11 @@ function App() {
      <Route path="/user-complaint-list" element={
       <ProtectedRoute>
         <UserComplaintList />
+      </ProtectedRoute>
+     } />
+     <Route path="/complaint-update" element={
+      <ProtectedRoute>
+        <UpdateComplaint />
       </ProtectedRoute>
      } />
      <Route path="/complaint-list" element={
@@ -203,7 +205,17 @@ function App() {
       </ProtectedRoute>
      } />
 
+      <Route path="/schedule-update" element={
+      <ProtectedRoute>
+        <UpdateSchedule/>
+      </ProtectedRoute>
+     } />
 
+     <Route path="/user-schedule" element={
+      <ProtectedRoute>
+        <UserSchedule/>
+      </ProtectedRoute>
+     } />
 
      <Route path="/class-quiz" element={
       <ProtectedRoute>

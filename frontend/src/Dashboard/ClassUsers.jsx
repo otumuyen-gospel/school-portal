@@ -24,7 +24,7 @@ import ConfirmDialogForm from "../Util/ConfirmDialogForm";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
 function ClassUsers(){
-  const authUser = JSON.parse(localStorage.getItem("auth"));
+  const [authUser] = useState(JSON.parse(localStorage.getItem("auth")));
   const [isLoading, setIsLoading] = useState(false);
   const [userList, setUserList] = useState([]);
   const [msg, setMsg] = useState("");
@@ -41,7 +41,8 @@ function ClassUsers(){
   const [nextPage,setNextPage] = useState(null);
   const [prevPage,setPrevPage] = useState(null);
   const [remark,setRemark] = useState("");
-  //const [markedAttendance, setMarkedAttendance] = useState([]);
+  const [mark,setMark]  = useState(false);
+  const [markedAttendance, setMarkedAttendance] = useState([]);
   
 
   const handleClosePromoteDialog = ()=>{
@@ -54,7 +55,13 @@ function ClassUsers(){
     setOpenAttendanceDialog(false);
   }
   const handleOpenAttendanceDialog = ()=>{
-    setOpenAttendanceDialog(true);
+    if(mark){ //checked
+       setOpenAttendanceDialog(true);
+    }else{ //unchecked
+      //delete instances of current attendance from backend and frontend
+      
+    }
+   
   }
 
   const attendance = async ()=>{
@@ -156,6 +163,17 @@ function ClassUsers(){
     return classes ? classes.classCode : "None";
   }
 
+  const getMarkedAttendance = (user)=>{
+    const marked = markedAttendance.filter(att=>(att.userId === user.pk))[0];
+    setMark(marked ? true : false);
+    return <Checkbox
+              checked={mark}
+              onChange={(e)=>{
+              setCurrUser(user);
+              setMark(e.target.value)
+              handleOpenAttendanceDialog();
+    }}/>;
+  }
   useEffect(()=>{
      //fetch all paginated students data by recursively calling page by page
       const users = async(endpoint, queries)=>{
@@ -179,6 +197,50 @@ function ClassUsers(){
       }
       users(url, query);
   },[url, query])
+
+  const today = ()=>{
+    const originalDate = new Date(); // Get the current date and time
+
+    // Example using YYYY-MM-DD format
+    const year = originalDate.getFullYear();
+    const month = (originalDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed
+    const day = originalDate.getDate().toString().padStart(2, '0');
+
+    const customFormattedDate = `${year}-${month}-${day}`;
+    return customFormattedDate; // Example output: "2025-09-10"
+  }
+
+  useEffect(()=>{
+    //fetch all paginated class attendance for today by recursively calling page by page
+    const listAttendance = async(url, queries)=>{
+      try{
+         const response = await axiosInstance.get(url,{params:queries})
+          const data = response.data.results;
+          const nextPage = response.data.next;
+          if(nextPage){
+            return data.concat(await listAttendance(nextPage, queries));
+          }else{
+            return data;
+          }
+      }catch(error){
+         setMsg(`Oops! sorry can't load class List`);
+         throw error; //rethrow consequent error
+     }
+    }
+
+    if(authUser){
+      const classId = authUser['user'].classId;
+      const url = "http://localhost:8000/attendance/class-attendance/"+classId+"/";
+      const queries = {search:today()};
+      listAttendance(url, queries).then(allData=>{
+         setMarkedAttendance(allData)
+      }).catch((error)=>{
+         setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class attendance List`);
+      })
+    }
+    
+  },[authUser])
+
   
   return (
     <div style={{backgroundColor:"#FFF"}}>
@@ -265,11 +327,7 @@ function ClassUsers(){
                         </IconButton>
                       </TableCell>
                       <TableCell>
-                         <Checkbox
-                         onClick={()=>{
-                          setCurrUser(user);
-                          handleOpenAttendanceDialog();
-                         }}/>
+                        {getMarkedAttendance(user)}
                       </TableCell>
                       
                     </TableRow>

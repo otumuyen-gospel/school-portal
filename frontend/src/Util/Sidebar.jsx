@@ -110,6 +110,8 @@ function Sidebar(props){
                 to:"/create-schedule/", hidden:false},
             {label:"All Schedule", Icon:ScheduleIcon, 
                 to:"/schedule-list/", hidden:false},
+            {label:"My Schedules", Icon:ScheduleIcon, 
+                to:"/user-schedule/", hidden:false},
             {label:"New Ticket", Icon:AddIcon, 
                 to:"/create-complaint/", hidden:false},
             {label:"Class Ticket", Icon:ClassIcon, 

@@ -35,15 +35,15 @@ class ClassAttendance(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('userId__firstName','userId__lastName',
+    filterset_fields = ('userId__firstName','date','userId__lastName',
                        'classId__className','classId__classCode','remark','attendance', ) 
 
      #you can search using the "search" keyword
-    search_fields = ('userId__firstName','userId__lastName',
+    search_fields = ('userId__firstName','date','userId__lastName',
                        'classId__className','classId__classCode','remark','attendance',) 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('userId__firstName','userId__lastName',
+    ordering_fields = ('userId__firstName','date','userId__lastName',
                        'classId__className','classId__classCode','remark','attendance',) 
 
     def get_url_values(self):
@@ -77,15 +77,15 @@ class AttendanceList(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('userId__firstName','userId__lastName',
+    filterset_fields = ('userId__firstName','date','userId__lastName',
                        'classId__className','classId__classCode','remark','attendance',) 
 
      #you can search using the "search" keyword
-    search_fields = ('userId__firstName','userId__lastName',
+    search_fields = ('userId__firstName','date','userId__lastName',
                        'classId__className','classId__classCode','remark','attendance',) 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('userId__firstName','userId__lastName',
+    ordering_fields = ('userId__firstName','date','userId__lastName',
                        'classId__className','classId__classCode','remark','attendance',) 
 
     
@@ -141,15 +141,15 @@ class UserAttendance(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('userId__firstName','userId__lastName',
+    filterset_fields = ('userId__firstName','date','userId__lastName',
                        'classId__className','classId__classCode','remark','attendance') 
 
      #you can search using the "search" keyword
-    search_fields = ('userId__firstName','userId__lastName',
+    search_fields = ('userId__firstName','date','userId__lastName',
                        'classId__className','classId__classCode','remark','attendance',) 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('userId__firstName','userId__lastName',
+    ordering_fields = ('userId__firstName','date','userId__lastName',
                        'classId__className','classId__classCode','remark','attendance',) 
 
     def get_url_values(self):

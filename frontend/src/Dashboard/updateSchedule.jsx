@@ -10,21 +10,23 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
 
-
-function CreateComplaint(){
-  const [authUser] = useState(JSON.parse(localStorage.getItem('auth')));
+function UpdateSchedule(){
+  const schedule = useLocation().state;
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [msg, setMsg] = useState("");
   const [form, setForm] = useState({
-    complaint:"",
-    title:"",
-    date:dayjs(),
+    detail:schedule?.detail,
+    title:schedule?.title,
+    startDateTime:dayjs(schedule?.startDateTime),
+    endDateTime:dayjs(schedule?.endDateTime),
+
   });
   const handleOpenMsgBox = ()=>{
     setOpenMsgBox(true);
@@ -42,19 +44,20 @@ function CreateComplaint(){
     }
     
     const data = {
-       complaint:form.complaint,
+       detail:form.detail,
        title:form.title,
-       userId:authUser['user'].pk,
-       classId:authUser['user'].classId,
-       date:dayjs(form.date).format("YYYY-MM-DD hh:mm:ss"),
+       userId:schedule?.userId,
+       classId:schedule?.classId,
+       startDateTime:dayjs(form.startDateTime).format("YYYY-MM-DD hh:mm:ss"),
+       endDateTime:dayjs(form.endDateTime).format("YYYY-MM-DD hh:mm:ss"),
     };
 
     setIsLoading(true);
-    axiosInstance.post("http://localhost:8000/complaints/create-complaint/",
+    axiosInstance.put("http://localhost:8000/schedule/update-schedule/"+schedule?.id+"/",
           data).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button
-            setMsg("complaint created successfully");
+            setMsg("schedule updated successfully");
             handleOpenMsgBox();
     }).catch((err) => {
             setIsLoading(false)
@@ -70,21 +73,21 @@ function CreateComplaint(){
   return (
      <LocalizationProvider dateAdapter={AdapterDayjs}>
     <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="New Ticket">
+      <Layout title="Update Schedule">
         <Box 
        sx={{
           minHeight:"100vh",
           marginTop:"10px",
         }}
         >
-        <Typography component="h1" variant="h6">New Ticket</Typography>
+        <Typography component="h1" variant="h6">Update Schedule</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{
            width:{xs:"100%",}}}>
             <Typography component="p" sx={{
               textAlign:"center",
               color:"primary",
               }}>
-                Create New Ticket
+                Update Schedule
            </Typography>
 
            <Grid container width="sm" direction="column" spacing={4}>
@@ -110,13 +113,13 @@ function CreateComplaint(){
                  rows={7}
                  margin="normal"
                  required
-                 id="complaint"
-                 label="complaint"
-                 type="complaint"
-                 value={form.complaint}
+                 id="detail"
+                 label="detail"
+                 type="detail"
+                 value={form.detail}
                  onChange={(e) => setForm({ ...form,
-                    complaint: e.target.value })}
-                 name="complaint"
+                    detail: e.target.value })}
+                 name="detail"
                  
               />
             </Grid>
@@ -125,13 +128,29 @@ function CreateComplaint(){
               <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%"}}>
                  <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
-                 id="date"
-                 label="date"
-                 value={dayjs(form.date)}
+                 id="startDate"
+                 label="Start Date"
+                 value={dayjs(form.startDateTime)}
                  format="YYYY-MM-DD hh:mm:ss"
                  onChange={(e) => setForm({ ...form,
-                    date: e })}
-                 name="date"
+                    startDateTime: e })}
+                 name="startDate"
+                 
+              /></LocalizationProvider>
+              </FormControl>
+            </Grid>
+            
+            <Grid>
+              <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%"}}>
+                 <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                 id="endDate"
+                 label="End Date"
+                 value={dayjs(form.endDateTime)}
+                 format="YYYY-MM-DD hh:mm:ss"
+                 onChange={(e) => setForm({ ...form,
+                    endDateTime: e })}
+                 name="endDate"
                  
               /></LocalizationProvider>
               </FormControl>
@@ -143,7 +162,7 @@ function CreateComplaint(){
               fullWidth
               variant="contained"
               disabled={isDisabled}
-              sx={{ mt: 3, mb: 2 }}>Create Ticket</Button>
+              sx={{ mt: 3, mb: 2 }}>Update Schedule</Button>
             
               <div className="loaderContainer">
                      {isLoading && <CircularProgress />}
@@ -170,4 +189,4 @@ function CreateComplaint(){
 }
 
 
-export default CreateComplaint;
+export default UpdateSchedule;
