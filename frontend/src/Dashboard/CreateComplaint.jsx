@@ -44,6 +44,8 @@ function CreateComplaint(){
     const data = {
        complaint:form.complaint,
        title:form.title,
+       replyStatus:false,
+       replyMessage:"",
        userId:authUser['user'].pk,
        classId:authUser['user'].classId,
        date:dayjs(form.date).format("YYYY-MM-DD hh:mm:ss"),

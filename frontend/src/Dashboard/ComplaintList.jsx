@@ -1,8 +1,9 @@
 import TrashIcon from "@mui/icons-material/DeleteOutline";
+import MessageIcon from "@mui/icons-material/MessageOutlined";
 import SearchIcon from "@mui/icons-material/SearchOutlined";
-import PromoteIcon from "@mui/icons-material/UpgradeOutlined";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
@@ -15,7 +16,6 @@ import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import ConfirmDialogForm from "../Util/ConfirmDialogForm";
 import Layout from "../Util/Layout";
@@ -25,6 +25,7 @@ function ComplaintList(){
   const [complaintList, setComplaintList] = useState([]);
   const [msg, setMsg] = useState("");
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openReplyDialog, setOpenReplyDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [dialogMsg, setDialogMsg] = useState("");
   const [url,setUrl] = useState("http://localhost:8000/complaints/complaint-list/"
@@ -34,7 +35,7 @@ function ComplaintList(){
   const [params, setParams] = useState("");
   const [nextPage,setNextPage] = useState(null);
   const [prevPage,setPrevPage] = useState(null);
-   const navigate = useNavigate();
+  
 
   const handleCloseDeleteDialog = ()=>{
     setOpenDeleteDialog(false);
@@ -42,6 +43,46 @@ function ComplaintList(){
   const handleOpenDeleteDialog = ()=>{
     setOpenDeleteDialog(true);
   }
+
+  const handleCloseReplyDialog = ()=>{
+    setOpenReplyDialog(false);
+  }
+  const handleOpenReplyDialog = ()=>{
+    setOpenReplyDialog(true);
+  }
+
+  const updateComplaintFromList = () => {
+    setComplaintList(prevComplaint =>
+      prevComplaint.map(complaint =>
+        complaint.id === currComplaint.id ? { ...complaint, 
+          replyMessage: currComplaint.replyMessage,
+          replyStatus: currComplaint.replyStatus,} : complaint
+      )
+    );
+  };
+  const reply = async ()=>{
+    const endpoint = "http://localhost:8000/complaints/update-complaint/"+currComplaint.id+"/"; 
+    setIsLoading(true);
+      try{
+          const response = await axiosInstance.put(endpoint, currComplaint);
+          const data = response.data.results;
+          if(data){
+            setDialogMsg(JSON.stringify(data));
+          }else{
+            setDialogMsg("this data was updated successfully");
+          }
+          
+           handleOpenMsgBox();
+          setIsLoading(false);
+          updateComplaintFromList();
+
+      }catch(error){
+          setIsLoading(false);
+          setDialogMsg(JSON.stringify(error.response.data));
+          handleOpenMsgBox();
+    }
+      
+   }
 
   const removeComplaintFromList = (theComplaint, data)=>{
    const remainingComplaint = data.filter(complaint => complaint.id !== theComplaint.id);
@@ -144,7 +185,8 @@ function ComplaintList(){
                  <TableCell>Title</TableCell>
                  <TableCell>complaint</TableCell>
                  <TableCell>Date</TableCell>
-                 <TableCell>Update</TableCell>
+                 <TableCell>Reply status</TableCell>
+                 <TableCell>Reply</TableCell>
                  <TableCell>Delete</TableCell>
                  
               </TableRow>
@@ -172,15 +214,16 @@ function ComplaintList(){
                           {complaint.date}
                         </span>
                       </TableCell>
-                      
                       <TableCell>
-                        <IconButton title="update"
+                        <Checkbox checked={complaint.replyStatus}/>
+                      </TableCell>
+                      <TableCell>
+                        <IconButton title="reply"
                          onClick={()=>{
                              setCurrComplaint(complaint);
-                             navigate('/complaint-update',{state:complaint});
-                           
+                             handleOpenReplyDialog();
                           }}>
-                        <PromoteIcon></PromoteIcon>
+                        <MessageIcon></MessageIcon>
                         </IconButton>
                       </TableCell>
                       <TableCell>
@@ -236,6 +279,26 @@ function ComplaintList(){
         onSubmit={()=>deletes()}
         formContent={
           <Typography>Are you sure to delete this information</Typography>
+        }
+        title="DialogBox"
+        />
+
+
+         <ConfirmDialogForm open={openReplyDialog} 
+        onClose={handleCloseReplyDialog} 
+        onSubmit={()=>reply()}
+        formContent={
+          <TextField 
+           fullWidth
+           multiline
+           label="message"
+           id="message"
+           rows={4}
+           value={currComplaint.replyMessage}
+           onChange={(e)=>setCurrComplaint({...currComplaint, replyMessage: e.target.value,
+            replyStatus :true
+           })}
+          />
         }
         title="DialogBox"
         />

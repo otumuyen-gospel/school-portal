@@ -10,7 +10,9 @@ class Complaint(models.Model):
     date = models.DateTimeField(auto_now_add=True, blank=True)
     userId = models.ForeignKey(User, on_delete=models.CASCADE)
     classId  = models.ForeignKey(Class, on_delete=models.CASCADE)
+    replyStatus = models.BooleanField(blank=False)
+    replyMessage =models.TextField(blank=True)
     class Meta:
-        ordering = ('title','classId',)
+        ordering = ('title','classId','date')
     def __str__(self):
         return f"{self.title}"

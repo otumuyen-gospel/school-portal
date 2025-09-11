@@ -1,4 +1,5 @@
 import TrashIcon from "@mui/icons-material/DeleteOutline";
+import MessageIcon from "@mui/icons-material/MailOutline";
 import SearchIcon from "@mui/icons-material/SearchOutlined";
 import PromoteIcon from "@mui/icons-material/UpgradeOutlined";
 import Box from "@mui/material/Box";
@@ -146,6 +147,7 @@ function UserComplaintList(){
                  <TableCell>Title</TableCell>
                  <TableCell>complaint</TableCell>
                  <TableCell>Date</TableCell>
+                  <TableCell>Reply</TableCell>
                  <TableCell>Update</TableCell>
                  <TableCell>Delete</TableCell>
                  
@@ -174,7 +176,20 @@ function UserComplaintList(){
                           {complaint.date}
                         </span>
                       </TableCell>
-                      
+                      <TableCell>
+                        {
+                          complaint.replyStatus ? 
+                          <IconButton title="open message"
+                         onClick={()=>{
+                             setDialogMsg(complaint.replyMessage);
+                             handleOpenMsgBox();
+                           
+                          }}>
+                        <MessageIcon></MessageIcon>
+                        </IconButton> :
+                        <Typography>Pending</Typography>
+                        }
+                      </TableCell>
                       <TableCell>
                         <IconButton title="update"
                          onClick={()=>{
