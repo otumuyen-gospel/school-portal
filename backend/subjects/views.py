@@ -27,7 +27,7 @@ class ClassSubjectsList(generics.ListAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializers
     permission_classes = [IsAuthenticated, IsInGroup,]
-    required_groups = ['admin','teacher','student',]
+    required_groups = ['admin','teacher','student','parent']
     name = 'class-subject-list'
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]

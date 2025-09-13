@@ -31,6 +31,7 @@ import Register from './Dashboard/Register';
 import ScheduleList from './Dashboard/ScheduleList';
 import SubjectList from './Dashboard/SubjectList';
 import UpdateComplaint from './Dashboard/updateComplaint';
+import UpdateMark from './Dashboard/updateMark';
 import UpdateSchedule from './Dashboard/updateSchedule';
 import UpdateUser from './Dashboard/updateUser';
 import UserAttendance from "./Dashboard/UserAttendance";
@@ -160,6 +161,11 @@ function App() {
      <Route path="/class-marks" element={
       <ProtectedRoute>
         <ClassMarks />
+      </ProtectedRoute>
+     } />
+     <Route path="/mark-update" element={
+      <ProtectedRoute>
+        <UpdateMark/>
       </ProtectedRoute>
      } />
      <Route path="/user-marks" element={

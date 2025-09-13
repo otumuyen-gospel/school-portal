@@ -1,3 +1,4 @@
+
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -9,12 +10,13 @@ import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
 
-
-function CreateMark(){
+function UpdateMark(){
+  const mark = useLocation().state;
   const [authUser] = useState(JSON.parse(localStorage.getItem('auth')));
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -23,16 +25,16 @@ function CreateMark(){
   const [studentList, setStudentList] = useState([]);
   const [subjectList, setSubjectList] = useState([]);
   const [form, setForm] = useState({
-    examScore:"",
-    test_score1:"",
-    test_score2:"",
-    test_score3:"",
-    homework_score1:"",
-    homework_score2:"",
-    homework_score3:"",
-    userId:"",
-    subjectId:"",
-    classId:authUser ? authUser['user'].classId :""
+    examScore:mark?.examScore,
+    test_score1:mark?.test_score1,
+    test_score2:mark.test_score2,
+    test_score3:mark?.test_score3,
+    homework_score1:mark?.homework_score1,
+    homework_score2:mark?.homework_score2,
+    homework_score3:mark?.homework_score3,
+    userId:mark?.userId,
+    subjectId:mark?.subjectId,
+    classId:mark?.classId
   });
   const handleOpenMsgBox = ()=>{
     setOpenMsgBox(true);
@@ -65,7 +67,7 @@ function CreateMark(){
        listSubjects(url).then(allData=>{
          setSubjectList(allData)
       }).catch((error)=>{
-         setMsg(`Oops! sorry can't load subject List`);
+         setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load subject List`);
          handleOpenMsgBox();
       })
     }
@@ -149,11 +151,11 @@ function CreateMark(){
     }
 
     setIsLoading(true);
-    axiosInstance.post("http://localhost:8000/marks/create-marks/",
+    axiosInstance.put("http://localhost:8000/marks/update-mark/"+mark?.id+"/",
           form).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button
-            setMsg("student graded successfully");
+            setMsg("student grade updated successfully");
             handleOpenMsgBox();
     }).catch((err) => {
             setIsLoading(false)
@@ -168,21 +170,21 @@ function CreateMark(){
   
   return (
     <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="Add Grade">
+      <Layout title="Update Grade">
         <Box 
        sx={{
           minHeight:"100vh",
           marginTop:"10px",
         }}
         >
-        <Typography component="h1" variant="h6">Add Grade</Typography>
+        <Typography component="h1" variant="h6">Update Grade</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{
            width:{xs:"100%",}}}>
             <Typography component="p" sx={{
               textAlign:"center",
               color:"primary",
               }}>
-                Add Grade
+                Update Grade
            </Typography>
 
            <Grid container width="sm" direction="column" spacing={4}>
@@ -385,4 +387,4 @@ function CreateMark(){
 }
 
 
-export default CreateMark;
+export default UpdateMark;
