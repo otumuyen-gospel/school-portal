@@ -10,21 +10,21 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
 
-
-function CreateHomework(){
-  const [authUser] = useState(JSON.parse(localStorage.getItem('auth')));
+function UpdateHomework(){
+  const homework = useLocation().state;
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [msg, setMsg] = useState("");
   const [form, setForm] = useState({
-    link:'',
-    title:"",
-    submission:dayjs(),
+    link:homework?.link,
+    title:homework?.title,
+    submission:dayjs(homework?.submission),
   });
   const handleOpenMsgBox = ()=>{
     setOpenMsgBox(true);
@@ -41,16 +41,15 @@ function CreateHomework(){
         return;
     }
     
-    const data = new FormData();
-    data.append('link',form.link);
-    data.append('title',form.title);
-    data.append('userId',authUser['user'].pk);
-    data.append('classId',authUser['user'].classId);
-    data.append('submission',dayjs(form.submission).format("YYYY-MM-DD hh:mm:ss"));
-    
+   const data = new FormData();
+       data.append('link',form.link);
+       data.append('title',form.title);
+       data.append('userId',homework?.userId);
+       data.append('classId',homework?.classId);
+       data.append('submission',dayjs(form.submission).format("YYYY-MM-DD hh:mm:ss"));
 
     setIsLoading(true);
-    axiosInstance.post("http://localhost:8000/homework/create-homework/",
+    axiosInstance.put("http://localhost:8000/homework/update-homework/"+homework?.id+"/",
           data,{
             headers:{
               'Content-Type':'multipart/form-data',
@@ -58,7 +57,7 @@ function CreateHomework(){
           }).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button
-            setMsg("homework upload successfully");
+            setMsg("homework uploaded successfully");
             handleOpenMsgBox();
     }).catch((err) => {
             setIsLoading(false)
@@ -74,21 +73,21 @@ function CreateHomework(){
   return (
      <LocalizationProvider dateAdapter={AdapterDayjs}>
     <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="New Work">
+      <Layout title="Update Work">
         <Box 
        sx={{
           minHeight:"100vh",
           marginTop:"10px",
         }}
         >
-        <Typography component="h1" variant="h6">New Work</Typography>
+        <Typography component="h1" variant="h6">Update Work</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{
            width:{xs:"100%",}}}>
             <Typography component="p" sx={{
               textAlign:"center",
               color:"primary",
               }}>
-                Create New Work
+                Update Work
            </Typography>
 
            <Grid container width="sm" direction="column" spacing={4}>
@@ -120,7 +119,7 @@ function CreateHomework(){
                  name="link"
                  
               />
-              <Typography>Your selected file : {form.link.name}</Typography>
+              <Typography>Previous File : <a href={homework?.link}>{homework?.link}</a></Typography>
             </Grid>
             <Grid>
               <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%"}}>
@@ -170,4 +169,4 @@ function CreateHomework(){
 }
 
 
-export default CreateHomework;
+export default UpdateHomework;

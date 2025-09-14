@@ -31,6 +31,7 @@ import Register from './Dashboard/Register';
 import ScheduleList from './Dashboard/ScheduleList';
 import SubjectList from './Dashboard/SubjectList';
 import UpdateComplaint from './Dashboard/updateComplaint';
+import UpdateHomework from './Dashboard/updateHomework';
 import UpdateMark from './Dashboard/updateMark';
 import UpdateSchedule from './Dashboard/updateSchedule';
 import UpdateUser from './Dashboard/updateUser';
@@ -150,6 +151,11 @@ function App() {
      <Route path="/homework-list" element={
       <ProtectedRoute>
         <HomeworkList />
+      </ProtectedRoute>
+     } />
+      <Route path="/homework-update" element={
+      <ProtectedRoute>
+        <UpdateHomework />
       </ProtectedRoute>
      } />
      <Route path="/create-homework" element={
