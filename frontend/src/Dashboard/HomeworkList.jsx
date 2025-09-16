@@ -229,7 +229,7 @@ function HomeworkList(){
                         </span>
                       </TableCell>
                       <TableCell>
-                        <a href={homework.link} style={{ display: 'inline-block', 
+                        <a href={homework.link}  style={{ display: 'inline-block', 
                           whiteSpace:"normal", wordBreak:"break-word" }}>
                           {homework.link}
                         </a>

@@ -1,27 +1,323 @@
+import TrashIcon from "@mui/icons-material/DeleteOutline";
+import UpdateIcon from "@mui/icons-material/MarkChatReadOutlined";
+import SearchIcon from "@mui/icons-material/SearchOutlined";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../Util/ApiRefresher";
+import ConfirmDialogForm from "../Util/ConfirmDialogForm";
 import Layout from "../Util/Layout";
+import MessageDialogForm from "../Util/MessageDialogForm";
 function ClassQuiz(){
-  const PageContent = (props)=>{
-    return (
-      <Box marginLeft={props.marginLeft}
-       marginRight={props.marginRight}
-       width={props.width}
-       sx={{
-        minHeight:"100vh",
-        }}>
-        <h1>Class Quiz
-        </h1>
-      </Box>
-    );
+  const [authUser] = useState(JSON.parse(localStorage.getItem('auth')));
+   const [isLoading, setIsLoading] = useState(false);
+  const [quizList, setQuizList] = useState([]);
+  const navigate = useNavigate();
+  const [msg, setMsg] = useState("");
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openMsgBox, setOpenMsgBox] = useState(false);
+  const [dialogMsg, setDialogMsg] = useState("");
+  const [url,setUrl] = useState("http://localhost:8000/quizzes/class-quiz/"+
+     authUser['user'].classId+"/"
+  );
+  const [query,setQuery] =useState({});
+  const [classList,setClassList] = useState([]);
+  const [subjectList,setSubjectList] = useState([]);
+  const [currQuiz, setCurrQuiz] = useState({});
+  const [params, setParams] = useState("");
+  const [nextPage,setNextPage] = useState(null);
+  const [prevPage,setPrevPage] = useState(null);
+
+  const handleOpenDeleteDialog = ()=>{
+    setOpenDeleteDialog(true);
   }
+  const handleCloseDeleteDialog = ()=>{
+    setOpenDeleteDialog(false);
+  }
+  
+
+  const removeQuizFromList = (theQuiz, data)=>{
+   const remainingQuiz = data.filter(quiz => quiz.id !== theQuiz.id);
+    return remainingQuiz;
+  }
+  
+  const deletes= async ()=>{
+    const endpoint = "http://localhost:8000/quizzes/delete-quiz/"+currQuiz.id+"/"; 
+    setIsLoading(true);
+      try{
+          const response = await axiosInstance.delete(endpoint);
+          const data = response.data.results;
+          if(data){
+            setDialogMsg(data);
+          }else{
+            setDialogMsg("this quiz were deleted successfully");
+          }
+           handleOpenMsgBox();
+          setIsLoading(false);
+          //remove the currently deleted quix from the list
+          const remainingQuizzes = removeQuizFromList(currQuiz, quizList);
+          setQuizList(remainingQuizzes);
+      }catch(error){
+          setIsLoading(false);
+          setDialogMsg(JSON.stringify(error.response.data));
+          handleOpenMsgBox();
+    }
+      
+   }
+
+  const handleOpenMsgBox = ()=>{
+    setOpenMsgBox(true);
+  }
+  const handleCloseMsgBox = ()=>{
+    setOpenMsgBox(false);
+  }
+  useEffect(()=>{
+    //fetch all paginated class data by recursively calling page by page
+    const listClasses = async(url)=>{
+      try{
+         const response = await axiosInstance.get(url)
+          const data = response.data.results;
+          const nextPage = response.data.next;
+          if(nextPage){
+            return data.concat(await listClasses(nextPage));
+          }else{
+            return data;
+          }
+      }catch(error){
+         setMsg(`Oops! sorry can't load class List`);
+         throw error; //rethrow consequent error
+     }
+    }
+
+    const url = "http://localhost:8000/classes/class-list/";
+    listClasses(url).then(allData=>{
+      setClassList(allData)
+     }).catch((error)=>{
+       setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+     })
+  },[])
+
+  const getClassCode = (mark)=>{
+    const classes = classList.filter(classlist=>(classlist.id === mark.classId))[0];
+    return classes ? classes.classCode : "None";
+  }
+
+  useEffect(()=>{
+    //fetch all paginated subject data by recursively calling page by page
+    const listSubjects = async(url)=>{
+      try{
+         const response = await axiosInstance.get(url)
+          const data = response.data.results;
+          const nextPage = response.data.next;
+          if(nextPage){
+            return data.concat(await listSubjects(nextPage));
+          }else{
+            return data;
+          }
+      }catch(error){
+         setMsg(`Oops! sorry can't load subject List`);
+         throw error; //rethrow consequent error
+     }
+    }
+    
+    if(authUser){
+       const url = "http://localhost:8000/subjects/class-subject-list/"+
+       authUser['user'].classId+"/";
+    listSubjects(url).then(allData=>{
+      setSubjectList(allData)
+     }).catch((error)=>{
+       setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load subject List`);
+     })
+    }
+   
+  },[authUser])
+
+  const getSubjectCode = (mark)=>{
+    const subjects = subjectList.filter(subjectlist=>(subjectlist.id === mark.subjectId))[0];
+    return subjects ? subjects.subjectCode : "None";
+  }
+ 
+  useEffect(()=>{
+     //fetch all paginated students scores by recursively calling page by page
+      const quizzes = async(endpoint, queries)=>{
+        setIsLoading(true);
+        try{
+           const response = await axiosInstance.get(endpoint,{params:queries})
+           const data = response.data.results;
+           setNextPage(response.data.next);
+           setPrevPage(response.data.previous);
+           if(data){
+            setQuizList(data);  
+           }
+           setIsLoading(false);
+          }catch(error){
+           setIsLoading(false);
+           setMsg(JSON.stringify(error)+`Oops! sorry can't load quiz List`);
+          }
+      }
+      quizzes(url, query);
+  },[url, query])
+  
   return (
-    <div className="dashboard">
-      <Layout title="Class Quiz">
-        <PageContent/>
+    <div style={{backgroundColor:"#FFF"}}>
+      <Layout title="Class Quizzes">
+        <Box 
+       sx={{
+          minHeight:"100vh",
+          marginTop:"10px",
+        }}
+        >
+        <Typography component="h1" variant="h6">Class Quizzes</Typography>
+        <Container sx={{textAlign:"right"}} >
+          <TextField
+               minWidth="200px"
+               margin="normal"
+               required
+               id="params"
+               label="params"
+               type="text"
+               value={params}
+               onChange={(e) =>setParams(e.target.value)}
+               name="params"/>
+               <Button 
+               sx={{backgroundColor:"royalblue",
+                color:"#FFFFFF",
+                border:"1px",
+                borderRadius:"0px",
+                marginTop:"16px",
+                '& .hover':{backgroundColor:"dodgerblue"},
+                minHeight:"56px"}}
+                onClick={()=>{
+                   setQuery({...query,search:params});
+                }}
+               >
+                <SearchIcon></SearchIcon>
+               </Button>
+        </Container>
+        <Paper>
+          <Table>
+            <TableHead>
+              <TableRow>
+                 <TableCell>Id</TableCell>
+                 <TableCell>Question</TableCell>
+                 <TableCell>Option 1</TableCell>
+                 <TableCell>Option 2</TableCell>
+                 <TableCell>Option 3</TableCell>
+                 <TableCell>answer</TableCell>
+                 <TableCell>Start Date</TableCell>
+                 <TableCell>End Date</TableCell>
+                 <TableCell>Subject</TableCell>
+                 <TableCell>Class</TableCell>
+                 <TableCell>Reset Quiz</TableCell>
+                 <TableCell>Delete</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {
+                  quizList.map(quiz=>(
+                    <TableRow key={quiz.id}>
+                      <TableCell>{quiz.id}</TableCell>
+                      <TableCell>{quiz.question}</TableCell>
+                      <TableCell>{quiz.option1}</TableCell>
+                      <TableCell>{quiz.option2}</TableCell>
+                      <TableCell>{quiz.option3}</TableCell>
+                      <TableCell>{quiz.answer}</TableCell>
+                      <TableCell>{quiz.startDate}</TableCell>
+                      <TableCell>{quiz.endDate}</TableCell>
+                      
+                      <TableCell>
+                       {
+                           getSubjectCode(quiz)
+                        }
+                      </TableCell>
+                      <TableCell>
+                        {
+                           getClassCode(quiz)
+                        }
+                      </TableCell>
+                      <TableCell>
+                         <IconButton title="reset quiz"
+                         onClick={()=>{
+                            setCurrQuiz(quiz);
+                            navigate('/update-quiz',{state:quiz});
+                            
+                          }}>
+                          <UpdateIcon></UpdateIcon>
+                         </IconButton>
+                      </TableCell>
+                      <TableCell>
+                         <IconButton title="delete"
+                         onClick={()=>{
+                            setCurrQuiz(quiz);
+                            handleOpenDeleteDialog();
+                          }}>
+                          <TrashIcon></TrashIcon>
+                         </IconButton>
+                      </TableCell>
+                    </TableRow>
+                    
+                 ))
+                        
+              }
+            </TableBody>
+          </Table>
+          <div className="loaderContainer">
+            {isLoading && <CircularProgress />}
+          </div>
+          <div className="loaderContainer">
+            <Typography color="error">{msg}</Typography>
+          </div>
+        </Paper>
+        <Container sx={{textAlign:"right", margin:"40px auto"}}>
+          <Button
+          sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}
+           onClick={()=>{
+             if(prevPage){
+               setUrl(prevPage);
+             }
+          }}>
+            Prev
+          </Button>
+          <Button 
+            sx={{backgroundColor:"royalblue", color:"#FFF"}}
+          onClick={()=>{
+            if(nextPage){
+               setUrl(nextPage);
+             }
+          }}>
+            Next
+          </Button>
+        </Container>
+        </Box>
       </Layout>
+
+        {/*Dialog window */}
+        <ConfirmDialogForm open={openDeleteDialog} 
+        onClose={handleCloseDeleteDialog} 
+        onSubmit={()=>deletes()}
+        formContent={<Typography>This action will delete this Quiz</Typography>}
+        title="Confirm Dialog"
+        />
+
+        <MessageDialogForm open={openMsgBox} 
+        onClose={handleCloseMsgBox} 
+        formContent={<Typography>{dialogMsg}</Typography>}
+        title="Message Dialog"
+        />
     </div>
 );
-
 }
 
 

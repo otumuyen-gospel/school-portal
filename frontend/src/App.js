@@ -33,6 +33,7 @@ import SubjectList from './Dashboard/SubjectList';
 import UpdateComplaint from './Dashboard/updateComplaint';
 import UpdateHomework from './Dashboard/updateHomework';
 import UpdateMark from './Dashboard/updateMark';
+import UpdateQuiz from './Dashboard/updateQuiz';
 import UpdateSchedule from './Dashboard/updateSchedule';
 import UpdateUser from './Dashboard/updateUser';
 import UserAttendance from "./Dashboard/UserAttendance";
@@ -42,7 +43,6 @@ import UserLists from './Dashboard/UserLists';
 import UserMarks from "./Dashboard/UserMarks";
 import UserQuiz from "./Dashboard/UserQuiz";
 import UserSchedule from "./Dashboard/UserSchedule";
-
 function App() {
   return <Routes>
     {/* add all unprotected routes here */}
@@ -232,6 +232,11 @@ function App() {
      <Route path="/class-quiz" element={
       <ProtectedRoute>
         <ClassQuiz />
+      </ProtectedRoute>
+     } />
+      <Route path="/update-quiz" element={
+      <ProtectedRoute>
+        <UpdateQuiz />
       </ProtectedRoute>
      } />
      <Route path="/user-quiz" element={

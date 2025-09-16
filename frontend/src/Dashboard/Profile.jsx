@@ -1,38 +1,540 @@
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
+import MessageDialogForm from "../Util/MessageDialogForm";
 function Profile(){
-  /* 
-    const [currUser, setCurrUser] = useState({});
-    useEffect(()=>{
-    //if the same current user is logged in update the user currently saved login profile
-     const auth = JSON.parse(localStorage.getItem("auth"));
-     if(auth){
-      if(auth['user'].pk === currUser.pk){
-          auth['user'] = currUser;
-          localStorage.setItem("auth",JSON.stringify(auth));
-      }
-     }
-  },[currUser])
-  */
-  const PageContent = (props)=>{
-    return (
-      <Box marginLeft={props.marginLeft}
-       marginRight={props.marginRight}
-       width={props.width}
-       sx={{
-        minHeight:"100vh",
-        }}>
-        <h1>Profile
-        </h1>
-      </Box>
-    );
+   const [auth] = useState(JSON.parse(localStorage.getItem('auth')));
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [openMsgBox, setOpenMsgBox] = useState(false);
+  const [classList, setClassList] = useState([]);
+  const [studentList, setStudentList] = useState([]);
+  const [telephone, setTelephone] = useState('');
+  const [zip, setZip] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [confirmError, setConfirmError] = useState('');
+  const [msg, setMsg] = useState("");
+  const [form, setForm] = useState({
+    username:auth ? auth['user'].username : "",
+    firstname:auth ? auth['user'].firstName : "",
+    lastname:auth ? auth['user'].lastName : "",
+    password:auth ? auth['user'].password : "",
+    email:auth ? auth['user'].email : "",
+    gender:auth ? auth['user'].gender : "",
+    role:auth ? auth['user'].role : "",
+    address:auth ? auth['user'].address : "",
+    nationality:auth ? auth['user'].nationality:"",
+    state:auth ? auth['user'].state : "",
+    zipCode:auth ? auth['user'].zipCode : "",
+    telephone:auth ? auth['user'].telephone :"",
+    childId:auth ? auth['user'].childId : "",
+    classId:auth ? auth['user'].classId : "",
+    entrance:dayjs(auth ? auth['user'].entrance : ""),
+    dob:dayjs(auth ? auth['user'].dob : ""),
+
+  });
+  const [confirm, setConfirm] = useState(auth ? auth['user'].password : "");
+  const handleOpenMsgBox = ()=>{
+    setOpenMsgBox(true);
   }
+  const handleCloseMsgBox = ()=>{
+    setOpenMsgBox(false);
+  }
+  
+  useEffect(()=>{
+    //fetch all paginated class data by recursively calling page by page
+    const listClasses = async(url)=>{
+      try{
+         const response = await axiosInstance.get(url)
+          const data = response.data.results;
+          const nextPage = response.data.next;
+          if(nextPage){
+            return data.concat(await listClasses(nextPage));
+          }else{
+            return data;
+          }
+      }catch(error){
+         setMsg(`Oops! sorry can't load class List`);
+         throw error; //rethrow consequent error
+     }
+    }
+
+    const url = "http://localhost:8000/classes/class-list/";
+    listClasses(url).then(allData=>{
+      setClassList(allData)
+     }).catch((error)=>{
+       setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+       handleOpenMsgBox();
+     })
+  },[])
+
+  useEffect(()=>{
+    //fetch all paginated students data by recursively calling page by page
+    const listStudents = async(url,query)=>{
+      try{
+         const response = await axiosInstance.get(url,{params:query})
+          const data = response.data.results;
+          const nextPage = response.data.next;
+          if(nextPage){
+            return data.concat(await listStudents(nextPage,query));
+          }else{
+            return data;
+          }
+      }catch(error){
+         setMsg(`Oops! sorry can't load Students List`);
+         throw error; //rethrow consequent error
+     }
+    }
+
+    const url = "http://localhost:8000/accounts/users-list/";
+    const query = {role:"student"};
+    listStudents(url, query).then(allData=>{
+      setStudentList(allData)
+     }).catch((error)=>{
+       setMsg(`Oops! sorry can't load Students List`);
+       handleOpenMsgBox();
+     })
+  },[])
+
+  const validateZipCode = (zipCode)=>{
+    const zipCodeRegex = /^\d{6}$/;
+    return zipCodeRegex.test(zipCode);
+  }
+  const validateEmail = (email)=>{
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  }
+  const validateTelephone = (telephone)=>{
+    const telephoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$/;
+    return telephoneRegex.test(telephone);
+  }
+  const changeAuthData = (newData)=>{
+    if(auth){
+      auth['user'] = newData;
+      localStorage.setItem('auth', JSON.stringify(auth));
+    }
+  }
+
+ const handleSubmit = (event)=>{
+    event.preventDefault();
+    if(event.target.checkValidity()){
+        setUsername("");
+        setTelephone("");
+        setZip("");
+        setEmail("");
+        if(!validateTelephone(form.telephone)){
+          setTelephone("Telephone must be 11 digit");
+          setIsDisabled(false)  //re-enable button
+          return;
+        }
+        if((!validateZipCode(form.zipCode))){
+          setZip("invalid ZipCode")
+          setIsDisabled(false)  //re-enable button
+          return;
+        }
+        if(form.username.length > 11){
+          setUsername("Username must not exceed 11 digit");
+          setIsDisabled(false)  //re-enable button
+          return;
+        }
+        if(!validateEmail(form.email)){
+          setEmail("Enter a valid email address");
+          setIsDisabled(false)  //re-enable button
+          return;
+        }
+        if(confirm !== form.password){
+           setConfirmError("password confirm mismatch");
+           setIsDisabled(false)  //re-enable button
+          return;
+        }
+    }else{
+        setMsg("Please ensure to enter all your data correctly");
+        handleOpenMsgBox();
+        return;
+    }
+    
+    const data = {
+      username:form.username,
+      password:form.password,
+      firstName:form.firstname,
+      lastName:form.lastname,
+      email:form.email,
+      address:form.address,
+      telephone:form.telephone,
+      state:form.state,
+      nationality:form.nationality,
+      dob:dayjs(form.dob).format("YYYY-MM-DD"),
+      entrance:dayjs(form.entrance).format("YYYY-MM-DD hh:mm:ss"),
+      role:form.role,
+      gender:form.gender,
+      childId:form.childId,
+      classId:form.classId,
+      zipCode:form.zipCode
+
+    };
+    setIsLoading(true);
+    axiosInstance.put("http://localhost:8000/accounts/user-update/"+
+      (auth ? auth['user'].pk : "")+"/",
+          data).then((res) => {
+            setIsLoading(false)
+            setIsDisabled(false)  //re-enable button
+            changeAuthData(res.data);
+            setMsg("User account updated successfully ");
+            handleOpenMsgBox();
+    }).catch((err) => {
+            setIsLoading(false)
+            setIsDisabled(false)  //re-enable button
+            if (err) {
+              setMsg(JSON.stringify(err.response.data));
+                 handleOpenMsgBox();
+            }
+    })
+        
+  }
+  
   return (
-    <div className="dashboard">
-      <Layout title="Profile">
-        <PageContent/>
+     <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <div style={{backgroundColor:"#FFF", flexGrow:1}}>
+      <Layout title="My Profile">
+        <Box 
+       sx={{
+          minHeight:"100vh",
+          marginTop:"10px",
+        }}
+        >
+        <Typography component="h1" variant="h6">My Profile</Typography>
+        <Box component="form" onSubmit={handleSubmit} sx={{
+           width:{xs:"100%",}}}>
+           <Grid container spacing={4}>
+            <Grid item size={{xs:12, md:6}}>
+              <Typography sx={{color:"royalblue"}}>Account Details</Typography>
+              <TextField
+                 fullWidth
+                 margin="normal"
+                 required
+                 id="username"
+                 label="username"
+                 helperText={username}
+                 type="text"
+                 value={form.username}
+                 onChange={(e) => setForm({ ...form,
+                    username: e.target.value })}
+                 name="username"
+                 
+              />
+              <TextField
+                 fullWidth
+                 margin="normal"
+                 required
+                 id="email"
+                 label="email"
+                 type="email"
+                 helperText={email}
+                 value={form.email}
+                 onChange={(e) => setForm({ ...form,
+                    email: e.target.value })}
+                 name="email"
+                 
+              />
+              <TextField
+                 fullWidth
+                 margin="normal"
+                 required
+                 id="firstname"
+                 label="firstname"
+                 type="text"
+                 value={form.firstname}
+                 onChange={(e) => setForm({ ...form,
+                    firstname: e.target.value })}
+                 name="firstname"
+                 
+              />
+              <TextField
+                 fullWidth
+                 margin="normal"
+                 required
+                 id="lastname"
+                 label="lastname"
+                 type="text"
+                 value={form.lastname}
+                 onChange={(e) => setForm({ ...form,
+                    lastname: e.target.value })}
+                 name="lastname"
+                 
+              />
+            </Grid>
+
+            <Grid item size={{xs:12, md:6}}>
+              <Typography sx={{color:"royalblue"}}>Bio Information</Typography>
+              <TextField
+                 required
+                 fullWidth
+                 margin="normal"
+                 id="address"
+                 label="address"
+                 type="text"
+                 value={form.address}
+                 onChange={(e) => setForm({ ...form,
+                    address: e.target.value })}
+                 name="address"
+                 
+              />
+           
+              <TextField
+                 required
+                 fullWidth
+                 margin="normal"
+                 id="nationality"
+                 label="nationality"
+                 type="text"
+                 value={form.nationality}
+                 onChange={(e) => setForm({ ...form,
+                    nationality: e.target.value })}
+                 name="nationality"
+                 
+              />
+            
+              <TextField
+                 fullWidth
+                 required
+                 margin="normal"
+                 id="state"
+                 label="state"
+                 type="text"
+                 value={form.state}
+                 onChange={(e) => setForm({ ...form,
+                    state: e.target.value })}
+                 name="state"
+                 
+              />
+            
+              <TextField
+                 fullWidth
+                 required
+                 margin="normal"
+                 id="zipCode"
+                 label="zipCode"
+                 type="text"
+                 helperText={zip}
+                 value={form.zipCode}
+                 onChange={(e) => setForm({ ...form,
+                    zipCode: e.target.value })}
+                 name="zipCode"
+                 
+              />
+           
+              <TextField
+                 fullWidth
+                 required
+                 margin="normal"
+                 id="telephone"
+                 label="telephone"
+                 type="text"
+                 value={form.telephone}
+                 helperText={telephone}
+                 onChange={(e) => setForm({ ...form,
+                    telephone: e.target.value })}
+                 name="telephone"
+                 
+              />
+            </Grid>
+            <Grid item size={{xs:12, md:6}}>
+              <Typography sx={{color:"royalblue"}}>User Data</Typography>
+              <FormControl required sx={{margin:"16px 0px 0px 0px",width:"100%" }}>
+                <InputLabel id="gender-label">{form.gender || "gender"}</InputLabel>
+                <Select
+                    margin="normal"
+                    labelId="gender-label"
+                    id="gender"
+                    name="gender"
+                    value={form.gender}
+                    label="gender"
+                    onChange={(e) => setForm({ ...form,
+                      gender: e.target.value })}
+                     
+                    >
+                      <MenuItem value="M">Male</MenuItem>
+                      <MenuItem value="F">Female</MenuItem>
+                      <MenuItem value="O">Other</MenuItem>
+                </Select>
+              </FormControl>
+            
+              <FormControl
+              required sx={{margin:"16px 0px 0px 0px",width:"100%" }}>
+                <InputLabel id="role-label">{form.role || "role"}</InputLabel>
+                <Select
+                    disabled
+                    margin="normal"
+                    labelId="role-label"
+                    id="role"
+                    name="role"
+                    value={form.role}
+                    label="role"
+                    onChange={(e) => setForm({ ...form,
+                      role: e.target.value })}
+                     
+                    >
+                      <MenuItem value="teacher">Teacher</MenuItem>
+                      <MenuItem value="student">Student</MenuItem>
+                      <MenuItem value="parent">Parent</MenuItem>
+                      <MenuItem value="admin">Admin</MenuItem>
+                </Select>
+              </FormControl>
+            
+              <FormControl
+               sx={{margin:"16px 0px 0px 0px",width:"100%" }}>
+                <InputLabel id="class-label">{form.classId || "class"}</InputLabel>
+                <Select
+                    disabled
+                    margin="normal"
+                    labelId="class-label"
+                    id="classId"
+                    name="classId"
+                    value={form.classId}
+                    label="class"
+                    onChange={(e) => setForm({ ...form,
+                      classId: e.target.value })}
+                    >
+                      <MenuItem value="">None</MenuItem>
+                      {
+                        classList.map(classlist=>(
+                          <MenuItem key={classlist.id}
+                          value={classlist.id}>{classlist.classCode}</MenuItem>
+                        ))
+                        
+                      }
+                </Select>
+              </FormControl>
+            
+              <FormControl
+               sx={{margin:"16px 0px 0px 0px", width:"100%" }}>
+                <InputLabel id="child-label">{form.childId || "child"}</InputLabel>
+                <Select
+                    disabled
+                    margin="normal"
+                    labelId="child-label"
+                    id="childId"
+                    name="childId"
+                    value={form.childId}
+                    label="child"
+                    onChange={(e) => setForm({ ...form,
+                      childId: e.target.value })}
+                     
+                     
+                    >
+                      <MenuItem value="">None</MenuItem>
+                      {
+                        studentList.map(student=>(
+                          <MenuItem key={student.pk}
+                          value={student.pk}>{student.firstName+" "+student.lastName}</MenuItem>
+                        ))
+                        
+                      }
+                </Select>
+              </FormControl>
+            
+              <FormControl 
+               required sx={{margin:"16px 0px 0px 0px", width:"100%"}}>
+                 <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                 disabled
+                 id="entrance"
+                 label="entrance"
+                 value={dayjs(form.entrance)}
+                 format="YYYY-MM-DD hh:mm:ss"
+                 onChange={(e) => setForm({ ...form,
+                    entrance: e })}
+                 name="entrance"
+                 
+              /></LocalizationProvider>
+              </FormControl>
+            
+              <FormControl required sx={{margin:"16px 0px 0px 0px",width:"100%"}}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                 id="dob"
+                 label="dob"
+                 value={dayjs(form.dob)}
+                 format="YYYY-MM-DD"
+                 onChange={(e) =>setForm({ ...form, dob: e })}
+                 name="dob"
+                
+              /></LocalizationProvider>
+              </FormControl>
+            </Grid>
+
+            <Grid item size={{xs:12, md:6}}>
+            <Typography sx={{color:"royalblue"}}>Change Password</Typography>
+              <TextField
+                 fullWidth
+                 margin="normal"
+                 id="password"
+                 label="new password"
+                 type="password"
+                 value={form.password}
+                 onChange={(e) => setForm({ ...form,
+                    password: e.target.value })}
+                 name="password"
+                 
+              />
+              <TextField
+                 fullWidth
+                 margin="normal"
+                 id="confirm"
+                 label="confirm password"
+                 helperText={confirmError}
+                 type="password"
+                 value={confirm}
+                 onChange={(e) => setConfirm(e.target.value)}
+                 name="confirm"
+                 
+              />
+            </Grid>
+
+            <Grid size={{xs:12, md:12}}>
+              <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              disabled={isDisabled}
+              sx={{ mt: 3, mb: 2 }}>Update Profile</Button>
+            
+              <div className="loaderContainer">
+                     {isLoading && <CircularProgress />}
+               </div>
+            </Grid>
+           </Grid>
+           
+
+        </Box>
+
+      </Box>
+
+
+        <MessageDialogForm open={openMsgBox} 
+        onClose={handleCloseMsgBox} 
+        formContent={<Typography>{msg}</Typography>}
+        title="Message Dialog"
+        />
       </Layout>
     </div>
+    </LocalizationProvider>
 );
 
 }

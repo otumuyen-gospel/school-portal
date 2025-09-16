@@ -44,10 +44,8 @@ function Login(){
       }).catch((err) => {
         setIsLoading(false)
         setIsDisabled(false)  //re-enable button
-        if (err.message) {
-          setError(`Oops! sorry can't log you in.
-            Ensure your credentials are correct and
-            that you have an active connection`);
+        if (err) {
+          setError(JSON.stringify(err.response.data['detail']));
         }
       })
   }

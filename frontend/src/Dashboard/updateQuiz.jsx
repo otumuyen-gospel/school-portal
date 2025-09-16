@@ -14,29 +14,30 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
 
-
-function CreateQuiz(){
+function UpdateQuiz(){
   const [authUser] = useState(JSON.parse(localStorage.getItem('auth')));
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [msg, setMsg] = useState("");
   const [subjectList, setSubjectList] = useState([]);
+   const quiz = useLocation().state;
   const [form, setForm] = useState({
-    question:"",
-    option1:"",
-    option2:"",
-    option3:"",
-    answer:"",
-    subjectId:"",
-    classId:"",
-    endDate:dayjs(),
-    startDate:dayjs(),
-    setAsQuiz:false,
+    question:quiz?.question,
+    option1:quiz?.option1,
+    option2:quiz?.option2,
+    option3:quiz?.option3,
+    answer:quiz?.answer,
+    subjectId:quiz?.subjectId,
+    classId:quiz?.classId,
+    endDate:dayjs(quiz?.endDate),
+    startDate:dayjs(quiz?.startDate),
+    setAsQuiz:quiz?.setAsQuiz,
   });
   const handleOpenMsgBox = ()=>{
     setOpenMsgBox(true);
@@ -91,11 +92,11 @@ function CreateQuiz(){
     endDate:dayjs(form.endDate).format("YYYY-MM-DD"),
     startDate:dayjs(form.startDate).format("YYYY-MM-DD"),
     setAsQuiz:form.setAsQuiz,};
-    axiosInstance.post("http://localhost:8000/quizzes/create-quiz/",
+    axiosInstance.put("http://localhost:8000/quizzes/update-quiz/"+quiz?.id+"/",
           data).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button
-            setMsg("quiz created successfully");
+            setMsg("quiz updated successfully");
             handleOpenMsgBox();
     }).catch((err) => {
             setIsLoading(false)
@@ -110,21 +111,21 @@ function CreateQuiz(){
   
   return (
     <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="Add Quiz">
+      <Layout title="Update Quiz">
         <Box 
        sx={{
           minHeight:"100vh",
           marginTop:"10px",
         }}
         >
-        <Typography component="h1" variant="h6">Add Quiz</Typography>
+        <Typography component="h1" variant="h6">Update Quiz</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{
            width:{xs:"100%",}}}>
             <Typography component="p" sx={{
               textAlign:"center",
               color:"primary",
               }}>
-                Add Quiz
+                Update Quiz
            </Typography>
 
            <Grid container width="sm" direction="column" spacing={4}>
@@ -209,8 +210,7 @@ function CreateQuiz(){
             </Grid>
 
             <Grid>
-             
-              <Checkbox
+               <Checkbox
                  style={{display:"inline"}}
                  fullWidth
                  margin="normal"
@@ -224,7 +224,8 @@ function CreateQuiz(){
                  
               />
                <Typography style={{display:"inline"}}>
-                Set and Activate Quiz to Run Immediately after creation
+                Set and Activate Quiz to Run Immediately after creation. 
+                Remember to reset start and end date.
                 </Typography>
             </Grid>
 
@@ -290,7 +291,7 @@ function CreateQuiz(){
               fullWidth
               variant="contained"
               disabled={isDisabled}
-              sx={{ mt: 3, mb: 2 }}>Add Quiz</Button>
+              sx={{ mt: 3, mb: 2 }}>Update Quiz</Button>
             
               <div className="loaderContainer">
                      {isLoading && <CircularProgress />}
@@ -318,4 +319,4 @@ function CreateQuiz(){
 }
 
 
-export default CreateQuiz;
+export default UpdateQuiz;
