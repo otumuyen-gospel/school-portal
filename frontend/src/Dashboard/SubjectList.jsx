@@ -165,7 +165,7 @@ function SubjectList(){
   
   
   return (
-    <div style={{backgroundColor:"#FFF"}}>
+    <div style={{backgroundColor:"#FCFCF9"}}>
       <Layout title="Subject Lists">
         <Box 
        sx={{
@@ -174,11 +174,11 @@ function SubjectList(){
         }}
         >
         <Typography component="h1" variant="h6">Subject Lists</Typography>
-        <Grid>
+        <Grid container spacing={4}>
           {
             subjectList.map(subjectlist=>(
-              <Grid item key={subjectlist.id}>
-                <Card style={{marginBottom:"25px"}}>
+              <Grid item size={{xs:12, md:6}} key={subjectlist.id}>
+                <Card elevation={3} style={{marginBottom:"25px"}}>
                   <CardContent>
                      <Typography
                      >{subjectlist.subjectCode}</Typography>

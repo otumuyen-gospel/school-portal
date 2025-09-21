@@ -137,11 +137,11 @@ function ClassList(){
         }}
         >
         <Typography component="h1" variant="h6">Class Lists</Typography>
-        <Grid>
+        <Grid container spacing={4}>
           {
             classList.map(classlist=>(
-              <Grid item key={classlist.id}>
-                <Card style={{marginBottom:"25px"}}>
+              <Grid item size={{xs:12, md:6}} key={classlist.id}>
+                <Card elevation={3}>
                   <CardContent>
                      <Typography>{classlist.classCode}</Typography>
                      <Typography>{classlist.className}</Typography>

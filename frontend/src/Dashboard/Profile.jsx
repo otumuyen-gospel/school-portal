@@ -210,7 +210,7 @@ function Profile(){
   
   return (
      <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <div style={{backgroundColor:"#FFF", flexGrow:1}}>
+    <div style={{backgroundColor:"#F9F9FE", flexGrow:1}}>
       <Layout title="My Profile">
         <Box 
        sx={{

@@ -31,7 +31,7 @@ class ClassList(generics.ListAPIView):
     queryset = Class.objects.all()
     serializer_class = ClassSerializers
     permission_classes = [IsAuthenticated, IsInGroup, ]
-    required_groups = ['admin','teacher']
+    required_groups = ['admin','teacher','parent','student']
     name = 'class-list'
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]

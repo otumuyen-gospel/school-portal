@@ -30,21 +30,21 @@ class ClassUsers(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializers
     permission_classes = [IsAuthenticated, IsInGroup,]
-    required_groups = ['admin','teacher',]
+    required_groups = ['admin','teacher','parent','student']
     name = 'class-users'
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('id','childId','classId__id',
+    filterset_fields = ('id','childId','classId__id', 'entrance',
                      'firstName','lastName','email','gender','role') 
 
      #you can search using the "search" keyword
-    search_fields = ('id','childId','classId__id',
+    search_fields = ('id','childId','classId__id','entrance',
                      'firstName','lastName','email','gender','role') 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('id','childId','classId__id',
+    ordering_fields = ('id','childId','classId__id','entrance',
                      'firstName','lastName','email','gender','role')  
 
 
@@ -60,9 +60,7 @@ class ClassUsers(generics.ListAPIView):
 
         # Example: Filter by classId
         val = int(self.get_url_values())
-        userClass = self.request.user.classId
-        if (userClass != None and val == userClass.id) or \
-        self.request.user.is_superuser:
+        if (val):
             return self.queryset.filter(classId=val)
         else:
             raise PermissionDenied("You don't have access right")
@@ -75,21 +73,21 @@ class UsersList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializers
     permission_classes = [IsAuthenticated, IsInGroup,]
-    required_groups = ['admin',]
+    required_groups = ['admin','teacher','parent','student']
     name = 'users-list'
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('id','childId','classId__id',
+    filterset_fields = ('id','childId','classId__id','entrance',
                      'firstName','lastName','email','gender','role') 
 
      #you can search using the "search" keyword
-    search_fields = ('id','childId','classId__id',
+    search_fields = ('id','childId','classId__id','entrance',
                      'firstName','lastName','email','gender','role') 
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('id','childId','classId__id',
+    ordering_fields = ('id','childId','classId__id','entrance',
                      'firstName','lastName','email','gender','role')  
 
     

@@ -17,7 +17,6 @@ import ScheduleIcon from "@mui/icons-material/ScheduleOutlined";
 import StudentIcon from "@mui/icons-material/SchoolOutlined";
 import SubjectIcon from "@mui/icons-material/SubjectOutlined";
 import Collapse from "@mui/material/Collapse";
-import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -214,10 +213,10 @@ function Sidebar(props){
     }}
     sx={{
         '& .MuiDrawer-paper': {
-            backgroundColor:'#FFFFFF',
+            backgroundColor:'#F9F9F9',
             boxSizing:'border-box',
             color:'royalblue',
-            boxShadow:1,
+            boxShadow:0,
         },
         flexShrink:0,
         display:{sx:"none",sm:"block"},
@@ -225,13 +224,12 @@ function Sidebar(props){
     >
         {/* header section*/}
         <ListItem alignItems="center" sx={{
-            padding:"10px",
+            padding:"15px",
+            backgroundColor:"royalblue",
              }}>
-            <ListItemIcon><StudentIcon style={{color:"royalblue"}} /></ListItemIcon>
-            <ListItemText>SCHOOL PORTAL</ListItemText>
+            <ListItemIcon><StudentIcon style={{color:"white"}} /></ListItemIcon>
+            <ListItemText style={{color:"white"}}>SCHOOL PORTAL</ListItemText>
         </ListItem>
-         <Divider/>
-
           {/* page links */}
          <ListItem  sx={{
             cursor:"pointer",
@@ -259,7 +257,7 @@ function Sidebar(props){
         />
 
         {/* logout section*/}
-        <Divider/>
+        
         <ListItem sx={{
             cursor:"pointer",
         }} button onClick={()=>{

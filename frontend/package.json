@@ -8,6 +8,7 @@
     "@fontsource/roboto": "^5.2.6",
     "@mui/icons-material": "^7.3.1",
     "@mui/material": "^7.3.1",
+    "@mui/x-charts": "^8.11.3",
     "@mui/x-date-pickers": "^8.10.2",
     "axios": "^1.11.0",
     "axios-auth-refresh": "^3.3.6",
