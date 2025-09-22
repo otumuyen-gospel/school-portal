@@ -17,37 +17,74 @@ import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 function UserAttendance(){
   const[authUser] = useState(JSON.parse(localStorage.getItem('auth')));
+  const[authUserChild, setAuthUserChild] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [attendanceList, setAttendanceList] = useState([]);
   const [msg, setMsg] = useState("");
+  const userId = authUser['user'].role === 'student' ? authUser['user'].pk : 
+  authUser['user'].childId;
   const [url,setUrl] = useState("http://localhost:8000/attendance/user-attendance/"
-         +authUser['user'].pk+"/");
+         +userId+"/");
   const [query,setQuery] =useState({});
-  const [userClass,setUserClass] = useState({});
+  const [classList,setClassList] = useState([]);
   const [params, setParams] = useState("");
   const [nextPage,setNextPage] = useState(null);
   const [prevPage,setPrevPage] = useState(null);
 
+  useEffect(()=>{
+      //fetch all paginated subject data by recursively calling page by page
+      const listClass = async(url)=>{
+        try{
+           const response = await axiosInstance.get(url)
+            const data = response.data.results;
+            const nextPage = response.data.next;
+            if(nextPage){
+              return data.concat(await listClass(nextPage));
+            }else{
+              return data;
+            }
+        }catch(error){
+           setMsg(`Oops! sorry can't load class List`);
+           throw error; //rethrow consequent error
+       }
+      }
+      
+      if(authUser){
+         const url = "http://localhost:8000/classes/class-list/";
+      listClass(url).then(allData=>{
+        setClassList(allData)
+       }).catch((error)=>{
+         setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+       })
+      }
+     
+    },[authUser])
+  
+    const getClassCode = (attendance)=>{
+      const c = classList.filter(classes=>(classes.id === attendance.classId))[0];
+      return c ? c.classCode : "None";
+    }
 
   useEffect(()=>{
-    const listClasses = async(url)=>{
+    const childInfo = async(url)=>{
       try{
          const response = await axiosInstance.get(url);
           const data = response.data;
             if(data){
-             setUserClass(data);
+             setAuthUserChild(data);
           }
       }catch(error){
-         setMsg(`Oops! sorry can't load user class`);
+         setMsg(`Oops! sorry can't load user details`);
      }
     }
 
-    if(authUser){
-         const url = "http://localhost:8000/classes/user-class/"+authUser['user'].classId+"/";
-         listClasses(url);
+    if(userId){
+         const url = "http://localhost:8000/accounts/retrieve-user/"+userId+"/";
+         childInfo(url);
     }
     
-  },[authUser])
+  },[userId])
+
 
   useEffect(()=>{
       const attendance = async(endpoint, queries)=>{
@@ -63,7 +100,7 @@ function UserAttendance(){
            setIsLoading(false);
           }catch(error){
            setIsLoading(false);
-           setMsg(error+`Oops! sorry can't load class attendance List`);
+           setMsg(`Oops! sorry can't load user attendance List`);
           }
       }
 
@@ -138,11 +175,11 @@ function UserAttendance(){
                       </TableCell>
                       <TableCell>
                         {
-                           userClass.className
+                           getClassCode(attendance)
                         }
                       </TableCell>
                       <TableCell>{
-                        authUser['user'].firstName + " "+  authUser['user'].lastName
+                        authUserChild.firstName + " "+  authUserChild.lastName
                        }
                       </TableCell>
                       <TableCell>

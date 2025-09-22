@@ -133,9 +133,13 @@ class UserRetrieve(generics.RetrieveAPIView):
     name = 'retrieve-user'
     lookup_field = 'id'
     def get_object(self):
+        
         obj = super().get_object()
-        if self.request.user.is_superuser or \
-            obj == self.request.user:
+        if self.request.user.is_superuser:
+             return obj
+        elif obj == self.request.user:
+             return obj
+        elif int(obj.id) == int(self.request.user.childId):
              return obj
         else:
             raise PermissionDenied("You do not have permission to view this object.")

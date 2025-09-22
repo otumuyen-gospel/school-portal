@@ -52,7 +52,8 @@ function Dashboard(){
        setMsg("an error has occured");
      })
   },[])
-  
+
+  // fetch student's count for the various class for four consecutive years
   useEffect(()=>{
     if(classList.length){
       setIsLoading(true);

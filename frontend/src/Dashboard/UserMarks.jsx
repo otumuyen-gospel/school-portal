@@ -25,7 +25,7 @@ function UserMarks(){
    userId+"/"
   );
   const [query,setQuery] =useState({});
-  const [userClass,setUserClass] = useState({});
+  const [classList,setClassList] = useState([]);
   const [subjectList,setSubjectList] = useState([]);
   const [params, setParams] = useState("");
   const [nextPage,setNextPage] = useState(null);
@@ -38,24 +38,38 @@ function UserMarks(){
   }
   
   useEffect(()=>{
-      const listClasses = async(url)=>{
-        try{
-           const response = await axiosInstance.get(url);
-            const data = response.data;
-              if(data){
-               setUserClass(data);
-            }
-        }catch(error){
-           setMsg(`Oops! sorry can't load user class`);
-       }
-      }
-  
-      if(authUser){
-           const url = "http://localhost:8000/classes/user-class/"+authUser['user'].classId+"/";
-           listClasses(url);
-      }
-      
-    },[authUser])
+    //fetch all paginated subject data by recursively calling page by page
+    const listClass = async(url)=>{
+      try{
+         const response = await axiosInstance.get(url)
+          const data = response.data.results;
+          const nextPage = response.data.next;
+          if(nextPage){
+            return data.concat(await listClass(nextPage));
+          }else{
+            return data;
+          }
+      }catch(error){
+         setMsg(`Oops! sorry can't load class List`);
+         throw error; //rethrow consequent error
+     }
+    }
+    
+    if(authUser){
+       const url = "http://localhost:8000/classes/class-list/";
+    listClass(url).then(allData=>{
+      setClassList(allData)
+     }).catch((error)=>{
+       setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+     })
+    }
+   
+  },[authUser])
+
+  const getClassCode = (mark)=>{
+    const c = classList.filter(classes=>(classes.id === mark.classId))[0];
+    return c ? c.classCode : "None";
+  }
   
   useEffect(()=>{
     //fetch all paginated subject data by recursively calling page by page
@@ -76,8 +90,7 @@ function UserMarks(){
     }
     
     if(authUser){
-       const url = "http://localhost:8000/subjects/class-subject-list/"+
-       authUser['user'].classId+"/";
+       const url = "http://localhost:8000/subjects/subject-list/";
     listSubjects(url).then(allData=>{
       setSubjectList(allData)
      }).catch((error)=>{
@@ -221,7 +234,7 @@ function UserMarks(){
                       </TableCell>
                       <TableCell>
                         {
-                           userClass.classCode
+                           getClassCode(mark)
                         }
                       </TableCell>
                       

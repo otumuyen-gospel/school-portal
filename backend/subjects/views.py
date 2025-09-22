@@ -92,7 +92,7 @@ class SubjectList(generics.ListAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializers
     permission_classes = [IsAuthenticated, IsInGroup,]
-    required_groups = ['admin',]
+    required_groups = ['admin','teacher','student','parent']
     name = 'subject-list'
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]

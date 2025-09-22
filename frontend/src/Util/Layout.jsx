@@ -9,9 +9,12 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from "@mui/material/Typography";
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axiosInstance from './ApiRefresher';
 import SideBar from "./Sidebar";
+import SideBar2 from './Sidebar2';
+import SideBar3 from './Sidebar3';
+import SideBar4 from './Sidebar4';
 
 function Layout(props){
    const [scrolling, setScrolling] = useState(false);
@@ -20,6 +23,7 @@ function Layout(props){
    const [role, setRole] = useState("role");
    const [badge, setBadge] = useState(0);
    const [open, setOpen] = useState(true);
+   const navigate = useNavigate();
 
    const openDrawer = ()=>{
     setOpen(open ? false : true);
@@ -61,10 +65,25 @@ function Layout(props){
     }
    },[scrollTop]); 
 
+   const userSideBar = ()=>{
+    if(role === 'admin'){
+       return  <SideBar open={open} onOpenDrawer={openDrawer}/> ;
+    }else if(role === 'teacher'){
+        return  <SideBar2 open={open} onOpenDrawer={openDrawer}/> ;
+    }else if(role === 'student'){
+        return <SideBar3 open={open} onOpenDrawer={openDrawer}/> ;
+    }else if(role === 'parent'){
+        return  <SideBar4 open={open} onOpenDrawer={openDrawer}/> ;
+    }else{
+        navigate("/");
+    }
+
+   }
+
     return(
     <div sx={{flexGrow: 1}}>
         {/* navigation sidebar */}
-        <SideBar open={open} onOpenDrawer={openDrawer}/>
+        {userSideBar()}
 
         {/* Header or app bar*/}
         <Fade in={!scrolling}>

@@ -1,19 +1,12 @@
 import AccountIcon from "@mui/icons-material/AccountBoxOutlined";
 import AddIcon from "@mui/icons-material/AddCircleOutlined";
-import TicketIcon from "@mui/icons-material/AirplaneTicket";
 import ToggleOn from "@mui/icons-material/ArrowDropDown";
 import ToggleOff from "@mui/icons-material/ArrowDropUp";
 import ClassIcon from "@mui/icons-material/ClassOutlined";
 import DashboardIcon from "@mui/icons-material/DashboardOutlined";
-import GradeIcon from "@mui/icons-material/GradeOutlined";
-import HomeWorkIcon from "@mui/icons-material/HomeWorkOutlined";
-import AttendanceIcon from "@mui/icons-material/PagesOutlined";
-import PeopleOutline from "@mui/icons-material/PeopleOutline";
 import LogoutIcon from "@mui/icons-material/PortableWifiOff";
-import QuizIcon from "@mui/icons-material/QuizOutlined";
 import ScheduleIcon from "@mui/icons-material/ScheduleOutlined";
 import StudentIcon from "@mui/icons-material/SchoolOutlined";
-import SubjectIcon from "@mui/icons-material/SubjectOutlined";
 import Collapse from "@mui/material/Collapse";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -29,7 +22,7 @@ import axiosInstance from "./ApiRefresher";
 import ConfirmDialogForm from "./ConfirmDialogForm";
 import MessageDialogForm from "./MessageDialogForm";
 
-function Sidebar(props){
+function Sidebar3(props){
   const navigate = useNavigate();    
   const location = useLocation();
   const isMobile = useMediaQuery('(max-width:600px)');
@@ -45,44 +38,36 @@ function Sidebar(props){
 
   const [items] = useState({
         Account:[
-            {label:"New User", Icon:AddIcon, 
-                to:"/register/", hidden:false},
-            {label:"All Users", Icon:PeopleOutline, 
-                to:"/user-lists/", hidden:false},
             {label:"Profile", Icon:AccountIcon,
                  to:"/profile/", hidden:false},
-             {label:"All Attendance", Icon:AttendanceIcon, 
-                to:"/attendance-lists/", hidden:false},
+             {label:"My Attendance", Icon:AccountIcon, 
+                to:"/my-attendance/", hidden:false},
             
         ],
         Classes:[
-            {label:"New Class", Icon:AddIcon, 
-                to:"/create-class/", hidden:false},
-            {label:"Class View", Icon:ClassIcon, 
-                to:"/class-lists/", hidden:false},
-            {label:"New Subject", Icon:AddIcon, 
-                to:"/create-subject/", hidden:false},
-            {label:"All Subject", Icon:SubjectIcon, 
-                to:"/subject-list/", hidden:false},
+            {label:"Class Subject", Icon:ClassIcon, 
+                to:"/class-subject-list/", hidden:false},
         ],
 
          Assessment:[
-            {label:"All Grades", Icon:GradeIcon, 
-                to:"/mark-list/", hidden:false},
-            {label:"All Work", Icon:HomeWorkIcon, 
-                to:"/homework-list/", hidden:false},
-            {label:"All Quiz", Icon:QuizIcon, 
-                to:"/quiz-list/", hidden:false},
+            {label:"My Grades", Icon:AccountIcon,
+                 to:"/user-marks/", hidden:false},
+            {label:"New work", Icon:AddIcon, 
+                to:"/create-homework/", hidden:false},
+            {label:"My Work", Icon:AccountIcon,
+                 to:"/user-homework-list/", hidden:false},
+            {label:"My Quiz", Icon:AccountIcon,
+                 to:"/user-quiz/", hidden:false},
             
         ],
 
         Others:[
-            {label:"New Schedule", Icon:AddIcon, 
-                to:"/create-schedule/", hidden:false},
-            {label:"All Schedule", Icon:ScheduleIcon, 
-                to:"/schedule-list/", hidden:false},
-            {label:"All Ticket", Icon:TicketIcon, 
-                to:"/complaint-list/", hidden:false},
+            {label:"My Schedules", Icon:ScheduleIcon, 
+                to:"/user-schedule/", hidden:false},
+            {label:"New Ticket", Icon:AddIcon, 
+                to:"/create-complaint/", hidden:false},
+            {label:"My Tickets", Icon:AccountIcon,
+                 to:"/user-complaint-list/", hidden:false},
             
         ],
 
@@ -235,4 +220,4 @@ function Sidebar(props){
     </Drawer>
 }
 
-export default Sidebar;
+export default Sidebar3;

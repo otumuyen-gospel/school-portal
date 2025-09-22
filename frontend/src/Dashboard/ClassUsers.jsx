@@ -34,14 +34,15 @@ function ClassUsers(){
   const [dialogMsg, setDialogMsg] = useState("");
   const [url,setUrl] = useState("http://localhost:8000/accounts/class-users/"
     +authUser['user'].classId+"/");
-  const [query,setQuery] =useState({});
+  const [query,setQuery] =useState({
+    search:'', role:'student',
+  });
   const [classList,setClassList] = useState([]);
   const [currUser, setCurrUser] = useState({});
   const [params, setParams] = useState("");
   const [nextPage,setNextPage] = useState(null);
   const [prevPage,setPrevPage] = useState(null);
   const [remark,setRemark] = useState("");
-  const [mark,setMark]  = useState(false);
   const [markedAttendance, setMarkedAttendance] = useState([]);
   
 
@@ -54,15 +55,45 @@ function ClassUsers(){
   const handleCloseAttendanceDialog = ()=>{
     setOpenAttendanceDialog(false);
   }
-  const handleOpenAttendanceDialog = ()=>{
-    if(mark){ //checked
+  const handleOpenAttendanceDialog = (e, attendance)=>{
+    if(e.target.checked){ //checked
        setOpenAttendanceDialog(true);
     }else{ //unchecked
       //delete instances of current attendance from backend and frontend
+      deletes(attendance);
       
     }
-   
   }
+
+  const removeAttendanceFromList = (theAttendance, data)=>{
+     const remainingAttendance = data.filter(attendance => attendance.id !== theAttendance.id);
+      return remainingAttendance;
+    }
+     
+    const deletes = async (marked)=>{
+      const endpoint = "http://localhost:8000/attendance/delete-attendance/"+
+      marked.id+"/"; 
+      setIsLoading(true);
+        try{
+            const response = await axiosInstance.delete(endpoint);
+            const data = response.data.results;
+            if(data){
+              setDialogMsg(JSON.stringify(data));
+            }else{
+              setDialogMsg("attendance was unmarked");
+            }
+            
+             handleOpenMsgBox();
+            setIsLoading(false);
+            setMarkedAttendance(removeAttendanceFromList(marked,markedAttendance));
+  
+        }catch(error){
+            setIsLoading(false);
+            setDialogMsg(JSON.stringify(error.response.data));
+            handleOpenMsgBox();
+      }
+        
+     }
 
   const attendance = async ()=>{
     const endpoint = "http://localhost:8000/attendance/create-attendance/"; 
@@ -75,13 +106,10 @@ function ClassUsers(){
           attendance:true
         };
           const response = await axiosInstance.post(endpoint, userData );
-          const data = response.data.results;
+          const data = response.data;
           if(data){
-            setDialogMsg(data);
-          }else{
-            setDialogMsg("this user attendance captured successfully");
+            markedAttendance.push(data)
           }
-           handleOpenMsgBox();
           setIsLoading(false);
       }catch(error){
           setIsLoading(false);
@@ -104,8 +132,8 @@ function ClassUsers(){
     return remainingUsers;
   }
    
-  const promotes = async ()=>{
-    const endpoint = "http://localhost:8000/accounts/user-promotion/"+currUser.pk+"/"; 
+  const promotes = async (pk)=>{
+    const endpoint = "http://localhost:8000/accounts/user-promotion/"+pk+"/"; 
     setIsLoading(true);
       try{
           const response = await axiosInstance.patch(endpoint, {classId:currUser.classId});
@@ -115,9 +143,11 @@ function ClassUsers(){
           }else{
             setDialogMsg("this user was promoted successfully");
           }
-           handleOpenMsgBox();
           setIsLoading(false);
-          updateUserFromList();
+          if(pk === currUser.pk){ //if not student be silent
+             handleOpenMsgBox();
+             updateUserFromList();
+          }
       }catch(error){
           setIsLoading(false);
           setDialogMsg(JSON.stringify(error.response.data));
@@ -125,6 +155,20 @@ function ClassUsers(){
     }
       
    }
+
+    const updateParent = async()=>{
+      try{
+        const q = {role:'parent', childId:currUser.pk}
+         const response = await axiosInstance.get(url,{params:q});
+          const data = response.data;
+            if(data){
+             promotes(data.results[0].pk);
+          }
+      }catch(error){
+         setMsg(`Oops! sorry can't load user details`);
+     }
+    }
+  
 
   const handleOpenMsgBox = ()=>{
     setOpenMsgBox(true);
@@ -165,13 +209,11 @@ function ClassUsers(){
 
   const getMarkedAttendance = (user)=>{
     const marked = markedAttendance.filter(att=>(att.userId === user.pk))[0];
-    setMark(marked ? true : false);
     return <Checkbox
-              checked={mark}
+              checked={marked ? marked.attendance: false}
               onChange={(e)=>{
               setCurrUser(user);
-              setMark(e.target.value)
-              handleOpenAttendanceDialog();
+              handleOpenAttendanceDialog(e, marked);
     }}/>;
   }
   useEffect(()=>{
@@ -223,7 +265,7 @@ function ClassUsers(){
             return data;
           }
       }catch(error){
-         setMsg(`Oops! sorry can't load class List`);
+         setMsg(`Oops! sorry can't load class Attendance`);
          throw error; //rethrow consequent error
      }
     }
@@ -235,7 +277,7 @@ function ClassUsers(){
       listAttendance(url, queries).then(allData=>{
          setMarkedAttendance(allData)
       }).catch((error)=>{
-         setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class attendance List`);
+         setMsg(` Oops! sorry can't load class attendance List`);
       })
     }
     
@@ -369,7 +411,10 @@ function ClassUsers(){
 
         <ConfirmDialogForm open={openPromoteDialog} 
         onClose={handleClosePromoteDialog} 
-        onSubmit={()=>promotes()}
+        onSubmit={()=>{
+          promotes(currUser.pk); //promote student
+          updateParent(currUser.pk); //promote student's parent as well
+        }}
         formContent={
           <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
               <InputLabel id="class-label"/>
