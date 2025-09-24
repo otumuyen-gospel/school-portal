@@ -91,9 +91,9 @@ function UserQuiz(){
   const saveReport = (quiz)=>{
     const data = {
      'question':quiz.question,
-      'answer':quiz.answer,
-      'option':selectedOption,
-      'id':quiz.id,
+     'answer':quiz.answer,
+     'option':selectedOption,
+     'id':quiz.id,
     };
    deleteReport(data) // delete report if it already exist
    setReportList(data); //add the new data

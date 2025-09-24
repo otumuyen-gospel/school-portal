@@ -178,7 +178,7 @@ function Dashboard(){
   },[])
   
   useEffect(()=>{
-    if(studentCount && parentCount && adminCount && teacherCount){
+    if(studentCount || parentCount || adminCount || teacherCount){
       const percentageCount = (data)=>{
         return ((data / (studentCount + parentCount + 
        teacherCount + adminCount)) * 100).toFixed(1);
@@ -226,7 +226,9 @@ function Dashboard(){
                           
                   />
               </CardContent>
-               <Typography sx={{textAlign:"center"}}>Total : {studentCount}</Typography>
+               <Typography sx={{textAlign:"center"}}>
+                Total : {studentCount ? studentCount : 0}
+                </Typography>
             </Card>
           </Grid>
 
@@ -253,7 +255,9 @@ function Dashboard(){
                           
                   />
               </CardContent>
-              <Typography sx={{textAlign:"center"}}>Total : {parentCount}</Typography>
+              <Typography sx={{textAlign:"center"}}>
+                Total : {parentCount ? parentCount : 0}
+                </Typography>
             </Card>
           </Grid>
 
@@ -282,7 +286,9 @@ function Dashboard(){
                   />
                 </Typography>
               </CardContent> 
-              <Typography sx={{textAlign:"center"}}>Total : {teacherCount}</Typography>
+              <Typography sx={{textAlign:"center"}}>
+                Total : {teacherCount ? teacherCount : 0}
+                </Typography>
             </Card>
           </Grid>
 
@@ -311,7 +317,9 @@ function Dashboard(){
                   />
                 </Typography>
               </CardContent>
-              <Typography sx={{textAlign:"center"}}>Total : {adminCount}</Typography>
+              <Typography sx={{textAlign:"center"}}>
+                Total : {adminCount ? adminCount : 0}
+                </Typography>
             </Card>
           </Grid>
 
@@ -325,20 +333,6 @@ function Dashboard(){
                  ]}
                  yAxis={[{width:50}]}
                 />
-                {/*}
-               <LineChart 
-                  xAxis={[
-                    {data:getValues(studentList)},
-                  ]}
-                  series={getKeys(studentList).map((key, index)=>({
-                            data:studentList[index][key],
-                            label:key,
-                            area:true,   
-                   }))}
-                  height={300}
-                  grid={{vertical:true, horizontal:true}}
-               />
-               {*/}
                
               </CardContent>
                <CardActions>

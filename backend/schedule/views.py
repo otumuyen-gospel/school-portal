@@ -12,7 +12,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser,AllowAny
 from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter
 from account.permissions import IsInGroup
 from rest_framework.exceptions import PermissionDenied
-from datetime import datetime
+from django.utils import timezone
 
 
 '''
@@ -48,13 +48,13 @@ class ScheduleList(generics.ListAPIView):
                         'classId__className','title','detail','startDateTime',)
 
     def get_queryset(self):
-        #delete schedules that due for expiration
+        #delete schedules that are due for expiration
         self.deleteSchedules()
         return  self.queryset
 
     def deleteSchedules(self):
         if self.queryset.count():
-            self.queryset.filter(endDateTime__lt=datetime.today()).delete()
+            self.queryset.filter(endDateTime__lt=timezone.now()).delete()
     
 #this generic class will handle UPDATE(list 1 item) by admin and teacher only 
 class ScheduleUpdate(generics.UpdateAPIView):
