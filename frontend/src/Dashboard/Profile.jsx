@@ -20,6 +20,7 @@ import MessageDialogForm from "../Util/MessageDialogForm";
 function Profile(){
    const [auth] = useState(JSON.parse(localStorage.getItem('auth')));
   const [isLoading, setIsLoading] = useState(false);
+  const [isProfileLoading, setIsProfileLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [classList, setClassList] = useState([]);
@@ -30,11 +31,15 @@ function Profile(){
   const [email, setEmail] = useState('');
   const [confirmError, setConfirmError] = useState('');
   const [msg, setMsg] = useState("");
+  const [password, setPassword] = useState({
+    password:'',
+    new_password:'',
+    confirm:'',
+  })
   const [form, setForm] = useState({
     username:auth ? auth['user'].username : "",
     firstname:auth ? auth['user'].firstName : "",
     lastname:auth ? auth['user'].lastName : "",
-    password:auth ? auth['user'].password : "",
     email:auth ? auth['user'].email : "",
     gender:auth ? auth['user'].gender : "",
     role:auth ? auth['user'].role : "",
@@ -49,7 +54,6 @@ function Profile(){
     dob:dayjs(auth ? auth['user'].dob : ""),
 
   });
-  const [confirm, setConfirm] = useState(auth ? auth['user'].password : "");
   const handleOpenMsgBox = ()=>{
     setOpenMsgBox(true);
   }
@@ -131,6 +135,42 @@ function Profile(){
     }
   }
 
+  const handlePasswordSubmit = (event)=>{
+    event.preventDefault();
+    if(event.target.checkValidity()){
+        if(password.confirm !== password.new_password){
+           setConfirmError("password confirm mismatch");
+           setIsDisabled(false)  //re-enable button
+          return;
+        }
+    }else{
+        setMsg("Please ensure to enter all your data correctly");
+        handleOpenMsgBox();
+        return;
+    }
+
+     const data = {
+      password:password.password,
+      new_password:password.new_password,
+    };
+    setIsLoading(true);
+    axiosInstance.put("http://localhost:8000/auth/update-password/"+
+      (auth ? auth['user'].pk : "")+"/",
+          data).then((res) => {
+            setIsLoading(false)
+            setIsDisabled(false)  //re-enable button
+            setMsg("password changed successfully ");
+            handleOpenMsgBox();
+    }).catch((err) => {
+            setIsLoading(false)
+            setIsDisabled(false)  //re-enable button
+            if (err) {
+              setMsg(JSON.stringify(err.response.data));
+                 handleOpenMsgBox();
+            }
+    })
+  }
+
  const handleSubmit = (event)=>{
     event.preventDefault();
     if(event.target.checkValidity()){
@@ -158,7 +198,7 @@ function Profile(){
           setIsDisabled(false)  //re-enable button
           return;
         }
-        if(confirm !== form.password){
+        if(form.confirm !== form.password){
            setConfirmError("password confirm mismatch");
            setIsDisabled(false)  //re-enable button
           return;
@@ -171,7 +211,6 @@ function Profile(){
     
     const data = {
       username:form.username,
-      password:form.password,
       firstName:form.firstname,
       lastName:form.lastname,
       email:form.email,
@@ -188,17 +227,17 @@ function Profile(){
       zipCode:form.zipCode
 
     };
-    setIsLoading(true);
-    axiosInstance.put("http://localhost:8000/accounts/user-update/"+
+    setIsProfileLoading(true);
+    axiosInstance.patch("http://localhost:8000/accounts/user-update/"+
       (auth ? auth['user'].pk : "")+"/",
           data).then((res) => {
-            setIsLoading(false)
+            setIsProfileLoading(false)
             setIsDisabled(false)  //re-enable button
             changeAuthData(res.data);
             setMsg("User account updated successfully ");
             handleOpenMsgBox();
     }).catch((err) => {
-            setIsLoading(false)
+            setIsProfileLoading(false)
             setIsDisabled(false)  //re-enable button
             if (err) {
               setMsg(JSON.stringify(err.response.data));
@@ -218,12 +257,11 @@ function Profile(){
           marginTop:"10px",
         }}
         >
-        <Typography component="h1" variant="h6">My Profile</Typography>
+        <Typography component="h1" variant="h6" sx={{color:"royalblue"}}>My Profile</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{
-           width:{xs:"100%",}}}>
+               width:{xs:"100%",}}}>
            <Grid container spacing={4}>
-            <Grid item size={{xs:12, md:6}}>
-              <Typography sx={{color:"royalblue"}}>Account Details</Typography>
+            <Grid item size={{xs:12, sm:6, md:4}}>
               <TextField
                  fullWidth
                  margin="normal"
@@ -278,10 +316,38 @@ function Profile(){
                  name="lastname"
                  
               />
-            </Grid>
-
-            <Grid item size={{xs:12, md:6}}>
-              <Typography sx={{color:"royalblue"}}>Bio Information</Typography>
+              </Grid>
+              <Grid item size={{xs:12, sm:6,md:4}}>
+              <FormControl required sx={{margin:"16px 0px 0px 0px",width:"100%" }}>
+                <InputLabel id="gender-label">{form.gender || "gender"}</InputLabel>
+                <Select
+                    margin="normal"
+                    labelId="gender-label"
+                    id="gender"
+                    name="gender"
+                    value={form.gender}
+                    label="gender"
+                    onChange={(e) => setForm({ ...form,
+                      gender: e.target.value })}
+                     
+                    >
+                      <MenuItem value="M">Male</MenuItem>
+                      <MenuItem value="F">Female</MenuItem>
+                      <MenuItem value="O">Other</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl required sx={{margin:"16px 0px 0px 0px",width:"100%"}}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                 id="dob"
+                 label="dob"
+                 value={dayjs(form.dob)}
+                 format="YYYY-MM-DD"
+                 onChange={(e) =>setForm({ ...form, dob: e })}
+                 name="dob"
+                
+              /></LocalizationProvider>
+              </FormControl>
               <TextField
                  required
                  fullWidth
@@ -309,7 +375,9 @@ function Profile(){
                  name="nationality"
                  
               />
-            
+            </Grid>
+
+            <Grid item size={{xs:12,sm:6, md:4}}>
               <TextField
                  fullWidth
                  required
@@ -323,7 +391,6 @@ function Profile(){
                  name="state"
                  
               />
-            
               <TextField
                  fullWidth
                  required
@@ -354,27 +421,8 @@ function Profile(){
                  
               />
             </Grid>
-            <Grid item size={{xs:12, md:6}}>
-              <Typography sx={{color:"royalblue"}}>User Data</Typography>
-              <FormControl required sx={{margin:"16px 0px 0px 0px",width:"100%" }}>
-                <InputLabel id="gender-label">{form.gender || "gender"}</InputLabel>
-                <Select
-                    margin="normal"
-                    labelId="gender-label"
-                    id="gender"
-                    name="gender"
-                    value={form.gender}
-                    label="gender"
-                    onChange={(e) => setForm({ ...form,
-                      gender: e.target.value })}
-                     
-                    >
-                      <MenuItem value="M">Male</MenuItem>
-                      <MenuItem value="F">Female</MenuItem>
-                      <MenuItem value="O">Other</MenuItem>
-                </Select>
-              </FormControl>
-            
+
+            <Grid item size={{xs:12, md:12}}>
               <FormControl
               required sx={{margin:"16px 0px 0px 0px",width:"100%" }}>
                 <InputLabel id="role-label">{form.role || "role"}</InputLabel>
@@ -464,65 +512,81 @@ function Profile(){
                  
               /></LocalizationProvider>
               </FormControl>
-            
-              <FormControl required sx={{margin:"16px 0px 0px 0px",width:"100%"}}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                 id="dob"
-                 label="dob"
-                 value={dayjs(form.dob)}
-                 format="YYYY-MM-DD"
-                 onChange={(e) =>setForm({ ...form, dob: e })}
-                 name="dob"
-                
-              /></LocalizationProvider>
-              </FormControl>
-            </Grid>
 
-            <Grid item size={{xs:12, md:6}}>
-            <Typography sx={{color:"royalblue"}}>Change Password</Typography>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 id="password"
-                 label="new password"
-                 type="password"
-                 value={form.password}
-                 onChange={(e) => setForm({ ...form,
-                    password: e.target.value })}
-                 name="password"
-                 
-              />
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 id="confirm"
-                 label="confirm password"
-                 helperText={confirmError}
-                 type="password"
-                 value={confirm}
-                 onChange={(e) => setConfirm(e.target.value)}
-                 name="confirm"
-                 
-              />
-            </Grid>
-
-            <Grid size={{xs:12, md:12}}>
               <Button
               type="submit"
               fullWidth
               variant="contained"
               disabled={isDisabled}
               sx={{ mt: 3, mb: 2 }}>Update Profile</Button>
+            </Grid>
+             <Grid size={{xs:12, sm:12}}>
+              <div className="loaderContainer">
+                     {isProfileLoading && <CircularProgress />}
+               </div>
+               </Grid>
+            </Grid>
+            </Box>
             
+            <Grid container spacing={4}>
+            <Grid item size={{xs:12, sm:12}}>
+            <Box component="form" onSubmit={handlePasswordSubmit} sx={{
+               width:{xs:"100%",marginTop:"40px"}}}>
+            <Typography sx={{color:"royalblue"}} component="h1" variant="h6">
+              Change Password</Typography>
+            <TextField
+                 fullWidth
+                 margin="normal"
+                 id="old_password"
+                 label="old_password"
+                 type="password"
+                 value={password.password}
+                 onChange={(e) => setPassword({ ...password,
+                    password: e.target.value })}
+                 name="old_password"
+                 
+              />
+              <TextField
+                 fullWidth
+                 margin="normal"
+                 id="new_password"
+                 label="new_password"
+                 type="password"
+                 value={password.new_password}
+                 onChange={(e) => setPassword({ ...password,
+                    new_password: e.target.value })}
+                 name="new_password"
+                 
+              />
+              <TextField
+                 fullWidth
+                 margin="normal"
+                 id="confirm_password"
+                 label="confirm_password"
+                 helperText={confirmError}
+                 type="password"
+                 value={password.confirm}
+                 onChange={(e) => setPassword({ ...password,
+                    confirm: e.target.value })}
+                 name="confirm_password"
+                 
+              />
+
+              <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              disabled={isDisabled}
+              sx={{ mt: 3, mb: 2 }}>Change Password</Button>
+              </Box>
+            </Grid>
+
+            <Grid size={{xs:12, sm:12}}>
               <div className="loaderContainer">
                      {isLoading && <CircularProgress />}
                </div>
             </Grid>
            </Grid>
-           
-
-        </Box>
 
       </Box>
 

@@ -1,13 +1,16 @@
 import SearchIcon from "@mui/icons-material/SearchOutlined";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Paper from "@mui/material/Paper";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
@@ -26,6 +29,7 @@ function UserQuiz(){
   const [reportList, setReportList] = useState([]);
   const [params, setParams] = useState("");
   const [nextPage,setNextPage] = useState(null);
+  const [selectedOption, setSelectedOption] = useState("");
 
   useEffect(()=>{
     //fetch all paginated subject data by recursively calling page by page
@@ -58,7 +62,7 @@ function UserQuiz(){
   },[authUser])
 
   const getSubjectCode = (mark)=>{
-    const subjects = subjectList.filter(subjectlist=>(subjectlist.id === mark.subjectId))[0];
+    const subjects = subjectList.filter(subjectlist=>(subjectlist.id === mark.id))[0];
     return subjects ? subjects.subjectCode : "None";
   }
  
@@ -84,8 +88,15 @@ function UserQuiz(){
       quizzes(url, query);
   },[url, query])
 
-  const saveReport = (data)=>{
-    reportList.push(data);
+  const saveReport = (quiz)=>{
+    const data = {
+     'question':quiz.question,
+      'answer':quiz.answer,
+      'option':selectedOption,
+      'id':quiz.id,
+    };
+   deleteReport(data) // delete report if it already exist
+   setReportList(data); //add the new data
   }
   const deleteReport = (data)=>{
      const reports = reportList.filter(report=>(report.id === data.id));
@@ -145,91 +156,46 @@ function UserQuiz(){
         <Container>
           {
           quizList.map((quiz)=>(
-            <Paper key={quiz.id}>
-              <Typography marginBottom="10px">
-                {
-                 "Subject: "+getSubjectCode(quiz)
-                }
-              </Typography>
-              <Box key={quiz.id}>
-                <Typography>{quiz.question}</Typography>
-                <Box>
-                  <Checkbox style={{display:"inline"}} 
-                  onChange={(e)=>{
-                    const data = {
-                      'question':quiz.question,
-                      'answer':quiz.answer,
-                      'option':quiz.option1,
-                      'id':quiz.id,
-                    };
-                    if(e.target.checked){
-                       saveReport(data);
-                    }else{
-                      deleteReport(data);
-                    }
-                   
-                  }}
-                  /> 
-                  <Typography style={{display:"inline"}}>{quiz.option1}</Typography>
-                </Box>
-                <Box>
-                  <Checkbox style={{display:"inline"}}
-                  onChange={(e)=>{
-                    const data = {
-                      'question':quiz.question,
-                      'answer':quiz.answer,
-                      'option':quiz.option2,
-                      'id':quiz.id,
-                    };
-                    if(e.target.checked){
-                       saveReport(data);
-                    }else{
-                      deleteReport(data);
-                    }
-                  }}
-                  /> 
-                  <Typography style={{display:"inline"}}>{quiz.option2}</Typography>
-                </Box>
-                <Box>
-                  <Checkbox style={{display:"inline"}}
-                  onChange={(e)=>{
-                    const data = {
-                      'question':quiz.question,
-                      'answer':quiz.answer,
-                      'option':quiz.option3,
-                      'id':quiz.id,
-                    };
-                   if(e.target.checked){
-                       saveReport(data);
-                    }else{
-                      deleteReport(data);
-                    }
-                  }}
-                  /> 
-                  <Typography style={{display:"inline"}}>{quiz.option3}</Typography>
-                </Box>
-                <Box>
-                  <Checkbox style={{display:"inline"}}
-                   onChange={(e)=>{
-                    const data = {
-                      'question':quiz.question,
-                      'answer':quiz.answer,
-                      'option':quiz.answer,
-                      'id':quiz.id,
-                    };
-                    if(e.target.checked){
-                       saveReport(data);
-                    }else{
-                      deleteReport(data);
-                    }
-                  }}
-                  /> 
-                  <Typography style={{display:"inline"}}>{quiz.answer}</Typography>
-                </Box>
-              </Box>
-            </Paper>
+            <Paper>
+            <FormControl>
+              <Typography variant="h3"  style={{color:"royalblue", marginBottom:"10px"}}>
+                {getSubjectCode(quiz)}
+                </Typography>
+              <FormLabel id={quiz.id}>
+                {quiz.question}
+              </FormLabel>
+              <RadioGroup
+                aria-labelledby={quiz.id}
+                name={quiz.question}
+                value={selectedOption}
+                onChange={(e)=>{
+                    setSelectedOption(e.target.value)
+                    saveReport(quiz);
+                }}
+              />
+              <FormControlLabel 
+              value={quiz.option1} 
+              control={<Radio/>} 
+              label={quiz.option1}/>
+
+               <FormControlLabel 
+              value={quiz.option2} 
+              control={<Radio/>} 
+              label={quiz.option2}/>
+
+               <FormControlLabel 
+              value={quiz.option3} 
+              control={<Radio/>} 
+              label={quiz.option3}/>
+
+               <FormControlLabel 
+              value={quiz.answer} 
+              control={<Radio/>} 
+              label={quiz.answer}/>
+            </FormControl> </Paper>
+            
           ))
-          }
+        }
         </Container>
         <Container>
           <div className="loaderContainer">
@@ -243,11 +209,9 @@ function UserQuiz(){
           <Button 
             sx={{backgroundColor:"royalblue", color:"#FFF"}}
           onClick={()=>{
-            if(nextPage){
-               setUrl(nextPage);
-             }else{
-               alert(JSON.stringify(reportList))
-             }
+             if(nextPage){
+                setUrl(nextPage)
+              }
           }}>
             {nextPage?"Next":"Submit"} 
           </Button>

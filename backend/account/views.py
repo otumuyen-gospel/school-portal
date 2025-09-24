@@ -13,7 +13,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser,AllowAny
 from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter
 from .permissions import IsInGroup
 from rest_framework.exceptions import PermissionDenied
-
+from django.contrib.auth.models import Group
 
 '''
 NOTE: that a global pagination has been set on this generic api 
@@ -103,9 +103,20 @@ class UserUpdate(generics.UpdateAPIView):
         obj = super().get_object()
         if self.request.user.is_superuser or \
             obj == self.request.user:
+             self.updateUserGroup(obj)
              return obj
         else:
             raise PermissionDenied("You do not have permission to edit this object.")
+    
+    def updateUserGroup(self,obj):
+        user = self.queryset.get(pk=obj.id)
+        if self.request.data['role'] != user.role: #user changed role so update role
+            group = Group.objects.get(name=user.role)
+            new_group = Group.objects.get(name=self.request.data['role'])
+            if group in user.groups.all():
+              user.groups.remove(group)
+              user.groups.add(new_group)
+
 
 #this generic class will handle DELETE(list 1 item) ONly Admin
 class UserDelete(generics.DestroyAPIView):
