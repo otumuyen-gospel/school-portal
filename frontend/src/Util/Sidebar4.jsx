@@ -1,13 +1,14 @@
 import AccountIcon from "@mui/icons-material/AccountBoxOutlined";
 import AddIcon from "@mui/icons-material/AddCircleOutlined";
-import ToggleOn from "@mui/icons-material/ArrowDropDown";
-import ToggleOff from "@mui/icons-material/ArrowDropUp";
 import ClassIcon from "@mui/icons-material/ClassOutlined";
 import DashboardIcon from "@mui/icons-material/DashboardOutlined";
+import OtherIcon from "@mui/icons-material/DevicesOther";
 import LogoutIcon from "@mui/icons-material/PortableWifiOff";
+import QuizIcon from "@mui/icons-material/QuizOutlined";
 import ScheduleIcon from "@mui/icons-material/ScheduleOutlined";
 import StudentIcon from "@mui/icons-material/SchoolOutlined";
 import Collapse from "@mui/material/Collapse";
+import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -35,30 +36,36 @@ function Sidebar4(props){
     Assessment:false,
     Others:false,
   });
+  const [sectionIcons] = useState({
+    Account: AccountIcon,
+    Classes:ClassIcon,
+    Assessment:QuizIcon,
+    Others:OtherIcon,
+  });
 
   const [items] = useState({
         Account:[
             {label:"Profile", Icon:AccountIcon,
                  to:"/profile/", hidden:false},
-             {label:"My Attendance", Icon:AccountIcon, 
+             {label:"Attendance", Icon:AccountIcon, 
                 to:"/my-attendance/", hidden:false},
             
         ],
         Classes:[
-            {label:"Class Subject", Icon:ClassIcon, 
+            {label:"Subjects", Icon:ClassIcon, 
                 to:"/class-subject-list/", hidden:false},
         ],
          Assessment:[
-            {label:"My Grades", Icon:AccountIcon,
+            {label:"Grades", Icon:AccountIcon,
                  to:"/user-marks/", hidden:false},
         ],
 
         Others:[
-            {label:"My Schedules", Icon:ScheduleIcon, 
+            {label:"Schedules", Icon:ScheduleIcon, 
                 to:"/user-schedule/", hidden:false},
             {label:"New Ticket", Icon:AddIcon, 
                 to:"/create-complaint/", hidden:false},
-            {label:"My Tickets", Icon:AccountIcon,
+            {label:"Tickets", Icon:AccountIcon,
                  to:"/user-complaint-list/", hidden:false},
             
         ],
@@ -115,7 +122,7 @@ function Sidebar4(props){
             
         ));
 
-    const CreateCategory = ({item, section, sectionKey,sectionTitle})=>{
+   const CreateCategory = ({item, section, sectionKey,sectionTitle, Icon})=>{
         return (<List>
             <ListItem  sx={{cursor:"pointer"}}  button
                 onClick={()=>{
@@ -124,7 +131,7 @@ function Sidebar4(props){
                 }}
             >
                <ListItemIcon>
-               { section ? <ToggleOn/> : <ToggleOff/>}
+               <Icon/>
                </ListItemIcon>
                <ListItemText>{sectionTitle}</ListItemText>
             </ListItem>
@@ -142,6 +149,7 @@ function Sidebar4(props){
                section={sections[key]}
                sectionTitle={key}
                sectionKey={key}
+               Icon={sectionIcons[key]}
          />;
         });
     }
@@ -154,10 +162,12 @@ function Sidebar4(props){
     }}
     sx={{
         '& .MuiDrawer-paper': {
-            backgroundColor:'#F9F9F9',
+            backgroundColor:'#FFF',
+            color:"#999",
             boxSizing:'border-box',
-            color:'royalblue',
-            boxShadow:0,
+            fontSize:'5px',
+            fontWeight:"400",
+            boxShadow:1,
         },
         flexShrink:0,
         display:{sx:"none",sm:"block"},
@@ -166,11 +176,13 @@ function Sidebar4(props){
         {/* header section*/}
         <ListItem alignItems="center" sx={{
             padding:"15px",
-            backgroundColor:"royalblue",
+            fontSize:'5px',
+            fontWeight:"400",
              }}>
-            <ListItemIcon><StudentIcon style={{color:"white"}} /></ListItemIcon>
-            <ListItemText style={{color:"white"}}>SCHOOL PORTAL</ListItemText>
+            <ListItemIcon><StudentIcon/></ListItemIcon>
+            <ListItemText>School Portal</ListItemText>
         </ListItem>
+        <Divider/>
           {/* page links */}
          <ListItem  sx={{
             cursor:"pointer",

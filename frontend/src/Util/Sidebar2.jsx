@@ -1,16 +1,17 @@
 import AccountIcon from "@mui/icons-material/AccountBoxOutlined";
 import AddIcon from "@mui/icons-material/AddCircleOutlined";
-import ToggleOn from "@mui/icons-material/ArrowDropDown";
-import ToggleOff from "@mui/icons-material/ArrowDropUp";
 import ClassHomwWork from "@mui/icons-material/AssessmentOutlined";
 import ClassIcon from "@mui/icons-material/ClassOutlined";
 import DashboardIcon from "@mui/icons-material/DashboardOutlined";
+import OtherIcon from "@mui/icons-material/DevicesOther";
 import childIcon from "@mui/icons-material/PeopleAltOutlined";
 import PeopleOutline from "@mui/icons-material/PeopleOutline";
 import LogoutIcon from "@mui/icons-material/PortableWifiOff";
+import QuizIcon from "@mui/icons-material/QuizOutlined";
 import ScheduleIcon from "@mui/icons-material/ScheduleOutlined";
 import StudentIcon from "@mui/icons-material/SchoolOutlined";
 import Collapse from "@mui/material/Collapse";
+import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -38,32 +39,38 @@ function Sidebar2(props){
     Assessment:false,
     Others:false,
   });
+  const [sectionIcons] = useState({
+    Account: AccountIcon,
+    Classes:ClassIcon,
+    Assessment:QuizIcon,
+    Others:OtherIcon,
+  });
 
   const [items] = useState({
         Account:[
-            {label:"Class Users", Icon:childIcon, 
+            {label:"Students", Icon:childIcon, 
                 to:"/class-users/", hidden:false},
             {label:"Profile", Icon:AccountIcon,
                  to:"/profile/", hidden:false},
-             {label:"Class Attendance", Icon:PeopleOutline, 
+             {label:"Attendance", Icon:PeopleOutline, 
                 to:"/class-attendance/", hidden:false},
             
         ],
         Classes:[
-            {label:"Class Subject", Icon:ClassIcon, 
+            {label:"Subjects", Icon:ClassIcon, 
                 to:"/class-subject-list/", hidden:false},
         ],
 
          Assessment:[
             {label:"Add Grade", Icon:AddIcon, 
                 to:"/create-marks/", hidden:false},
-            {label:"Class Grades", Icon:ClassIcon, 
+            {label:"Grades", Icon:ClassIcon, 
                 to:"/class-marks/", hidden:false},
-            {label:"Class Work", Icon:ClassHomwWork, 
+            {label:"Homeworks", Icon:ClassHomwWork, 
                 to:"/class-homework-list/", hidden:false},
             {label:"Add Quiz", Icon:AddIcon, 
                 to:"/create-quiz/", hidden:false},
-            {label:"Class Quiz", Icon:ClassIcon, 
+            {label:"Quizzes", Icon:ClassIcon, 
                 to:"/class-quiz/", hidden:false},
             
         ],
@@ -71,9 +78,9 @@ function Sidebar2(props){
         Others:[
             {label:"New Schedule", Icon:AddIcon, 
                 to:"/create-schedule/", hidden:false},
-            {label:"All Schedule", Icon:ScheduleIcon, 
+            {label:"Schedules", Icon:ScheduleIcon, 
                 to:"/schedule-list/", hidden:false},
-            {label:"Class Ticket", Icon:ClassIcon, 
+            {label:"Tickets", Icon:ClassIcon, 
                 to:"/class-complaint-list/", hidden:false},
             
         ],
@@ -130,7 +137,7 @@ function Sidebar2(props){
             
         ));
 
-    const CreateCategory = ({item, section, sectionKey,sectionTitle})=>{
+    const CreateCategory = ({item, section, sectionKey,sectionTitle, Icon})=>{
         return (<List>
             <ListItem  sx={{cursor:"pointer"}}  button
                 onClick={()=>{
@@ -139,7 +146,7 @@ function Sidebar2(props){
                 }}
             >
                <ListItemIcon>
-               { section ? <ToggleOn/> : <ToggleOff/>}
+               <Icon/>
                </ListItemIcon>
                <ListItemText>{sectionTitle}</ListItemText>
             </ListItem>
@@ -157,35 +164,40 @@ function Sidebar2(props){
                section={sections[key]}
                sectionTitle={key}
                sectionKey={key}
+               Icon={sectionIcons[key]}
          />;
         });
     }
 
     return <Drawer anchor="Left" open={props.open} 
-    onClose={props.onOpenDrawer}
-    variant= {isMobile ? "temporary":"persistent"} 
-    ModalProps={{
-        keepMounted:true,
-    }}
-    sx={{
-        '& .MuiDrawer-paper': {
-            backgroundColor:'#F9F9F9',
-            boxSizing:'border-box',
-            color:'royalblue',
-            boxShadow:0,
-        },
-        flexShrink:0,
-        display:{sx:"none",sm:"block"},
-    }}
-    >
-        {/* header section*/}
-        <ListItem alignItems="center" sx={{
-            padding:"15px",
-            backgroundColor:"royalblue",
-             }}>
-            <ListItemIcon><StudentIcon style={{color:"white"}} /></ListItemIcon>
-            <ListItemText style={{color:"white"}}>SCHOOL PORTAL</ListItemText>
-        </ListItem>
+        onClose={props.onOpenDrawer}
+        variant= {isMobile ? "temporary":"persistent"} 
+        ModalProps={{
+            keepMounted:true,
+        }}
+        sx={{
+            '& .MuiDrawer-paper': {
+                backgroundColor:'#FFF',
+                color:"#999",
+                boxSizing:'border-box',
+                fontSize:'5px',
+                fontWeight:"400",
+                boxShadow:1,
+            },
+            flexShrink:0,
+            display:{sx:"none",sm:"block"},
+        }}
+        >
+            {/* header section*/}
+            <ListItem alignItems="center" sx={{
+                padding:"15px",
+                fontSize:'5px',
+                fontWeight:"400",
+                 }}>
+                <ListItemIcon><StudentIcon/></ListItemIcon>
+                <ListItemText>School Portal</ListItemText>
+            </ListItem>
+            <Divider/>
           {/* page links */}
          <ListItem  sx={{
             cursor:"pointer",
