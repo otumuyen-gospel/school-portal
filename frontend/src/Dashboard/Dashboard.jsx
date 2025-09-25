@@ -5,7 +5,6 @@ import PersonIcon from "@mui/icons-material/PersonOutlineRounded";
 import TeacherIcon from "@mui/icons-material/SchoolOutlined";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -15,6 +14,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { BarChart } from "@mui/x-charts";
 import { useEffect, useState } from "react";
+import { Scrollbars } from "react-custom-scrollbars-2";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 
@@ -50,6 +50,7 @@ function Dashboard(){
       }
   
      if(authUser){
+        if(authUser['user'].classId){
          const url = "http://localhost:8000/accounts/class-users/"+
          authUser['user'].classId+"/";
          const query = {role:"student"}
@@ -58,6 +59,7 @@ function Dashboard(){
         }).catch((error)=>{
            setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load students List`);
         })
+      }
       }
     },[authUser])
   
@@ -216,7 +218,7 @@ function Dashboard(){
   
 
   return (
-    <div style={{backgroundColor:"#F5FCFE"}}>
+    <div style={{backgroundColor:"#FFF"}}>
       <Layout title="Dashboard">
         <Box 
        sx={{
@@ -337,7 +339,8 @@ function Dashboard(){
                   color:"royalblue", marginBottom:"10px"}}>
                     CLASS MATES
                   </Typography>
-                  <Divider width="100%" marginBottom="10px"/>
+                  <Scrollbars autoHide autoHideTimeout={1000}
+                  style={{width:"100%", height:"200px"}}>
                   <List>
                     {
                        classStudentList.map(student=>(
@@ -365,6 +368,7 @@ function Dashboard(){
                         ))
                     }
                   </List>
+                  </Scrollbars>
                </Box>
           </Grid>
         </Grid>

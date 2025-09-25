@@ -2,7 +2,6 @@ import LogoIcon from "@mui/icons-material/SchoolOutlined";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
-import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -51,35 +50,31 @@ function Login(){
   }
 
   return(
-    <div className="holder">
-    <div className="overlay">
-     <Grid container direction="column">
-      <Grid>
-        <Container component="main" maxWidth="xs" sx={{
-          marginTop:{xs:"15px", sm:"-10px"},
-
-          }}>
-        <Box
-        sx={{
-          px: 4,
-          py: 5,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          backgroundColor:"#FFFFFF",
-          minWidth:{sm:"38%",md:"48%"},
-         }}
-         >
+    <Grid container spacing={4}>
+      <Grid item size={{xs:12, sm:6}}>
+        <div className="holder">
+          <div className="overlay">
+            <Typography component="h3" variant="h3" 
+            style={{color:"white", fontWeight:"bolder"}}>
+              De Modern Pace
+            </Typography>
+            <Typography component="h4" variant="h4" 
+            style={{color:"white", fontWeight:"bolder"}}>
+              School Portal
+            </Typography>
+          </div>
+        </div>
+      </Grid>
+      <Grid item size={{xs:12, sm:6}}>
+        <Box style={{textAlign:"center", marginTop:"50px"}}>
          <Box
           sx={{
-            padding: '8px', // Add some padding around the icon
-            display: 'inline-flex', // Ensures the box wraps tightly around the icon
-            alignItems: 'center',
-            justifyContent: 'center',
+            marginBottom: '4px', // Add some padding around the icon
+            textAlign:"center",
             color: 'royalblue', // Set icon color
           }}
           >
-          <LogoIcon></LogoIcon>  
+          <LogoIcon style={{height:"40px", width:"40%"}}></LogoIcon>  
         </Box>
          <Typography component="h1" variant="h5">
             Login
@@ -91,13 +86,22 @@ function Login(){
           }}>
           {error ? error :"Login here to access the school portal "}
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{
-           width:{xs:"100%"},
-           }}>
+        <Box component="form" onSubmit={handleSubmit}>
           <TextField
+            sx={{
+              width:"60%",
+              '& .MuiInputBase-root':{
+                  height:"50px",
+              },
+              '& .MuiOutlinedInput-input':{
+                  height:"50px",
+                  paddingTop:0,
+                  paddingBottom:0,
+
+              },
+            }}
             margin="normal"
             required
-            fullWidth
             id="username"
             label="username"
             type="text"
@@ -105,13 +109,23 @@ function Login(){
             onChange={(e) => setForm({ ...form,
                 username: e.target.value })}
             name="username"
-            autoComplete="username"
             autoFocus
-          />
+          /><br/>
           <TextField
+             sx={{
+              width:"60%",
+              '& .MuiInputBase-root':{
+                  height:"50px",
+              },
+              '& .MuiOutlinedInput-input':{
+                  height:"50px",
+                  paddingTop:0,
+                  paddingBottom:0,
+
+              },
+            }}
             margin="normal"
             required
-            fullWidth
             name="password"
             label="Password"
             type="password"
@@ -119,30 +133,23 @@ function Login(){
             value={form.password}
             onChange={(e) => setForm({ ...form,
                 password: e.target.value })}
-            autoComplete="password"
-          />
+          /><br/>
           <Button
             type="submit"
-            fullWidth
             variant="contained"
             disabled={isDisabled}
-            sx={{ mt: 3, mb: 2 }}>Login</Button>
-            
-            <div className="linkContainer">
+            sx={{ mt: 3, mb: 2, width:"60%",}}>Login</Button>
+          <div className="linkContainer">
             <Link to="/request">Forgot Password?</Link>
-         </div>
-        <div className="loaderContainer">
+          </div>
+         <div className="loaderContainer">
            {isLoading && <CircularProgress />}
-        </div>
+         </div>
         
         </Box>
       </Box>
-      
-    </Container>
     </Grid>
     </Grid>
-    </div>
-    </div>
     
   );
 

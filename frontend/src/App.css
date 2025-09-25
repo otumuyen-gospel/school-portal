@@ -12,9 +12,10 @@
   background-size: cover;
 }
 .overlay{
-  background-color: rgba(0,0,200,0.6);
-  min-height: 95vh;
-  padding-top: 5vh;
+  background-color: rgba(0,0,200,0.5);
+  min-height: 75vh;
+  padding-top: 25vh;
+  text-align: center;
 }
 .linkContainer *{
   text-decoration: none;

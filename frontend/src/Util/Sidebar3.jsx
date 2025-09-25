@@ -7,6 +7,7 @@ import LogoutIcon from "@mui/icons-material/PortableWifiOff";
 import QuizIcon from "@mui/icons-material/QuizOutlined";
 import ScheduleIcon from "@mui/icons-material/ScheduleOutlined";
 import StudentIcon from "@mui/icons-material/SchoolOutlined";
+import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
@@ -18,6 +19,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react";
+import { Scrollbars } from "react-custom-scrollbars-2";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "./ApiRefresher";
 import ConfirmDialogForm from "./ConfirmDialogForm";
@@ -107,8 +109,7 @@ function Sidebar3(props){
         navigate("/");
       }
    };
-
-   const ListItems = ({ items}) =>
+const ListItems = ({ items}) =>
         items.filter(({ hidden }) => !hidden).map((
             { label, Icon, to, }, i) => (
             <ListItem 
@@ -121,10 +122,19 @@ function Sidebar3(props){
                 component={NavLink}
                 to={to}
                 >
+                
                 <ListItemIcon>
-                    <Icon />
+                    <Icon style={{
+                       color:"#FFF",
+                       width:"17px",
+                       height:"17px"}}/>
                 </ListItemIcon>
-                <ListItemText>{label}</ListItemText>
+                <ListItemText style={{
+                      color:"#FFF",
+                      fontWeight:"bold",
+                      fontSize:"5px"}}>
+                       {label}
+                    </ListItemText>
                 </ListItemButton>
             </ListItem>
             
@@ -139,9 +149,15 @@ function Sidebar3(props){
                 }}
             >
                <ListItemIcon>
-               <Icon/>
+               <Icon style={{
+                color:"#FFF",
+                width:"17px",
+                height:"17px"}}/>
                </ListItemIcon>
-               <ListItemText>{sectionTitle}</ListItemText>
+               <ListItemText style={{
+                color:"#FFF",
+                fontWeight:"bold",
+                fontSize:"5px"}}>{sectionTitle}</ListItemText>
             </ListItem>
             <Collapse in={section}>
                 <ListItems items={item} />
@@ -170,12 +186,10 @@ function Sidebar3(props){
     }}
     sx={{
         '& .MuiDrawer-paper': {
-            backgroundColor:'#FFF',
-            color:"#999",
+            backgroundColor:'darkblue',
             boxSizing:'border-box',
-            fontSize:'5px',
-            fontWeight:"400",
             boxShadow:1,
+            width:"19%",
         },
         flexShrink:0,
         display:{sx:"none",sm:"block"},
@@ -183,25 +197,47 @@ function Sidebar3(props){
     >
         {/* header section*/}
         <ListItem alignItems="center" sx={{
-            padding:"15px",
-            fontSize:'5px',
-            fontWeight:"400",
+            display:"block",
+            textAlign:"center",
              }}>
-            <ListItemIcon><StudentIcon/></ListItemIcon>
-            <ListItemText>School Portal</ListItemText>
+            <ListItemIcon><StudentIcon style={{
+                color:"#FFF",
+                width:"50px",
+                height:"50px"
+            }}/></ListItemIcon>
+            <ListItemText style={{
+                color:"#FFF",
+                fontWeight:"bold",
+                fontSize:"5px"
+            }}>School Portal</ListItemText>
         </ListItem>
-        <Divider/>
+        <Divider style={{backgroundColor:"#666", height:"0.01px"}}/>
           {/* page links */}
+
+          <Scrollbars
+            autoHide autoHideTimeout={1000}
+            style={{width:"100%", height:"400px"}}>
+          <Box>
          <ListItem  sx={{
             cursor:"pointer",
           }}
           button onClick={()=>{navigate("/dashboard/")}} >
-               <ListItemIcon><DashboardIcon /></ListItemIcon><br/>
-              <ListItemText>Dashboard</ListItemText>  
+               <ListItemIcon><DashboardIcon style={{
+                color:"#FFF",
+                width:"17px",
+                height:"17px"
+            }}/></ListItemIcon><br/>
+              <ListItemText style={{
+                color:"#FFF",
+                fontWeight:"bold",
+                fontSize:"5px"
+            }}>Dashboard</ListItemText>  
          </ListItem>
 
          {/*Collapsible categories*/}
         <Categories />
+        </Box>
+        </Scrollbars>
 
         {/*Dialog window */}
         <ConfirmDialogForm open={openDialog} 
@@ -218,15 +254,23 @@ function Sidebar3(props){
         />
 
         {/* logout section*/}
-        
+        <Divider style={{backgroundColor:"#666", height:"0.01px"}}/>
         <ListItem sx={{
             cursor:"pointer",
         }} button onClick={()=>{
             handleOpenDialog()
             
         }}>
-            <ListItemIcon><LogoutIcon/></ListItemIcon>
-            <ListItemText>Logout</ListItemText>
+            <ListItemIcon><LogoutIcon style={{
+                color:"#FFF",
+                width:"17px",
+                height:"17px"
+            }}/></ListItemIcon><br/>
+              <ListItemText style={{
+                color:"#FFF",
+                fontWeight:"bold",
+                fontSize:"5px"
+            }}>Logout</ListItemText>
         </ListItem>
     
     </Drawer>

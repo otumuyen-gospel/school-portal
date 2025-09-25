@@ -87,7 +87,7 @@ function Layout(props){
 
         {/* Header or app bar*/}
         <Fade in={!scrolling}>
-                <AppBar sx={{backgroundColor:"#F5FCFE"}} elevation={0}>
+                <AppBar sx={{backgroundColor:"#FFF"}} elevation={0}>
                     <Toolbar>
                         <IconButton onClick={()=> openDrawer()}
                            sx={{color:"royalblue",  
