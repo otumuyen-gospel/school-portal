@@ -2,7 +2,6 @@ import LogoIcon from "@mui/icons-material/SchoolOutlined";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
-import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -52,40 +51,51 @@ function Verify(){
   }
 
   return(
-    <div className="holder">
-      <div className="overlay">
-    <Grid container direction="column">
-      <Grid item xs={6}>
-        <Container component="main" maxWidth="xs" sx={{
-          marginTop:{xs:"60px"},
-
+    <Box style={{backgroundColor:"#FFF"}}>
+    <Grid container spacing={1}>
+      <Grid item size={{xs:12, sm:6}}>
+        <Box sx={{
+            backgroundColor: {xs:"darkblue", sm:"#FCFCFF", md:"#FCFCFF"},
+            minHeight:{xs:"auto", sm:"auto", md:"50vh"},
+            paddingTop:{xs:"15px", sm:"15px", md:"25vh"},
+            paddingBottom:{xs:"15px", sm:"15px", md:"25vh"},
+            textAlign: "center",
           }}>
-        <Box
-        sx={{
-          px: 4,
-          py: 4,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          backgroundColor:"#FFFFFF",
-          minWidth:{sm:"38%",md:"48%"},
-         }}
-         >
+            <Typography
+            sx={{ color: {xs:"#CCC", sm:"darkblue", md:"darkblue"},
+              fontWeight:"bolder", 
+              fontSize:{xs:"20px", sm:"20px", md:"40px"}
+            }}>
+              De Modern Pace
+            </Typography>
+            <Typography
+            style={{color:"royalblue", fontWeight:"bolder",
+              fontSize:{xs:"15px", sm:"15px", md:"30px"},
+            }}>
+              Welcome To De Modern Pace 
+            </Typography>
+            <Typography 
+            style={{color:"#999", fontWeight:"bolder",
+              fontSize:{xs:"13px", sm:"13px", md:"20px"},
+            }}>
+              School Portal
+            </Typography>
+        </Box>
+      </Grid>
+      <Grid item size={{xs:12, sm:6}}>
+        <Box style={{textAlign:"center", marginTop:"50px", marginBottom:"50px"}}>
          <Box
           sx={{
-            padding: '8px', // Add some padding around the icon
-            display: 'inline-flex', // Ensures the box wraps tightly around the icon
-            alignItems: 'center',
-            justifyContent: 'center',
+            marginBottom: '4px', // Add some padding around the icon
+            textAlign:"center",
             color: 'royalblue', // Set icon color
           }}
           >
-          <LogoIcon></LogoIcon>  
+          <LogoIcon style={{height:"40px", width:"40%"}}></LogoIcon>  
         </Box>
-         
          <Typography component="h1" variant="h5">
-          OTP Email Verification
-        </Typography>
+            OTP Email Verification
+          </Typography>
          <Typography component="p" sx={{
           textAlign:"center",
           marginTop:1,
@@ -93,8 +103,21 @@ function Verify(){
           }}>
           {error ? error :"Verify the OTP sent to your email"}
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{ width:{xs:"100%"},}}>
+        <Box component="form" onSubmit={handleSubmit}>
           <TextField
+            sx={{
+              width:"60%",
+              '& .MuiInputBase-root':{
+                  height:"50px",
+                  borderRadius:"10px",
+              },
+              '& .MuiOutlinedInput-input':{
+                  height:"50px",
+                  paddingTop:0,
+                  paddingBottom:0,
+
+              },
+            }}
             margin="normal"
             required
             fullWidth
@@ -109,27 +132,26 @@ function Verify(){
             name="otp"
             autoComplete="otp"
             autoFocus
-          />
+          /><br/>
+          
           <Button
             type="submit"
-            fullWidth
             variant="contained"
             disabled={isDisabled}
-            sx={{ mt: 4, mb: 2 }}>Verify</Button>
-
-           <Link to="/">Login instead?</Link>
-           <div className="loaderContainer">
-              {isLoading && <CircularProgress />}
-            </div>
+            sx={{ mt: 3, mb: 2, width:"60%", height:"50px",
+             borderRadius:"10px",}}>Verify</Button>
+          <div className="linkContainer">
+            <Link to="/">Login instead?</Link>
+          </div>
+         <div className="loaderContainer">
+           {isLoading && <CircularProgress />}
+         </div>
+        
         </Box>
       </Box>
-      
-    </Container>
     </Grid>
     </Grid>
-    </div>
-    </div>
-    
+    </Box>
   );
 
 }

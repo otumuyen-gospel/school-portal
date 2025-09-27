@@ -3,7 +3,6 @@ import MuiAlert from '@mui/material/Alert';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
-import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Snackbar from '@mui/material/Snackbar';
 import TextField from "@mui/material/TextField";
@@ -78,52 +77,75 @@ function Password(){
   }
 
   return(
-     <div className="holder">
-         <div className="overlay">
-          <Grid container direction="column">
-           <Grid item xs={6}>
-             <Container component="main" maxWidth="xs" sx={{
-               marginTop:{xs:"15px", sm:"-10px"},
-     
-               }}>
-             <Box
-             sx={{
-               px: 4,
-               py: 5,
-               display: "flex",
-               flexDirection: "column",
-               alignItems: "center",
-               backgroundColor:"#FFFFFF",
-               minWidth:{sm:"38%",md:"48%"},
-              }}
-              >
-              <Box
-               sx={{
-                 padding: '8px', // Add some padding around the icon
-                 display: 'inline-flex', // Ensures the box wraps tightly around the icon
-                 alignItems: 'center',
-                 justifyContent: 'center',
-                 color: 'royalblue', // Set icon color
-               }}
-               >
-          <LogoIcon></LogoIcon>  
+    <Box style={{backgroundColor:"#FFF"}}>
+    <Grid container spacing={1}>
+      <Grid item size={{xs:12, sm:6}}>
+        <Box sx={{
+            backgroundColor: {xs:"darkblue", sm:"#FCFCFF", md:"#FCFCFF"},
+            minHeight:{xs:"auto", sm:"auto", md:"50vh"},
+            paddingTop:{xs:"15px", sm:"15px", md:"25vh"},
+            paddingBottom:{xs:"15px", sm:"15px", md:"25vh"},
+            textAlign: "center",
+          }}>
+            <Typography
+            sx={{ color: {xs:"#CCC", sm:"darkblue", md:"darkblue"},
+              fontWeight:"bolder", 
+              fontSize:{xs:"20px", sm:"20px", md:"40px"}
+            }}>
+              De Modern Pace
+            </Typography>
+            <Typography
+            style={{color:"royalblue", fontWeight:"bolder",
+              fontSize:{xs:"15px", sm:"15px", md:"30px"},
+            }}>
+              Welcome To De Modern Pace 
+            </Typography>
+            <Typography 
+            style={{color:"#999", fontWeight:"bolder",
+              fontSize:{xs:"13px", sm:"13px", md:"20px"},
+            }}>
+              School Portal
+            </Typography>
         </Box>
-         
+      </Grid>
+      <Grid item size={{xs:12, sm:6}}>
+        <Box style={{textAlign:"center", marginTop:"50px", marginBottom:"50px"}}>
+         <Box
+          sx={{
+            marginBottom: '4px', // Add some padding around the icon
+            textAlign:"center",
+            color: 'royalblue', // Set icon color
+          }}
+          >
+          <LogoIcon style={{height:"40px", width:"40%"}}></LogoIcon>  
+        </Box>
          <Typography component="h1" variant="h5">
-          Change Password
-        </Typography>
+            Change Password
+          </Typography>
          <Typography component="p" sx={{
           textAlign:"center",
           marginTop:1,
           color:error ? "red" : "primary",
           }}>
-          {error ? error :"Enter your new password and confirm it"}
+          {error ? error :"Change Password "}
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{  width:{xs:"100%"}, }}>
+        <Box component="form" onSubmit={handleSubmit}>
           <TextField
+            sx={{
+              width:"60%",
+              '& .MuiInputBase-root':{
+                  height:"50px",
+                  borderRadius:"10px",
+              },
+              '& .MuiOutlinedInput-input':{
+                  height:"50px",
+                  paddingTop:0,
+                  paddingBottom:0,
+
+              },
+            }}
             margin="normal"
             required
-            fullWidth
             id="password"
             label="password"
             helperText={passwordError}
@@ -132,39 +154,49 @@ function Password(){
             onChange={(e) => setForm({ ...form,
                 password: e.target.value })}
             name="password"
-            autoComplete="password"
             autoFocus
-          />
+          /><br/>
           <TextField
+             sx={{
+              width:"60%",
+              '& .MuiInputBase-root':{
+                  height:"50px",
+                  borderRadius:"10px",
+              },
+              '& .MuiOutlinedInput-input':{
+                  height:"50px",
+                  paddingTop:0,
+                  paddingBottom:0,
+
+              },
+            }}
             margin="normal"
             required
-            fullWidth
-            name="confirm"
-            label="confirm"
+            name="Confirm"
+            label="Confirm"
             type="password"
-            id="confirm"
             helperText={confirmError}
+            id="Confirm"
             value={form.confirm}
             onChange={(e) => setForm({ ...form,
                 confirm: e.target.value })}
-            autoComplete="confirm"
-          />
+          /><br/>
           <Button
             type="submit"
-            fullWidth
             variant="contained"
             disabled={isDisabled}
-            sx={{ mt: 3, mb: 2 }}>Change Password</Button>
-            
-            <Link to="/">Login</Link>
-            <div className="loaderContainer">
-               {isLoading && <CircularProgress />}
-            </div>
+            sx={{ mt: 3, mb: 2, width:"60%", height:"50px",
+             borderRadius:"10px",}}>Change</Button>
+          <div className="linkContainer">
+            <Link to="/">Login Here</Link>
+          </div>
+         <div className="loaderContainer">
+           {isLoading && <CircularProgress />}
+         </div>
+        
         </Box>
       </Box>
-      
-
-       <Snackbar
+      <Snackbar
         open={open}
         autoHideDuration={6000} // Automatically close after 6 seconds
         onClose={handleClose}
@@ -177,15 +209,11 @@ function Password(){
           {popMsg}
         </MuiAlert>
       </Snackbar>
-
-
-    </Container>
     </Grid>
     </Grid>
-    </div>
-    </div>
-    
+    </Box>
   );
+
 
 }
 

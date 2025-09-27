@@ -50,23 +50,39 @@ function Login(){
   }
 
   return(
-    <Grid container spacing={4}>
+    <Box style={{backgroundColor:"#FFF"}}>
+    <Grid container spacing={1}>
       <Grid item size={{xs:12, sm:6}}>
-        <div className="holder">
-          <div className="overlay">
-            <Typography component="h3" variant="h3" 
-            style={{color:"white", fontWeight:"bolder"}}>
+        <Box sx={{
+            backgroundColor: {xs:"darkblue", sm:"#FCFCFF", md:"#FCFCFF"},
+            minHeight:{xs:"auto", sm:"auto", md:"50vh"},
+            paddingTop:{xs:"15px", sm:"15px", md:"25vh"},
+            paddingBottom:{xs:"15px", sm:"15px", md:"25vh"},
+            textAlign: "center",
+          }}>
+            <Typography
+            sx={{ color: {xs:"#CCC", sm:"darkblue", md:"darkblue"},
+              fontWeight:"bolder", 
+              fontSize:{xs:"20px", sm:"20px", md:"40px"}
+            }}>
               De Modern Pace
             </Typography>
-            <Typography component="h4" variant="h4" 
-            style={{color:"white", fontWeight:"bolder"}}>
+            <Typography
+            style={{color:"royalblue", fontWeight:"bolder",
+              fontSize:{xs:"15px", sm:"15px", md:"30px"},
+            }}>
+              Welcome To De Modern Pace 
+            </Typography>
+            <Typography 
+            style={{color:"#999", fontWeight:"bolder",
+              fontSize:{xs:"13px", sm:"13px", md:"20px"},
+            }}>
               School Portal
             </Typography>
-          </div>
-        </div>
+        </Box>
       </Grid>
       <Grid item size={{xs:12, sm:6}}>
-        <Box style={{textAlign:"center", marginTop:"50px"}}>
+        <Box style={{textAlign:"center", marginTop:"50px", marginBottom:"50px"}}>
          <Box
           sx={{
             marginBottom: '4px', // Add some padding around the icon
@@ -84,7 +100,7 @@ function Login(){
           marginTop:1,
           color:error ? "red" : "primary",
           }}>
-          {error ? error :"Login here to access the school portal "}
+          {error ? error :"Login here "}
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
@@ -92,6 +108,7 @@ function Login(){
               width:"60%",
               '& .MuiInputBase-root':{
                   height:"50px",
+                  borderRadius:"10px",
               },
               '& .MuiOutlinedInput-input':{
                   height:"50px",
@@ -116,6 +133,7 @@ function Login(){
               width:"60%",
               '& .MuiInputBase-root':{
                   height:"50px",
+                  borderRadius:"10px",
               },
               '& .MuiOutlinedInput-input':{
                   height:"50px",
@@ -138,7 +156,8 @@ function Login(){
             type="submit"
             variant="contained"
             disabled={isDisabled}
-            sx={{ mt: 3, mb: 2, width:"60%",}}>Login</Button>
+            sx={{ mt: 3, mb: 2, width:"60%", height:"50px",
+             borderRadius:"10px",}}>Login</Button>
           <div className="linkContainer">
             <Link to="/request">Forgot Password?</Link>
           </div>
@@ -150,7 +169,7 @@ function Login(){
       </Box>
     </Grid>
     </Grid>
-    
+    </Box>
   );
 
 }

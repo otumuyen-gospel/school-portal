@@ -19,6 +19,7 @@ import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
+import Scrollbars from "react-custom-scrollbars-2";
 import axiosInstance from "../Util/ApiRefresher";
 import ConfirmDialogForm from "../Util/ConfirmDialogForm";
 import Layout from "../Util/Layout";
@@ -321,6 +322,8 @@ function ClassUsers(){
                </Button>
         </Container>
         <Paper>
+           <Scrollbars autoHide autoHideTimeout={1000}
+                            style={{width:"100%", height:"200px"}}>
           <Table>
             <TableHead>
               <TableRow>
@@ -385,6 +388,7 @@ function ClassUsers(){
           <div className="loaderContainer">
             <Typography color="error">{msg}</Typography>
           </div>
+           </Scrollbars>
         </Paper>
         <Container sx={{textAlign:"right", margin:"40px auto"}}>
           <Button

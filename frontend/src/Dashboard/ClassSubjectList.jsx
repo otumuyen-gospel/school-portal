@@ -7,6 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
+import Scrollbars from "react-custom-scrollbars-2";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 function ClassSubjectList(){
@@ -89,6 +90,8 @@ function ClassSubjectList(){
         }}
         >
         <Typography component="h1" variant="h6">My Subjects</Typography>
+         <Scrollbars autoHide autoHideTimeout={1000}
+                          style={{width:"100%", height:"200px"}}>
         <Table>
           <TableHead>
             <TableRow>
@@ -112,6 +115,7 @@ function ClassSubjectList(){
            }
            </TableBody>
         </Table>
+         </Scrollbars>
           <div className="loaderContainer">
             {isLoading && <CircularProgress />}
           </div>
