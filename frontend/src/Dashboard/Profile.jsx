@@ -249,7 +249,7 @@ function Profile(){
   
   return (
      <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <div style={{backgroundColor:"#F9F9FE", flexGrow:1}}>
+    <div style={{backgroundColor:"#FFF", flexGrow:1}}>
       <Layout title="My Profile">
         <Box 
        sx={{
@@ -260,10 +260,24 @@ function Profile(){
         <Typography component="h1" variant="h6" sx={{color:"royalblue"}}>My Profile</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{
                width:{xs:"100%",}}}>
-           <Grid container spacing={4}>
-            <Grid item size={{xs:12, sm:6, md:4}}>
-              <TextField
-                 fullWidth
+          <Box boxShadow={1} marginBottom={5} marginTop={5} borderRadius={5}
+           padding="10px 30px">
+            <Typography style={{color:"royalblue"}}>Personal Information</Typography>
+            <Grid container spacing={1}>
+              <Grid item size={{xs:12, sm:6, md:6}}>
+                <TextField
+                fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  margin="normal"
                  required
                  id="username"
@@ -276,8 +290,21 @@ function Profile(){
                  name="username"
                  
               />
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
               <TextField
                  fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  margin="normal"
                  required
                  id="email"
@@ -290,8 +317,21 @@ function Profile(){
                  name="email"
                  
               />
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
               <TextField
                  fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  margin="normal"
                  required
                  id="firstname"
@@ -303,8 +343,21 @@ function Profile(){
                  name="firstname"
                  
               />
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
               <TextField
                  fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  margin="normal"
                  required
                  id="lastname"
@@ -317,8 +370,28 @@ function Profile(){
                  
               />
               </Grid>
-              <Grid item size={{xs:12, sm:6,md:4}}>
-              <FormControl required sx={{margin:"16px 0px 0px 0px",width:"100%" }}>
+            </Grid>
+          </Box>
+
+
+           <Box boxShadow={1} marginBottom={5} marginTop={5} borderRadius={5}
+           padding="10px 30px">
+            <Typography style={{color:"royalblue"}}>Other Information</Typography>
+            <Grid container spacing={1}>
+              <Grid item size={{xs:12, sm:6, md:6}}>
+              <FormControl required fullWidth
+                 sx={{
+                   margin:"16px 0px 0px 0px",
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}>
                 <InputLabel id="gender-label">{form.gender || "gender"}</InputLabel>
                 <Select
                     margin="normal"
@@ -336,7 +409,21 @@ function Profile(){
                       <MenuItem value="O">Other</MenuItem>
                 </Select>
               </FormControl>
-              <FormControl required sx={{margin:"16px 0px 0px 0px",width:"100%"}}>
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
+              <FormControl required fullWidth
+                 sx={{
+                   margin:"16px 0px 0px 0px",
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                  id="dob"
@@ -348,9 +435,22 @@ function Profile(){
                 
               /></LocalizationProvider>
               </FormControl>
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
               <TextField
                  required
                  fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  margin="normal"
                  id="address"
                  label="address"
@@ -361,10 +461,22 @@ function Profile(){
                  name="address"
                  
               />
-           
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
               <TextField
                  required
                  fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  margin="normal"
                  id="nationality"
                  label="nationality"
@@ -377,9 +489,20 @@ function Profile(){
               />
             </Grid>
 
-            <Grid item size={{xs:12,sm:6, md:4}}>
+            <Grid item size={{xs:12, sm:6, md:6}}>
               <TextField
                  fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  required
                  margin="normal"
                  id="state"
@@ -391,8 +514,21 @@ function Profile(){
                  name="state"
                  
               />
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
               <TextField
                  fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  required
                  margin="normal"
                  id="zipCode"
@@ -405,9 +541,21 @@ function Profile(){
                  name="zipCode"
                  
               />
-           
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
               <TextField
                  fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  required
                  margin="normal"
                  id="telephone"
@@ -421,10 +569,30 @@ function Profile(){
                  
               />
             </Grid>
+            </Grid>
+            </Box>
 
-            <Grid item size={{xs:12, md:12}}>
+
+            
+             <Box boxShadow={1} marginBottom={5} marginTop={5} borderRadius={5}
+           padding="10px 30px">
+            <Typography style={{color:"royalblue"}}>Restricted Information</Typography>
+            <Grid container spacing={1}>
+              <Grid item size={{xs:12, sm:6, md:6}}>
               <FormControl
-              required sx={{margin:"16px 0px 0px 0px",width:"100%" }}>
+              required fullWidth
+                 sx={{
+                   margin:"16px 0px 0px 0px",
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}>
                 <InputLabel id="role-label">{form.role || "role"}</InputLabel>
                 <Select
                     disabled
@@ -444,9 +612,22 @@ function Profile(){
                       <MenuItem value="admin">Admin</MenuItem>
                 </Select>
               </FormControl>
-            
+            </Grid>
+             <Grid item size={{xs:12, sm:6, md:6}}>
               <FormControl
-               sx={{margin:"16px 0px 0px 0px",width:"100%" }}>
+               fullWidth
+                 sx={{
+                   margin:"16px 0px 0px 0px",
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}>
                 <InputLabel id="class-label">{form.classId || "class"}</InputLabel>
                 <Select
                     disabled
@@ -469,9 +650,22 @@ function Profile(){
                       }
                 </Select>
               </FormControl>
-            
+             </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
               <FormControl
-               sx={{margin:"16px 0px 0px 0px", width:"100%" }}>
+               fullWidth
+                 sx={{
+                   margin:"16px 0px 0px 0px",
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}>
                 <InputLabel id="child-label">{form.childId || "child"}</InputLabel>
                 <Select
                     disabled
@@ -496,9 +690,22 @@ function Profile(){
                       }
                 </Select>
               </FormControl>
-            
+              </Grid>
+               <Grid item size={{xs:12, sm:6, md:6}}>
               <FormControl 
-               required sx={{margin:"16px 0px 0px 0px", width:"100%"}}>
+               required fullWidth
+                 sx={{
+                   margin:"16px 0px 0px 0px",
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}>
                  <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
                  disabled
@@ -512,30 +719,46 @@ function Profile(){
                  
               /></LocalizationProvider>
               </FormControl>
+              </Grid>
+              </Grid>
+              </Box>
 
               <Button
               type="submit"
               fullWidth
               variant="contained"
               disabled={isDisabled}
-              sx={{ mt: 3, mb: 2 }}>Update Profile</Button>
-            </Grid>
-             <Grid size={{xs:12, sm:12}}>
+              sx={{ mt: 2, mb: 2, height:"50px", 
+              borderRadius:"10px" }}>Update Profile</Button>
+            
               <div className="loaderContainer">
                      {isProfileLoading && <CircularProgress />}
                </div>
-               </Grid>
-            </Grid>
             </Box>
-            
-            <Grid container spacing={4}>
-            <Grid item size={{xs:12, sm:12}}>
+        
+
             <Box component="form" onSubmit={handlePasswordSubmit} sx={{
                width:{xs:"100%",marginTop:"40px"}}}>
             <Typography sx={{color:"royalblue"}} component="h1" variant="h6">
               Change Password</Typography>
-            <TextField
+
+            <Box boxShadow={1} marginBottom={5} marginTop={5} borderRadius={5}
+              padding="10px 30px">
+            <Grid container spacing={1}>
+             <Grid item size={{xs:12, sm:6, md:6}}>
+               <TextField
                  fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  margin="normal"
                  id="old_password"
                  label="old_password"
@@ -546,8 +769,21 @@ function Profile(){
                  name="old_password"
                  
               />
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
               <TextField
                  fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  margin="normal"
                  id="new_password"
                  label="new_password"
@@ -558,8 +794,21 @@ function Profile(){
                  name="new_password"
                  
               />
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
               <TextField
                  fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  margin="normal"
                  id="confirm_password"
                  label="confirm_password"
@@ -571,26 +820,24 @@ function Profile(){
                  name="confirm_password"
                  
               />
+              </Grid>
+              </Grid>
+              </Box>
 
               <Button
               type="submit"
               fullWidth
               variant="contained"
               disabled={isDisabled}
-              sx={{ mt: 3, mb: 2 }}>Change Password</Button>
-              </Box>
-            </Grid>
+              sx={{mt: 2, mb: 2, height:"50px", 
+              borderRadius:"10px" }}>Change Password</Button>
 
-            <Grid size={{xs:12, sm:12}}>
               <div className="loaderContainer">
                      {isLoading && <CircularProgress />}
                </div>
-            </Grid>
-           </Grid>
-
+            
+           </Box>
       </Box>
-
-
         <MessageDialogForm open={openMsgBox} 
         onClose={handleCloseMsgBox} 
         formContent={<Typography>{msg}</Typography>}
