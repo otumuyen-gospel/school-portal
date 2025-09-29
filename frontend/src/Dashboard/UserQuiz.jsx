@@ -14,9 +14,11 @@ import RadioGroup from "@mui/material/RadioGroup";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 function UserQuiz(){
+  const subject = useLocation().state;
   const [authUser] = useState(JSON.parse(localStorage.getItem('auth')));
    const [isLoading, setIsLoading] = useState(false);
   const [quizList, setQuizList] = useState([]);
@@ -24,7 +26,7 @@ function UserQuiz(){
   const [url,setUrl] = useState("http://localhost:8000/quizzes/user-quiz/"+
      authUser['user'].classId+"/"
   );
-  const [query,setQuery] =useState({});
+  const [query,setQuery] =useState({subjectId:subject?.id});
   const [subjectList,setSubjectList] = useState([]);
   const [reportList, setReportList] = useState([]);
   const [params, setParams] = useState("");
@@ -54,6 +56,7 @@ function UserQuiz(){
        authUser['user'].classId+"/";
     listSubjects(url).then(allData=>{
       setSubjectList(allData)
+      
      }).catch((error)=>{
        setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load subject List`);
      })
@@ -61,13 +64,14 @@ function UserQuiz(){
    
   },[authUser])
 
+  
   const getSubjectCode = (mark)=>{
     const subjects = subjectList.filter(subjectlist=>(subjectlist.id === mark.id))[0];
     return subjects ? subjects.subjectCode : "None";
   }
  
   useEffect(()=>{
-     //fetch all paginated students scores by recursively calling page by page
+     //fetch all paginated quiz by recursively calling page by page
       const quizzes = async(endpoint, queries)=>{
         setIsLoading(true);
         try{
@@ -85,8 +89,12 @@ function UserQuiz(){
            setMsg(`Oops! sorry can't load quiz List`);
           }
       }
+      if(!query.subjectId && subjectList.length > 0){ 
+         setQuery({...query, subjectId:subjectList[0].id}); //set to the first subject
+      }
       quizzes(url, query);
-  },[url, query])
+    
+  },[url, query, subjectList])
 
   const saveReport = (quiz)=>{
     const data = {
@@ -147,7 +155,7 @@ function UserQuiz(){
                 '& .hover':{backgroundColor:"dodgerblue"},
                 minHeight:"56px"}}
                 onClick={()=>{
-                   setQuery({...query,search:params});
+                   setQuery({...query,subjectId:params});
                 }}
                >
                 <SearchIcon></SearchIcon>

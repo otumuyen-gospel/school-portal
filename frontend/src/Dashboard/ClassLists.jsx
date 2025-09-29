@@ -1,9 +1,6 @@
 import TrashIcon from "@mui/icons-material/DeleteOutline";
 import UpdateIcon from "@mui/icons-material/MarkChatReadOutlined";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import CircularProgress from "@mui/material/CircularProgress";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
@@ -137,32 +134,51 @@ function ClassList(){
         }}
         >
         <Typography component="h1" variant="h6">Class Lists</Typography>
-        <Grid container spacing={4}>
+        <Grid container spacing={4} marginBottom={5}>
           {
             classList.map(classlist=>(
-              <Grid item size={{xs:12, md:6}} key={classlist.id}>
-                <Card elevation={3}>
-                  <CardContent>
-                     <Typography>{classlist.classCode}</Typography>
-                     <Typography>{classlist.className}</Typography>
-                  </CardContent>
-                  <CardActions>
-                     <IconButton title="update"
+              <Grid item size={{xs:12, sm:12}} key={classlist.id}>
+                <Box boxShadow={1}>
+                  <Box padding="15px 5px">
+                  <Grid container spacing={5}>
+                    <Grid item size={{xs:6,}}>
+                      <Typography color="royalblue" fontWeight="bolder"  
+                         textAlign="left" fontSize={15}>
+                         {classlist.classCode}
+                      </Typography>
+                       <Typography color="royalblue" fontWeight="bolder"  
+                          fontSize={12} textAlign="left">
+                         {classlist.className}
+                      </Typography>
+                    </Grid>
+                    <Grid item size={{xs:6,}}>
+                      <Box textAlign="right">
+                      <IconButton title="update" 
                          onClick={()=>{
                             setCurrClass(classlist);
                             handleOpenUpdateDialog();
                           }}>
-                          <UpdateIcon></UpdateIcon>
+                          <UpdateIcon sx={{color:"#888", 
+                            width:"16px", height:"16px"}}></UpdateIcon>
                          </IconButton>
                           <IconButton title="delete"
                          onClick={()=>{
                             setCurrClass(classlist);
                             handleOpenDeleteDialog();
                           }}>
-                          <TrashIcon></TrashIcon>
+                          <TrashIcon sx={{color:"#888",
+                              width:"16px", height:"16px"
+                          }}></TrashIcon>
                          </IconButton>
-                  </CardActions>
-                </Card>
+                         </Box>
+                    </Grid>
+                  </Grid>
+                  </Box>
+                  <Box padding="10px 5px" backgroundColor="#FCFCF9" >
+                    <Typography color="#333">ID : {classlist.id}</Typography>
+                  </Box>
+                </Box>
+                
               </Grid> 
             ))      
            }

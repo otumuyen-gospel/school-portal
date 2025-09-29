@@ -1,18 +1,18 @@
+import ComplainIcon from "@mui/icons-material/CommentOutlined";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchIcon from "@mui/icons-material/SearchOutlined";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import Grid from "@mui/material/Grid";
+import IconButton from '@mui/material/IconButton';
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
-import Scrollbars from "react-custom-scrollbars-2";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 function ClassComplaintList(){
@@ -86,58 +86,61 @@ function ClassComplaintList(){
                 <SearchIcon></SearchIcon>
                </Button>
         </Container>
-        <Paper>
-           <Scrollbars autoHide autoHideTimeout={1000}
-                            style={{width:"100%", height:"200px"}}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                 <TableCell>Id</TableCell>
-                 <TableCell>Title</TableCell>
-                 <TableCell>complaint</TableCell>
-                 <TableCell>Date</TableCell>
-                 
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {
-                  complaintList.map(complaint=>(
-                    <TableRow key={complaint.id}>
-                      <TableCell>{complaint.id}</TableCell>
-                      <TableCell>
-                        <span style={{ display: 'inline-block', 
-                          whiteSpace:"normal", wordBreak:"break-word" }}>
-                          {complaint.title}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <span style={{ display: 'inline-block', 
-                          whiteSpace:"normal", wordBreak:"break-word" }}>
-                          {complaint.complaint}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <span style={{ display: 'inline-block', 
-                          whiteSpace:"normal", wordBreak:"break-word" }}>
-                          {complaint.date}
-                        </span>
-                      </TableCell>
-                    
-                    </TableRow>
-                    
-                 ))
-                        
-              }
-            </TableBody>
-          </Table>
-          <div className="loaderContainer">
+        <Grid container spacing={4} marginBottom={5}>
+          {
+            complaintList.map(complaint=>(
+              <Grid item size={{xs:12, sm:12}} key={complaint.id}>
+                  <Box>
+                    <Box padding="15px 5px">
+                      <Grid container spacing={4}>
+                        <Grid item size={{xs:6,}}>
+                          <Typography color="royalblue" fontWeight="bolder"  
+                            textAlign="left" fontSize={15}>
+                             {complaint.title}
+                         </Typography>
+                         <Typography color="darkblue" fontWeight="bolder"  
+                          fontSize={12} textAlign="left">
+                           {complaint.date}
+                          </Typography>
+                        </Grid>
+                        <Grid item size={{xs:6,}}>
+                          <Box textAlign="right">
+                             <IconButton>
+                              <ComplainIcon sx={{color:"#888", 
+                                  width:"16px", height:"16px"}}></ComplainIcon>
+                             </IconButton>
+                          </Box>
+                      </Grid>
+                      </Grid>
+                    </Box>
+                    <Box padding="10px 5px">
+                        <Accordion width="100%">
+                          <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls="panel1-content"
+                          id="panel1-header"
+                          >
+                            <Typography component="span">
+                              {complaint.complaint.substring(0, 20)}...
+                              </Typography>
+                          </AccordionSummary>
+                          <AccordionDetails>
+                              {complaint.complaint}
+                          </AccordionDetails>
+                          
+                        </Accordion>
+                    </Box>
+                  </Box>
+              </Grid>
+            ))
+          }
+        </Grid>
+        <div className="loaderContainer">
             {isLoading && <CircularProgress />}
-          </div>
-          <div className="loaderContainer">
+        </div>
+        <div className="loaderContainer">
             <Typography color="error">{msg}</Typography>
-          </div>
-          </Scrollbars>
-        </Paper>
+        </div>
         <Container sx={{textAlign:"right", margin:"40px auto"}}>
           <Button
           sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}

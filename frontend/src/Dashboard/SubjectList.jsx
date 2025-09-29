@@ -1,9 +1,6 @@
 import TrashIcon from "@mui/icons-material/DeleteOutline";
 import UpdateIcon from "@mui/icons-material/MarkChatReadOutlined";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import CircularProgress from "@mui/material/CircularProgress";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
@@ -165,7 +162,7 @@ function SubjectList(){
   
   
   return (
-    <div style={{backgroundColor:"#FCFCF9"}}>
+    <div style={{backgroundColor:"#FFF"}}>
       <Layout title="Subject Lists">
         <Box 
        sx={{
@@ -173,35 +170,53 @@ function SubjectList(){
           marginTop:"10px",
         }}
         >
-        <Typography component="h1" variant="h6">Subject Lists</Typography>
-        <Grid container spacing={4}>
+        <Typography component="h1" variant="h6" marginBottom={5}>
+          Subject Lists</Typography>
+        <Grid container spacing={4} marginBottom={5}>
           {
             subjectList.map(subjectlist=>(
-              <Grid item size={{xs:12, md:6}} key={subjectlist.id}>
-                <Card elevation={3} style={{marginBottom:"25px"}}>
-                  <CardContent>
-                     <Typography
-                     >{subjectlist.subjectCode}</Typography>
-                     <Typography>{subjectlist.subjectName}</Typography>
-                     <Typography>{getClassCode(subjectlist)}</Typography>
-                  </CardContent>
-                  <CardActions>
-                     <IconButton title="update"
+              <Grid item size={{xs:12, sm:12}} key={subjectlist.id}>
+                <Box boxShadow={1}>
+                  <Box padding="15px 5px">
+                  <Grid container spacing={4}>
+                    <Grid item size={{xs:6,}}>
+                      <Typography color="royalblue" fontWeight="bolder"  
+                         textAlign="left" fontSize={15}>
+                         {subjectlist.subjectCode}
+                      </Typography>
+                       <Typography color="royalblue" fontWeight="bolder"  
+                          fontSize={12} textAlign="left">
+                         {subjectlist.subjectName}
+                      </Typography>
+                    </Grid>
+                    <Grid item size={{xs:6,}}>
+                      <Box textAlign="right">
+                      <IconButton title="update" 
                          onClick={()=>{
                             setCurrSubject(subjectlist);
                             handleOpenUpdateDialog();
                           }}>
-                          <UpdateIcon></UpdateIcon>
+                          <UpdateIcon sx={{color:"#888", 
+                            width:"16px", height:"16px"}}></UpdateIcon>
                          </IconButton>
                           <IconButton title="delete"
                          onClick={()=>{
                             setCurrSubject(subjectlist);
                             handleOpenDeleteDialog();
                           }}>
-                          <TrashIcon></TrashIcon>
+                          <TrashIcon sx={{color:"#888",
+                              width:"16px", height:"16px"
+                          }}></TrashIcon>
                          </IconButton>
-                  </CardActions>
-                </Card>
+                         </Box>
+                    </Grid>
+                  </Grid>
+                  </Box>
+                  <Box padding="10px 5px" backgroundColor="#FCFCF9" >
+                    <Typography color="#333">{getClassCode(subjectlist)}</Typography>
+                  </Box>
+                </Box>
+                
               </Grid> 
             ))      
            }

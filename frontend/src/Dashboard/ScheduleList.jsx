@@ -1,21 +1,19 @@
 import TrashIcon from "@mui/icons-material/DeleteOutline";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchIcon from "@mui/icons-material/SearchOutlined";
 import PromoteIcon from "@mui/icons-material/UpgradeOutlined";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
-import Scrollbars from "react-custom-scrollbars-2";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import ConfirmDialogForm from "../Util/ConfirmDialogForm";
@@ -136,86 +134,74 @@ function ScheduleList(){
                 <SearchIcon></SearchIcon>
                </Button>
         </Container>
-        <Paper>
-           <Scrollbars autoHide autoHideTimeout={1000}
-                            style={{width:"100%", height:"200px"}}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                 <TableCell>Id</TableCell>
-                 <TableCell>Title</TableCell>
-                 <TableCell>Details</TableCell>
-                 <TableCell>Start Date</TableCell>
-                  <TableCell>End Date</TableCell>
-                 <TableCell>Update</TableCell>
-                 <TableCell>Delete</TableCell>
-                 
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {
-                  scheduleList.map(schedule=>(
-                    <TableRow key={schedule.id}>
-                      <TableCell>{schedule.id}</TableCell>
-                      <TableCell>
-                        <span style={{ display: 'inline-block', 
-                          whiteSpace:"normal", wordBreak:"break-word" }}>
-                          {schedule.title}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <span style={{ display: 'inline-block', 
-                          whiteSpace:"normal", wordBreak:"break-word" }}>
-                          {schedule.detail}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <span style={{ display: 'inline-block', 
-                          whiteSpace:"normal", wordBreak:"break-word" }}>
-                          {schedule.startDateTime}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <span style={{ display: 'inline-block', 
-                          whiteSpace:"normal", wordBreak:"break-word" }}>
-                          {schedule.endDateTime}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <IconButton title="update"
-                         onClick={()=>{
-                             setCurrSchedule(schedule);
-                             navigate('/schedule-update',{state:schedule});
-                           
-                          }}>
-                        <PromoteIcon></PromoteIcon>
-                        </IconButton>
-                      </TableCell>
-                      <TableCell>
-                         <IconButton title="delete"
-                         onClick={()=>{
-                             setCurrSchedule(schedule);
-                             handleOpenDeleteDialog();  
-                          }}>
-                        <TrashIcon></TrashIcon>
-                        </IconButton>
-                      </TableCell>
-                      
-                    </TableRow>
-                    
-                 ))
-                        
-              }
-            </TableBody>
-          </Table>
-          <div className="loaderContainer">
+        <Grid container spacing={4} marginBottom={5}>
+          {
+            scheduleList.map(schedule=>(
+              <Grid item size={{xs:12, sm:12}} key={schedule.id}>
+                  <Box>
+                    <Box padding="15px 5px">
+                      <Grid container spacing={4}>
+                        <Grid item size={{xs:6,}}>
+                          <Typography color="royalblue" fontWeight="bolder"  
+                            textAlign="left" fontSize={15}>
+                             {schedule.title}
+                         </Typography>
+                         <Typography color="darkblue" fontWeight="bolder"  
+                          fontSize={12} textAlign="left">
+                           {schedule.startDateTime} - {schedule.endDateTime}
+                          </Typography>
+                        </Grid>
+                        <Grid item size={{xs:6,}}>
+                          <Box textAlign="right">
+                            <IconButton title="update" 
+                               onClick={()=>{
+                                  setCurrSchedule(schedule);
+                                  navigate('/schedule-update',{state:schedule});
+                                }}>
+                                <PromoteIcon sx={{color:"#888", 
+                                  width:"16px", height:"16px"}}></PromoteIcon>
+                            </IconButton>
+                            <IconButton title="delete"
+                               onClick={()=>{
+                                 setCurrSchedule(schedule);
+                                 handleOpenDeleteDialog();
+                                }}>
+                               <TrashIcon sx={{color:"#888",
+                                    width:"16px", height:"16px"
+                                   }}></TrashIcon>
+                            </IconButton>
+                          </Box>
+                      </Grid>
+                      </Grid>
+                    </Box>
+                    <Box padding="10px 5px">
+                        <Accordion width="100%">
+                          <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls="panel1-content"
+                          id="panel1-header"
+                          >
+                            <Typography component="span">
+                              {schedule.detail.substring(0, 20)}...
+                              </Typography>
+                          </AccordionSummary>
+                          <AccordionDetails>
+                              {schedule.detail}
+                          </AccordionDetails>
+                        </Accordion>
+                    </Box>
+                  </Box>
+              </Grid>
+            ))
+          }
+        </Grid>
+        
+         <div className="loaderContainer">
             {isLoading && <CircularProgress />}
-          </div>
-          <div className="loaderContainer">
+         </div>
+         <div className="loaderContainer">
             <Typography color="error">{msg}</Typography>
-          </div>
-           </Scrollbars>
-        </Paper>
+        </div>
         <Container sx={{textAlign:"right", margin:"40px auto"}}>
           <Button
           sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}

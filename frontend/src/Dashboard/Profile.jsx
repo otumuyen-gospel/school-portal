@@ -260,9 +260,10 @@ function Profile(){
         <Typography component="h1" variant="h6" sx={{color:"royalblue"}}>My Profile</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{
                width:{xs:"100%",}}}>
-          <Box boxShadow={1} marginBottom={5} marginTop={5} borderRadius={5}
-           padding="10px 30px">
-            <Typography style={{color:"royalblue"}}>Personal Information</Typography>
+          <Typography marginTop={5} style={{color:"royalblue"}}>
+              Personal Information</Typography>
+          <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+            marginTop={5} padding="10px 30px">
             <Grid container spacing={1}>
               <Grid item size={{xs:12, sm:6, md:6}}>
                 <TextField
@@ -373,10 +374,10 @@ function Profile(){
             </Grid>
           </Box>
 
-
-           <Box boxShadow={1} marginBottom={5} marginTop={5} borderRadius={5}
-           padding="10px 30px">
-            <Typography style={{color:"royalblue"}}>Other Information</Typography>
+          <Typography marginTop={5} style={{color:"royalblue"}}>
+              Other Information</Typography>
+           <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+            marginTop={5} padding="10px 30px">
             <Grid container spacing={1}>
               <Grid item size={{xs:12, sm:6, md:6}}>
               <FormControl required fullWidth
@@ -572,11 +573,10 @@ function Profile(){
             </Grid>
             </Box>
 
-
-            
-             <Box boxShadow={1} marginBottom={5} marginTop={5} borderRadius={5}
-           padding="10px 30px">
-            <Typography style={{color:"royalblue"}}>Restricted Information</Typography>
+            <Typography marginTop={5} style={{color:"royalblue"}}>
+              Restricted Information</Typography>
+             <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+            marginTop={5} padding="10px 30px">
             <Grid container spacing={1}>
               <Grid item size={{xs:12, sm:6, md:6}}>
               <FormControl
@@ -723,15 +723,16 @@ function Profile(){
               </Grid>
               </Box>
 
+              <div style={{textAlign:"center"}}>
               <Button
               type="submit"
               fullWidth
               variant="contained"
               disabled={isDisabled}
-              sx={{ mt: 2, mb: 2, height:"50px", 
-              borderRadius:"10px" }}>Update Profile</Button>
+              sx={{ mt: 2, mb: 2, height:"50px", width:"150px",
+              borderRadius:"10px" }}>Update</Button></div>
             
-              <div className="loaderContainer">
+              <div className="loaderContainer" marginBottom={10}>
                      {isProfileLoading && <CircularProgress />}
                </div>
             </Box>
@@ -741,9 +742,10 @@ function Profile(){
                width:{xs:"100%",marginTop:"40px"}}}>
             <Typography sx={{color:"royalblue"}} component="h1" variant="h6">
               Change Password</Typography>
-
-            <Box boxShadow={1} marginBottom={5} marginTop={5} borderRadius={5}
-              padding="10px 30px">
+            <Typography marginTop={5} style={{color:"royalblue"}}>
+             Security Information</Typography>
+            <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+            marginTop={5} padding="10px 30px">
             <Grid container spacing={1}>
              <Grid item size={{xs:12, sm:6, md:6}}>
                <TextField
@@ -824,15 +826,16 @@ function Profile(){
               </Grid>
               </Box>
 
+              <div style={{textAlign:"center"}}>
               <Button
               type="submit"
               fullWidth
               variant="contained"
               disabled={isDisabled}
-              sx={{mt: 2, mb: 2, height:"50px", 
-              borderRadius:"10px" }}>Change Password</Button>
+              sx={{mt: 2, mb: 2, height:"50px", width:"150px",
+              borderRadius:"10px" }}>Change</Button></div>
 
-              <div className="loaderContainer">
+              <div className="loaderContainer" marginBottom={10}>
                      {isLoading && <CircularProgress />}
                </div>
             

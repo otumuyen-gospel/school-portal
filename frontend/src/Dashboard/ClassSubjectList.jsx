@@ -1,16 +1,15 @@
+import QuizIcon from "@mui/icons-material/QuizOutlined";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
-import Scrollbars from "react-custom-scrollbars-2";
+import { useNavigate } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 function ClassSubjectList(){
+  const navigate = useNavigate();
    const [isLoading, setIsLoading] = useState(false);
   const [msg, setMsg] = useState("");
   const [classList,setClassList] = useState([]);
@@ -89,33 +88,48 @@ function ClassSubjectList(){
           marginTop:"10px",
         }}
         >
-        <Typography component="h1" variant="h6">My Subjects</Typography>
-         <Scrollbars autoHide autoHideTimeout={1000}
-                          style={{width:"100%", height:"200px"}}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell>Subject Name</TableCell>
-              <TableCell>Subject Code</TableCell>
-              <TableCell>Class</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+        <Typography component="h1" variant="h6" marginBottom={5}>
+          My Subjects</Typography>
+        <Grid container spacing={4} marginBottom={5}>
           {
             subjectList.map(subjectlist=>(
-              <TableRow key={subjectlist.id}>
-              <TableCell>{subjectlist.id}</TableCell>
-              <TableCell>{subjectlist.subjectName}</TableCell>
-              <TableCell>{subjectlist.subjectCode}</TableCell>
-              <TableCell>{getClassCode(subjectlist)}</TableCell>
-              </TableRow>
-              
+              <Grid item size={{xs:12, sm:12}} key={subjectlist.id}>
+                <Box boxShadow={1}>
+                  <Box padding="15px 5px">
+                  <Grid container spacing={4}>
+                    <Grid item size={{xs:6,}}>
+                      <Typography color="royalblue" fontWeight="bolder"  
+                         textAlign="left" fontSize={15}>
+                         {subjectlist.subjectCode}
+                      </Typography>
+                       <Typography color="royalblue" fontWeight="bolder"  
+                          fontSize={12} textAlign="left">
+                         {subjectlist.subjectName}
+                      </Typography>
+                    </Grid>
+                    <Grid item size={{xs:6,}}>
+                      <Box textAlign="right">
+                      <IconButton title="Take the Quiz" 
+                         onClick={()=>{
+                             navigate('/user-quiz',{state:subjectlist});
+                          }}>
+                          <QuizIcon sx={{color:"#888", 
+                            width:"16px", height:"16px"}}/>
+                         </IconButton>
+                          
+                         </Box>
+                    </Grid>
+                  </Grid>
+                  </Box>
+                  <Box padding="10px 5px" backgroundColor="#FCFCF9" >
+                    <Typography color="#333">{getClassCode(subjectlist)}</Typography>
+                  </Box>
+                </Box>
+                
+              </Grid> 
             ))      
            }
-           </TableBody>
-        </Table>
-         </Scrollbars>
+        </Grid>
           <div className="loaderContainer">
             {isLoading && <CircularProgress />}
           </div>
