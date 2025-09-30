@@ -208,17 +208,25 @@ function Register(){
         <Typography component="h1" variant="h6">New User</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{
            width:{xs:"100%",}}}>
-            <Typography component="p" sx={{
-              textAlign:"center",
-              color:"primary",
-              }}>
-                Create New User
-           </Typography>
-
-           <Grid container width="sm" direction="column" spacing={4}>
-            <Grid>
-              <TextField
-                 fullWidth
+            <Typography marginTop={5} style={{color:"royalblue"}}>
+              Personal Information</Typography>
+          <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+            marginTop={5} padding="10px 30px">
+            <Grid container spacing={1}>
+              <Grid item size={{xs:12, sm:6, md:6}}>
+                <TextField
+                fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  margin="normal"
                  required
                  id="username"
@@ -231,10 +239,21 @@ function Register(){
                  name="username"
                  
               />
-            </Grid>
-            <Grid>
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
               <TextField
                  fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  margin="normal"
                  required
                  id="email"
@@ -247,26 +266,21 @@ function Register(){
                  name="email"
                  
               />
-            </Grid>
-           <Grid>
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
               <TextField
                  fullWidth
-                 margin="normal"
-                 required
-                 id="password"
-                 label="password"
-                 type="password"
-                 value={form.password}
-                 onChange={(e) => setForm({ ...form,
-                    password: e.target.value })}
-                 name="password"
-                 
-              />
-            </Grid>
-
-            <Grid>
-              <TextField
-                 fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  margin="normal"
                  required
                  id="firstname"
@@ -278,11 +292,21 @@ function Register(){
                  name="firstname"
                  
               />
-            </Grid>
-            
-            <Grid>
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
               <TextField
                  fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
                  margin="normal"
                  required
                  id="lastname"
@@ -294,91 +318,31 @@ function Register(){
                  name="lastname"
                  
               />
+              </Grid>
             </Grid>
+          </Box>
 
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="address"
-                 label="address"
-                 type="text"
-                 value={form.address}
-                 onChange={(e) => setForm({ ...form,
-                    address: e.target.value })}
-                 name="address"
-                 
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="nationality"
-                 label="nationality"
-                 type="text"
-                 value={form.nationality}
-                 onChange={(e) => setForm({ ...form,
-                    nationality: e.target.value })}
-                 name="nationality"
-                 
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="state"
-                 label="state"
-                 type="text"
-                 value={form.state}
-                 onChange={(e) => setForm({ ...form,
-                    state: e.target.value })}
-                 name="state"
-                 
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="zipCode"
-                 label="zipCode"
-                 type="text"
-                 helperText={zip}
-                 value={form.zipCode}
-                 onChange={(e) => setForm({ ...form,
-                    zipCode: e.target.value })}
-                 name="zipCode"
-                 
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="telephone"
-                 label="telephone"
-                 type="text"
-                 value={form.telephone}
-                 helperText={telephone}
-                 onChange={(e) => setForm({ ...form,
-                    telephone: e.target.value })}
-                 name="telephone"
-                 
-              />
-            </Grid>
-            
-           <Grid>
-              <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
+          <Typography marginTop={5} style={{color:"royalblue"}}>
+              Other Information</Typography>
+           <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+            marginTop={5} padding="10px 30px">
+            <Grid container spacing={1}>
+              <Grid item size={{xs:12, sm:6, md:6}}>
+              <FormControl required fullWidth
+                 sx={{
+                   margin:"16px 0px 0px 0px",
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}>
                 <InputLabel id="gender-label">{form.gender || "gender"}</InputLabel>
                 <Select
-                    fullWidth
                     margin="normal"
                     labelId="gender-label"
                     id="gender"
@@ -394,12 +358,218 @@ function Register(){
                       <MenuItem value="O">Other</MenuItem>
                 </Select>
               </FormControl>
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
+              <FormControl required fullWidth
+                 sx={{
+                   margin:"16px 0px 0px 0px",
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                 id="dob"
+                 label="dob"
+                 value={dayjs(form.dob)}
+                 format="YYYY-MM-DD"
+                 onChange={(e) =>setForm({ ...form, dob: e })}
+                 name="dob"
+                
+              /></LocalizationProvider>
+              </FormControl>
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
+              <TextField
+                 required
+                 fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
+                 margin="normal"
+                 id="address"
+                 label="address"
+                 type="text"
+                 value={form.address}
+                 onChange={(e) => setForm({ ...form,
+                    address: e.target.value })}
+                 name="address"
+                 
+              />
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
+              <TextField
+                 required
+                 fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
+                 margin="normal"
+                 id="nationality"
+                 label="nationality"
+                 type="text"
+                 value={form.nationality}
+                 onChange={(e) => setForm({ ...form,
+                    nationality: e.target.value })}
+                 name="nationality"
+                 
+              />
             </Grid>
-            <Grid>
-              <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
+
+            <Grid item size={{xs:12, sm:6, md:6}}>
+              <TextField
+                 fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
+                 required
+                 margin="normal"
+                 id="state"
+                 label="state"
+                 type="text"
+                 value={form.state}
+                 onChange={(e) => setForm({ ...form,
+                    state: e.target.value })}
+                 name="state"
+                 
+              />
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
+              <TextField
+                 fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
+                 required
+                 margin="normal"
+                 id="zipCode"
+                 label="zipCode"
+                 type="text"
+                 helperText={zip}
+                 value={form.zipCode}
+                 onChange={(e) => setForm({ ...form,
+                    zipCode: e.target.value })}
+                 name="zipCode"
+                 
+              />
+              </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
+              <TextField
+                 fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
+                 required
+                 margin="normal"
+                 id="telephone"
+                 label="telephone"
+                 type="text"
+                 value={form.telephone}
+                 helperText={telephone}
+                 onChange={(e) => setForm({ ...form,
+                    telephone: e.target.value })}
+                 name="telephone"
+                 
+              />
+            </Grid>
+            </Grid>
+            </Box>
+
+            <Typography marginTop={5} style={{color:"royalblue"}}>
+              Restricted Information</Typography>
+             <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+            marginTop={5} padding="10px 30px">
+            <Grid container spacing={1}>
+              <Grid item size={{xs:12, sm:6, md:6}}>
+               <TextField
+                 fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
+                 margin="normal"
+                 id="password"
+                 label="password"
+                 type="password"
+                 value={form.password}
+                 onChange={(e) => setForm({ ...form,
+                    password: e.target.value })}
+                 name="password"
+                 
+              />
+              </Grid>
+
+              <Grid item size={{xs:12, sm:6, md:6}}>
+              <FormControl
+              required 
+              fullWidth
+                 sx={{
+                   margin:"16px 0px 0px 0px",
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}>
                 <InputLabel id="role-label">{form.role || "role"}</InputLabel>
                 <Select
-                    fullWidth
                     margin="normal"
                     labelId="role-label"
                     id="role"
@@ -417,12 +587,23 @@ function Register(){
                 </Select>
               </FormControl>
             </Grid>
-
-            <Grid>
-              <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
+             <Grid item size={{xs:12, sm:6, md:6}}>
+              <FormControl
+               fullWidth
+                 sx={{
+                   margin:"16px 0px 0px 0px",
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}>
                 <InputLabel id="class-label">{form.classId || "class"}</InputLabel>
                 <Select
-                    fullWidth
                     margin="normal"
                     labelId="class-label"
                     id="classId"
@@ -442,13 +623,24 @@ function Register(){
                       }
                 </Select>
               </FormControl>
-            </Grid>
-
-            <Grid>
-              <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
+             </Grid>
+              <Grid item size={{xs:12, sm:6, md:6}}>
+              <FormControl
+               fullWidth
+                 sx={{
+                   margin:"16px 0px 0px 0px",
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}>
                 <InputLabel id="child-label">{form.childId || "child"}</InputLabel>
                 <Select
-                    fullWidth
                     margin="normal"
                     labelId="child-label"
                     id="childId"
@@ -470,10 +662,23 @@ function Register(){
                       }
                 </Select>
               </FormControl>
-            </Grid>
-
-            <Grid>
-              <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%"}}>
+              </Grid>
+               <Grid item size={{xs:12, sm:6, md:6}}>
+              <FormControl 
+               required 
+               fullWidth
+                 sx={{
+                   margin:"16px 0px 0px 0px",
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}>
                  <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
                  id="entrance"
@@ -486,43 +691,25 @@ function Register(){
                  
               /></LocalizationProvider>
               </FormControl>
-            </Grid>
-            
-            <Grid>
-              <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%"}}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                 id="dob"
-                 label="dob"
-                 value={dayjs(form.dob)}
-                 format="YYYY-MM-DD"
-                 onChange={(e) =>setForm({ ...form, dob: e })}
-                 name="dob"
-                
-              /></LocalizationProvider>
-              </FormControl>
-            </Grid>
+              </Grid>
+              </Grid>
+              </Box>
 
-            <Grid>
+              <div style={{textAlign:"center"}}>
               <Button
               type="submit"
               fullWidth
               variant="contained"
               disabled={isDisabled}
-              sx={{ mt: 3, mb: 2 }}>Register</Button>
+              sx={{ mt: 2, mb: 2, height:"50px", width:"150px",
+              borderRadius:"10px" }}>Register</Button></div>
             
-              <div className="loaderContainer">
+              <div className="loaderContainer" marginBottom={10}>
                      {isLoading && <CircularProgress />}
                </div>
-            </Grid>
-           </Grid>
-           
-
-        </Box>
+            </Box>
 
       </Box>
-
-
         <MessageDialogForm open={openMsgBox} 
         onClose={handleCloseMsgBox} 
         formContent={<Typography>{msg}</Typography>}

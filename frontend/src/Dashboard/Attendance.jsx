@@ -221,7 +221,7 @@ function Attendance(){
         }}
         >
         <Typography component="h1" variant="h6">Attendance</Typography>
-        <Container sx={{textAlign:"right"}} >
+        <Container sx={{textAlign:"right", marginRight:"-25px"}} >
           <TextField
                minWidth="200px"
                margin="normal"
@@ -323,7 +323,8 @@ function Attendance(){
           </div>
           </Scrollbars>
         </Paper>
-        <Container sx={{textAlign:"right", margin:"40px auto"}}>
+        <Container sx={{textAlign:"right", marginTop:"40px",
+          marginBottom:"40px", marginRight:"-21px"}}>
           <Button
           sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}
            onClick={()=>{
@@ -352,6 +353,17 @@ function Attendance(){
         formContent={
           <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
               <TextField
+                   sx={{
+                             '& .MuiInputBase-root':{
+                              height:"50px",
+                              borderRadius:"10px",
+                          },
+                           '& .MuiOutlinedInput-input':{
+                              height:"50px",
+                              paddingTop:0,
+                              paddingBottom:0,
+                          },
+                          }}
                   fullWidth
                   margin="normal"
                   labelId="remark"

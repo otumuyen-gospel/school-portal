@@ -62,61 +62,77 @@ function CreateClass(){
         <Typography component="h1" variant="h6">New Class</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{
            width:{xs:"100%",}}}>
-            <Typography component="p" sx={{
-              textAlign:"center",
-              color:"primary",
-              }}>
-                Create New Class
-           </Typography>
-
-           <Grid container width="sm" direction="column" spacing={4}>
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="className"
-                 label="className"
-                 type="text"
-                 value={className}
-                 onChange={(e) => setClassName(e.target.value)}
-                 name="className"
-                 
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="classCode"
-                 label="classCode"
-                 type="classCode"
-                 value={classCode}
-                 onChange={(e) => setClassCode(e.target.value)}
-                 name="classCode"
-                 
-              />
-            </Grid>
-            <Grid>
+            <Typography marginTop={5} style={{color:"royalblue"}}>
+              Create New Class</Typography>
+            <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+            marginTop={5} padding="10px 30px">
+               <Grid container spacing={1} textAlign="center">
+                 <Grid item size={{xs:12,}}>
+                  <TextField
+                      sx={{
+                       width:"60%",
+                      '& .MuiInputBase-root':{
+                       height:"50px",
+                       borderRadius:"10px",
+                      },
+                      '& .MuiOutlinedInput-input':{
+                          height:"50px",
+                          paddingTop:0,
+                          paddingBottom:0,
+                      },
+                      }}
+                      fullWidth
+                      margin="normal"
+                      required
+                      id="className"
+                      label="className"
+                      type="text"
+                      value={className}
+                      onChange={(e) => setClassName(e.target.value)}
+                      name="className"             
+                  />
+                 </Grid>
+                 <Grid item size={{xs:12,}}>
+                  <TextField
+                      sx={{
+                        width:"60%",
+                      '& .MuiInputBase-root':{
+                       height:"50px",
+                       borderRadius:"10px",
+                      },
+                      '& .MuiOutlinedInput-input':{
+                          height:"50px",
+                          paddingTop:0,
+                          paddingBottom:0,
+                      },
+                      }}
+                      fullWidth
+                      margin="normal"
+                      required
+                      id="classCode"
+                      label="classCode"
+                      type="text"
+                      value={classCode}
+                      onChange={(e) => setClassCode(e.target.value)}
+                      name="classCode"             
+                  />
+                 </Grid>
+               </Grid>
+            </Box>
+            <div style={{textAlign:"center"}}>
               <Button
               type="submit"
               fullWidth
               variant="contained"
               disabled={isDisabled}
-              sx={{ mt: 3, mb: 2 }}>Create Class</Button>
+              sx={{ mt: 2, mb: 2, height:"50px", width:"150px",
+              borderRadius:"10px" }}>Create</Button></div>
             
-              <div className="loaderContainer">
+              <div className="loaderContainer" marginBottom={10}>
                      {isLoading && <CircularProgress />}
                </div>
-            </Grid>
-           </Grid>
-           
-
-        </Box>
-
-      </Box>
-
+            </Box>
+          </Box>
 
         <MessageDialogForm open={openMsgBox} 
         onClose={handleCloseMsgBox} 

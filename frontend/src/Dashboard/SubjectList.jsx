@@ -251,6 +251,17 @@ function SubjectList(){
                 formContent={
                   <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
                       <TextField
+                           sx={{
+                             '& .MuiInputBase-root':{
+                              height:"50px",
+                              borderRadius:"10px",
+                          },
+                           '& .MuiOutlinedInput-input':{
+                              height:"50px",
+                              paddingTop:0,
+                              paddingBottom:0,
+                          },
+                          }}
                           fullWidth
                           margin="normal"
                           id="subjectName"
@@ -262,6 +273,17 @@ function SubjectList(){
                           
                       />
                       <TextField
+                          sx={{
+                             '& .MuiInputBase-root':{
+                              height:"50px",
+                              borderRadius:"10px",
+                          },
+                           '& .MuiOutlinedInput-input':{
+                              height:"50px",
+                              paddingTop:0,
+                              paddingBottom:0,
+                          },
+                          }}
                           fullWidth
                           margin="normal"
                           id="subjectCode"
@@ -276,6 +298,10 @@ function SubjectList(){
                       <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
                         <InputLabel id="class-label">{currSubject.classId || "class"}</InputLabel>
                         <Select
+                          sx={{
+                              height:"50px",
+                              borderRadius:"10px",
+                          }}
                           fullWidth
                           margin="normal"
                           labelId="class-label"

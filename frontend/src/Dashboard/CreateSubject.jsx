@@ -93,9 +93,110 @@ function CreateSubject(){
           marginTop:"10px",
         }}
         >
-        <Typography component="h1" variant="h6">New Class</Typography>
+        <Typography component="h1" variant="h6">New Subject</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{
            width:{xs:"100%",}}}>
+              <Typography marginTop={5} style={{color:"royalblue"}}>
+                          Create New Subject</Typography>
+              <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+                        marginTop={5} padding="10px 30px">
+                  <Grid container spacing={1} textAlign="center">
+                     <Grid item size={{xs:12,sm:6}}>
+                              <TextField
+                                  sx={{
+                                  '& .MuiInputBase-root':{
+                                   height:"50px",
+                                   borderRadius:"10px",
+                                  },
+                                  '& .MuiOutlinedInput-input':{
+                                      height:"50px",
+                                      paddingTop:0,
+                                      paddingBottom:0,
+                                  },
+                                  }}
+                                  fullWidth
+                                  margin="normal"
+                                  required
+                                  id="subjectName"
+                                  label="subjectName"
+                                  type="text"
+                                  value={subjectName}
+                                  onChange={(e) => setSubjectName(e.target.value)}
+                                  name="subjectName"             
+                              />
+                             </Grid>
+                             <Grid item size={{xs:12,sm:6}}>
+                              <TextField
+                                  sx={{
+                                  '& .MuiInputBase-root':{
+                                   height:"50px",
+                                   borderRadius:"10px",
+                                  },
+                                  '& .MuiOutlinedInput-input':{
+                                      height:"50px",
+                                      paddingTop:0,
+                                      paddingBottom:0,
+                                  },
+                                  }}
+                                  fullWidth
+                                  margin="normal"
+                                  required
+                                  id="subjectCode"
+                                  label="subjectCode"
+                                  type="text"
+                                  value={subjectCode}
+                                  onChange={(e) => setSubjectCode(e.target.value)}
+                                  name="subjectCode"             
+                              />
+                             </Grid>
+                             <Grid item size={{xs:12,sm:6}}>
+                              <FormControl sx={{margin:"16px 0px 0px 0px", 
+                                minWidth: "100%" }}>
+                                  <InputLabel id="class-label">{classId || "class"}</InputLabel>
+                                  <Select
+                                    sx={{
+                                      borderRadius:"10px",
+                                      height:"50px",
+                                  }}
+                                    fullWidth
+                                    margin="normal"
+                                    labelId="class-label"
+                                    id="classId"
+                                    name="classId"
+                                    value={classId}
+                                    label="class"
+                                    onChange={(e) => setClassId(e.target.value )}
+                                   >
+                                    {
+                                     classList.map(classlist=>(
+                                          <MenuItem key={classlist.id}
+                                           value={classlist.id}>{classlist.classCode}
+                                           </MenuItem>
+                                     ))
+                        
+                                    }
+                                 </Select>
+                              </FormControl>
+                             </Grid>
+                           </Grid>
+                        </Box>
+                        <div style={{textAlign:"center"}}>
+                          <Button
+                          type="submit"
+                          fullWidth
+                          variant="contained"
+                          disabled={isDisabled}
+                          sx={{ mt: 2, mb: 2, height:"50px", width:"150px",
+                          borderRadius:"10px" }}>Create</Button></div>
+                        
+                          <div className="loaderContainer" marginBottom={10}>
+                                 {isLoading && <CircularProgress />}
+                           </div>
+                        </Box>
+                      </Box>
+
+
+            {/*}
             <Typography component="p" sx={{
               textAlign:"center",
               color:"primary",
@@ -169,11 +270,13 @@ function CreateSubject(){
             </Grid>
            </Grid>
            
+         
+          
 
         </Box>
 
       </Box>
-
+  {*/}
 
         <MessageDialogForm open={openMsgBox} 
         onClose={handleCloseMsgBox} 

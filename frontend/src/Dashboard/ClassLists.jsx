@@ -213,6 +213,17 @@ function ClassList(){
                 formContent={
                   <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
                       <TextField
+                          sx={{
+                             '& .MuiInputBase-root':{
+                              height:"50px",
+                              borderRadius:"10px",
+                          },
+                           '& .MuiOutlinedInput-input':{
+                              height:"50px",
+                              paddingTop:0,
+                              paddingBottom:0,
+                          },
+                          }}
                           fullWidth
                           margin="normal"
                           id="className"
@@ -224,6 +235,17 @@ function ClassList(){
                           
                       />
                       <TextField
+                          sx={{
+                             '& .MuiInputBase-root':{
+                              height:"50px",
+                              borderRadius:"10px",
+                          },
+                           '& .MuiOutlinedInput-input':{
+                              height:"50px",
+                              paddingTop:0,
+                              paddingBottom:0,
+                          },
+                          }}
                           fullWidth
                           margin="normal"
                           id="classCode"

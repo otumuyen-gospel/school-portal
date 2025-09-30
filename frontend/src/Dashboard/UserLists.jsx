@@ -185,7 +185,7 @@ function UserLists(){
         }}
         >
         <Typography component="h1" variant="h6">All Users</Typography>
-        <Container sx={{textAlign:"right"}} >
+        <Container sx={{textAlign:"right", marginRight:"-25px"}} >
           <TextField
                minWidth="200px"
                margin="normal"
@@ -295,7 +295,8 @@ function UserLists(){
           </div>
            </Scrollbars>
         </Paper>
-        <Container sx={{textAlign:"right", margin:"40px auto"}}>
+        <Container sx={{textAlign:"right", marginTop:"40px",
+          marginBottom:"40px", marginRight:"-21px"}}>
           <Button
           sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}
            onClick={()=>{
@@ -333,6 +334,8 @@ function UserLists(){
           <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
               <InputLabel id="class-label"/>
               <Select
+                   sx={{ height:"50px",
+                              borderRadius:"10px",}}
                   fullWidth
                   margin="normal"
                   labelId="class-label"

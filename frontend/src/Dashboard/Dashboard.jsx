@@ -30,6 +30,7 @@ function Dashboard(){
   const [studentList, setStudentList] = useState([]);
   const [classStudentList, setClassStudentList] = useState([]);
   const [year] = useState(new Date().getFullYear());
+  const [hasClassMate, setHasClassMate] = useState(false);
 
   useEffect(()=>{
       //fetch all paginated students data by recursively calling page by page
@@ -50,7 +51,8 @@ function Dashboard(){
       }
   
      if(authUser){
-        if(authUser['user'].classId){
+        if(authUser['user'].role === "student"){
+          setHasClassMate(true); //is a student
          const url = "http://localhost:8000/accounts/class-users/"+
          authUser['user'].classId+"/";
          const query = {role:"student"}
@@ -59,6 +61,8 @@ function Dashboard(){
         }).catch((error)=>{
            setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load students List`);
         })
+      }else {
+        setHasClassMate(false); // is either an admin, teacher or parent
       }
       }
     },[authUser])
@@ -103,7 +107,7 @@ function Dashboard(){
             const dataCount = [];
             for(let i = 0; i < 4; i++){
               const url = "http://localhost:8000/accounts/class-users/"+classes.id+"/";
-              const param ={search:(year-i),role:"student"};;
+              const param ={search:(year-i),role:"student"};
               const response = await axiosInstance.get(url,{params:param});
               dataCount.push(response.data.count)
               
@@ -343,7 +347,7 @@ function Dashboard(){
                   style={{width:"100%", height:"200px"}}>
                   <List>
                     {
-                       classStudentList.map(student=>(
+                     hasClassMate ?  classStudentList.map(student=>(
                         <Paper elevation={1} style={{marginBottom:"15px"}}>
                          <ListItem key={student.pk}>
                           <ListItemIcon>
@@ -366,6 +370,15 @@ function Dashboard(){
                          </ListItem>
                          </Paper>
                         ))
+                        : <ListItem>
+                          <ListItemText>
+                            <Typography style={{
+                              color:"#AAA",
+                              marginTop:"60px",
+                              textAlign:"center"
+                            }}>No Data</Typography>
+                          </ListItemText>
+                        </ListItem>
                     }
                   </List>
                   </Scrollbars>
