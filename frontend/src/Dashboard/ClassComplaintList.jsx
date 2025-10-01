@@ -60,7 +60,7 @@ function ClassComplaintList(){
         }}
         >
         <Typography component="h1" variant="h6">Class Tickets</Typography>
-        <Container sx={{textAlign:"right"}} >
+        <Container sx={{textAlign:"right", marginRight:"-25px"}} >
           <TextField
                minWidth="200px"
                margin="normal"
@@ -141,7 +141,8 @@ function ClassComplaintList(){
         <div className="loaderContainer">
             <Typography color="error">{msg}</Typography>
         </div>
-        <Container sx={{textAlign:"right", margin:"40px auto"}}>
+        <Container sx={{textAlign:"right", marginTop:"40px",
+          marginBottom:"40px", marginRight:"-21px"}}>
           <Button
           sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}
            onClick={()=>{

@@ -151,7 +151,7 @@ function ComplaintList(){
         }}
         >
         <Typography component="h1" variant="h6">Tickets</Typography>
-        <Container sx={{textAlign:"right"}} >
+        <Container sx={{textAlign:"right", marginRight:"-25px"}} >
           <TextField
                minWidth="200px"
                margin="normal"
@@ -240,87 +240,14 @@ function ComplaintList(){
             ))
           }
         </Grid>
-        {/*}
-        <Paper>
-           <Scrollbars autoHide autoHideTimeout={1000}
-                            style={{width:"100%", height:"200px"}}>
-
-                  
-          <Table>
-            <TableHead>
-              <TableRow>
-                 <TableCell>Id</TableCell>
-                 <TableCell>Title</TableCell>
-                 <TableCell>complaint</TableCell>
-                 <TableCell>Date</TableCell>
-                 <TableCell>Reply status</TableCell>
-                 <TableCell>Reply</TableCell>
-                 <TableCell>Delete</TableCell>
-                 
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {
-                  complaintList.map(complaint=>(
-                    <TableRow key={complaint.id}>
-                      <TableCell>{complaint.id}</TableCell>
-                      <TableCell>
-                        <span style={{ display: 'inline-block', 
-                          whiteSpace:"normal", wordBreak:"break-word" }}>
-                          {complaint.title}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <span style={{ display: 'inline-block', 
-                          whiteSpace:"normal", wordBreak:"break-word" }}>
-                          {complaint.complaint}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <span style={{ display: 'inline-block', 
-                          whiteSpace:"normal", wordBreak:"break-word" }}>
-                          {complaint.date}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <Checkbox checked={complaint.replyStatus}/>
-                      </TableCell>
-                      <TableCell>
-                        <IconButton title="reply"
-                         onClick={()=>{
-                             setCurrComplaint(complaint);
-                             handleOpenReplyDialog();
-                          }}>
-                        <MessageIcon></MessageIcon>
-                        </IconButton>
-                      </TableCell>
-                      <TableCell>
-                         <IconButton title="delete"
-                         onClick={()=>{
-                             setCurrComplaint(complaint);
-                             handleOpenDeleteDialog();  
-                          }}>
-                        <TrashIcon></TrashIcon>
-                        </IconButton>
-                      </TableCell>
-                      
-                    </TableRow>
-                    
-                 ))
-                        
-              }
-            </TableBody>
-          </Table>
-           </Scrollbars>
-        </Paper>
-        {*/}
          <div className="loaderContainer">
             {isLoading && <CircularProgress />}
           </div>
           <div className="loaderContainer">
             <Typography color="error">{msg}</Typography>
           </div>
-        <Container sx={{textAlign:"right", margin:"40px auto"}}>
+        <Container sx={{textAlign:"right", marginTop:"40px",
+          marginBottom:"40px", marginRight:"-21px"}}>
           <Button
           sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}
            onClick={()=>{
@@ -359,6 +286,18 @@ function ComplaintList(){
         onSubmit={()=>reply()}
         formContent={
           <TextField 
+           sx={{
+              width:"70%",
+              '& .MuiInputBase-root':{
+              height:"50px",
+              borderRadius:"10px",
+              },
+              '& .MuiOutlinedInput-input':{
+               height:"50px",
+               paddingTop:0,
+               paddingBottom:0,
+                },
+               }}
            fullWidth
            multiline
            label="message"

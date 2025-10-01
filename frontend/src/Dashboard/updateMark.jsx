@@ -180,140 +180,237 @@ function UpdateMark(){
         <Typography component="h1" variant="h6">Update Grade</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{
            width:{xs:"100%",}}}>
-            <Typography component="p" sx={{
-              textAlign:"center",
-              color:"primary",
-              }}>
-                Update Grade
-           </Typography>
-
-           <Grid container width="sm" direction="column" spacing={4}>
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="examScore"
-                 label="examScore"
-                 type="text"
-                 value={form.examScore}
-                 onChange={(e) => setForm({ ...form,
-                    examScore: e.target.value })}
-                 name="examScore"
-                 
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="test_score1"
-                 label="test_score1"
-                 type="text"
-                 value={form.test_score1}
-                 onChange={(e) => setForm({ ...form,
-                    test_score1: e.target.value })}
-                 name="test_score1"
-                 
-              />
-            </Grid>
-
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="test_score2"
-                 label="test_score2"
-                 type="text"
-                 value={form.test_score2}
-                 onChange={(e) => setForm({ ...form,
-                    test_score2: e.target.value })}
-                 name="test_score2"
-                 
-              />
-            </Grid>
-
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="test_score3"
-                 label="test_score3"
-                 type="text"
-                 value={form.test_score3}
-                 onChange={(e) => setForm({ ...form,
-                    test_score3: e.target.value })}
-                 name="test_score3"
-                 
-              />
-            </Grid>
 
 
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="homework_score1"
-                 label="homework_score1"
-                 type="text"
-                 value={form.homework_score1}
-                 onChange={(e) => setForm({ ...form,
-                    homework_score1: e.target.value })}
-                 name="homework_score1"
-                 
-              />
-            </Grid>
+            <Typography marginTop={5} style={{color:"royalblue"}}>
+                Exam and Test Scores </Typography>
+            <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+                        marginTop={5} padding="10px 30px">
+                 <Grid container spacing={1}>
+                  <Grid item size={{xs:12, sm:6, md:6}}>
+                    <TextField
+                      fullWidth
+                        sx={{
+                          '& .MuiInputBase-root':{
+                          height:"50px",
+                           borderRadius:"10px",
+                          },
+                          '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                           },
+                          }}
+                          margin="normal"
+                          required
+                          id="examScore"
+                          label="examScore"
+                          type="text"
+                          value={form.examScore}
+                          onChange={(e) => setForm({ ...form,
+                             examScore: e.target.value })}
+                          name="examScore"
+                                     
+                          />
+                  </Grid>
+                  <Grid item size={{xs:12, sm:6, md:6}}>
+                    <TextField
+                      fullWidth
+                        sx={{
+                          '& .MuiInputBase-root':{
+                          height:"50px",
+                           borderRadius:"10px",
+                          },
+                          '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                           },
+                          }}
+                          margin="normal"
+                          required
+                          id="test_score1"
+                          label="test_score1"
+                          type="text"
+                          value={form.test_score1}
+                          onChange={(e) => setForm({ ...form,
+                             test_score1: e.target.value })}
+                          name="test_score1"
+                                     
+                          />
+                  </Grid>
+                  <Grid item size={{xs:12, sm:6, md:6}}>
+                    <TextField
+                      fullWidth
+                        sx={{
+                          '& .MuiInputBase-root':{
+                          height:"50px",
+                           borderRadius:"10px",
+                          },
+                          '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                           },
+                          }}
+                          margin="normal"
+                          required
+                          id="test_score2"
+                          label="test_score2"
+                          type="text"
+                          value={form.test_score2}
+                          onChange={(e) => setForm({ ...form,
+                             test_score2: e.target.value })}
+                          name="test_score2"
+                                     
+                          />
+                  </Grid>
+                  <Grid item size={{xs:12, sm:6, md:6}}>
+                    <TextField
+                      fullWidth
+                        sx={{
+                          '& .MuiInputBase-root':{
+                          height:"50px",
+                           borderRadius:"10px",
+                          },
+                          '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                           },
+                          }}
+                          margin="normal"
+                          required
+                          id="test_score3"
+                          label="test_score3"
+                          type="text"
+                          value={form.test_score3}
+                          onChange={(e) => setForm({ ...form,
+                             test_score3: e.target.value })}
+                          name="test_score3"
+                                     
+                          />
+                  </Grid>
+                 </Grid>
+            </Box>
 
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="homework_score2"
-                 label="homework_score2"
-                 type="text"
-                 value={form.homework_score2}
-                 onChange={(e) => setForm({ ...form,
-                    homework_score2: e.target.value })}
-                 name="homework_score2"
-                 
-              />
-            </Grid>
+            <Typography marginTop={5} style={{color:"royalblue"}}>
+                Assignment Scores</Typography>
+            <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+                        marginTop={5} padding="10px 30px">
+                 <Grid container spacing={1}>
+                  <Grid item size={{xs:12, sm:6, md:6}}>
+                    <TextField
+                      fullWidth
+                        sx={{
+                          '& .MuiInputBase-root':{
+                          height:"50px",
+                           borderRadius:"10px",
+                          },
+                          '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                           },
+                          }}
+                          margin="normal"
+                          required
+                          id="homework_score1"
+                          label="homework_score1"
+                          type="text"
+                          value={form.homework_score1}
+                          onChange={(e) => setForm({ ...form,
+                             homework_score1: e.target.value })}
+                          name="homework_score1"
+                                     
+                          />
+                  </Grid>
+                  <Grid item size={{xs:12, sm:6, md:6}}>
+                    <TextField
+                      fullWidth
+                        sx={{
+                          '& .MuiInputBase-root':{
+                          height:"50px",
+                           borderRadius:"10px",
+                          },
+                          '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                           },
+                          }}
+                          margin="normal"
+                          required
+                          id="homework_score2"
+                          label="homework_score2"
+                          type="text"
+                          value={form.homework_score2}
+                          onChange={(e) => setForm({ ...form,
+                             homework_score2: e.target.value })}
+                          name="homework_score2"
+                                     
+                          />
+                  </Grid>
+                  <Grid item size={{xs:12, sm:6, md:6}}>
+                    <TextField
+                      fullWidth
+                        sx={{
+                          '& .MuiInputBase-root':{
+                          height:"50px",
+                           borderRadius:"10px",
+                          },
+                          '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                           },
+                          }}
+                          margin="normal"
+                          required
+                          id="homework_score3"
+                          label="homework_score3"
+                          type="text"
+                          value={form.homework_score3}
+                          onChange={(e) => setForm({ ...form,
+                             homework_score3: e.target.value })}
+                          name="homework_score3"
+                                     
+                          />
+                  </Grid>
+                 </Grid>
+            </Box>
 
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="homework_score3"
-                 label="homework_score3"
-                 type="text"
-                 value={form.homework_score3}
-                 onChange={(e) => setForm({ ...form,
-                    homework_score3: e.target.value })}
-                 name="homework_score3"
-                 
-              />
-            </Grid>
-
-            <Grid>
-              <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
-                <InputLabel id="subject-label">{form.subjectId || "subject"}</InputLabel>
-                <Select
-                    fullWidth
-                    margin="normal"
-                    labelId="subject-label"
-                    id="subjectId"
-                    name="subjectId"
-                    value={form.subjectId}
-                    label="Subject"
-                    onChange={(e) => setForm({ ...form,
-                      subjectId: e.target.value })}
-                    >
+            <Typography marginTop={5} style={{color:"royalblue"}}>
+                Subject / Student</Typography>
+            <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+                        marginTop={5} padding="10px 30px">
+                 <Grid container spacing={1} textAlign="center">
+                  <Grid item size={{xs:12, sm:12, md:12}}>
+                    <FormControl  sx={{
+                            width:"60%",
+                            margin:"16px 0px",
+                          '& .MuiInputBase-root':{
+                          height:"50px",
+                           borderRadius:"10px",
+                          },
+                          '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                           },
+                          }}>
+                      <InputLabel id="subject-label">{form.subjectId || "subject"}</InputLabel>
+                     <Select
+                      fullWidth
+                      margin="normal"
+                      labelId="subject-label"
+                      id="subjectId"
+                      name="subjectId"
+                      value={form.subjectId}
+                      label="Subject"
+                      onChange={(e) => setForm({ ...form,
+                         subjectId: e.target.value })}
+                       >
                       <MenuItem value="">None</MenuItem>
                       {
                         subjectList.map(list=>(
@@ -322,26 +419,37 @@ function UpdateMark(){
                         ))
                         
                       }
-                </Select>
-              </FormControl>
-            </Grid>
-
-            <Grid>
-              <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
-                <InputLabel id="child-label">{form.userId || "child"}</InputLabel>
-                <Select
-                    fullWidth
-                    margin="normal"
-                    labelId="child-label"
-                    id="childId"
-                    name="childId"
-                    value={form.userId}
-                    label="child"
-                    onChange={(e) => setForm({ ...form,
-                      userId: e.target.value })}
+                     </Select>
+                   </FormControl>
+                  </Grid>
+                  <Grid item size={{xs:12, sm:12, md:12}}>
+                    <FormControl  sx={{
+                            width:"60%",
+                            margin:"16px 0px 0px 0px",
+                          '& .MuiInputBase-root':{
+                          height:"50px",
+                           borderRadius:"10px",
+                          },
+                          '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                           },
+                          }}>
+                      <InputLabel id="child-label">{form.userId || "child"}</InputLabel>
+                      <Select
+                      fullWidth
+                      margin="normal"
+                      labelId="child-label"
+                      id="childId"
+                       name="childId"
+                       value={form.userId}
+                       label="child"
+                        onChange={(e) => setForm({ ...form,
+                         userId: e.target.value })}
                      
                      
-                    >
+                      >
                       <MenuItem value="">None</MenuItem>
                       {
                         studentList.map(student=>(
@@ -350,26 +458,25 @@ function UpdateMark(){
                         ))
                         
                       }
-                </Select>
-              </FormControl>
-            </Grid>
+                      </Select>
+                     </FormControl>
+                  </Grid>
+                 </Grid>
+            </Box>
 
-            <Grid>
+             <div style={{textAlign:"center"}}>
               <Button
               type="submit"
               fullWidth
               variant="contained"
               disabled={isDisabled}
-              sx={{ mt: 3, mb: 2 }}>Add Grade</Button>
+              sx={{ mt: 2, mb: 2, height:"50px", width:"150px",
+              borderRadius:"10px" }}>Upload</Button></div>
             
-              <div className="loaderContainer">
+              <div className="loaderContainer" marginBottom={10}>
                      {isLoading && <CircularProgress />}
                </div>
-            </Grid>
-           </Grid>
-           
-
-        </Box>
+            </Box>
 
       </Box>
 

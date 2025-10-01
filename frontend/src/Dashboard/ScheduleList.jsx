@@ -64,7 +64,7 @@ function ScheduleList(){
 
       }catch(error){
           setIsLoading(false);
-          setDialogMsg(JSON.stringify(error.response.data));
+          setDialogMsg(JSON.stringify(error.response.data.detail));
           handleOpenMsgBox();
     }
       
@@ -108,7 +108,7 @@ function ScheduleList(){
         }}
         >
         <Typography component="h1" variant="h6">All Schedule</Typography>
-        <Container sx={{textAlign:"right"}} >
+        <Container sx={{textAlign:"right", marginRight:"-25px"}} >
           <TextField
                minWidth="200px"
                margin="normal"
@@ -202,7 +202,8 @@ function ScheduleList(){
          <div className="loaderContainer">
             <Typography color="error">{msg}</Typography>
         </div>
-        <Container sx={{textAlign:"right", margin:"40px auto"}}>
+        <Container sx={{textAlign:"right", marginRight:"-21px", marginBottom:"40px",
+          marginTop:"40px"}}>
           <Button
           sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}
            onClick={()=>{

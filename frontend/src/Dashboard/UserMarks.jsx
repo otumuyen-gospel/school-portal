@@ -71,6 +71,10 @@ function UserMarks(){
     const c = classList.filter(classes=>(classes.id === mark.classId))[0];
     return c ? c.classCode : "None";
   }
+  const getClassId = (code)=>{
+     const c = classList.filter(classes=>(classes.classCode === code))[0];
+    return c ? c.id : "";
+  }
   
   useEffect(()=>{
     //fetch all paginated subject data by recursively calling page by page
@@ -104,6 +108,12 @@ function UserMarks(){
   const getSubjectCode = (mark)=>{
     const subjects = subjectList.filter(subjectlist=>(subjectlist.id === mark.subjectId))[0];
     return subjects ? subjects.subjectCode : "None";
+  }
+
+  const getSubjectId = (code)=>{
+     const subjects = subjectList.filter(subjectlist=>(subjectlist.subjectCode
+       === code))[0];
+    return subjects ? subjects.id : "";
   }
 
  const getGrade = (grade)=>{
@@ -144,6 +154,18 @@ function UserMarks(){
       }
       users(url, query);
   },[url, query])
+
+  const initializeQuery = ()=>{
+    const classId = getClassId(params)
+    const subjectId = getSubjectId(params)
+    if(classId){
+      setQuery({...query,search:classId})
+    }else if(subjectId){
+      setQuery({...query,search:subjectId}) 
+    }else{
+      setQuery({...query, search:params})
+    }
+  }
   
   return (
     <div style={{backgroundColor:"#FFF"}}>
@@ -155,7 +177,7 @@ function UserMarks(){
         }}
         >
         <Typography component="h1" variant="h6">My Grades</Typography>
-        <Container sx={{textAlign:"right"}} >
+        <Container sx={{textAlign:"right", marginRight:"-25px"}} >
           <TextField
                minWidth="200px"
                margin="normal"
@@ -174,9 +196,7 @@ function UserMarks(){
                 marginTop:"16px",
                 '& .hover':{backgroundColor:"dodgerblue"},
                 minHeight:"56px"}}
-                onClick={()=>{
-                   setQuery({...query,search:params});
-                }}
+                onClick={initializeQuery}
                >
                 <SearchIcon></SearchIcon>
                </Button>
@@ -188,12 +208,12 @@ function UserMarks(){
             <TableHead>
               <TableRow>
                  <TableCell>Id</TableCell>
-                 <TableCell>Test 1</TableCell>
-                 <TableCell>Test 2</TableCell>
-                 <TableCell>Test 3</TableCell>
-                 <TableCell>Work 1</TableCell>
-                 <TableCell>Work 2</TableCell>
-                 <TableCell>Work 3</TableCell>
+                 <TableCell>Test1</TableCell>
+                 <TableCell>Test2</TableCell>
+                 <TableCell>Test3</TableCell>
+                 <TableCell>Work1</TableCell>
+                 <TableCell>Work2</TableCell>
+                 <TableCell>Work3</TableCell>
                  <TableCell>Exam</TableCell>
                  <TableCell>Total</TableCell>
                  <TableCell>Grade</TableCell>
@@ -256,7 +276,8 @@ function UserMarks(){
           </div>
            </Scrollbars>
         </Paper>
-        <Container sx={{textAlign:"right", margin:"40px auto"}}>
+        <Container sx={{textAlign:"right", marginTop:"40px", 
+          marginRight:"-21px",marginBottom:"40px"}}>
           <Button
           sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}
            onClick={()=>{

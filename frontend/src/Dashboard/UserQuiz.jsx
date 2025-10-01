@@ -121,7 +121,7 @@ function UserQuiz(){
         }}
         >
         <Typography component="h1" variant="h6">My Quizzes</Typography>
-        <Container sx={{textAlign:"right"}} >
+        <Container sx={{textAlign:"right", marginRight:"-25px"}} >
           <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "200px" }}>
               <InputLabel id="params">{params || "subject"}</InputLabel>
               <Select
@@ -213,7 +213,8 @@ function UserQuiz(){
             <Typography color="error">{msg}</Typography>
           </div>
         </Container>
-        <Container sx={{textAlign:"right", margin:"40px auto"}}>
+        <Container sx={{textAlign:"right", marginTop:"40px", 
+          marginRight:"-21px",marginBottom:"40px"}}>
           <Button 
             sx={{backgroundColor:"royalblue", color:"#FFF"}}
           onClick={()=>{

@@ -35,16 +35,19 @@ class ClassMark(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__id',) 
+    filterset_fields =  ('subjectId__id', 'userId__id','classId__id','examScore',
+    'test_score1','test_score2','test_score3','homework_score1','homework_score2',
+    'homework_score3',)
 
      #you can search using the "search" keyword
-    search_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__id',)
+    search_fields =  ('subjectId__id', 'userId__id','classId__id','examScore',
+    'test_score1','test_score2','test_score3','homework_score1','homework_score2',
+    'homework_score3',)
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__id',)
+    ordering_fields =  ('subjectId__id', 'userId__id','classId__id','examScore',
+    'test_score1','test_score2','test_score3','homework_score1','homework_score2',
+    'homework_score3',)
 
     def get_url_values(self):
         url = self.request.build_absolute_uri()
@@ -77,16 +80,19 @@ class MarkList(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__id',) 
+    filterset_fields =  ('subjectId__id', 'userId__id','classId__id','examScore',
+    'test_score1','test_score2','test_score3','homework_score1','homework_score2',
+    'homework_score3',)
 
      #you can search using the "search" keyword
-    search_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId_id', 'userId__id',)
+    search_fields =  ('subjectId__id', 'userId__id','classId__id','examScore',
+    'test_score1','test_score2','test_score3','homework_score1','homework_score2',
+    'homework_score3',)
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__id',)
+    ordering_fields =  ('subjectId__id', 'userId__id','classId__id','examScore',
+    'test_score1','test_score2','test_score3','homework_score1','homework_score2',
+    'homework_score3',)
     
 #this generic class will handle UPDATE(list 1 item) by admin and teacher only 
 class MarkUpdate(generics.UpdateAPIView):
@@ -140,16 +146,19 @@ class UserMark(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
     #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__id',) 
+    filterset_fields = ('subjectId__id', 'userId__id','classId_id','examScore',
+    'test_score1','test_score2','test_score3','homework_score1','homework_score2',
+    'homework_score3',) 
 
      #you can search using the "search" keyword
-    search_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__id',)
+    search_fields = ('subjectId__id', 'userId__id','classId__id','examScore',
+    'test_score1','test_score2','test_score3','homework_score1','homework_score2',
+    'homework_score3',)
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('examScore','test_score1','test_score2',
-                     'test_score3','subjectId__id', 'userId__id',) 
+    ordering_fields = ('subjectId__id', 'userId__id','classId__id','examScore',
+    'test_score1','test_score2','test_score3','homework_score1','homework_score2',
+    'homework_score3',) 
     
 
     def get_url_values(self):

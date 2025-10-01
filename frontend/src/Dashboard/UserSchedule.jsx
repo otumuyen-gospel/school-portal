@@ -56,7 +56,7 @@ function UserSchedule(){
         }}
         >
         <Typography component="h1" variant="h6">My Schedules</Typography>
-        <Container sx={{textAlign:"right"}} >
+        <Container sx={{textAlign:"right" , marginRight:"-25px"}} >
           <TextField
                minWidth="200px"
                margin="normal"
@@ -138,7 +138,9 @@ function UserSchedule(){
             <Typography color="error">{msg}</Typography>
           </div>
         
-        <Container sx={{textAlign:"right", margin:"40px auto"}}>
+        <Container sx={{textAlign:"right", marginRight:"-21px", marginBottom:"40px",
+          marginTop:"40px"
+        }}>
           <Button
           sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}
            onClick={()=>{

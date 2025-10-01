@@ -693,7 +693,8 @@ function Profile(){
               </Grid>
                <Grid item size={{xs:12, sm:6, md:6}}>
               <FormControl 
-               required fullWidth
+               required 
+               fullWidth
                  sx={{
                    margin:"16px 0px 0px 0px",
                     '& .MuiInputBase-root':{

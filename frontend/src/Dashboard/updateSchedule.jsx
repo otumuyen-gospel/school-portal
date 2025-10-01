@@ -63,7 +63,7 @@ function UpdateSchedule(){
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button
             if (err) {
-              setMsg(JSON.stringify(err.response.data));
+              setMsg(JSON.stringify(err.response.data.detail));
                  handleOpenMsgBox();
             }
     })
@@ -83,92 +83,148 @@ function UpdateSchedule(){
         <Typography component="h1" variant="h6">Update Schedule</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{
            width:{xs:"100%",}}}>
-            <Typography component="p" sx={{
-              textAlign:"center",
-              color:"primary",
-              }}>
-                Update Schedule
-           </Typography>
+             <Typography marginTop={5} style={{color:"royalblue"}}>
+              Title And Date</Typography>
+             <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+                        marginTop={5} padding="10px 30px">
 
-           <Grid container width="sm" direction="column" spacing={4}>
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="title"
-                 label="title"
-                 type="text"
-                 value={form.title}
-                 onChange={(e) => setForm({ ...form,
-                    title: e.target.value })}
-                 name="title"
+                <Grid container spacing={1}>
+                   <Grid item size={{xs:12, sm:6, md:6}}>
+                      <TextField
+                        sx={{
+                           '& .MuiInputBase-root':{
+                            height:"50px",
+                            borderRadius:"10px",
+                         },
+                         '& .MuiOutlinedInput-input':{
+                         height:"50px",
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}
+                        fullWidth
+                        margin="normal"
+                        required
+                        id="title"
+                        label="title"
+                        type="text"
+                        value={form.title}
+                        onChange={(e) => setForm({ ...form,
+                              title: e.target.value })}
+                        name="title"
                  
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                 fullWidth
-                 multiline
-                 rows={7}
-                 margin="normal"
-                 required
-                 id="detail"
-                 label="detail"
-                 type="detail"
-                 value={form.detail}
-                 onChange={(e) => setForm({ ...form,
-                    detail: e.target.value })}
-                 name="detail"
+                      />
+                   </Grid>
+                   <Grid item size={{xs:12, sm:6, md:6}}>
+                      <FormControl 
+                      required  
+                      fullWidth
+                      sx={{
+                            margin:"16px 0px 0px 0px",
+                           '& .MuiInputBase-root':{
+                            height:"50px",
+                            borderRadius:"10px",
+                         },
+                         '& .MuiOutlinedInput-input':{
+                         height:"50px",
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DateTimePicker
+                      id="startDate"
+                      label="Start Date"
+                      value={dayjs(form.startDateTime)}
+                      format="YYYY-MM-DD hh:mm:ss"
+                      onChange={(e) => setForm({ ...form,
+                          startDateTime: e })}
+                      name="startDate"
                  
-              />
-            </Grid>
+                       /></LocalizationProvider>
+                     </FormControl>
+                   </Grid>
 
-            <Grid>
-              <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%"}}>
-                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateTimePicker
-                 id="startDate"
-                 label="Start Date"
-                 value={dayjs(form.startDateTime)}
-                 format="YYYY-MM-DD hh:mm:ss"
-                 onChange={(e) => setForm({ ...form,
-                    startDateTime: e })}
-                 name="startDate"
+                   <Grid item size={{xs:12, sm:6, md:6}}>
+                      <FormControl 
+                      required  
+                      fullWidth
+                      sx={{
+                            margin:"16px 0px 0px 0px",
+                           '& .MuiInputBase-root':{
+                            height:"50px",
+                            borderRadius:"10px",
+                         },
+                         '& .MuiOutlinedInput-input':{
+                         height:"50px",
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DateTimePicker
+                      id="endDate"
+                      label="End Date"
+                      value={dayjs(form.endDateTime)}
+                      format="YYYY-MM-DD hh:mm:ss"
+                      onChange={(e) => setForm({ ...form,
+                          endDateTime: e })}
+                      name="endDate"
                  
-              /></LocalizationProvider>
-              </FormControl>
-            </Grid>
-            
-            <Grid>
-              <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%"}}>
-                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateTimePicker
-                 id="endDate"
-                 label="End Date"
-                 value={dayjs(form.endDateTime)}
-                 format="YYYY-MM-DD hh:mm:ss"
-                 onChange={(e) => setForm({ ...form,
-                    endDateTime: e })}
-                 name="endDate"
+                       /></LocalizationProvider>
+                     </FormControl>
+                   </Grid>
+                </Grid>
+              </Box>
+              
+              <Typography marginTop={5} style={{color:"royalblue"}}>
+              Schedule Detail</Typography>
+             <Box marginBottom={5} marginTop={5}>
+                <Grid container>
+                   <Grid item size={{xs:12, sm:12, md:12}}>
+                      <TextField
+                        boxShadow={1}
+                        sx={{
+                           '& .MuiInputBase-root':{
+                            borderBottomLeftRadius:"10px",
+                            borderBottomRightRadius:"10px",
+                            borderTop:"5px solid royalblue"
+                         },
+                         '& .MuiOutlinedInput-input':{
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}
+                        fullWidth
+                        multiline
+                        rows={7}
+                        margin="normal"
+                        required
+                        id="detail"
+                        label="detail"
+                        type="detail"
+                        value={form.detail}
+                        onChange={(e) => setForm({ ...form,
+                           detail: e.target.value })}
+                        name="detail"
                  
-              /></LocalizationProvider>
-              </FormControl>
-            </Grid>
+                      />
+                   </Grid>
+                </Grid>
+              </Box>
 
-            <Grid>
+              <div style={{textAlign:"center"}}>
               <Button
               type="submit"
               fullWidth
               variant="contained"
               disabled={isDisabled}
-              sx={{ mt: 3, mb: 2 }}>Update Schedule</Button>
-            
-              <div className="loaderContainer">
+              sx={{mt: 2, mb: 2, height:"50px", width:"150px",
+              borderRadius:"10px" }}>Update</Button></div>
+
+              <div className="loaderContainer" marginBottom={20}>
                      {isLoading && <CircularProgress />}
                </div>
-            </Grid>
-           </Grid>
            
 
         </Box>

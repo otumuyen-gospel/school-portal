@@ -67,7 +67,7 @@ class ScheduleUpdate(generics.UpdateAPIView):
     def get_object(self):
         obj = super().get_object()
         if self.request.user.is_superuser or \
-            obj.classId.id == self.request.user.classId.id:
+            obj.userId.id == self.request.user.pk:
              return obj
         else:
             raise PermissionDenied("You do not have permission to edit this object.")
@@ -84,7 +84,7 @@ class ScheduleDelete(generics.DestroyAPIView):
     def get_object(self):
         obj = super().get_object()
         if self.request.user.is_superuser or \
-            obj.classId.id == self.request.user.classId.id:
+            obj.userId.id == self.request.user.pk:
              return obj
         else:
             raise PermissionDenied("You do not have permission to edit this object.")
