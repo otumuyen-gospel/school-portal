@@ -83,78 +83,116 @@ function UpdateHomework(){
         <Typography component="h1" variant="h6">Update Work</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{
            width:{xs:"100%",}}}>
-            <Typography component="p" sx={{
-              textAlign:"center",
-              color:"primary",
-              }}>
-                Update Work
-           </Typography>
 
-           <Grid container width="sm" direction="column" spacing={4}>
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="title"
-                 label="title"
-                 type="text"
-                 value={form.title}
-                 onChange={(e) => setForm({ ...form,
-                    title: e.target.value })}
-                 name="title"
-                 
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="link"
-                 label="link"
-                 type="file"
-                 onChange={(e) => setForm({ ...form,
-                    link: e.target.files[0] })}
-                 name="link"
-                 
-              />
-              <Typography>Previous File : <a href={homework?.link}>{homework?.link}</a></Typography>
-            </Grid>
-            <Grid>
-              <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%"}}>
-                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateTimePicker
-                 id="submission"
-                 label="submission"
-                 value={dayjs(form.submission)}
-                 format="YYYY-MM-DD hh:mm:ss"
-                 onChange={(e) => setForm({ ...form,
-                    submission: e })}
-                 name="submission"
-              /></LocalizationProvider>
-              </FormControl>
-            </Grid>
+            <Typography marginTop={5} style={{color:"royalblue"}}>
+              Update Homework</Typography>
+             <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+                        marginTop={5} padding="10px 30px">
 
-            <Grid>
+                <Grid container spacing={1}>
+                   <Grid item size={{xs:12, sm:6, md:6}}>
+                      <TextField
+                        sx={{
+                           '& .MuiInputBase-root':{
+                            borderRadius:"10px",
+                            height:"50px",
+                         },
+                         '& .MuiOutlinedInput-input':{
+                          height:"50px",
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}
+                        fullWidth
+                        margin="normal"
+                        required
+                        id="title"
+                        label="title"
+                        type="text"
+                        value={form.title}
+                        onChange={(e) => setForm({ ...form,
+                              title: e.target.value })}
+                        name="title"
+                 
+                      />
+                   </Grid>
+                   <Grid item size={{xs:12, sm:6, md:6}}>
+                     <TextField
+                        sx={{
+                           '& .MuiInputBase-root':{
+                            borderRadius:"10px",
+                            height:"50px",
+                         },
+                         '& .MuiOutlinedInput-input':{
+                          height:"50px",
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}
+                      fullWidth
+                      margin="normal"
+                      required
+                      id="link"
+                      type="file"
+                      onChange={(e) => setForm({ ...form,
+                           link: e.target.files[0] })}
+                      name="link"
+                 
+                      />
+                      
+                   </Grid>
+                   <Grid item size={{xs:12, sm:6, md:6}}>
+                      <FormControl 
+                      required  
+                      fullWidth
+                      sx={{
+                            margin:"16px 0px",
+                           '& .MuiInputBase-root':{
+                            borderRadius:"10px",
+                            height:"50px",
+                         },
+                         '& .MuiOutlinedInput-input':{
+                          height:"50px",
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DateTimePicker
+                      id="submission"
+                      label="submission"
+                      value={dayjs(form.submission)}
+                      format="YYYY-MM-DD hh:mm:ss"
+                      onChange={(e) => setForm({ ...form,
+                          submission: e })}
+                      name="submission"
+                 
+                       /></LocalizationProvider>
+                     </FormControl>
+                   </Grid>
+                   <Grid item size={{xs:12, sm:6, md:6}}>
+                    <Typography style={{ display: 'inline-block', 
+                          whiteSpace:"normal", wordBreak:"break-word" }}>
+                        Previous File : <a href={homework?.link}>{homework?.link}</a>
+                        </Typography>
+                   </Grid>
+                </Grid>
+              </Box>
+              
+              <div style={{textAlign:"center"}}>
               <Button
               type="submit"
               fullWidth
               variant="contained"
               disabled={isDisabled}
-              sx={{ mt: 3, mb: 2 }}>Upload Homework</Button>
-            
-              <div className="loaderContainer">
+              sx={{mt: 2, mb: 2, width:"150px",
+              borderRadius:"10px" }}>Upload</Button></div>
+
+              <div className="loaderContainer" marginBottom={10}>
                      {isLoading && <CircularProgress />}
                </div>
-            </Grid>
-           </Grid>
-           
-
-        </Box>
-
+          </Box>
       </Box>
-
 
         <MessageDialogForm open={openMsgBox} 
         onClose={handleCloseMsgBox} 

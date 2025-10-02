@@ -120,6 +120,303 @@ function CreateQuiz(){
         <Typography component="h1" variant="h6">Add Quiz</Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{
            width:{xs:"100%",}}}>
+            <Typography marginTop={5} style={{color:"royalblue"}}>
+              Quiz details</Typography>
+             <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+                        marginTop={5} padding="10px 30px">
+
+                <Grid container spacing={1}>
+                   <Grid item size={{xs:12, sm:6, md:6}}>
+                      <TextField
+                        sx={{
+                           '& .MuiInputBase-root':{
+                            height:"50px",
+                            borderRadius:"10px",
+                         },
+                         '& .MuiOutlinedInput-input':{
+                         height:"50px",
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}
+                        fullWidth
+                        margin="normal"
+                        required
+                        id="question"
+                        label="question"
+                        type="text"
+                        value={form.question}
+                        onChange={(e) => setForm({ ...form,
+                              question: e.target.value })}
+                        name="question"
+                 
+                      />
+                   </Grid>
+                   <Grid item size={{xs:12, sm:6, md:6}}>
+                      <TextField
+                        sx={{
+                           '& .MuiInputBase-root':{
+                            height:"50px",
+                            borderRadius:"10px",
+                         },
+                         '& .MuiOutlinedInput-input':{
+                         height:"50px",
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}
+                        fullWidth
+                        margin="normal"
+                        required
+                        id="option1"
+                        label="option1"
+                        type="text"
+                        value={form.option1}
+                        onChange={(e) => setForm({ ...form,
+                              option1: e.target.value })}
+                        name="option1"
+                 
+                      />
+                   </Grid>
+                   <Grid item size={{xs:12, sm:6, md:6}}>
+                      <TextField
+                        sx={{
+                           '& .MuiInputBase-root':{
+                            height:"50px",
+                            borderRadius:"10px",
+                         },
+                         '& .MuiOutlinedInput-input':{
+                         height:"50px",
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}
+                        fullWidth
+                        margin="normal"
+                        required
+                        id="option2"
+                        label="option2"
+                        type="text"
+                        value={form.option2}
+                        onChange={(e) => setForm({ ...form,
+                              option2: e.target.value })}
+                        name="option2"
+                 
+                      />
+                   </Grid>
+                   <Grid item size={{xs:12, sm:6, md:6}}>
+                      <TextField
+                        sx={{
+                           '& .MuiInputBase-root':{
+                            height:"50px",
+                            borderRadius:"10px",
+                         },
+                         '& .MuiOutlinedInput-input':{
+                         height:"50px",
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}
+                        fullWidth
+                        margin="normal"
+                        required
+                        id="option3"
+                        label="option3"
+                        type="text"
+                        value={form.option3}
+                        onChange={(e) => setForm({ ...form,
+                              option3: e.target.value })}
+                        name="option3"
+                 
+                      />
+                   </Grid>
+                   <Grid item size={{xs:12, sm:6, md:6}}>
+                      <TextField
+                        sx={{
+                           '& .MuiInputBase-root':{
+                            height:"50px",
+                            borderRadius:"10px",
+                         },
+                         '& .MuiOutlinedInput-input':{
+                         height:"50px",
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}
+                        fullWidth
+                        margin="normal"
+                        required
+                        id="answer"
+                        label="answer"
+                        type="text"
+                        value={form.answer}
+                        onChange={(e) => setForm({ ...form,
+                              answer: e.target.value })}
+                        name="answer"
+                 
+                      />
+                   </Grid>
+                </Grid>
+              </Box>
+
+
+              <Typography marginTop={5} style={{color:"royalblue"}}>
+              Other details</Typography>
+             <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
+                        marginTop={5} padding="10px 30px">
+
+                <Grid container spacing={1}>
+                   <Grid item size={{xs:12, sm:6, md:6}}>
+                      <Checkbox
+                        sx={{
+                           display:"inline",
+                           '& .MuiInputBase-root':{
+                            height:"50px",
+                            borderRadius:"10px",
+                         },
+                         '& .MuiOutlinedInput-input':{
+                         height:"50px",
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}
+                        fullWidth
+                        margin="normal"
+                        required
+                        id="setAsQuiz"
+                        label="setAsQuiz"
+                        checked={form.setAsQuiz}
+                        onChange={(e) =>{setForm({ ...form,
+                           setAsQuiz: e.target.checked })}}
+                       name="setAsQuiz"
+                 
+                     />
+                     <Typography style={{display:"inline"}}>
+                        Set and Activate Quiz to Run Immediately after creation
+                     </Typography>
+                   </Grid>
+                   <Grid item size={{xs:12, sm:6, md:6}}>
+                      <FormControl 
+                      required  
+                      fullWidth
+                      sx={{
+                            margin:"16px 0px",
+                           '& .MuiInputBase-root':{
+                            height:"50px",
+                            borderRadius:"10px",
+                         },
+                         '& .MuiOutlinedInput-input':{
+                         height:"50px",
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker
+                       id="startDate"
+                       label="startDate"
+                       value={dayjs(form.startDate)}
+                       format="YYYY-MM-DD"
+                       onChange={(e) =>setForm({ ...form, startDate: e })}
+                       name="startDate"
+                 
+                       /></LocalizationProvider>
+                     </FormControl>
+                   </Grid>
+
+                    <Grid item size={{xs:12, sm:6, md:6}}>
+                      <FormControl 
+                      required  
+                      fullWidth
+                      sx={{
+                            margin:"16px 0px",
+                           '& .MuiInputBase-root':{
+                            height:"50px",
+                            borderRadius:"10px",
+                         },
+                         '& .MuiOutlinedInput-input':{
+                         height:"50px",
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker
+                       id="endDate"
+                       label="endDate"
+                       value={dayjs(form.endDate)}
+                       format="YYYY-MM-DD"
+                       onChange={(e) =>setForm({ ...form, endDate: e })}
+                       name="endDate"
+                 
+                       /></LocalizationProvider>
+                     </FormControl>
+                   </Grid>
+
+                   <Grid item size={{xs:12, sm:6, md:6}}>
+                      <FormControl 
+                      required  
+                      fullWidth
+                      sx={{
+                            margin:"16px 0px",
+                           '& .MuiInputBase-root':{
+                            height:"50px",
+                            borderRadius:"10px",
+                         },
+                         '& .MuiOutlinedInput-input':{
+                         height:"50px",
+                         paddingTop:0,
+                         paddingBottom:0,
+                         },
+                        }}>
+                       <InputLabel id="subject-label">{form.subjectId || "subject"}</InputLabel>
+                       <Select
+                        fullWidth
+                        margin="normal"
+                        labelId="subject-label"
+                        id="subjectId"
+                        name="subjectId"
+                        value={form.subjectId}
+                        label="Subject"
+                        onChange={(e) => setForm({ ...form,
+                           subjectId: e.target.value })}
+                        >
+                        <MenuItem value="">None</MenuItem>
+                          {
+                            subjectList.map(list=>(
+                              <MenuItem key={list.id}
+                               value={list.id}>{list.subjectCode}</MenuItem>
+                            ))
+                        
+                          }
+                        </Select>
+                     </FormControl>
+                   </Grid>
+                </Grid>
+              </Box>
+              
+              <div style={{textAlign:"center"}}>
+              <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              disabled={isDisabled}
+              sx={{mt: 2, mb: 2, height:"50px", width:"150px",
+              borderRadius:"10px" }}>Upload</Button></div>
+
+              <div className="loaderContainer" marginBottom={10}>
+                     {isLoading && <CircularProgress />}
+               </div>
+          </Box>
+      </Box>
+
+
+
+
+
+
+
+            {/*}
             <Typography component="p" sx={{
               textAlign:"center",
               color:"primary",
@@ -297,12 +594,11 @@ function CreateQuiz(){
                </div>
             </Grid>
            </Grid>
-           
-           
 
         </Box>
 
       </Box>
+      {*/}
 
 
         <MessageDialogForm open={openMsgBox} 
