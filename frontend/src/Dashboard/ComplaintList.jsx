@@ -287,13 +287,10 @@ function ComplaintList(){
         formContent={
           <TextField 
            sx={{
-              width:"70%",
               '& .MuiInputBase-root':{
-              height:"50px",
               borderRadius:"10px",
               },
               '& .MuiOutlinedInput-input':{
-               height:"50px",
                paddingTop:0,
                paddingBottom:0,
                 },

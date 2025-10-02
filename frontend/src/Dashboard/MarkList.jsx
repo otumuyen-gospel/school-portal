@@ -1,5 +1,4 @@
 import TrashIcon from "@mui/icons-material/DeleteOutline";
-import UpdateIcon from "@mui/icons-material/MarkChatReadOutlined";
 import SearchIcon from "@mui/icons-material/SearchOutlined";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -16,7 +15,6 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
-import { useNavigate } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import ConfirmDialogForm from "../Util/ConfirmDialogForm";
 import Layout from "../Util/Layout";
@@ -24,7 +22,6 @@ import MessageDialogForm from "../Util/MessageDialogForm";
 function MarkList(){
    const [isLoading, setIsLoading] = useState(false);
   const [markList, setMarkList] = useState([]);
-  const navigate = useNavigate();
   const [msg, setMsg] = useState("");
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
@@ -302,7 +299,6 @@ function MarkList(){
                  <TableCell>Grade</TableCell>
                  <TableCell>Subject</TableCell>
                  <TableCell>Class</TableCell>
-                 <TableCell>Update</TableCell>
                  <TableCell>Delete</TableCell>
               </TableRow>
             </TableHead>
@@ -349,16 +345,6 @@ function MarkList(){
                         {
                            getClassCode(mark)
                         }
-                      </TableCell>
-                      <TableCell>
-                         <IconButton title="update"
-                         onClick={()=>{
-                            setCurrMark(mark);
-                            navigate('/mark-update',{state:mark});
-                            
-                          }}>
-                          <UpdateIcon></UpdateIcon>
-                         </IconButton>
                       </TableCell>
                       <TableCell>
                          <IconButton title="delete"
