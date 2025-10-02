@@ -26,7 +26,7 @@ function Dashboard(){
    const [adminCount, setAdminCount] = useState("");
    const [msg, setMsg] = useState('');
    const [isLoading, setIsLoading] = useState(false);
-  const [classList,setClassList] = useState([]);
+  //const [classList,setClassList] = useState([]);
   const [studentList, setStudentList] = useState([]);
   const [classStudentList, setClassStudentList] = useState([]);
   const [year] = useState(new Date().getFullYear());
@@ -66,76 +66,7 @@ function Dashboard(){
       }
       }
     },[authUser])
-  
-    
-  useEffect(()=>{
-    //fetch all paginated class data by recursively calling page by page
-     setIsLoading(true);
-    const listClasses = async(url)=>{
-      try{
-         const response = await axiosInstance.get(url)
-          const data = response.data.results;
-          const nextPage = response.data.next;
-          if(nextPage){
-            return data.concat(await listClasses(nextPage));
-          }else{
-            return data;
-          }
-      }catch(error){
-         setMsg("an error has occured");
-         throw error; //rethrow consequent error
-     }
-    }
 
-    const url = "http://localhost:8000/classes/class-list/";
-    listClasses(url).then(allData=>{
-      setClassList(allData)
-      setIsLoading(false);
-     }).catch((error)=>{
-       setMsg("an error has occured");
-     })
-  },[])
-
-  // fetch student's count for the various class for four consecutive years
-  useEffect(()=>{
-    if(classList.length){
-      setIsLoading(true);
-      const listStudent = async()=>{
-        try{
-          const data = [];
-         for(const classes of classList){
-            const dataCount = [];
-            for(let i = 0; i < 4; i++){
-              const url = "http://localhost:8000/accounts/class-users/"+classes.id+"/";
-              const param ={search:(year-i),role:"student"};
-              const response = await axiosInstance.get(url,{params:param});
-              dataCount.push(response.data.count)
-              
-            }
-            const classData = {
-                data:dataCount,
-                label: classes.classCode,
-                id:(classes.id),
-              };
-              data.push(classData);
-            
-         }
-         return data;
-        }catch(error){
-          setMsg("an error has occured");
-          setIsLoading(false);
-          throw error; //rethrow error
-        }
-      }
-
-       listStudent().then(allData=>{
-       setStudentList(allData);
-       setIsLoading(false);
-     }).catch((error)=>{
-       setMsg("an error has occured");
-     })
-    }
-  },[classList,year])
 
    /* fetch student count*/
    useEffect(()=>{
@@ -148,6 +79,7 @@ function Dashboard(){
            if(data){
             setStudentCount(data);  
            }
+            setIsLoading(false)
           }catch(error){
             setIsLoading(false);
             setMsg("an error has occured");
@@ -169,6 +101,7 @@ function Dashboard(){
            if(data){
             setTeacherCount(data);  
            }
+            setIsLoading(false)
           }catch(error){
             setIsLoading(false);
             setMsg("an error has occured");
@@ -190,6 +123,7 @@ function Dashboard(){
            if(data){
             setAdminCount(data);  
            }
+            setIsLoading(false)
           }catch(error){
             setIsLoading(false);
             setMsg("an error has occured");
@@ -210,6 +144,7 @@ function Dashboard(){
            if(data){
             setParentCount(data);  
            }
+            setIsLoading(false)
           }catch(error){
             setIsLoading(false);
             setMsg("an error has occured");
@@ -220,6 +155,27 @@ function Dashboard(){
       users(url, query);
   },[])
   
+
+   useEffect(()=>{
+       setIsLoading(true);
+      const users = async(endpoint)=>{
+        try{
+           const response = await axiosInstance.get(endpoint)
+           const data = response.data;
+           if(data){
+            setStudentList(data);  
+           }
+           setIsLoading(false)
+          }catch(error){
+            setIsLoading(false);
+            setMsg("an error has occured");
+
+          }
+      }
+      const url = "http://localhost:8000/accounts/user-analytics/";
+      users(url);
+  },[])
+
 
   return (
     <div style={{backgroundColor:"#FFF"}}>
@@ -347,7 +303,7 @@ function Dashboard(){
                   style={{width:"100%", height:"200px"}}>
                   <List>
                     {
-                     hasClassMate ?  classStudentList.map(student=>(
+                    hasClassMate ? classStudentList.map(student=>(
                         <Paper elevation={1} style={{marginBottom:"15px"}}>
                          <ListItem key={student.pk}>
                           <ListItemIcon>
@@ -371,14 +327,12 @@ function Dashboard(){
                          </Paper>
                         ))
                         : <ListItem>
-                          <ListItemText>
-                            <Typography style={{
-                              color:"#AAA",
-                              marginTop:"60px",
-                              textAlign:"center"
-                            }}>No Data</Typography>
+                          <ListItemText style={{color:"#999", 
+                            textAlign:"center", marginTop:"70px"}}>
+                            No Data
                           </ListItemText>
                         </ListItem>
+                         
                     }
                   </List>
                   </Scrollbars>

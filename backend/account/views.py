@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from rest_framework import status
 from .models import User
-from .serializers import UserSerializers
+from .serializers import UserSerializers, UserAnalytics
 from rest_framework.reverse import reverse
 from rest_framework import generics
 from rest_framework.response import Response
@@ -14,6 +14,11 @@ from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter
 from .permissions import IsInGroup
 from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth.models import Group
+from rest_framework.views import APIView
+from classes.models import Class
+from datetime import datetime
+import uuid
+
 
 '''
 NOTE: that a global pagination has been set on this generic api 
@@ -176,3 +181,38 @@ class UserPromotion(generics.UpdateAPIView):
              return obj
         else:
             raise PermissionDenied("You do not have permission to edit this object.")
+
+
+
+
+#this class will handle GET method to generate student distribution for
+#four consecutive years backward for the various classes beginning from the current year
+class UserAnalytics(APIView):
+    classes = Class.objects.all()
+    currYear = datetime.now().year
+    data = []
+    permission_classes = [IsAuthenticated,IsInGroup,]
+    required_groups = ['admin','teacher','parent','student']
+    name = 'user-analytics'
+    def get(self, request, *args, **kwargs):
+        for cl in self.classes:
+            dataCount = []
+            for i in range(4):
+                count = User.objects.filter(role='student', 
+                                            classId__id=cl.id,
+                        entrance__icontains=(self.currYear - i)).count()
+                dataCount.append(count)
+            classData = {
+                'data':dataCount,
+                'label': cl.classCode,
+                'id':str(uuid.uuid4()),
+            }
+            self.data.append(classData)
+        if(len(self.data) > 0):
+             serializer = UserAnalytics(data=self.data, many=True)
+             return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+             return Response(status=status.HTTP_404_NOT_FOUND)
+       
+
+

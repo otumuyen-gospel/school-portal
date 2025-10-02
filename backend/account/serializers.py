@@ -9,3 +9,8 @@ class UserSerializers(serializers.ModelSerializer):
         exclude = ('id','user_permissions','groups','last_login','otp',
                    'otp_exp','otp_verified','is_active','is_superuser','is_staff')
         
+
+class UserAnalytics(serializers.Serializer):
+    id = serializers.CharField()
+    label = serializers.CharField()
+    data = serializers.ListField(child=serializers.IntegerField())
