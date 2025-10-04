@@ -148,17 +148,14 @@ class UserQuiz(generics.ListAPIView):
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     
-    #you can filter by field names specified here keyword e.g url?className='primary one'
-    filterset_fields = ('subjectId__id','question','option1','option2','option3',
-                     'answer',) 
+    #you can filter the class quizzes by their subject Ids'
+    filterset_fields = ('subjectId__id',) 
 
      #you can search using the "search" keyword
-    search_fields = ('subjectId__id','question','option1','option2','option3',
-                     'answer',) 
+    search_fields = ('subjectId__id',)
 
     #you can order using the "ordering" keyword
-    ordering_fields = ('subjectId__id','question','option1','option2','option3',
-                     'answer',)
+    ordering_fields = ('subjectId__id',)
 
     def get_url_values(self):
         url = self.request.build_absolute_uri()
