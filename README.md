@@ -406,6 +406,10 @@ this project is the design and implementation of a school web portal using pytho
 ### Installation Guide
 * for the frontend install and configure Node.js, NPM and YARN.
 * navigate to the root folder of the react frontend app inside the folder of the cloned project.
+* Install yarn globally.
+```cmd
+    npm install --global yarn
+```
 * Install dependencies for the react project as stated below.
 ```cmd
      yarn install
