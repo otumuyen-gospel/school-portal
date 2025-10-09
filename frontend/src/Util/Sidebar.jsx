@@ -34,7 +34,7 @@ import MessageDialogForm from "./MessageDialogForm";
 function Sidebar(props){
   const navigate = useNavigate();    
   const location = useLocation();
-  const isMobile = useMediaQuery('(max-width:600px)');
+  const isMobile = useMediaQuery('(max-width:1000px)');
   const [openDialog, setOpenDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [error, setError] = useState("");
@@ -205,10 +205,10 @@ function Sidebar(props){
             backgroundColor:'darkblue',
             boxSizing:'border-box',
             boxShadow:1,
-            width:"19%",
+            width:"210px",
         },
         flexShrink:0,
-        display:{sx:"none",sm:"block"},
+        display:{sx:"none",sm:"block",},
     }}
     >
         {/* header section*/}
@@ -230,8 +230,8 @@ function Sidebar(props){
         <Divider style={{backgroundColor:"#666", height:"0.01px"}}/>
           {/* page links */}
 
-          <Scrollbars  autoHide autoHideTimeout={1000}
-                  style={{width:"100%", height:"400px"}}>
+          <Scrollbars autoHide autoHideTimeout={1000}
+                  style={{width:"100%", height:"400px",}}>
           <Box>
          <ListItem  sx={{
             cursor:"pointer",

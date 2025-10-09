@@ -28,7 +28,7 @@ import MessageDialogForm from "./MessageDialogForm";
 function Sidebar4(props){
   const navigate = useNavigate();    
   const location = useLocation();
-  const isMobile = useMediaQuery('(max-width:600px)');
+  const isMobile = useMediaQuery('(max-width:1000px)');
   const [openDialog, setOpenDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [error, setError] = useState("");
@@ -181,7 +181,7 @@ const ListItems = ({ items}) =>
             backgroundColor:'darkblue',
             boxSizing:'border-box',
             boxShadow:1,
-            width:"19%",
+            width:"210px",
         },
         flexShrink:0,
         display:{sx:"none",sm:"block"},
