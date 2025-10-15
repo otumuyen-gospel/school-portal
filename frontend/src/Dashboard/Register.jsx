@@ -18,7 +18,6 @@ import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
 
-
 function Register(){
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -31,6 +30,7 @@ function Register(){
   const [email, setEmail] = useState('');
   const [msg, setMsg] = useState("");
   const [form, setForm] = useState({
+    pics:"",
     username:"",
     firstname:"",
     lastname:"",
@@ -157,29 +157,32 @@ function Register(){
         return;
     }
     
-    const data = {
-      username:form.username,
-      password:form.password,
-      firstName:form.firstname,
-      lastName:form.lastname,
-      email:form.email,
-      address:form.address,
-      telephone:form.telephone,
-      state:form.state,
-      nationality:form.nationality,
-      dob:dayjs(form.dob).format("YYYY-MM-DD"),
-      entrance:dayjs(form.entrance).format("YYYY-MM-DD hh:mm:ss"),
-      role:form.role,
-      gender:form.gender,
-      childId:form.childId,
-      classId:form.classId,
-      zipCode:form.zipCode
-
-    };
+    const data = new FormData();
+      data.append('pics',form.pics);
+      data.append('username',form.username);
+      data.append('password',form.password);
+      data.append('firstName',form.firstname);
+      data.append('lastName',form.lastname);
+      data.append('email',form.email);
+      data.append('address',form.address);
+      data.append('telephone',form.telephone);
+      data.append('state',form.state);
+      data.append('nationality',form.nationality);
+      data.append('dob',dayjs(form.dob).format("YYYY-MM-DD"));
+      data.append('entrance',dayjs(form.entrance).format("YYYY-MM-DD hh:mm:ss"));
+      data.append('role',form.role);
+      data.append('gender',form.gender);
+      data.append('childId',form.childId);
+      data.append('classId',form.classId);
+      data.append('zipCode',form.zipCode);
 
     setIsLoading(true);
     axiosInstance.post("http://localhost:8000/auth/register/",
-          data).then((res) => {
+          data,{
+            headers:{
+              'Content-Type':'multipart/form-data',
+            },
+          }).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button
             setMsg("new user account created successfully");
@@ -515,6 +518,31 @@ function Register(){
                  onChange={(e) => setForm({ ...form,
                     telephone: e.target.value })}
                  name="telephone"
+                 
+              />
+            </Grid>
+            <Grid item size={{xs:12, sm:6, md:6}}>
+              <TextField
+                 fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
+                 required
+                 margin="normal"
+                 id="pics"
+                 label="Your Photo"
+                 type="file"
+                  onChange={(e) => setForm({ ...form,
+                           pics: e.target.files[0] })}
+                  name="pics"
                  
               />
             </Grid>

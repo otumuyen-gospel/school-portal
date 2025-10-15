@@ -3,6 +3,7 @@ import ParentIcon from "@mui/icons-material/Man2Outlined";
 import StudentIcon from "@mui/icons-material/PeopleOutlined";
 import PersonIcon from "@mui/icons-material/PersonOutlineRounded";
 import TeacherIcon from "@mui/icons-material/SchoolOutlined";
+import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
@@ -32,6 +33,10 @@ function Dashboard(){
   const [year] = useState(new Date().getFullYear());
   const [hasClassMate, setHasClassMate] = useState(false);
 
+  const removeUserFromList = (theUser, data)=>{
+   const remainingUsers = data.filter(user => user.pk !== theUser.pk);
+    return remainingUsers;
+  }
   useEffect(()=>{
       //fetch all paginated students data by recursively calling page by page
       const listStudents = async(url,query)=>{
@@ -57,7 +62,9 @@ function Dashboard(){
          authUser['user'].classId+"/";
          const query = {role:"student"}
          listStudents(url,query).then(allData=>{
-           setClassStudentList(allData)
+           const currUser = JSON.parse(localStorage.getItem("auth"))['user'];
+           const remainingUsers = removeUserFromList(currUser, allData);
+           setClassStudentList(remainingUsers)
         }).catch((error)=>{
            setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load students List`);
         })
@@ -190,7 +197,7 @@ function Dashboard(){
         <Typography component="h1" variant="h6" style={{marginBottom:"10px"}}>Dashboard</Typography>
         <Grid container spacing={4}>
           <Grid item size={{xs:6, sm:3}}>
-            <Box style={{backgroundColor:"#FFF", borderRadius:"10px"}} 
+            <Box style={{backgroundColor:"#FFF", borderRadius:"10px", height:"80px"}} 
             boxShadow={1}>
                 <ListItem>
                   <ListItemText>
@@ -211,7 +218,7 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:6, sm:3}}>
-            <Box style={{backgroundColor:"#FFF", borderRadius:"10px"}} 
+            <Box style={{backgroundColor:"#FFF", borderRadius:"10px",height:"80px"}} 
             boxShadow={1}>
                 <ListItem>
                   <ListItemText>
@@ -232,7 +239,7 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:6, sm:3}}>
-            <Box style={{backgroundColor:"#FFF", borderRadius:"10px"}} 
+            <Box style={{backgroundColor:"#FFF", borderRadius:"10px",height:"80px"}} 
             boxShadow={1}>
                 <ListItem>
                   <ListItemText>
@@ -253,7 +260,7 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:6, sm:3}}>
-            <Box style={{backgroundColor:"#FFF", borderRadius:"10px"}} 
+            <Box style={{backgroundColor:"#FFF", borderRadius:"10px",height:"80px"}} 
             boxShadow={1}>
                 <ListItem>
                   <ListItemText>
@@ -307,9 +314,19 @@ function Dashboard(){
                         <Paper elevation={1} style={{marginBottom:"15px"}}>
                          <ListItem key={student.pk}>
                           <ListItemIcon>
-                            <PersonIcon  style={{
-                              backgroundColor:"royalblue", 
-                              color:"#FFF", borderRadius:"100px"}}/>
+                            <Avatar
+                              src={student.pics}
+                              sx={{
+                                width:40,
+                                height:40,
+                              }}
+                              >
+                                {
+                                  !student.pics && <PersonIcon  style={{
+                                        backgroundColor:"royalblue", 
+                                        color:"#FFF", borderRadius:"100px"}}/>
+                                }
+                            </Avatar>
                           </ListItemIcon>
                           <ListItemText>
                             <Typography style={{fontWeight:"bold",
@@ -318,7 +335,7 @@ function Dashboard(){
                               {student.lastName}
                               </Typography>
                               <Typography style={{fontWeight:"bold",
-                                fontSize:"10px", color:"skyblue"
+                                fontSize:"10px", color:"#999"
                               }}>
                                 {student.firstName}
                               </Typography>

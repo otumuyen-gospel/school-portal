@@ -265,7 +265,7 @@ function UserLists(){
                          <IconButton title="update"
                          onClick={()=>{
                             setCurrUser(user);
-                            navigate('/user-update',{state:user});
+                            navigate('/user-update',{state:user.pk});
                             
                           }}>
                           <UpdateIcon></UpdateIcon>

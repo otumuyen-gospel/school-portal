@@ -2,6 +2,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonOutline from "@mui/icons-material/PersonOutline";
 import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
@@ -21,6 +22,7 @@ function Layout(props){
    const [scrollTop, setScrollTop] = useState(0);
    const [username,setUsername] = useState("username");
    const [role, setRole] = useState("role");
+   const [pics, setPics] = useState("");
    const [badge, setBadge] = useState(0);
    const [open, setOpen] = useState(true);
    const navigate = useNavigate();
@@ -28,13 +30,20 @@ function Layout(props){
    const openDrawer = ()=>{
     setOpen(open ? false : true);
    }
-   const setUser = ()=>{
+
+   const setUser = async()=>{
     const auth = JSON.parse(localStorage.getItem("auth"));
-     if(auth){
-        setRole(auth['user'].role);
-        setUsername(auth['user'].username);
-     }
+    if(auth){
+      try{
+        const url = "http://localhost:8000/accounts/retrieve-user/"+auth['user'].pk+"/";
+        const response = await axiosInstance.get(url)
+        setRole(response.data.role);
+        setUsername(response.data.username);
+        setPics(response.data.pics)
+      }catch(error){}
+    }
    }
+
    const fetchNotification = async ()=>{
     axiosInstance.get("http://localhost:8000/schedule/schedule-list/").then((res) => {
         // grab notifications and schedules
@@ -66,13 +75,14 @@ function Layout(props){
    },[scrollTop]); 
 
    const userSideBar = ()=>{
-    if(role === 'admin'){
+    const auth = JSON.parse(localStorage.getItem("auth"));
+    if(auth['user'].role === 'admin'){
        return  <SideBar open={open} onOpenDrawer={openDrawer}/> ;
-    }else if(role === 'teacher'){
+    }else if(auth['user'].role === 'teacher'){
         return  <SideBar2 open={open} onOpenDrawer={openDrawer}/> ;
-    }else if(role === 'student'){
+    }else if(auth['user'].role === 'student'){
         return <SideBar3 open={open} onOpenDrawer={openDrawer}/> ;
-    }else if(role === 'parent'){
+    }else if(auth['user'].role === 'parent'){
         return  <SideBar4 open={open} onOpenDrawer={openDrawer}/> ;
     }else{
         navigate("/");
@@ -142,7 +152,16 @@ function Layout(props){
                             color:"royalblue",
                             marginRight: {sm:'auto',xs:"-3%"}
                             }}>
-                            <PersonOutline></PersonOutline>
+                           <Avatar
+                            src={pics}
+                            sx={{
+                                width:30,
+                                height:30,
+                            }}
+                           >
+                            {!pics && <PersonOutline/>}
+                           </Avatar>
+
                         </IconButton>
                     </Toolbar>
                 </AppBar>

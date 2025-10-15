@@ -1,3 +1,5 @@
+import PersonIcon from "@mui/icons-material/Person";
+import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -13,12 +15,13 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
 function Profile(){
    const [auth] = useState(JSON.parse(localStorage.getItem('auth')));
+   const userId = auth ? auth['user'].pk : "";
   const [isLoading, setIsLoading] = useState(false);
   const [isProfileLoading, setIsProfileLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -36,30 +39,68 @@ function Profile(){
     new_password:'',
     confirm:'',
   })
-  const [form, setForm] = useState({
-    username:auth ? auth['user'].username : "",
-    firstname:auth ? auth['user'].firstName : "",
-    lastname:auth ? auth['user'].lastName : "",
-    email:auth ? auth['user'].email : "",
-    gender:auth ? auth['user'].gender : "",
-    role:auth ? auth['user'].role : "",
-    address:auth ? auth['user'].address : "",
-    nationality:auth ? auth['user'].nationality:"",
-    state:auth ? auth['user'].state : "",
-    zipCode:auth ? auth['user'].zipCode : "",
-    telephone:auth ? auth['user'].telephone :"",
-    childId:auth ? auth['user'].childId : "",
-    classId:auth ? auth['user'].classId : "",
-    entrance:dayjs(auth ? auth['user'].entrance : ""),
-    dob:dayjs(auth ? auth['user'].dob : ""),
-
-  });
+  const hasUpload = useRef("");
+    const [form, setForm] = useState({
+           pics:"",
+           username:"",
+           firstname:"",
+           lastname:"",
+           email:"",
+           gender:"",
+           role:"",
+           address:"",
+           nationality:"",
+           state:"",
+           zipCode:"",
+           telephone:"",
+           childId:"",
+           classId:"",
+           entrance:dayjs(),
+           dob:dayjs(),
+    });
   const handleOpenMsgBox = ()=>{
     setOpenMsgBox(true);
   }
   const handleCloseMsgBox = ()=>{
     setOpenMsgBox(false);
   }
+
+  useEffect(()=>{
+      const profile = async(url)=>{
+        try{
+           const response = await axiosInstance.get(url)
+            return response.data;
+        }catch(error){
+           setMsg(`Oops! sorry can't load data`);
+       }
+      }
+  
+      const url = "http://localhost:8000/accounts/retrieve-user/"+
+      userId+"/";
+      profile(url).then(data=>{
+         setForm({
+           pics:data.pics,
+           username:data.username,
+           firstname:data.firstName,
+           lastname:data.lastName,
+           email:data.email,
+           gender:data.gender,
+           role:data.role,
+           address:data.address,
+           nationality:data.nationality,
+           state:data.state,
+           zipCode:data.zipCode,
+           telephone:data.telephone,
+           childId:data.childId,
+           classId:data.classId,
+           entrance:dayjs(data.entrance),
+           dob:dayjs(data.dob),
+  
+       })
+       }).catch((error)=>{
+         setMsg(`Oops! sorry can't load data`);
+       })
+    },[userId])
   
   useEffect(()=>{
     //fetch all paginated class data by recursively calling page by page
@@ -209,31 +250,55 @@ function Profile(){
         return;
     }
     
-    const data = {
-      username:form.username,
-      firstName:form.firstname,
-      lastName:form.lastname,
-      email:form.email,
-      address:form.address,
-      telephone:form.telephone,
-      state:form.state,
-      nationality:form.nationality,
-      dob:dayjs(form.dob).format("YYYY-MM-DD"),
-      entrance:dayjs(form.entrance).format("YYYY-MM-DD hh:mm:ss"),
-      role:form.role,
-      gender:form.gender,
-      childId:form.childId,
-      classId:form.classId,
-      zipCode:form.zipCode
-
-    };
+    const data = new FormData();
+    if(hasUpload.current){
+      data.append('pics',hasUpload.current);
+    }
+    data.append('username',form.username);
+    data.append('firstName',form.firstname);
+    data.append('lastName',form.lastname);
+    data.append('email',form.email);
+    data.append('address',form.address);
+    data.append('telephone',form.telephone);
+    data.append('state',form.state);
+    data.append('nationality',form.nationality);
+    data.append('dob',dayjs(form.dob).format("YYYY-MM-DD"));
+    data.append('entrance',dayjs(form.entrance).format("YYYY-MM-DD hh:mm:ss"));
+    data.append('role',form.role);
+    data.append('gender',form.gender);
+    data.append('childId',form.childId);
+    data.append('classId',form.classId);
+    data.append('zipCode',form.zipCode);
+    
     setIsProfileLoading(true);
     axiosInstance.patch("http://localhost:8000/accounts/user-update/"+
-      (auth ? auth['user'].pk : "")+"/",
-          data).then((res) => {
+      userId+"/",
+          data, {
+            headers:{
+              'Content-Type':'multipart/form-data',
+            },
+          }).then((res) => {
+            const data = res.data;
+            setForm({
+                pics:data.pics,
+                username:data.username,
+                firstname:data.firstName,
+                lastname:data.lastName,
+                email:data.email,
+                gender:data.gender,
+                role:data.role,
+                address:data.address,
+                nationality:data.nationality,
+                state:data.state,
+                zipCode:data.zipCode,
+                telephone:data.telephone,
+                childId:data.childId,
+                classId:data.classId,
+                entrance:dayjs(data.entrance),
+                dob:dayjs(data.dob),})
             setIsProfileLoading(false)
             setIsDisabled(false)  //re-enable button
-            changeAuthData(res.data);
+            changeAuthData(data);
             setMsg("User account updated successfully ");
             handleOpenMsgBox();
     }).catch((err) => {
@@ -258,6 +323,37 @@ function Profile(){
         }}
         >
         <Typography component="h1" variant="h6" sx={{color:"royalblue"}}>My Profile</Typography>
+        
+        <Box sx={{
+              backgroundColor:"#EFF",
+              width:"100%",
+              padding:"10px",
+              marginBottom:"70px"
+            }}>
+              <Typography component="h1" variant="h6" 
+              sx={{color:"royalblue", fontWeight:"bolder", textAlign:"center"}}>
+                {form.firstname+" "+form.lastname}
+                </Typography>
+                     <Avatar
+                     src={form.pics}
+                     sx={{
+                       position:"relative",
+                       top:"50px",
+                       width: 100, // Adjust size
+                       height: 100,
+                       backgroundColor:"#EFF",
+                       border: '3px solid #FFF', // Add a gold border
+                       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', // Add a subtle shadow
+                       '&:hover': {
+                          transform: 'scale(1.05)', // Add a hover effect
+                          transition: 'transform 0.3s ease-in-out',
+                       },
+                     }} 
+                     >
+                       {!form.pics && <PersonIcon sx={{color:"royalblue"}}/> }
+                     </Avatar>
+                   </Box>
+        
         <Box component="form" onSubmit={handleSubmit} sx={{
                width:{xs:"100%",}}}>
           <Typography marginTop={5} style={{color:"royalblue"}}>
@@ -570,6 +666,36 @@ function Profile(){
                  
               />
             </Grid>
+            <Grid item size={{xs:12, sm:6, md:6}}>
+              <TextField
+                 fullWidth
+                 sx={{
+                    '& .MuiInputBase-root':{
+                    height:"50px",
+                    borderRadius:"10px",
+                  },
+                    '& .MuiOutlinedInput-input':{
+                    height:"50px",
+                    paddingTop:0,
+                    paddingBottom:0,
+                  },
+                  }}
+                 margin="normal"
+                 id="pics"
+                 label="Your Photo"
+                 type="file"
+                  onChange={(e) =>{ 
+                    if(e.target.files.length){
+                         hasUpload.current = e.target.files[0];
+                    }else{
+                       hasUpload.current = "";
+                    }
+                          
+                  }}
+                  name="pics"
+                 
+              />
+            </Grid>
             </Grid>
             </Box>
 
@@ -595,7 +721,7 @@ function Profile(){
                   }}>
                 <InputLabel id="role-label">{form.role || "role"}</InputLabel>
                 <Select
-                    disabled
+                    disabled={form.role !== 'admin'}
                     margin="normal"
                     labelId="role-label"
                     id="role"
@@ -630,7 +756,7 @@ function Profile(){
                   }}>
                 <InputLabel id="class-label">{form.classId || "class"}</InputLabel>
                 <Select
-                    disabled
+                    disabled={form.role !== 'admin'}
                     margin="normal"
                     labelId="class-label"
                     id="classId"
@@ -668,7 +794,7 @@ function Profile(){
                   }}>
                 <InputLabel id="child-label">{form.childId || "child"}</InputLabel>
                 <Select
-                    disabled
+                    disabled={form.role !== 'admin'}
                     margin="normal"
                     labelId="child-label"
                     id="childId"
@@ -709,7 +835,7 @@ function Profile(){
                   }}>
                  <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
-                 disabled
+                 disabled={form.role !== 'admin'}
                  id="entrance"
                  label="entrance"
                  value={dayjs(form.entrance)}

@@ -10,7 +10,12 @@ from django.utils import timezone
 from .usermanager import AccountManager
 from classes.models import Class
 
+
+def upload_to(instance, filename):
+    return 'user_account_{0}_{1}'.format(instance.pk, filename)
+
 class User(AbstractBaseUser, PermissionsMixin):
+    pics = models.FileField(blank=False, upload_to=upload_to)
     email = models.EmailField(db_index=True, unique=True)
     username = models.CharField(max_length=11, unique=True)
     firstName = models.CharField(max_length=255, blank=False)

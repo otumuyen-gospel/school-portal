@@ -35,6 +35,7 @@ class AccountManager(BaseUserManager):
         user.zipCode = kwargs.get('zipCode')
         user.telephone = kwargs.get('telephone')
         user.role =  kwargs.get('role')
+        user.pics =  kwargs.get('pics')
         user.is_active = True
         if kwargs.get('role') == 'admin':
             user.is_superuser = True

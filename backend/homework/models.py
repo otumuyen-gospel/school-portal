@@ -5,7 +5,7 @@ from account.models import Class
 
 # Create your models here.
 def upload_to(instance, filename):
-    return 'user_{0}_{1}'.format(instance.userId, filename)
+    return 'user_homework_{0}_{1}'.format(instance.userId, filename)
 
 class Homework(models.Model):
     title = models.CharField(blank=False)
