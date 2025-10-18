@@ -26,7 +26,7 @@ function ScheduleList(){
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [dialogMsg, setDialogMsg] = useState("");
-  const [url,setUrl] = useState("http://localhost:8000/schedule/schedule-list/");
+  const [url,setUrl] = useState("schedule/schedule-list/");
   const [query,setQuery] =useState({});
   const [currSchedule, setCurrSchedule] = useState({});
   const [params, setParams] = useState("");
@@ -47,7 +47,7 @@ function ScheduleList(){
   }
    
   const deletes = async ()=>{
-    const endpoint = "http://localhost:8000/schedule/delete-schedule/"+currSchedule.id+"/"; 
+    const endpoint = "schedule/delete-schedule/"+currSchedule.id+"/"; 
     setIsLoading(true);
       try{
           const response = await axiosInstance.delete(endpoint);

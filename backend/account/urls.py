@@ -26,4 +26,7 @@ urlpatterns = [
     path('retrieve-user/<int:id>/', UserRetrieve.as_view(), name=UserRetrieve.name),
     path('create-user/', UserCreate.as_view(), name=UserCreate.name),
     path('user-analytics/', UserAnalytics.as_view(), name=UserAnalytics.name),
+    path('system-backup/', BackupDatabaseAPIView.as_view(), name=BackupDatabaseAPIView.name),
+    path('system-restore/', RestoreDatabaseAPIView.as_view(), name=RestoreDatabaseAPIView.name),
+    path('export-users/', ExportUsers.as_view(), name=ExportUsers.name),
 ]

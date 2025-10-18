@@ -60,7 +60,7 @@ function CreateMark(){
     }
     
     if(authUser){
-       const url = "http://localhost:8000/subjects/class-subject-list/"+
+       const url = "subjects/class-subject-list/"+
        authUser['user'].classId+"/";
        listSubjects(url).then(allData=>{
          setSubjectList(allData)
@@ -91,7 +91,7 @@ function CreateMark(){
     }
 
    if(authUser){
-       const url = "http://localhost:8000/accounts/class-users/"+
+       const url = "accounts/class-users/"+
        authUser['user'].classId+"/";
        const query = {role:"student"}
        listStudents(url,query).then(allData=>{
@@ -149,7 +149,7 @@ function CreateMark(){
     }
 
     setIsLoading(true);
-    axiosInstance.post("http://localhost:8000/marks/create-marks/",
+    axiosInstance.post("marks/create-marks/",
           form).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button

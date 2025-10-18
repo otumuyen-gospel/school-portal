@@ -35,7 +35,7 @@ function Layout(props){
     const auth = JSON.parse(localStorage.getItem("auth"));
     if(auth){
       try{
-        const url = "http://localhost:8000/accounts/retrieve-user/"+auth['user'].pk+"/";
+        const url = "accounts/retrieve-user/"+auth['user'].pk+"/";
         const response = await axiosInstance.get(url)
         setRole(response.data.role);
         setUsername(response.data.username);
@@ -45,7 +45,7 @@ function Layout(props){
    }
 
    const fetchNotification = async ()=>{
-    axiosInstance.get("http://localhost:8000/schedule/schedule-list/").then((res) => {
+    axiosInstance.get("schedule/schedule-list/").then((res) => {
         // grab notifications and schedules
         setBadge(res.data.count);
       }).catch((err) => {

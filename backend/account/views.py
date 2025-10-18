@@ -18,6 +18,15 @@ from rest_framework.views import APIView
 from classes.models import Class
 from datetime import datetime
 import uuid
+from django.core.management import call_command
+from django.conf import settings 
+from django.http import HttpResponse
+from openpyxl import Workbook
+from openpyxl.styles import Alignment, Font
+from io import BytesIO
+from .serializers import UserSerializers
+from .models import User
+from classes.models import Class
 
 
 '''
@@ -69,7 +78,6 @@ class ClassUsers(generics.ListAPIView):
             return self.queryset.filter(classId=val)
         else:
             raise PermissionDenied("You don't have access right")
-        
         
     
 
@@ -216,3 +224,109 @@ class UserAnalytics(APIView):
        
 
 
+# API for issuing command prompt to the server or os
+class BackupDatabaseAPIView(APIView):
+    permission_classes = [IsAuthenticated,IsInGroup,]
+    required_groups = ['admin',]
+    name = 'backup'
+    def post(self, request):
+        try:
+            call_command('dbbackup')  # db backup
+            call_command('mediabackup')  # file and media backups
+            return Response({"message": "backup initiated successfully.", 
+                             'location':settings.DBBACKUP_STORAGE_OPTIONS})
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
+        
+
+# API for issuing command prompt to the server or os
+class RestoreDatabaseAPIView(APIView):
+    permission_classes = [IsAuthenticated,IsInGroup,]
+    required_groups = ['admin',]
+    name = 'restore'
+    def post(self, request):
+        try:
+            call_command('dbrestore','--noinput')  # db restore
+            call_command('mediarestore','--noinput')  # file and media restore
+            return Response({"message": "restore initiated successfully.",
+                             'location':settings.DBBACKUP_STORAGE_OPTIONS})
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
+         
+
+#export users to excel
+class ExportUsers(APIView):
+    permission_classes = [AllowAny,]
+    required_groups = ['admin',]
+    name = 'export'
+    def get(self, request, *args, **kwargs):
+        # 1. Perform your search query
+        # Example: filtering based on a 'query' parameter
+        search_query = request.query_params.get('query', '')
+        queryset = User.objects.filter(classId__id__icontains=search_query,
+                                       role__icontains=search_query, 
+                                       entrance__icontains=search_query,
+                                       gender__icontains=search_query) 
+            
+        # 2. Serialize the data (optional but good practice)
+        serializer = UserSerializers(queryset, many=True)
+        data = serializer.data
+
+        # 3. Create an Excel workbook
+        wb = Workbook()
+        ws = wb.active
+        ws.title = "User Search Results"
+
+        # Add headers (using serializer field names or custom names)
+        headers = ["username","email", "firstName","lastName","role","entrance",
+                   "dob", "telephone","gender","address","nationality","state"] # Or define custom headers
+        ws.append(headers)
+
+        # Add data rows
+        for item in data:
+            row_values = [item.get(header) for header in headers] # Or customize based on item keys
+            ws.append(row_values)
+
+        #add styles
+        self.addStyles(ws)
+        self.adjustWidth(ws)
+
+        # 4. Save the workbook to a BytesIO buffer
+        excel_buffer = BytesIO()
+        wb.save(excel_buffer)
+        excel_buffer.seek(0) # Rewind the buffer to the beginning
+
+        # 5. Create an HttpResponse with appropriate headers
+        response = HttpResponse(
+            excel_buffer.getvalue(),
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename="User_search_results.xlsx"'
+        return response
+    def addStyles(self, ws):
+        bold_font = Font(bold=True)
+        for row in ws.iter_rows():
+          for cell in row:
+           cell.alignment = Alignment(wrap_text=True)
+           # Assign the bold_font object to the cell's font attribute
+           cell.font = bold_font
+    def adjustWidth(self,ws):
+        # Iterate over all columns to adjust their widths
+        for col in ws.columns:
+          max_length = 0
+          column_letter = col[0].column_letter # Get the column letter (e.g., 'A', 'B')
+ 
+          for cell in col:
+            try:
+            # Check the length of the cell's value
+               if len(str(cell.value)) > max_length:
+                max_length = len(str(cell.value))
+            except TypeError: # Handle cases where cell.value might be None
+              pass
+
+            # Calculate adjusted width (add a small buffer for visual spacing)
+            adjusted_width = (max_length + 2)
+            # Set the column width
+            ws.column_dimensions[column_letter].width = adjusted_width
+
+    

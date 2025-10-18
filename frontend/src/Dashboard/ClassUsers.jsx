@@ -33,7 +33,7 @@ function ClassUsers(){
   const [openAttendanceDialog, setOpenAttendanceDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [dialogMsg, setDialogMsg] = useState("");
-  const [url,setUrl] = useState("http://localhost:8000/accounts/class-users/"
+  const [url,setUrl] = useState("accounts/class-users/"
     +authUser['user'].classId+"/");
   const [query,setQuery] =useState({
     search:'', role:'student',
@@ -72,7 +72,7 @@ function ClassUsers(){
     }
      
     const deletes = async (marked)=>{
-      const endpoint = "http://localhost:8000/attendance/delete-attendance/"+
+      const endpoint = "attendance/delete-attendance/"+
       marked.id+"/"; 
       setIsLoading(true);
         try{
@@ -97,7 +97,7 @@ function ClassUsers(){
      }
 
   const attendance = async ()=>{
-    const endpoint = "http://localhost:8000/attendance/create-attendance/"; 
+    const endpoint = "attendance/create-attendance/"; 
     setIsLoading(true);
       try{
         const userData = {
@@ -134,7 +134,7 @@ function ClassUsers(){
   }
    
   const promotes = async (pk)=>{
-    const endpoint = "http://localhost:8000/accounts/user-promotion/"+pk+"/"; 
+    const endpoint = "accounts/user-promotion/"+pk+"/"; 
     setIsLoading(true);
       try{
           const response = await axiosInstance.patch(endpoint, {classId:currUser.classId});
@@ -195,7 +195,7 @@ function ClassUsers(){
      }
     }
 
-    const url = "http://localhost:8000/classes/class-list/";
+    const url = "classes/class-list/";
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
@@ -273,7 +273,7 @@ function ClassUsers(){
 
     if(authUser){
       const classId = authUser['user'].classId;
-      const url = "http://localhost:8000/attendance/class-attendance/"+classId+"/";
+      const url = "attendance/class-attendance/"+classId+"/";
       const queries = {search:today()};
       listAttendance(url, queries).then(allData=>{
          setMarkedAttendance(allData)

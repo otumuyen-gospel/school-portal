@@ -65,7 +65,7 @@ function UpdateQuiz(){
     }
     
     if(authUser){
-       const url = "http://localhost:8000/subjects/class-subject-list/"+
+       const url = "subjects/class-subject-list/"+
        authUser['user'].classId+"/";
        listSubjects(url).then(allData=>{
          setSubjectList(allData)
@@ -92,7 +92,7 @@ function UpdateQuiz(){
     endDate:dayjs(form.endDate).format("YYYY-MM-DD"),
     startDate:dayjs(form.startDate).format("YYYY-MM-DD"),
     setAsQuiz:form.setAsQuiz,};
-    axiosInstance.put("http://localhost:8000/quizzes/update-quiz/"+quiz?.id+"/",
+    axiosInstance.put("quizzes/update-quiz/"+quiz?.id+"/",
           data).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button

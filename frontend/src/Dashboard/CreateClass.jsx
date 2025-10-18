@@ -32,7 +32,7 @@ function CreateClass(){
     classCode:classCode,
 
   };
-    axiosInstance.post("http://localhost:8000/classes/create-class/",
+    axiosInstance.post("classes/create-class/",
           form).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button

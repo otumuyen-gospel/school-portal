@@ -46,7 +46,7 @@ function ClassList(){
   };
 
   const updates = async ()=>{
-      const endpoint = "http://localhost:8000/classes/update-class/"+currClass.id+"/"; 
+      const endpoint = "classes/update-class/"+currClass.id+"/"; 
       setIsLoading(true);
         try{
             const response = await axiosInstance.put(endpoint, 
@@ -73,7 +73,7 @@ function ClassList(){
     setClassList(remainingClass);
   }
   const deletes= async ()=>{
-    const endpoint = "http://localhost:8000/classes/delete-class/"+currClass.id+"/"; 
+    const endpoint = "classes/delete-class/"+currClass.id+"/"; 
     setIsLoading(true);
       try{
           const response = await axiosInstance.delete(endpoint);
@@ -115,7 +115,7 @@ function ClassList(){
      }
     }
 
-    const url = "http://localhost:8000/classes/class-list/";
+    const url = "classes/class-list/";
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{

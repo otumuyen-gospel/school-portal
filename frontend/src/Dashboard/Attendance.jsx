@@ -30,7 +30,7 @@ function Attendance(){
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [dialogMsg, setDialogMsg] = useState("");
-  const [url,setUrl] = useState("http://localhost:8000/attendance/attendance-list/");
+  const [url,setUrl] = useState("attendance/attendance-list/");
   const [query,setQuery] =useState({});
   const [classList,setClassList] = useState([]);
   const [userList,setUserList] = useState([]);
@@ -53,7 +53,7 @@ function Attendance(){
   }
 
   const update = async ()=>{
-    const endpoint = "http://localhost:8000/attendance/update-attendance/"+
+    const endpoint = "attendance/update-attendance/"+
     currAttendance.id+"/"; 
     setIsLoading(true);
       try{
@@ -95,7 +95,7 @@ function Attendance(){
   }
    
   const deletes = async ()=>{
-    const endpoint = "http://localhost:8000/attendance/delete-attendance/"+currAttendance.id+"/"; 
+    const endpoint = "attendance/delete-attendance/"+currAttendance.id+"/"; 
     setIsLoading(true);
       try{
           const response = await axiosInstance.delete(endpoint);
@@ -143,7 +143,7 @@ function Attendance(){
      }
     }
      
-     const url = "http://localhost:8000/accounts/users-list/";
+     const url = "accounts/users-list/";
          listUsers(url).then(allData=>{
              setUserList(allData)
          }).catch((error)=>{
@@ -177,7 +177,7 @@ function Attendance(){
      }
     }
 
-    const url = "http://localhost:8000/classes/class-list/";
+    const url = "classes/class-list/";
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{

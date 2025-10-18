@@ -22,7 +22,7 @@ function UserMarks(){
   const [msg, setMsg] = useState("");
   const userId =  authUser['user'].role === 'student' ? authUser['user'].pk :
   authUser['user'].childId // student or parent
-  const [url,setUrl] = useState("http://localhost:8000/marks/user-marks/"+
+  const [url,setUrl] = useState("marks/user-marks/"+
    userId+"/"
   );
   const [query,setQuery] =useState({});
@@ -57,7 +57,7 @@ function UserMarks(){
     }
     
     if(authUser){
-       const url = "http://localhost:8000/classes/class-list/";
+       const url = "classes/class-list/";
     listClass(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
@@ -95,7 +95,7 @@ function UserMarks(){
     }
     
     if(authUser){
-       const url = "http://localhost:8000/subjects/subject-list/";
+       const url = "subjects/subject-list/";
     listSubjects(url).then(allData=>{
       setSubjectList(allData)
      }).catch((error)=>{

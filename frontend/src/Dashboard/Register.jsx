@@ -177,7 +177,7 @@ function Register(){
       data.append('zipCode',form.zipCode);
 
     setIsLoading(true);
-    axiosInstance.post("http://localhost:8000/auth/register/",
+    axiosInstance.post("auth/register/",
           data,{
             headers:{
               'Content-Type':'multipart/form-data',

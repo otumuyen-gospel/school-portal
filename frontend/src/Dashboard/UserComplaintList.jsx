@@ -29,7 +29,7 @@ function UserComplaintList(){
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [dialogMsg, setDialogMsg] = useState("");
-  const [url,setUrl] = useState("http://localhost:8000/complaints/user-complaint-list/"+
+  const [url,setUrl] = useState("complaints/user-complaint-list/"+
     authUser['user'].pk+"/"
   );
   const [query,setQuery] =useState({});
@@ -52,7 +52,7 @@ function UserComplaintList(){
   }
    
   const deletes = async ()=>{
-    const endpoint = "http://localhost:8000/complaints/delete-complaint/"+currComplaint.id+"/"; 
+    const endpoint = "complaints/delete-complaint/"+currComplaint.id+"/"; 
     setIsLoading(true);
       try{
           const response = await axiosInstance.delete(endpoint);

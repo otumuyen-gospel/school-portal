@@ -97,7 +97,7 @@ function Sidebar3(props){
   const logout= async ()=>{
     try{
     const {refresh} = JSON.parse(localStorage.getItem("auth"));
-    axiosInstance.post("http://localhost:8000/auth/logout/",
+    axiosInstance.post("auth/logout/",
         {refresh_token:refresh}).then((res) => {
         // logout and delete client auth storage
         localStorage.removeItem("auth");

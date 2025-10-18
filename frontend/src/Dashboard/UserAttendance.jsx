@@ -24,7 +24,7 @@ function UserAttendance(){
   const [msg, setMsg] = useState("");
   const userId = authUser['user'].role === 'student' ? authUser['user'].pk : 
   authUser['user'].childId;
-  const [url,setUrl] = useState("http://localhost:8000/attendance/user-attendance/"
+  const [url,setUrl] = useState("attendance/user-attendance/"
          +userId+"/");
   const [query,setQuery] =useState({});
   const [classList,setClassList] = useState([]);
@@ -51,7 +51,7 @@ function UserAttendance(){
       }
       
       if(authUser){
-         const url = "http://localhost:8000/classes/class-list/";
+         const url = "classes/class-list/";
       listClass(url).then(allData=>{
         setClassList(allData)
        }).catch((error)=>{
@@ -80,7 +80,7 @@ function UserAttendance(){
     }
 
     if(userId){
-         const url = "http://localhost:8000/accounts/retrieve-user/"+userId+"/";
+         const url = "accounts/retrieve-user/"+userId+"/";
          childInfo(url);
     }
     

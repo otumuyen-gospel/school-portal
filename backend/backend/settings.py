@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-f1z*z^9nj%2-p%=qn=qspba^t371fqij1k&%(l%m8t!*$#ubi3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.9','0.0.0.0','127.0.0.1','localhost']
 
 # Application definition
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
+    'dbbackup',
     'classes',
     'subjects',
     'quizzes',
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,7 +66,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -155,7 +156,12 @@ EMAIL_HOST_PASSWORD = 'ebd29b65df1f21'  # An app-specific password if using Gmai
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER # Optional: Sets the default 'from' address
 
 
-# Actual directory user files go to
+# Actual directory user backups files go to
+DBBACKUP_STORAGE_OPTIONS = {'location': os.path.join(os.path.dirname(BASE_DIR), 'uploads')}
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_FILENAME_TEMPLATE = 'backup_db_{datetime}.sql'
+DBBACKUP_MEDIA_FILENAME_TEMPLATE = 'backup_file_{datetime}.tar'
+
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'uploads')
 
 # URL used to access the media
@@ -192,7 +198,6 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "http://192.168.43.123:3000",
-    "http://192.168.0.172:3000",
-    "http://192.168.0.106:3000",
+    "http://192.168.1.9:3000",
 ]
+

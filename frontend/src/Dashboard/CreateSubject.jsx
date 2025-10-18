@@ -48,7 +48,7 @@ function CreateSubject(){
        }
       }
   
-      const url = "http://localhost:8000/classes/class-list/";
+      const url = "classes/class-list/";
       listClasses(url).then(allData=>{
         setClassList(allData)
        }).catch((error)=>{
@@ -66,7 +66,7 @@ function CreateSubject(){
     classId:classId
 
   };
-    axiosInstance.post("http://localhost:8000/subjects/create-subject/",
+    axiosInstance.post("subjects/create-subject/",
           form).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button

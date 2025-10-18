@@ -56,7 +56,7 @@ function SubjectList(){
   };
 
   const updates = async ()=>{
-      const endpoint = "http://localhost:8000/subjects/update-subject/"+currSubject.id+"/"; 
+      const endpoint = "subjects/update-subject/"+currSubject.id+"/"; 
       setIsLoading(true);
         try{
             const response = await axiosInstance.put(endpoint, 
@@ -83,7 +83,7 @@ function SubjectList(){
     setSubjectList(remainingSubject);
   }
   const deletes= async ()=>{
-    const endpoint = "http://localhost:8000/subjects/delete-subject/"+currSubject.id+"/"; 
+    const endpoint = "subjects/delete-subject/"+currSubject.id+"/"; 
     setIsLoading(true);
       try{
           const response = await axiosInstance.delete(endpoint);
@@ -125,7 +125,7 @@ function SubjectList(){
      }
     }
 
-    const url = "http://localhost:8000/subjects/subject-list/";
+    const url = "subjects/subject-list/";
     listSubjects(url).then(allData=>{
       setSubjectList(allData)
      }).catch((error)=>{
@@ -152,7 +152,7 @@ function SubjectList(){
      }
     }
 
-    const url = "http://localhost:8000/classes/class-list/";
+    const url = "classes/class-list/";
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{

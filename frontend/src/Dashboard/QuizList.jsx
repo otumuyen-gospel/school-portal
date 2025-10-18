@@ -26,7 +26,7 @@ function QuizList(){
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [dialogMsg, setDialogMsg] = useState("");
-  const [url,setUrl] = useState("http://localhost:8000/quizzes/quiz-list/");
+  const [url,setUrl] = useState("quizzes/quiz-list/");
   const [query,setQuery] =useState({});
   const [classList,setClassList] = useState([]);
   const [subjectList,setSubjectList] = useState([]);
@@ -49,7 +49,7 @@ function QuizList(){
   }
   
   const deletes= async ()=>{
-    const endpoint = "http://localhost:8000/quizzes/delete-quiz/"+currQuiz.id+"/"; 
+    const endpoint = "quizzes/delete-quiz/"+currQuiz.id+"/"; 
     setIsLoading(true);
       try{
           const response = await axiosInstance.delete(endpoint);
@@ -96,7 +96,7 @@ function QuizList(){
      }
     }
 
-    const url = "http://localhost:8000/classes/class-list/";
+    const url = "classes/class-list/";
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
@@ -127,7 +127,7 @@ function QuizList(){
      }
     }
 
-    const url = "http://localhost:8000/subjects/subject-list/";
+    const url = "subjects/subject-list/";
     listSubjects(url).then(allData=>{
       setSubjectList(allData)
      }).catch((error)=>{

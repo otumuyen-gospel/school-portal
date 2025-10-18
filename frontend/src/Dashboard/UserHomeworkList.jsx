@@ -29,7 +29,7 @@ function UserHomeworkList(){
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [dialogMsg, setDialogMsg] = useState("");
-  const [url,setUrl] = useState("http://localhost:8000/homework/user-homework-list/"+
+  const [url,setUrl] = useState("homework/user-homework-list/"+
     authUser['user'].pk+"/"
   );
   const [query,setQuery] =useState({});
@@ -55,7 +55,7 @@ function UserHomeworkList(){
   }
    
   const deletes = async ()=>{
-    const endpoint = "http://localhost:8000/homework/delete-homework/"+currHomework.id+"/"; 
+    const endpoint = "homework/delete-homework/"+currHomework.id+"/"; 
     setIsLoading(true);
       try{
           const response = await axiosInstance.delete(endpoint);
@@ -98,7 +98,7 @@ function UserHomeworkList(){
       }
   
       if(authUser){
-           const url = "http://localhost:8000/classes/user-class/"+authUser['user'].classId+"/";
+           const url = "classes/user-class/"+authUser['user'].classId+"/";
            listClasses(url);
       }
       

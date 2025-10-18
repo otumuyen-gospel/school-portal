@@ -19,7 +19,7 @@ function UserSchedule(){
   const [isLoading, setIsLoading] = useState(false);
   const [scheduleList, setScheduleList] = useState([]);
   const [msg, setMsg] = useState("");
-  const [url,setUrl] = useState("http://localhost:8000/schedule/schedule-list/");
+  const [url,setUrl] = useState("schedule/schedule-list/");
   const [query,setQuery] =useState({});
   const [params, setParams] = useState("");
   const [nextPage,setNextPage] = useState(null);

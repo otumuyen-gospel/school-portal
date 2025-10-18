@@ -50,7 +50,7 @@ function CreateHomework(){
     
 
     setIsLoading(true);
-    axiosInstance.post("http://localhost:8000/homework/create-homework/",
+    axiosInstance.post("homework/create-homework/",
           data,{
             headers:{
               'Content-Type':'multipart/form-data',

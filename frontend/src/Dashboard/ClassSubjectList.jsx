@@ -41,7 +41,7 @@ function ClassSubjectList(){
     }
 
     const auth = JSON.parse(localStorage.getItem("auth"));
-    const url = "http://localhost:8000/subjects/class-subject-list/"+auth['user'].classId+"/";
+    const url = "subjects/class-subject-list/"+auth['user'].classId+"/";
     listSubjects(url).then(allData=>{
       setSubjectList(allData)
       setIsLoading(false);
@@ -70,7 +70,7 @@ function ClassSubjectList(){
      }
     }
 
-    const url = "http://localhost:8000/classes/class-list/";
+    const url = "classes/class-list/";
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{

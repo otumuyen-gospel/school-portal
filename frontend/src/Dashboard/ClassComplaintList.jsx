@@ -20,7 +20,7 @@ function ClassComplaintList(){
   const [isLoading, setIsLoading] = useState(false);
   const [complaintList, setComplaintList] = useState([]);
   const [msg, setMsg] = useState("");
-  const [url,setUrl] = useState("http://localhost:8000/complaints/class-complaint-list/"+
+  const [url,setUrl] = useState("complaints/class-complaint-list/"+
     authUser['user'].classId+"/"
   );
   const [query,setQuery] =useState({});

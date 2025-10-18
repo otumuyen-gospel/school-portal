@@ -52,7 +52,7 @@ function CreateComplaint(){
     };
 
     setIsLoading(true);
-    axiosInstance.post("http://localhost:8000/complaints/create-complaint/",
+    axiosInstance.post("complaints/create-complaint/",
           data).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button

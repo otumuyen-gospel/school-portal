@@ -50,7 +50,7 @@ function UpdateComplaint(){
     };
 
     setIsLoading(true);
-    axiosInstance.patch("http://localhost:8000/complaints/update-complaint/"+complaint?.id+"/",
+    axiosInstance.patch("complaints/update-complaint/"+complaint?.id+"/",
           data).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button

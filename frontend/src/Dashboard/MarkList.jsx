@@ -26,7 +26,7 @@ function MarkList(){
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [dialogMsg, setDialogMsg] = useState("");
-  const [url,setUrl] = useState("http://localhost:8000/marks/mark-list/");
+  const [url,setUrl] = useState("marks/mark-list/");
   const [query,setQuery] =useState({});
   const [classList,setClassList] = useState([]);
   const [subjectList,setSubjectList] = useState([]);
@@ -50,7 +50,7 @@ function MarkList(){
   }
   
   const deletes= async ()=>{
-    const endpoint = "http://localhost:8000/marks/delete-mark/"+currMark.id+"/"; 
+    const endpoint = "marks/delete-mark/"+currMark.id+"/"; 
     setIsLoading(true);
       try{
           const response = await axiosInstance.delete(endpoint);
@@ -97,7 +97,7 @@ function MarkList(){
      }
     }
 
-    const url = "http://localhost:8000/classes/class-list/";
+    const url = "classes/class-list/";
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
@@ -133,7 +133,7 @@ function MarkList(){
      }
     }
 
-    const url = "http://localhost:8000/accounts/users-list/";
+    const url = "accounts/users-list/";
     const queries = {role:"student"};
     listStudents(url, queries).then(allData=>{
       setStudentList(allData)
@@ -172,7 +172,7 @@ function MarkList(){
      }
     }
 
-    const url = "http://localhost:8000/subjects/subject-list/";
+    const url = "subjects/subject-list/";
     listSubjects(url).then(allData=>{
       setSubjectList(allData)
      }).catch((error)=>{

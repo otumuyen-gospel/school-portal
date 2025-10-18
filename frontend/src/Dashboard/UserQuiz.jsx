@@ -26,7 +26,7 @@ function UserQuiz(){
    const [isLoading, setIsLoading] = useState(false);
   const [quizList, setQuizList] = useState([]);
   const [msg, setMsg] = useState("");
-  const [url] = useState("http://localhost:8000/quizzes/user-quiz/"+
+  const [url] = useState("quizzes/user-quiz/"+
      authUser['user'].classId+"/"
   );
   const [query,setQuery] =useState({search:subject?.id});
@@ -56,7 +56,7 @@ function UserQuiz(){
     }
     
     if(authUser){
-       const url = "http://localhost:8000/subjects/class-subject-list/"+
+       const url = "subjects/class-subject-list/"+
        authUser['user'].classId+"/";
     listSubjects(url).then(allData=>{
       setSubjectList(allData)

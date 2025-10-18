@@ -31,7 +31,7 @@ function ClassAttendance(){
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [dialogMsg, setDialogMsg] = useState("");
-  const [url,setUrl] = useState("http://localhost:8000/attendance/class-attendance/"
+  const [url,setUrl] = useState("attendance/class-attendance/"
          +authUser['user'].classId+"/");
   const [query,setQuery] =useState({});
   const [classList,setClassList] = useState([]);
@@ -55,7 +55,7 @@ function ClassAttendance(){
   }
 
   const update = async ()=>{
-    const endpoint = "http://localhost:8000/attendance/update-attendance/"+
+    const endpoint = "attendance/update-attendance/"+
     currAttendance.id+"/"; 
     setIsLoading(true);
       try{
@@ -97,7 +97,7 @@ function ClassAttendance(){
   }
    
   const deletes = async ()=>{
-    const endpoint = "http://localhost:8000/attendance/delete-attendance/"+currAttendance.id+"/"; 
+    const endpoint = "attendance/delete-attendance/"+currAttendance.id+"/"; 
     setIsLoading(true);
       try{
           const response = await axiosInstance.delete(endpoint);
@@ -146,7 +146,7 @@ function ClassAttendance(){
     }
      
      if(authUser){
-         const url = "http://localhost:8000/accounts/class-users/"+
+         const url = "accounts/class-users/"+
          authUser['user'].classId+"/";
          listUsers(url).then(allData=>{
              setUserList(allData)
@@ -182,7 +182,7 @@ function ClassAttendance(){
      }
     }
 
-    const url = "http://localhost:8000/classes/class-list/";
+    const url = "classes/class-list/";
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{

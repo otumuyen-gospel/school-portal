@@ -28,7 +28,7 @@ function ComplaintList(){
   const [openReplyDialog, setOpenReplyDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [dialogMsg, setDialogMsg] = useState("");
-  const [url,setUrl] = useState("http://localhost:8000/complaints/complaint-list/"
+  const [url,setUrl] = useState("complaints/complaint-list/"
   );
   const [query,setQuery] =useState({});
   const [currComplaint, setCurrComplaint] = useState({});
@@ -61,7 +61,7 @@ function ComplaintList(){
     );
   };
   const reply = async ()=>{
-    const endpoint = "http://localhost:8000/complaints/update-complaint/"+currComplaint.id+"/"; 
+    const endpoint = "complaints/update-complaint/"+currComplaint.id+"/"; 
     setIsLoading(true);
       try{
           const response = await axiosInstance.put(endpoint, currComplaint);
@@ -90,7 +90,7 @@ function ComplaintList(){
   }
    
   const deletes = async ()=>{
-    const endpoint = "http://localhost:8000/complaints/delete-complaint/"+currComplaint.id+"/"; 
+    const endpoint = "complaints/delete-complaint/"+currComplaint.id+"/"; 
     setIsLoading(true);
       try{
           const response = await axiosInstance.delete(endpoint);

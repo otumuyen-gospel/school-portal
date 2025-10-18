@@ -35,7 +35,7 @@ function UserLists(){
   const [openPromoteDialog, setOpenPromoteDialog] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [dialogMsg, setDialogMsg] = useState("");
-  const [url,setUrl] = useState("http://localhost:8000/accounts/users-list/");
+  const [url,setUrl] = useState("accounts/users-list/");
   const [query,setQuery] =useState({});
   const [classList,setClassList] = useState([]);
   const [currUser, setCurrUser] = useState({});
@@ -69,7 +69,7 @@ function UserLists(){
   }
   
   const deletes= async ()=>{
-    const endpoint = "http://localhost:8000/accounts/remove-user/"+currUser.pk+"/"; 
+    const endpoint = "accounts/remove-user/"+currUser.pk+"/"; 
     setIsLoading(true);
       try{
           const response = await axiosInstance.delete(endpoint);
@@ -93,7 +93,7 @@ function UserLists(){
    }
 
    const promotes = async ()=>{
-    const endpoint = "http://localhost:8000/accounts/user-promotion/"+currUser.pk+"/"; 
+    const endpoint = "accounts/user-promotion/"+currUser.pk+"/"; 
     setIsLoading(true);
       try{
           const response = await axiosInstance.patch(endpoint, {classId:currUser.classId});
@@ -138,7 +138,7 @@ function UserLists(){
      }
     }
 
-    const url = "http://localhost:8000/classes/class-list/";
+    const url = "classes/class-list/";
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{

@@ -76,7 +76,7 @@ function UpdateUser(){
      }
     }
 
-    const url = "http://localhost:8000/accounts/retrieve-user/"+
+    const url = "accounts/retrieve-user/"+
     userId+"/";
     profile(url).then(data=>{
        setForm({
@@ -121,7 +121,7 @@ function UpdateUser(){
      }
     }
 
-    const url = "http://localhost:8000/classes/class-list/";
+    const url = "classes/class-list/";
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
@@ -148,7 +148,7 @@ function UpdateUser(){
      }
     }
 
-    const url = "http://localhost:8000/accounts/users-list/";
+    const url = "accounts/users-list/";
     const query = {role:"student"};
     listStudents(url, query).then(allData=>{
       setStudentList(allData)
@@ -191,7 +191,7 @@ function UpdateUser(){
         new_password:password.new_password,
       };
       setIsLoading(true);
-      axiosInstance.put("http://localhost:8000/auth/update-password/"+userId+"/",
+      axiosInstance.put("auth/update-password/"+userId+"/",
             data).then((res) => {
               setIsLoading(false)
               setIsDisabled(false)  //re-enable button
@@ -266,7 +266,7 @@ function UpdateUser(){
       data.append('zipCode',form.zipCode);
       
       setIsProfileLoading(true);
-      axiosInstance.patch("http://localhost:8000/accounts/user-update/"+
+      axiosInstance.patch("accounts/user-update/"+
 userId+"/",
             data,{
             headers:{

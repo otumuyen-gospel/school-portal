@@ -64,7 +64,7 @@ function CreateQuiz(){
     }
     
     if(authUser){
-       const url = "http://localhost:8000/subjects/class-subject-list/"+
+       const url = "subjects/class-subject-list/"+
        authUser['user'].classId+"/";
        listSubjects(url).then(allData=>{
          setSubjectList(allData)
@@ -91,7 +91,7 @@ function CreateQuiz(){
     endDate:dayjs(form.endDate).format("YYYY-MM-DD"),
     startDate:dayjs(form.startDate).format("YYYY-MM-DD"),
     setAsQuiz:form.setAsQuiz,};
-    axiosInstance.post("http://localhost:8000/quizzes/create-quiz/",
+    axiosInstance.post("quizzes/create-quiz/",
           data).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button

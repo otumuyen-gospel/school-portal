@@ -75,7 +75,7 @@ function Profile(){
        }
       }
   
-      const url = "http://localhost:8000/accounts/retrieve-user/"+
+      const url = "accounts/retrieve-user/"+
       userId+"/";
       profile(url).then(data=>{
          setForm({
@@ -120,7 +120,7 @@ function Profile(){
      }
     }
 
-    const url = "http://localhost:8000/classes/class-list/";
+    const url = "classes/class-list/";
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
@@ -147,7 +147,7 @@ function Profile(){
      }
     }
 
-    const url = "http://localhost:8000/accounts/users-list/";
+    const url = "accounts/users-list/";
     const query = {role:"student"};
     listStudents(url, query).then(allData=>{
       setStudentList(allData)
@@ -195,7 +195,7 @@ function Profile(){
       new_password:password.new_password,
     };
     setIsLoading(true);
-    axiosInstance.put("http://localhost:8000/auth/update-password/"+
+    axiosInstance.put("auth/update-password/"+
       (auth ? auth['user'].pk : "")+"/",
           data).then((res) => {
             setIsLoading(false)
@@ -271,7 +271,7 @@ function Profile(){
     data.append('zipCode',form.zipCode);
     
     setIsProfileLoading(true);
-    axiosInstance.patch("http://localhost:8000/accounts/user-update/"+
+    axiosInstance.patch("accounts/user-update/"+
       userId+"/",
           data, {
             headers:{

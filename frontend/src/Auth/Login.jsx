@@ -29,7 +29,7 @@ function Login(){
       return;
     }
     setIsLoading(true);
-    axios.post("http://localhost:8000/auth/login/",
+    axios.post("http://192.168.1.9:8000/auth/login/",
       data).then((res) => {
         // Registering the account and tokens in the store
         localStorage.setItem("auth", JSON.stringify({

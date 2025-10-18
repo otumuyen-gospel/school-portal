@@ -62,7 +62,7 @@ function UpdateMark(){
     }
     
     if(authUser){
-       const url = "http://localhost:8000/subjects/class-subject-list/"+
+       const url = "subjects/class-subject-list/"+
        authUser['user'].classId+"/";
        listSubjects(url).then(allData=>{
          setSubjectList(allData)
@@ -93,7 +93,7 @@ function UpdateMark(){
     }
 
    if(authUser){
-       const url = "http://localhost:8000/accounts/class-users/"+
+       const url = "accounts/class-users/"+
        authUser['user'].classId+"/";
        const query = {role:"student"}
        listStudents(url,query).then(allData=>{
@@ -151,7 +151,7 @@ function UpdateMark(){
     }
 
     setIsLoading(true);
-    axiosInstance.put("http://localhost:8000/marks/update-mark/"+mark?.id+"/",
+    axiosInstance.put("marks/update-mark/"+mark?.id+"/",
           form).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button

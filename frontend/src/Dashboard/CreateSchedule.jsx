@@ -53,7 +53,7 @@ function CreateSchedule(){
     };
 
     setIsLoading(true);
-    axiosInstance.post("http://localhost:8000/schedule/create-schedule/",
+    axiosInstance.post("schedule/create-schedule/",
           data).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 //config
 const axiosInstance = axios.create({
-    baseURL: 'https://localhost:8000',
+    baseURL: 'http://192.168.1.9:8000',
     headers: {
         'Content-Type': 'application/json',
     },
@@ -25,7 +25,7 @@ axiosInstance.interceptors.request.use(request => {
 const refreshAuthLogic = async (failedRequest) => {
     const { refresh } = JSON.parse(localStorage.getItem("auth"));
     return axios.post("/auth/refresh/", {refresh:{refresh}}, {
-        baseURL: "http://localhost:8000",
+        baseURL: "http://192.168.1.9:8000",
         headers: {
             Authorization: `Bearer ${refresh}`,
         },

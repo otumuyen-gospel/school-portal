@@ -53,7 +53,7 @@ function UpdateSchedule(){
     };
 
     setIsLoading(true);
-    axiosInstance.put("http://localhost:8000/schedule/update-schedule/"+schedule?.id+"/",
+    axiosInstance.put("schedule/update-schedule/"+schedule?.id+"/",
           data).then((res) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button

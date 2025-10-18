@@ -58,7 +58,7 @@ function Dashboard(){
      if(authUser){
         if(authUser['user'].role === "student"){
           setHasClassMate(true); //is a student
-         const url = "http://localhost:8000/accounts/class-users/"+
+         const url = "accounts/class-users/"+
          authUser['user'].classId+"/";
          const query = {role:"student"}
          listStudents(url,query).then(allData=>{
@@ -93,7 +93,7 @@ function Dashboard(){
 
           }
       }
-      const url = "http://localhost:8000/accounts/users-list/";
+      const url = "accounts/users-list/";
       const query = {role:"student"};
       users(url, query);
   },[])
@@ -114,7 +114,7 @@ function Dashboard(){
             setMsg("an error has occured");
           }
       }
-      const url = "http://localhost:8000/accounts/users-list/";
+      const url = "accounts/users-list/";
       const query = {role:"teacher"};
       users(url, query);
   },[])
@@ -136,7 +136,7 @@ function Dashboard(){
             setMsg("an error has occured");
           }
       }
-      const url = "http://localhost:8000/accounts/users-list/";
+      const url = "accounts/users-list/";
       const query = {role:"admin"};
       users(url, query);
   },[])
@@ -157,7 +157,7 @@ function Dashboard(){
             setMsg("an error has occured");
           }
       }
-      const url = "http://localhost:8000/accounts/users-list/";
+      const url = "accounts/users-list/";
       const query = {role:"parent"};
       users(url, query);
   },[])
@@ -179,7 +179,7 @@ function Dashboard(){
 
           }
       }
-      const url = "http://localhost:8000/accounts/user-analytics/";
+      const url = "accounts/user-analytics/";
       users(url);
   },[])
 

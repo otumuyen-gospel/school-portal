@@ -49,7 +49,7 @@ function UpdateHomework(){
        data.append('submission',dayjs(form.submission).format("YYYY-MM-DD hh:mm:ss"));
 
     setIsLoading(true);
-    axiosInstance.put("http://localhost:8000/homework/update-homework/"+homework?.id+"/",
+    axiosInstance.put("homework/update-homework/"+homework?.id+"/",
           data,{
             headers:{
               'Content-Type':'multipart/form-data',
