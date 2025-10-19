@@ -14,3 +14,19 @@ class UserAnalytics(serializers.Serializer):
     id = serializers.CharField()
     label = serializers.CharField()
     data = serializers.ListField(child=serializers.IntegerField())
+
+
+class ExportUsers(serializers.Serializer):
+    SN = serializers.IntegerField()
+    Username = serializers.CharField()
+    FirstName = serializers.CharField()
+    LastName = serializers.CharField()
+    Email = serializers.EmailField()
+    Role = serializers.CharField()
+    ClassName = serializers.CharField()
+    Dob = serializers.DateField()
+    Telephone = serializers.CharField()
+    Gender = serializers.CharField()
+    Address = serializers.CharField()
+    Nationality = serializers.CharField()
+    State = serializers.CharField()

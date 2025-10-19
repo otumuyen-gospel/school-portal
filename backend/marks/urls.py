@@ -24,4 +24,5 @@ urlpatterns = [
     path('create-marks/', MarkCreate.as_view(), name=MarkCreate.name),
     path('delete-mark/<int:id>/', MarkDelete.as_view(), name=MarkDelete.name),
     path('update-mark/<int:id>/', MarkUpdate.as_view(), name=MarkUpdate.name),
+    path('export-marks/', ExportUserMarks.as_view(), name=ExportUserMarks.name),
 ]

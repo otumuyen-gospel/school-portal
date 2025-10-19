@@ -1,3 +1,4 @@
+import ExcelIcon from "@mui/icons-material/ImportExportOutlined";
 import SearchIcon from "@mui/icons-material/SearchOutlined";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -15,6 +16,7 @@ import { useEffect, useState } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
+import MessageDialogForm from "../Util/MessageDialogForm";
 function UserMarks(){
   const [authUser] = useState(JSON.parse(localStorage.getItem('auth')));
    const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +33,15 @@ function UserMarks(){
   const [params, setParams] = useState("");
   const [nextPage,setNextPage] = useState(null);
   const [prevPage,setPrevPage] = useState(null);
-  
+  const [disabled, setDisabled] = useState(false)
+  const [openMsgBox, setOpenMsgBox] = useState(false);
+  const handleOpenMsgBox = ()=>{
+    setOpenMsgBox(true);
+  }
+  const handleCloseMsgBox = ()=>{
+    setOpenMsgBox(false);
+  }
+
 
   const removeMarkFromList = (theMark, data)=>{
    const remainingMark = data.filter(mark => mark.id !== theMark.id);
@@ -166,6 +176,24 @@ function UserMarks(){
       setQuery({...query, search:params})
     }
   }
+
+
+  const Download = async()=>{
+        setIsLoading(true);
+        setDisabled(true);
+        try{
+           await axiosInstance.get("marks/export-marks/")
+           setMsg("SucessFully Exported Data");
+           handleOpenMsgBox()
+           setIsLoading(false);
+           setDisabled(false);
+        }catch(error){
+           setIsLoading(false);
+           setDisabled(false);
+           setMsg("Unable To Export User Data");
+          handleOpenMsgBox()
+       }
+      }
   
   return (
     <div style={{backgroundColor:"#FFF"}}>
@@ -199,6 +227,23 @@ function UserMarks(){
                 onClick={initializeQuery}
                >
                 <SearchIcon></SearchIcon>
+               </Button>
+
+               <Button 
+               title="Export To Excel"
+               disabled={disabled}
+               variant="contained"
+               sx={{backgroundColor:"#FFF",
+                color:"royalblue",
+                border:"1px",
+                borderRadius:"0px",
+                marginTop:"16px",
+                marginLeft:"10px",
+                '& .hover':{backgroundColor:"#FFF", color:"dodgerblue"},
+                minHeight:"54px"}}
+                onClick={Download}
+               >
+                <ExcelIcon />
                </Button>
         </Container>
         <Paper>
@@ -298,6 +343,13 @@ function UserMarks(){
           </Button>
         </Container>
         </Box>
+
+
+         <MessageDialogForm open={openMsgBox} 
+                onClose={handleCloseMsgBox} 
+                formContent={<Typography>{msg}</Typography>}
+                title="Message Dialog"
+                />
       </Layout>
 
     </div>

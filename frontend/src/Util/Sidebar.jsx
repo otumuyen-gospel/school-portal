@@ -1,6 +1,7 @@
 import AccountIcon from "@mui/icons-material/AccountBoxOutlined";
 import AddIcon from "@mui/icons-material/AddCircleOutlined";
 import TicketIcon from "@mui/icons-material/AirplaneTicket";
+import BackupIcon from "@mui/icons-material/BackupOutlined";
 import ClassIcon from "@mui/icons-material/ClassOutlined";
 import DashboardIcon from "@mui/icons-material/DashboardOutlined";
 import OtherIcon from "@mui/icons-material/DevicesOther";
@@ -92,6 +93,8 @@ function Sidebar(props){
                 to:"/schedule-list/", hidden:false},
             {label:"Tickets", Icon:TicketIcon, 
                 to:"/complaint-list/", hidden:false},
+            {label:"Backups", Icon:BackupIcon, 
+                to:"/backups/", hidden:false},
             
         ],
 

@@ -1,4 +1,5 @@
 import TrashIcon from "@mui/icons-material/DeleteOutline";
+import ExcelIcon from "@mui/icons-material/ImportExportOutlined";
 import UpdateIcon from "@mui/icons-material/MarkChatReadOutlined";
 import SearchIcon from "@mui/icons-material/SearchOutlined";
 import PromoteIcon from "@mui/icons-material/UpgradeOutlined";
@@ -27,7 +28,7 @@ import ConfirmDialogForm from "../Util/ConfirmDialogForm";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
 function UserLists(){
-   const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [userList, setUserList] = useState([]);
   const navigate = useNavigate();
   const [msg, setMsg] = useState("");
@@ -42,6 +43,7 @@ function UserLists(){
   const [params, setParams] = useState("");
   const [nextPage,setNextPage] = useState(null);
   const [prevPage,setPrevPage] = useState(null);
+  const [disabled, setDisabled] = useState(false)
 
   const handleOpenDeleteDialog = ()=>{
     setOpenDeleteDialog(true);
@@ -174,6 +176,23 @@ function UserLists(){
       }
       users(url, query);
   },[url, query])
+
+  const Download = async()=>{
+      setIsLoading(true);
+      setDisabled(true);
+      try{
+         await axiosInstance.get("accounts/export-users/")
+         setDialogMsg("SucessFully Exported Data");
+         handleOpenMsgBox()
+         setIsLoading(false);
+         setDisabled(false);
+      }catch(error){
+         setIsLoading(false);
+         setDisabled(false);
+         setDialogMsg("Unable To Export User Data");
+         handleOpenMsgBox()
+     }
+    }
   
   return (
     <div style={{backgroundColor:"#FFF"}}>
@@ -209,6 +228,23 @@ function UserLists(){
                 }}
                >
                 <SearchIcon></SearchIcon>
+               </Button>
+
+               <Button 
+               title="Export To Excel"
+               disabled={disabled}
+               variant="contained"
+               sx={{backgroundColor:"#FFF",
+                color:"royalblue",
+                border:"1px",
+                borderRadius:"0px",
+                marginTop:"16px",
+                marginLeft:"10px",
+                '& .hover':{backgroundColor:"#FFF", color:"dodgerblue"},
+                minHeight:"54px"}}
+                onClick={Download}
+               >
+                <ExcelIcon />
                </Button>
         </Container>
         <Paper>

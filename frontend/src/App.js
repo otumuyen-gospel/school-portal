@@ -6,6 +6,7 @@ import ProtectedRoute from './Auth/ProtectedRoute';
 import Request from './Auth/Request';
 import Verify from './Auth/Verify';
 import Attendance from './Dashboard/Attendance';
+import Backups from './Dashboard/Bsckups';
 import ClassAttendance from './Dashboard/ClassAttendance';
 import ClassComplaintList from "./Dashboard/ClassComplaintList";
 import ClassHomeworkList from "./Dashboard/ClassHomeworkList";
@@ -256,6 +257,11 @@ function App() {
       </ProtectedRoute>
      } />
      
+      <Route path="/backups" element={
+      <ProtectedRoute>
+        <Backups/>
+      </ProtectedRoute>
+     } />
   </Routes>
 }
 

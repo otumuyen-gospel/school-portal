@@ -27,6 +27,7 @@ from io import BytesIO
 from .serializers import UserSerializers
 from .models import User
 from classes.models import Class
+from .serializers import ExportUsers
 
 
 '''
@@ -256,46 +257,36 @@ class RestoreDatabaseAPIView(APIView):
 
 #export users to excel
 class ExportUsers(APIView):
-    permission_classes = [AllowAny,]
+    permission_classes = [IsAuthenticated,IsInGroup,]
     required_groups = ['admin',]
     name = 'export'
     def get(self, request, *args, **kwargs):
-        # 1. Perform your search query
-        # Example: filtering based on a 'query' parameter
-        search_query = request.query_params.get('query', '')
-        queryset = User.objects.filter(classId__id__icontains=search_query,
-                                       role__icontains=search_query, 
-                                       entrance__icontains=search_query,
-                                       gender__icontains=search_query) 
-            
+        queryset = User.objects.exclude(role='admin') 
+        queryset = self.getData(queryset)
         # 2. Serialize the data (optional but good practice)
-        serializer = UserSerializers(queryset, many=True)
+        serializer = ExportUsers(data=queryset, many=True)
         data = serializer.data
-
         # 3. Create an Excel workbook
         wb = Workbook()
         ws = wb.active
         ws.title = "User Search Results"
-
         # Add headers (using serializer field names or custom names)
-        headers = ["username","email", "firstName","lastName","role","entrance",
-                   "dob", "telephone","gender","address","nationality","state"] # Or define custom headers
+        headers =  [
+                 'SN','Username','FirstName','LastName','Email','Role','ClassName','Dob',
+                 'Telephone', 'Gender','Address','Nationality','State',
+        ]
         ws.append(headers)
-
         # Add data rows
         for item in data:
             row_values = [item.get(header) for header in headers] # Or customize based on item keys
             ws.append(row_values)
-
         #add styles
         self.addStyles(ws)
         self.adjustWidth(ws)
-
         # 4. Save the workbook to a BytesIO buffer
         excel_buffer = BytesIO()
         wb.save(excel_buffer)
         excel_buffer.seek(0) # Rewind the buffer to the beginning
-
         # 5. Create an HttpResponse with appropriate headers
         response = HttpResponse(
             excel_buffer.getvalue(),
@@ -303,6 +294,21 @@ class ExportUsers(APIView):
         )
         response['Content-Disposition'] = 'attachment; filename="User_search_results.xlsx"'
         return response
+    def getData(self,queryset):
+         data = []
+         count = 1
+         for obj in queryset:
+             cl = Class.objects.get(id=obj.classId.id)
+             newObj = {
+                 'SN':count,'Username': obj.username, 'FirstName':obj.firstName,
+                 'LastName':obj.lastName, 'Email': obj.email,'Role': obj.role,
+                 'ClassName': cl.className,'Dob': obj.dob,'Telephone': obj.telephone,
+                 'Gender': obj.gender,'Address': obj.address,'Nationality': obj.nationality,
+                 'State': obj.state,
+             }
+             data.append(newObj)
+             count = count + 1
+         return data
     def addStyles(self, ws):
         bold_font = Font(bold=True)
         for row in ws.iter_rows():
@@ -315,7 +321,6 @@ class ExportUsers(APIView):
         for col in ws.columns:
           max_length = 0
           column_letter = col[0].column_letter # Get the column letter (e.g., 'A', 'B')
- 
           for cell in col:
             try:
             # Check the length of the cell's value
@@ -323,7 +328,6 @@ class ExportUsers(APIView):
                 max_length = len(str(cell.value))
             except TypeError: # Handle cases where cell.value might be None
               pass
-
             # Calculate adjusted width (add a small buffer for visual spacing)
             adjusted_width = (max_length + 2)
             # Set the column width
