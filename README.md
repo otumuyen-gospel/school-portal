@@ -88,6 +88,21 @@ this project is the design and implementation of a school web portal using pytho
   curl --request GET --url "http://127.0.0.1:8000/accounts/user-analytics/" --header "Authorization: Bearer yourToken"
 ```
 
+| GET | /accounts/export-users/ | users; access[admin] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/accounts/export-users/" --header "Authorization: Bearer yourToken"
+```
+
+| POST | /accounts/system-backup/ | db and file backup; access[admin] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000 /accounts/system-backup/" --header "Authorization: Bearer yourToken" 
+```
+
+| POST | /accounts/system-restore/ | db and file restore; access[admin] |
+```cmd
+  curl --request POST --url "http://127.0.0.1:8000 /accounts/system-restore/" --header "Authorization: Bearer yourToken" 
+```
+
 
 
 ### Attendance API
@@ -123,6 +138,12 @@ this project is the design and implementation of a school web portal using pytho
 ```cmd
   curl --request PUT --url "http://127.0.0.1:8000/attendance/update-attendance/158/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
 ```
+
+| GET | /attendance/export-attendance/ | class attendance; access[Teacher] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/attendance/export-attendance/" --header "Authorization: Bearer yourToken"
+```
+
 
 ### Auth API
 | HTTP Verbs | Endpoints | Action |
@@ -296,6 +317,11 @@ this project is the design and implementation of a school web portal using pytho
 | PUT | marks/update-mark/id/ | update user marks; access[Admin,Teacher] |
 ```cmd
   curl --request PUT --url "http://127.0.0.1:8000/marks/update-mark/158/" --header "Authorization: Bearer yourToken" --data "key1=value1&key2=value2"
+```
+
+| GET | /marks/export-marks/ | User Marks; access[Student] |
+```cmd
+  curl --request GET --url "http://127.0.0.1:8000/marks/export-marks/" --header "Authorization: Bearer yourToken"
 ```
 
 
