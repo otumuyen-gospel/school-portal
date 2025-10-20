@@ -181,18 +181,31 @@ function UserMarks(){
   const Download = async()=>{
         setIsLoading(true);
         setDisabled(true);
-        try{
-           await axiosInstance.get("marks/export-marks/")
+  
+        axiosInstance.get("marks/export-marks/", {
+          responseType: 'blob' // Important for file downloads
+        })
+        .then(response => {
+           const url = window.URL.createObjectURL(new Blob([response.data]));
+           const link = document.createElement('a');
+           link.href = url;
+           link.setAttribute('download', 'my_results.xlsx');
+           document.body.appendChild(link);
+           link.click();
+           window.URL.revokeObjectURL(url); // Clean up the temporary URL
+           link.remove(); // Remove the temporary anchor element
            setMsg("SucessFully Exported Data");
            handleOpenMsgBox()
            setIsLoading(false);
            setDisabled(false);
-        }catch(error){
+        })
+        .catch(error => {
            setIsLoading(false);
            setDisabled(false);
            setMsg("Unable To Export User Data");
-          handleOpenMsgBox()
-       }
+           handleOpenMsgBox()
+        });
+  
       }
   
   return (

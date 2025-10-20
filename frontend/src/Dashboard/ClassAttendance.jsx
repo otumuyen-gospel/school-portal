@@ -1,4 +1,5 @@
 import TrashIcon from "@mui/icons-material/DeleteOutline";
+import ExcelIcon from "@mui/icons-material/ImportExportOutlined";
 import SearchIcon from "@mui/icons-material/SearchOutlined";
 import PromoteIcon from "@mui/icons-material/UpgradeOutlined";
 import Box from "@mui/material/Box";
@@ -40,6 +41,7 @@ function ClassAttendance(){
   const [params, setParams] = useState("");
   const [nextPage,setNextPage] = useState(null);
   const [prevPage,setPrevPage] = useState(null);
+  const [disabled, setDisabled] = useState(false)
 
   const handleCloseUpdateDialog = ()=>{
     setOpenUpdateDialog(false);
@@ -215,6 +217,37 @@ function ClassAttendance(){
 
       attendance(url, query);
   },[url, query, authUser])
+
+
+  const Download = async()=>{
+          setIsLoading(true);
+          setDisabled(true);
+    
+          axiosInstance.get("attendance/export-attendance/", {
+            responseType: 'blob' // Important for file downloads
+          })
+          .then(response => {
+             const url = window.URL.createObjectURL(new Blob([response.data]));
+             const link = document.createElement('a');
+             link.href = url;
+             link.setAttribute('download', 'class_attendance.xlsx');
+             document.body.appendChild(link);
+             link.click();
+             window.URL.revokeObjectURL(url); // Clean up the temporary URL
+             link.remove(); // Remove the temporary anchor element
+             setDialogMsg("SucessFully Exported Data");
+             handleOpenMsgBox()
+             setIsLoading(false);
+             setDisabled(false);
+          })
+          .catch(error => {
+             setIsLoading(false);
+             setDisabled(false);
+             setDialogMsg("Unable To Export User Data");
+             handleOpenMsgBox()
+          });
+    
+        }
   
   return (
     <div style={{backgroundColor:"#FFF"}}>
@@ -250,6 +283,23 @@ function ClassAttendance(){
                 }}
                >
                 <SearchIcon></SearchIcon>
+               </Button>
+
+               <Button 
+               title="Export To Excel"
+               disabled={disabled}
+               variant="contained"
+               sx={{backgroundColor:"#FFF",
+                color:"royalblue",
+                border:"1px",
+                borderRadius:"0px",
+                marginTop:"16px",
+                marginLeft:"10px",
+                '& .hover':{backgroundColor:"#FFF", color:"dodgerblue"},
+                minHeight:"54px"}}
+                onClick={Download}
+               >
+                <ExcelIcon />
                </Button>
         </Container>
         <Paper>

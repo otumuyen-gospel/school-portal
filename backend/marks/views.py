@@ -191,47 +191,51 @@ class UserMark(generics.ListAPIView):
    
    
 
-   #export users to excel
+#export users to excel
 class ExportUserMarks(APIView):
     permission_classes = [IsAuthenticated,IsInGroup,]
     required_groups = ['student',]
     name = 'export'
     def get(self, request, *args, **kwargs): 
-        queryset = Mark.objects.filter(userId__id=self.request.user.pk)
+        queryset = Mark.objects.filter(userId=self.request.user.id)
         queryset = self.getData(queryset)
         # 2. Serialize the data (optional but good practice)
         serializer = ExportMarks(data=queryset, many=True)
-        if serializer.is_valid():
-           data = serializer.data
-        # 3. Create an Excel workbook
-        wb = Workbook()
-        ws = wb.active
-        ws.title = "Statement of results"
-        # Add headers (using serializer field names or custom names)
-        headers =  [
+        try: 
+              data = serializer.initial_data
+              if serializer.is_valid():
+                 data = serializer.data
+              # 3. Create an Excel workbook
+              wb = Workbook()
+              ws = wb.active
+              ws.title = "Statement of results"
+              # Add headers (using serializer field names or custom names)
+              headers =  [
                  'SN','FirstName','LastName', 'ClassName','subjectName','examScore',
                  'homework_score1','homework_score2','homework_score3','test_score1', 
                  'test_score2','test_score3'
-        ]
-        ws.append(headers)
-        # Add data rows
-        for item in data:
-            row_values = [item.get(header) for header in headers] # Or customize based on item keys
-            ws.append(row_values)
-        #add styles
-        self.addStyles(ws)
-        self.adjustWidth(ws)
-        # 4. Save the workbook to a BytesIO buffer
-        excel_buffer = BytesIO()
-        wb.save(excel_buffer)
-        excel_buffer.seek(0) # Rewind the buffer to the beginning
-        # 5. Create an HttpResponse with appropriate headers
-        response = HttpResponse(
-            excel_buffer.getvalue(),
-            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        )
-        response['Content-Disposition'] = 'attachment; filename="my_results.xlsx"'
-        return response
+              ]
+              ws.append(headers)
+              # Add data rows
+              for item in data:
+                   row_values = [item.get(header) for header in headers] # Or customize based on item keys
+                   ws.append(row_values)
+              #add styles
+              self.addStyles(ws)
+              self.adjustWidth(ws)
+              # 4. Save the workbook to a BytesIO buffer
+              excel_buffer = BytesIO()
+              wb.save(excel_buffer)
+              excel_buffer.seek(0) # Rewind the buffer to the beginning
+              # 5. Create an HttpResponse with appropriate headers
+              response = HttpResponse(
+                 excel_buffer.getvalue(),
+                 content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+              )
+              response['Content-Disposition'] = 'attachment; filename="my_results.xlsx"'
+              return response
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
     def getData(self,queryset):
          data = []
          count = 1

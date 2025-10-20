@@ -24,4 +24,5 @@ urlpatterns = [
     path('create-attendance/', AttendanceCreate.as_view(), name=AttendanceCreate.name),
     path('delete-attendance/<int:id>/', AttendanceDelete.as_view(), name=AttendanceDelete.name),
     path('update-attendance/<int:id>/', AttendanceUpdate.as_view(), name=AttendanceUpdate.name),
+    path('export-attendance/', ExportClassAttendance.as_view(), name=ExportClassAttendance.name),
 ]
