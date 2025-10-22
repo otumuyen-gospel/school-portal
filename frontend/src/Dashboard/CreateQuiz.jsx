@@ -13,7 +13,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
+import { EditorState, convertToRaw } from 'draft-js';
 import { useEffect, useState } from "react";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
@@ -26,8 +29,8 @@ function CreateQuiz(){
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [msg, setMsg] = useState("");
   const [subjectList, setSubjectList] = useState([]);
+  const [detailsMsg, setDetailsMsg] = useState("");
   const [form, setForm] = useState({
-    question:"",
     option1:"",
     option2:"",
     option3:"",
@@ -38,6 +41,13 @@ function CreateQuiz(){
     startDate:dayjs(),
     setAsQuiz:false,
   });
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+    const onEditorStateChange = (newEditorState) => {
+        setEditorState(newEditorState);
+    };
+    const convertForDatabase = ()=>{
+      return JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+    }
   const handleOpenMsgBox = ()=>{
     setOpenMsgBox(true);
   }
@@ -79,9 +89,16 @@ function CreateQuiz(){
  const handleSubmit = (event)=>{
     event.preventDefault();
     event.target.checkValidity();
+    const dbData  = convertForDatabase();
+    if(!dbData){
+      setDetailsMsg("please kindly enter the Question");
+      return;
+    }else{
+      setDetailsMsg("");
+    }
     setIsLoading(true);
     const data ={
-    question:form.question,
+    question:dbData,
     option1:form.option1,
     option2:form.option2,
     option3:form.option3,
@@ -126,31 +143,13 @@ function CreateQuiz(){
                         marginTop={5} padding="10px 30px">
 
                 <Grid container spacing={1}>
-                   <Grid item size={{xs:12, sm:6, md:6}}>
-                      <TextField
-                        sx={{
-                           '& .MuiInputBase-root':{
-                            height:"50px",
-                            borderRadius:"10px",
-                         },
-                         '& .MuiOutlinedInput-input':{
-                         height:"50px",
-                         paddingTop:0,
-                         paddingBottom:0,
-                         },
-                        }}
-                        fullWidth
-                        margin="normal"
-                        required
-                        id="question"
-                        label="question"
-                        type="text"
-                        value={form.question}
-                        onChange={(e) => setForm({ ...form,
-                              question: e.target.value })}
-                        name="question"
-                 
-                      />
+                   <Grid item size={{xs:12, sm:12, md:12}}>
+                       <span>{detailsMsg ? detailsMsg : "Quiz Question"}</span>
+                        <Editor
+                          minHeight="150px"
+                          editorState={editorState}
+                          onEditorStateChange={onEditorStateChange}
+                        />
                    </Grid>
                    <Grid item size={{xs:12, sm:6, md:6}}>
                       <TextField
@@ -409,197 +408,6 @@ function CreateQuiz(){
                </div>
           </Box>
       </Box>
-
-
-
-
-
-
-
-            {/*}
-            <Typography component="p" sx={{
-              textAlign:"center",
-              color:"primary",
-              }}>
-                Add Quiz
-           </Typography>
-
-           <Grid container width="sm" direction="column" spacing={4}>
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="question"
-                 label="question"
-                 type="text"
-                 value={form.question}
-                 onChange={(e) => setForm({ ...form,
-                    question: e.target.value })}
-                 name="question"
-                 
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="option1"
-                 label="option1"
-                 type="text"
-                 value={form.option1}
-                 onChange={(e) => setForm({ ...form,
-                    option1: e.target.value })}
-                 name="option1"
-                 
-              />
-            </Grid>
-
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="option2"
-                 label="option2"
-                 type="text"
-                 value={form.option2}
-                 onChange={(e) => setForm({ ...form,
-                    option2: e.target.value })}
-                 name="option2"
-                 
-              />
-            </Grid>
-
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="option3"
-                 label="option3"
-                 type="text"
-                 value={form.option3}
-                 onChange={(e) => setForm({ ...form,
-                    option3: e.target.value })}
-                 name="option3"
-                 
-              />
-            </Grid>
-
-
-            <Grid>
-              <TextField
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="answer"
-                 label="answer"
-                 type="text"
-                 value={form.answer}
-                 onChange={(e) => setForm({ ...form,
-                    answer: e.target.value })}
-                 name="answer"
-                 
-              />
-            </Grid>
-
-            <Grid>
-             
-              <Checkbox
-                 style={{display:"inline"}}
-                 fullWidth
-                 margin="normal"
-                 required
-                 id="setAsQuiz"
-                 label="setAsQuiz"
-                 checked={form.setAsQuiz}
-                 onChange={(e) =>{setForm({ ...form,
-                    setAsQuiz: e.target.checked })}}
-                 name="setAsQuiz"
-                 
-              />
-               <Typography style={{display:"inline"}}>
-                Set and Activate Quiz to Run Immediately after creation
-                </Typography>
-            </Grid>
-
-            <Grid>
-              <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
-                <InputLabel id="subject-label">{form.subjectId || "subject"}</InputLabel>
-                <Select
-                    fullWidth
-                    margin="normal"
-                    labelId="subject-label"
-                    id="subjectId"
-                    name="subjectId"
-                    value={form.subjectId}
-                    label="Subject"
-                    onChange={(e) => setForm({ ...form,
-                      subjectId: e.target.value })}
-                    >
-                      <MenuItem value="">None</MenuItem>
-                      {
-                        subjectList.map(list=>(
-                          <MenuItem key={list.id}
-                          value={list.id}>{list.subjectCode}</MenuItem>
-                        ))
-                        
-                      }
-                </Select>
-              </FormControl>
-            </Grid>
-
-            <Grid>
-              <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%"}}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                 id="startDate"
-                 label="startDate"
-                 value={dayjs(form.startDate)}
-                 format="YYYY-MM-DD"
-                 onChange={(e) =>setForm({ ...form, startDate: e })}
-                 name="startDate"
-                
-              /></LocalizationProvider>
-              </FormControl>
-            </Grid>
-
-             <Grid>
-              <FormControl required sx={{margin:"16px 0px 0px 0px", minWidth: "100%"}}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                 id="endDate"
-                 label="endDate"
-                 value={dayjs(form.endDate)}
-                 format="YYYY-MM-DD"
-                 onChange={(e) =>setForm({ ...form, endDate: e })}
-                 name="endDate"
-                
-              /></LocalizationProvider>
-              </FormControl>
-            </Grid>
-
-            <Grid>
-              <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled={isDisabled}
-              sx={{ mt: 3, mb: 2 }}>Add Quiz</Button>
-            
-              <div className="loaderContainer">
-                     {isLoading && <CircularProgress />}
-               </div>
-            </Grid>
-           </Grid>
-
-        </Box>
-
-      </Box>
-      {*/}
-
 
         <MessageDialogForm open={openMsgBox} 
         onClose={handleCloseMsgBox} 

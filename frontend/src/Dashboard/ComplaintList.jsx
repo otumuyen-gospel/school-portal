@@ -15,11 +15,17 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import DOMPurify from 'dompurify';
+import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 import { useEffect, useState } from "react";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axiosInstance from "../Util/ApiRefresher";
 import ConfirmDialogForm from "../Util/ConfirmDialogForm";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
+
 function ComplaintList(){
   const [isLoading, setIsLoading] = useState(false);
   const [complaintList, setComplaintList] = useState([]);
@@ -36,6 +42,18 @@ function ComplaintList(){
   const [nextPage,setNextPage] = useState(null);
   const [prevPage,setPrevPage] = useState(null);
   
+  const convertToHtml = (content)=>{
+      const unsafeHtml = draftToHtml(JSON.parse(content));
+      return DOMPurify.sanitize(unsafeHtml);
+  }
+
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+    const onEditorStateChange = (newEditorState) => {
+          setEditorState(newEditorState);
+      };
+    const convertForDatabase = ()=>{
+        return JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+      }
 
   const handleCloseDeleteDialog = ()=>{
     setOpenDeleteDialog(false);
@@ -49,6 +67,7 @@ function ComplaintList(){
   }
   const handleOpenReplyDialog = ()=>{
     setOpenReplyDialog(true);
+
   }
 
   const updateComplaintFromList = () => {
@@ -64,6 +83,14 @@ function ComplaintList(){
     const endpoint = "complaints/update-complaint/"+currComplaint.id+"/"; 
     setIsLoading(true);
       try{
+          const dbData = convertForDatabase();
+          setCurrComplaint({...currComplaint, replyMessage: dbData,
+            replyStatus :true
+           })
+           const obj = currComplaint;
+           obj.replyMessage = dbData;
+           obj.replyStatus = true
+           setCurrComplaint(obj)
           const response = await axiosInstance.put(endpoint, currComplaint);
           const data = response.data.results;
           if(data){
@@ -209,15 +236,22 @@ function ComplaintList(){
                           id="panel1-header"
                           >
                             <Typography component="span">
-                              {complaint.complaint.substring(0, 20)}...
+                              <div dangerouslySetInnerHTML
+                               ={{__html:convertToHtml(complaint.complaint).substring(0,20)+ "..."
+                               }}/>
                               </Typography>
                           </AccordionSummary>
                           <AccordionDetails>
-                              {complaint.complaint}
+                             <div dangerouslySetInnerHTML
+                               ={{__html:convertToHtml(complaint.complaint)
+                               }}/>
                           </AccordionDetails>
                           <AccordionActions>
                              <IconButton title="reply"
                                  onClick={()=>{
+                                    if(complaint.replyMessage){
+                                    const contentState = convertFromRaw(JSON.parse(complaint.replyMessage));
+                                    setEditorState(EditorState.createWithContent(contentState));}
                                     setCurrComplaint(complaint);
                                     handleOpenReplyDialog();
                                  }}>
@@ -285,26 +319,11 @@ function ComplaintList(){
         onClose={handleCloseReplyDialog} 
         onSubmit={()=>reply()}
         formContent={
-          <TextField 
-           sx={{
-              '& .MuiInputBase-root':{
-              borderRadius:"10px",
-              },
-              '& .MuiOutlinedInput-input':{
-               paddingTop:0,
-               paddingBottom:0,
-                },
-               }}
-           fullWidth
-           multiline
-           label="message"
-           id="message"
-           rows={4}
-           value={currComplaint.replyMessage}
-           onChange={(e)=>setCurrComplaint({...currComplaint, replyMessage: e.target.value,
-            replyStatus :true
-           })}
-          />
+          <Editor
+              minHeight="150px"
+              editorState={editorState}
+              onEditorStateChange={onEditorStateChange}
+              />
         }
         title="DialogBox"
         />

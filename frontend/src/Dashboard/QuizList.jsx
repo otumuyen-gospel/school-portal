@@ -13,12 +13,15 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import DOMPurify from 'dompurify';
+import draftToHtml from 'draftjs-to-html';
 import { useEffect, useState } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
 import axiosInstance from "../Util/ApiRefresher";
 import ConfirmDialogForm from "../Util/ConfirmDialogForm";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
+
 function QuizList(){
    const [isLoading, setIsLoading] = useState(false);
   const [quizList, setQuizList] = useState([]);
@@ -35,6 +38,12 @@ function QuizList(){
   const [nextPage,setNextPage] = useState(null);
   const [prevPage,setPrevPage] = useState(null);
 
+
+   const convertToHtml = (content)=>{
+        const unsafeHtml = draftToHtml(JSON.parse(content));
+        return DOMPurify.sanitize(unsafeHtml);
+    }
+    
   const handleOpenDeleteDialog = ()=>{
     setOpenDeleteDialog(true);
   }
@@ -221,7 +230,11 @@ function QuizList(){
                   quizList.map(quiz=>(
                     <TableRow key={quiz.id}>
                       <TableCell>{quiz.id}</TableCell>
-                      <TableCell>{quiz.question}</TableCell>
+                      <TableCell>
+                        <div dangerouslySetInnerHTML
+                               ={{__html:convertToHtml(quiz.question).substring(0,50)
+                               }}/> ...
+                      </TableCell>
                       <TableCell>{quiz.option1}</TableCell>
                       <TableCell>{quiz.option2}</TableCell>
                       <TableCell>{quiz.option3}</TableCell>

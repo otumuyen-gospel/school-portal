@@ -9,11 +9,15 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
+import { useEffect, useState } from "react";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useLocation } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
+
 
 function UpdateComplaint(){
   const complaint = useLocation().state;
@@ -22,7 +26,6 @@ function UpdateComplaint(){
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [msg, setMsg] = useState("");
   const [form, setForm] = useState({
-    complaint:complaint?.complaint,
     title:complaint?.title,
     date:dayjs(complaint?.date),
   });
@@ -33,6 +36,22 @@ function UpdateComplaint(){
     setOpenMsgBox(false);
   }
   
+  const [detailsMsg, setDetailsMsg] = useState("");
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
+      const onEditorStateChange = (newEditorState) => {
+          setEditorState(newEditorState);
+      };
+      const convertForDatabase = ()=>{
+        return JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+      }
+  
+    useEffect(() => {
+      if (complaint?.complaint) {
+        const contentState = convertFromRaw(JSON.parse(complaint?.complaint));
+        setEditorState(EditorState.createWithContent(contentState));
+      }
+    }, [complaint?.complaint]);
+
  const handleSubmit = (event)=>{
     event.preventDefault();
     if(!event.target.checkValidity()){
@@ -40,9 +59,15 @@ function UpdateComplaint(){
         handleOpenMsgBox();
         return;
     }
-    
+     const dbData  = convertForDatabase();
+    if(!dbData){
+      setDetailsMsg("please kindly enter the complaint details");
+      return;
+    }else{
+      setDetailsMsg("");
+    }
     const data = {
-       complaint:form.complaint,
+       complaint:dbData,
        title:form.title,
        userId:complaint?.userId,
        classId:complaint?.classId,
@@ -152,32 +177,13 @@ function UpdateComplaint(){
              <Box marginBottom={5} marginTop={5}>
                 <Grid container>
                    <Grid item size={{xs:12, sm:12, md:12}}>
-                      <TextField
-                        boxShadow={1}
-                        sx={{
-                           '& .MuiInputBase-root':{
-                            borderBottomLeftRadius:"10px",
-                            borderBottomRightRadius:"10px",
-                            borderTop:"5px solid royalblue"
-                         },
-                         '& .MuiOutlinedInput-input':{
-                         paddingTop:0,
-                         paddingBottom:0,
-                         },
-                        }}
-                        fullWidth
-                        multiline
-                        rows={7}
-                        margin="normal"
-                        required
-                        id="complaint"
-                        label="complaint"
-                        type="complaint"
-                        value={form.complaint}
-                        onChange={(e) => setForm({ ...form,
-                           complaint: e.target.value })}
-                        name="complaint"
-                 
+                      <span style={{display:"inline"}}>
+                        {detailsMsg ? detailsMsg : "Quiz Question"}
+                        </span>
+                      <Editor
+                        minHeight="150px"
+                        editorState={editorState}
+                        onEditorStateChange={onEditorStateChange}
                       />
                    </Grid>
                 </Grid>
@@ -196,7 +202,6 @@ function UpdateComplaint(){
                      {isLoading && <CircularProgress />}
                </div>
            
-
         </Box>
 
       </Box>

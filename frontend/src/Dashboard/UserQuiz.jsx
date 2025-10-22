@@ -14,11 +14,14 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
+import DOMPurify from 'dompurify';
+import draftToHtml from 'draftjs-to-html';
 import { useEffect, useState } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
 import { useLocation } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
+
 function UserQuiz(){
   const subject = useLocation().state;
   const [counter, setCounter] = useState(0);
@@ -36,6 +39,11 @@ function UserQuiz(){
   const [showQuiz, setShowQuiz] = useState(false)
   const [selectMsg, setSelectMsg] = useState("");
   const [subjectName, setSubjectName]  = useState('')
+
+const convertToHtml = (content)=>{
+        const unsafeHtml = draftToHtml(JSON.parse(content));
+        return DOMPurify.sanitize(unsafeHtml);
+      }
 
   useEffect(()=>{
     //fetch all paginated subject data by recursively calling page by page
@@ -214,7 +222,8 @@ function UserQuiz(){
           {
             showQuiz ? <Paper style={{padding:"20px"}}>
               <Typography style={{color:"#888",fontSize:"20px", marginBottom:"20px"}}>
-               Question #{counter} : {quizList[counter].question}
+               Question #{counter} :  <span dangerouslySetInnerHTML
+                               ={{__html:convertToHtml(quizList[counter].question)}}/>
               </Typography>
               <Box style={{marginBottom:"20px"}}>
                 <input name="quiz" 
@@ -270,7 +279,9 @@ function UserQuiz(){
                           reportList.map((report)=>( 
                             <TableRow key={report.id}>
                               <TableCell>{report.id}</TableCell>
-                              <TableCell>{report.question}</TableCell>
+                              <TableCell><span dangerouslySetInnerHTML
+                               ={{__html:convertToHtml(report.question).substring(0,20)}}/>...
+                               </TableCell>
                               <TableCell>{report.correctAnswer}</TableCell>
                               <TableCell>{report.selectedOption}</TableCell>
                               <TableCell>{report.status}</TableCell>

@@ -12,6 +12,8 @@ import Grid from "@mui/material/Grid";
 import IconButton from '@mui/material/IconButton';
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import DOMPurify from 'dompurify';
+import draftToHtml from 'draftjs-to-html';
 import { useEffect, useState } from "react";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
@@ -28,6 +30,10 @@ function ClassComplaintList(){
   const [nextPage,setNextPage] = useState(null);
   const [prevPage,setPrevPage] = useState(null);
   
+ const convertToHtml = (content)=>{
+      const unsafeHtml = draftToHtml(JSON.parse(content));
+      return DOMPurify.sanitize(unsafeHtml);
+  }
 
   useEffect(()=>{
       const complaint = async(endpoint, queries)=>{
@@ -121,13 +127,16 @@ function ClassComplaintList(){
                           id="panel1-header"
                           >
                             <Typography component="span">
-                              {complaint.complaint.substring(0, 20)}...
+                             <div dangerouslySetInnerHTML
+                               ={{__html:convertToHtml(complaint.complaint).substring(0,20)
+                               }}/> ...
                               </Typography>
                           </AccordionSummary>
                           <AccordionDetails>
-                              {complaint.complaint}
+                              <div dangerouslySetInnerHTML
+                               ={{__html:convertToHtml(complaint.complaint)
+                               }}/>
                           </AccordionDetails>
-                          
                         </Accordion>
                     </Box>
                   </Box>

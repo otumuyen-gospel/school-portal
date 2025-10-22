@@ -15,12 +15,15 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import DOMPurify from 'dompurify';
+import draftToHtml from 'draftjs-to-html';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import ConfirmDialogForm from "../Util/ConfirmDialogForm";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
+
 function UserComplaintList(){
   const [authUser] = useState(JSON.parse(localStorage.getItem('auth')));
   const [isLoading, setIsLoading] = useState(false);
@@ -45,6 +48,11 @@ function UserComplaintList(){
   const handleOpenDeleteDialog = ()=>{
     setOpenDeleteDialog(true);
   }
+  
+  const convertToHtml = (content)=>{
+        const unsafeHtml = draftToHtml(JSON.parse(content));
+        return DOMPurify.sanitize(unsafeHtml);
+    }
 
   const removeComplaintFromList = (theComplaint, data)=>{
    const remainingComplaint = data.filter(complaint => complaint.id !== theComplaint.id);
@@ -161,7 +169,9 @@ function UserComplaintList(){
                              { complaint.replyStatus ? 
                                   <IconButton title="open message"
                                   onClick={()=>{
-                                   setDialogMsg(complaint.replyMessage);
+                                   setDialogMsg(<span dangerouslySetInnerHTML
+                               ={{__html:convertToHtml(complaint.replyMessage)
+                               }}/>);
                                    handleOpenMsgBox();
                            
                                    }}>
@@ -182,11 +192,15 @@ function UserComplaintList(){
                           id="panel1-header"
                           >
                             <Typography component="span">
-                              {complaint.complaint.substring(0, 20)}...
+                             <div dangerouslySetInnerHTML
+                               ={{__html:convertToHtml(complaint.complaint).substring(0,20)
+                               }}/> ...
                               </Typography>
                           </AccordionSummary>
                           <AccordionDetails>
-                              {complaint.complaint}
+                               <div dangerouslySetInnerHTML
+                               ={{__html:convertToHtml(complaint.complaint)
+                               }}/>
                           </AccordionDetails>
                           <AccordionActions>
                             <IconButton title="update"
