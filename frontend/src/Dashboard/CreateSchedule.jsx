@@ -9,7 +9,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
+import { EditorState, convertToRaw } from 'draft-js';
 import { useState } from "react";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
@@ -21,13 +24,21 @@ function CreateSchedule(){
   const [isDisabled, setIsDisabled] = useState(false);
   const [openMsgBox, setOpenMsgBox] = useState(false);
   const [msg, setMsg] = useState("");
+  const [detailsMsg, setDetailsMsg] = useState("");
   const [form, setForm] = useState({
-    detail:"",
     title:"",
     startDateTime:dayjs(),
     endDateTime:dayjs(),
 
   });
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const onEditorStateChange = (newEditorState) => {
+      setEditorState(newEditorState);
+  };
+  const convertForDatabase = ()=>{
+    return JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+  }
+  
   const handleOpenMsgBox = ()=>{
     setOpenMsgBox(true);
   }
@@ -42,9 +53,16 @@ function CreateSchedule(){
         handleOpenMsgBox();
         return;
     }
-    
+    const dbData  = convertForDatabase();
+    if(!dbData){
+      setDetailsMsg("please kindly enter the details");
+      return;
+    }else{
+      setDetailsMsg("");
+    }
+
     const data = {
-       detail:form.detail,
+       detail:dbData,
        title:form.title,
        userId:authUser['user'].pk,
        classId:authUser['user'].classId,
@@ -183,33 +201,12 @@ function CreateSchedule(){
              <Box marginBottom={5} marginTop={5}>
                 <Grid container>
                    <Grid item size={{xs:12, sm:12, md:12}}>
-                      <TextField
-                        boxShadow={1}
-                        sx={{
-                           '& .MuiInputBase-root':{
-                            borderBottomLeftRadius:"10px",
-                            borderBottomRightRadius:"10px",
-                            borderTop:"5px solid royalblue"
-                         },
-                         '& .MuiOutlinedInput-input':{
-                         paddingTop:0,
-                         paddingBottom:0,
-                         },
-                        }}
-                        fullWidth
-                        multiline
-                        rows={7}
-                        margin="normal"
-                        required
-                        id="detail"
-                        label="detail"
-                        type="detail"
-                        value={form.detail}
-                        onChange={(e) => setForm({ ...form,
-                           detail: e.target.value })}
-                        name="detail"
-                 
-                      />
+                    <span>{detailsMsg}</span>
+                    <Editor
+                     minHeight="150px"
+                     editorState={editorState}
+                     onEditorStateChange={onEditorStateChange}
+                    />
                    </Grid>
                 </Grid>
               </Box>

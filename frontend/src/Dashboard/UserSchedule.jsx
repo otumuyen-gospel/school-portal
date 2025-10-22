@@ -12,6 +12,8 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import DOMPurify from 'dompurify';
+import draftToHtml from 'draftjs-to-html';
 import { useEffect, useState } from "react";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
@@ -24,6 +26,11 @@ function UserSchedule(){
   const [params, setParams] = useState("");
   const [nextPage,setNextPage] = useState(null);
   const [prevPage,setPrevPage] = useState(null);
+
+  const convertToHtml = (content)=>{
+        const unsafeHtml = draftToHtml(JSON.parse(content));
+        return DOMPurify.sanitize(unsafeHtml);
+      }
 
   useEffect(()=>{
       const schedule = async(endpoint, queries)=>{
@@ -118,11 +125,14 @@ function UserSchedule(){
                           id="panel1-header"
                           >
                             <Typography component="span">
-                              {schedule.detail.substring(0, 20)}...
+                              <div dangerouslySetInnerHTML
+                               ={{__html:convertToHtml(schedule.detail).substring(0,20)
+                               }}/> ...
                               </Typography>
                           </AccordionSummary>
                           <AccordionDetails>
-                              {schedule.detail}
+                               <div dangerouslySetInnerHTML
+                               ={{__html:convertToHtml(schedule.detail)}}/>
                           </AccordionDetails>
                         </Accordion>
                     </Box>
