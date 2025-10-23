@@ -27,7 +27,6 @@ function Dashboard(){
    const [adminCount, setAdminCount] = useState("");
    const [msg, setMsg] = useState('');
    const [isLoading, setIsLoading] = useState(false);
-  //const [classList,setClassList] = useState([]);
   const [studentList, setStudentList] = useState([]);
   const [classStudentList, setClassStudentList] = useState([]);
   const [year] = useState(new Date().getFullYear());
@@ -167,22 +166,26 @@ function Dashboard(){
        setIsLoading(true);
       const users = async(endpoint)=>{
         try{
-           const response = await axiosInstance.get(endpoint)
-           const data = response.data;
-           if(data){
-            setStudentList(data);  
-           }
-           setIsLoading(false)
+           const response = await axiosInstance.get(endpoint);
+           return response.data;
           }catch(error){
-            setIsLoading(false);
-            setMsg("an error has occured");
-
+             throw error; //rethrow consequent error
           }
       }
       const url = "accounts/user-analytics/";
-      users(url);
+      users(url).then(data=>{
+           setIsLoading(false)
+           //remove duplication in the data array
+           const uniqueArray = data.filter((obj, index, self) =>
+               index === self.findIndex((o) => o.label === obj.label)
+           );
+           setStudentList(uniqueArray); 
+        }).catch((error)=>{
+            setIsLoading(false);
+            setMsg("an error has occured");
+        })
+      
   },[])
-
 
   return (
     <div style={{backgroundColor:"#FFF"}}>
@@ -287,7 +290,7 @@ function Dashboard(){
                 <BarChart 
                  series={studentList}
                  xAxis={[
-                  {data:[(year), (year - 1), (year - 2), (year - 3)]}
+                  {data:[(year), (year - 1), (year - 2), (year - 3)],scaleType: 'band'}
                  ]}
                  yAxis={[{width:50}]}
                 />

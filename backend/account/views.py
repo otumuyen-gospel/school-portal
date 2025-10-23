@@ -217,13 +217,12 @@ class UserAnalytics(APIView):
                 'id':str(uuid.uuid4()),
             }
             self.data.append(classData)
-        if(len(self.data) > 0):
+        try:
              serializer = UserAnalytics(data=self.data, many=True)
              return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-             return Response(status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
        
-
 
 # API for issuing command prompt to the server or os
 class BackupDatabaseAPIView(APIView):
