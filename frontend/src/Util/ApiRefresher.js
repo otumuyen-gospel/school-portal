@@ -22,17 +22,21 @@ axiosInstance.interceptors.request.use(request => {
 });
 
 //refresh user token that has expired
+const axiosRefreshInstance = axios.create();
 const refreshAuthLogic = async (failedRequest) => {
     const { refresh } = JSON.parse(localStorage.getItem("auth"));
-    return axios.post("/auth/refresh/", {refresh:{refresh}}, {
+    return axiosRefreshInstance.post("/auth/refresh/", {refresh:refresh}, {
         baseURL: "http://192.168.1.9:8000",
         headers: {
-            Authorization: `Bearer ${refresh}`,
+             Authorization: `Bearer ${refresh}`,
+            'Content-Type': 'application/json',
         },
     }).then((resp) => {
-        const { access, refresh } = resp.data;
+        const {access} = resp.data;
+        const auth =  JSON.parse(localStorage.getItem("auth"));
+        auth['access'] = access;
+        localStorage.setItem("auth", JSON.stringify(auth));
         failedRequest.response.config.headers["Authorization"] = "Bearer " + access;
-        localStorage.setItem("auth", JSON.stringify({access, refresh }));
     }).catch(() => {
         localStorage.removeItem("auth");
         // if unable to refresh redirect user to login
