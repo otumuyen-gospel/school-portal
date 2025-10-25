@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import bg from "../bg.jpg";
 
 function Request(){
   const navigate = useNavigate();
@@ -50,36 +51,42 @@ function Request(){
   }
  
   return(
-    <Box style={{backgroundColor:"#FFF"}}>
+    <Box style={{
+                backgroundImage: `url(${bg})`, //image
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover', // Adjust as needed: 'contain', 'auto'
+                backgroundPosition: 'center', // Adjust as needed: 'top', 'bottom', 'left', 'right', 'percentage'
+                width: '100%', // Set a width for the banner
+                display: 'flex', // For content alignment within the banner
+                alignItems: 'center', // For vertical alignment of content
+                justifyContent: 'center',
+        }}>
+        <Box sx={{
+                  backgroundColor:"rgba(0,0,200,0.7)",
+                  width:"100%",
+                  minHeight:"100vh",
+                 }}>
     <Grid container spacing={1}>
       <Grid item size={{xs:12, sm:6}}>
-        <Box sx={{
-            backgroundColor: {xs:"darkblue", sm:"#FCFCFF", md:"#FCFCFF"},
-            minHeight:{xs:"auto", sm:"auto", md:"50vh"},
-            paddingTop:{xs:"15px", sm:"15px", md:"25vh"},
-            paddingBottom:{xs:"15px", sm:"15px", md:"25vh"},
-            textAlign: "center",
-          }}>
+        <Box
+             sx={{
+              textAlign:"center",
+             }}
+             >
             <Typography
-            sx={{ color: {xs:"#CCC", sm:"darkblue", md:"darkblue"},
+            sx={{ color: "#FFF",
               fontWeight:"bolder", 
               fontSize:{xs:"20px", sm:"20px", md:"40px"}
             }}>
               De Modern Pace
             </Typography>
             <Typography
-            style={{color:"royalblue", fontWeight:"bolder",
+            style={{color:"#FFF", fontWeight:"bolder",
               fontSize:{xs:"15px", sm:"15px", md:"30px"},
-            }}>
-              Welcome To De Modern Pace 
-            </Typography>
-            <Typography 
-            style={{color:"#999", fontWeight:"bolder",
-              fontSize:{xs:"13px", sm:"13px", md:"20px"},
             }}>
               School Portal
             </Typography>
-        </Box>
+            </Box>
       </Grid>
       <Grid item size={{xs:12, sm:6}}>
         <Box style={{textAlign:"center", marginTop:"50px", marginBottom:"50px"}}>
@@ -87,18 +94,18 @@ function Request(){
           sx={{
             marginBottom: '4px', // Add some padding around the icon
             textAlign:"center",
-            color: 'royalblue', // Set icon color
+            color: '#FFF', // Set icon color
           }}
           >
           <LogoIcon style={{height:"40px", width:"40%"}}></LogoIcon>  
         </Box>
-         <Typography component="h1" variant="h5">
+         <Typography component="h1" variant="h5" color="#FFF">
             Email Verification
           </Typography>
          <Typography component="p" sx={{
           textAlign:"center",
           marginTop:1,
-          color:error ? "red" : "primary",
+          color:error ? "red" : "#FFF",
           }}>
           {error ? error :"Enter your email address "}
         </Typography>
@@ -109,6 +116,7 @@ function Request(){
               '& .MuiInputBase-root':{
                   height:"50px",
                   borderRadius:"10px",
+                  backgroundColor:"#FFF",
               },
               '& .MuiOutlinedInput-input':{
                   height:"50px",
@@ -123,6 +131,14 @@ function Request(){
             label="email"
             type="email"
             helperText={emailError}
+            slotProps={{
+              formHelperText:{
+                sx: {
+                 color: '#CCC', // Change to your desired color
+                },
+              },
+              
+           }}
             value={email}
             onChange={(e) => setEmail(e.target.value )}
             name="email"
@@ -136,16 +152,26 @@ function Request(){
             sx={{ mt: 3, mb: 2, width:"60%", height:"50px",
              borderRadius:"10px",}}>Submit</Button>
           <div className="linkContainer">
-            <Link to="/">Login instead?</Link>
+            <Link to="/" style={{color:"#CCC", '&:hover': {
+          color: 'lightblue', // Color on hover
+        },}}>Login instead?</Link>
           </div>
          <div className="loaderContainer">
-           {isLoading && <CircularProgress />}
+           {isLoading && <CircularProgress sx={{
+              '& .MuiCircularProgress-circle': {
+              stroke: '#FFF', 
+             },
+             '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+              stroke: '#FFF', 
+             },
+           }}/>}
          </div>
         
         </Box>
       </Box>
     </Grid>
     </Grid>
+    </Box>
     </Box>
   );
 
