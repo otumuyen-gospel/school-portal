@@ -197,9 +197,11 @@ function Dashboard(){
           paddingBottom:"3vh",
         }}
         >
-        <Typography component="h1" variant="h6" style={{marginBottom:"10px"}}>Dashboard</Typography>
-        <Grid container spacing={4}>
-          <Grid item size={{xs:6, sm:3}}>
+        <Typography component="h1" variant="h6" 
+        style={{marginBottom:"10px", fontWeight:"normal",color:"#999"}}>
+          Dashboard</Typography>
+        <Grid container spacing={2}>
+          <Grid item size={{xs:12,sm:6, md:3}}>
             <Box style={{backgroundColor:"#FFF", borderRadius:"10px", height:"80px"}} 
             boxShadow={1}>
                 <ListItem>
@@ -214,13 +216,13 @@ function Dashboard(){
                     </Typography>
                   </ListItemText>
                   <ListItemIcon>
-                    <StudentIcon  style={{color:"#999", fontSize:"45px"}}/>
+                    <StudentIcon  style={{color:"royalblue", fontSize:"45px"}}/>
                   </ListItemIcon>
                 </ListItem>
             </Box>
           </Grid>
 
-          <Grid item size={{xs:6, sm:3}}>
+          <Grid item size={{xs:12,sm:6, md:3}}>
             <Box style={{backgroundColor:"#FFF", borderRadius:"10px",height:"80px"}} 
             boxShadow={1}>
                 <ListItem>
@@ -235,13 +237,13 @@ function Dashboard(){
                     </Typography>
                   </ListItemText>
                   <ListItemIcon>
-                    <ParentIcon  style={{color:"purple", fontSize:"45px"}}/>
+                    <ParentIcon  style={{color:"royalblue", fontSize:"45px"}}/>
                   </ListItemIcon>
                 </ListItem>
             </Box>
           </Grid>
 
-          <Grid item size={{xs:6, sm:3}}>
+          <Grid item size={{xs:12,sm:6, md:3}}>
             <Box style={{backgroundColor:"#FFF", borderRadius:"10px",height:"80px"}} 
             boxShadow={1}>
                 <ListItem>
@@ -256,13 +258,13 @@ function Dashboard(){
                     </Typography>
                   </ListItemText>
                   <ListItemIcon>
-                    <TeacherIcon  style={{color:"orange", fontSize:"45px"}}/>
+                    <TeacherIcon  style={{color:"royalblue", fontSize:"45px"}}/>
                   </ListItemIcon>
                 </ListItem>
             </Box>
           </Grid>
 
-          <Grid item size={{xs:6, sm:3}}>
+          <Grid item size={{xs:12,sm:6, md:3}}>
             <Box style={{backgroundColor:"#FFF", borderRadius:"10px",height:"80px"}} 
             boxShadow={1}>
                 <ListItem>
@@ -285,8 +287,10 @@ function Dashboard(){
 
           <Grid item size={{xs:12, sm:9}}>
              <Box style={{backgroundColor:"#FFF", 
-             borderRadius:"10px", padding:"20px"}} 
+             borderRadius:"10px", padding:"20px",}} 
             boxShadow={1}>
+              <Scrollbars autoHide autoHideTimeout={1000}
+                  style={{width:"100%", height:"250px"}}>
                 <BarChart 
                  series={studentList}
                  xAxis={[
@@ -297,6 +301,7 @@ function Dashboard(){
                 <Typography style={{textAlign:"center", color:"#999"}}>
                   Distribution of students in various Classes
                   </Typography>
+                </Scrollbars>
                </Box>
           </Grid>
 
@@ -310,11 +315,11 @@ function Dashboard(){
                     CLASS MATES
                   </Typography>
                   <Scrollbars autoHide autoHideTimeout={1000}
-                  style={{width:"100%", height:"200px"}}>
+                  style={{width:"100%", height:"220px"}}>
                   <List>
                     {
                     hasClassMate ? classStudentList.map(student=>(
-                        <Paper elevation={1} style={{marginBottom:"15px"}}>
+                        <Paper elevation={1} style={{marginBottom:"15px", width:"100%"}}>
                          <ListItem key={student.pk}>
                           <ListItemIcon>
                             <Avatar
@@ -333,12 +338,12 @@ function Dashboard(){
                           </ListItemIcon>
                           <ListItemText>
                             <Typography style={{fontWeight:"bold",
-                              fontSize:"12px", color:"darkblue"
+                              fontSize:"13px", color:"royalblue", wordWrap:"break-word",
                             }}>
                               {student.lastName}
                               </Typography>
-                              <Typography style={{fontWeight:"bold",
-                                fontSize:"10px", color:"#999"
+                              <Typography style={{fontSize:"11px", color:"#999",
+                              wordWrap:"break-word",
                               }}>
                                 {student.firstName}
                               </Typography>

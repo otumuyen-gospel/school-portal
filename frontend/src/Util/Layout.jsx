@@ -101,15 +101,16 @@ function Layout(props){
                     <Toolbar>
                         <IconButton onClick={()=> openDrawer()}
                            sx={{color:"royalblue",  
-                            marginLeft: {sm:open ? "19.7%" : "auto",
-                                xs:"-3%",
+                            marginLeft: {sm:open ? "19.7%" : "-1%",
+                                md:open ? "19.7%" : "auto",
+                                xs:"-4.5%",
                             } }}
                            aria-label="Menu">
                             <MenuIcon />
                         </IconButton>
                         <Typography
                             variant="h6"
-                            color="royalblue"
+                            color="#999"
                             sx={{flex:1, marginLeft:"20px", fontSize:"15px"}}>
                             {props.title}
                         </Typography>
@@ -126,7 +127,7 @@ function Layout(props){
                         </IconButton>
                         <Box sx={{marginTop:"3px"}}>
                             <Box sx={{
-                                color:"#333",
+                                color:"royalblue",
                                 flex:1, 
                                 marginRight:"5px", 
                                 fontSize:"14px",
@@ -148,7 +149,7 @@ function Layout(props){
                         </Box>
                         <IconButton component={Link} 
                         to="/profile/"
-                        sx={{backgroundColor:"#EEF",
+                        sx={{
                             color:"royalblue",
                             marginRight: {sm:'auto',xs:"-3%"}
                             }}>
