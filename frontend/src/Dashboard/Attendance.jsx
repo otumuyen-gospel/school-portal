@@ -220,37 +220,29 @@ function Attendance(){
           marginTop:"10px",
         }}
         >
-        <Typography component="h1" variant="h6">Attendance</Typography>
-        <Container sx={{textAlign:"right", marginRight:"-25px"}} >
-          <TextField
-               minWidth="200px"
-               margin="normal"
-               required
-               id="params"
-               label="params"
-               type="text"
-               value={params}
+        <Typography component="h1" variant="h6" 
+         style={{marginBottom:"10px", fontWeight:"normal",color:"#999",
+         }}>
+          Attendance</Typography>
+        <Container style={{textAlign:"center", float:"right", marginBottom:"20px",
+          width:{sm:"100%", md:"250px"}
+        }}>
+          <input type="text" required placeholder="Search" 
+          style={{padding:"10px", width:"70%",border:"none",
+            outline:"none", color:"#999", backgroundColor:"#EFF"
+          }} value={params}
                onChange={(e) =>setParams(e.target.value)}
-               name="params"/>
-               <Button 
-               sx={{backgroundColor:"royalblue",
-                color:"#FFFFFF",
-                border:"1px",
-                borderRadius:"0px",
-                marginTop:"16px",
-                '& .hover':{backgroundColor:"dodgerblue"},
-                minHeight:"56px"}}
-                onClick={()=>{
+               name="params" id="params"/>
+          <IconButton onClick={()=>{
                    setQuery({...query,search:params});
-                }}
-               >
-                <SearchIcon></SearchIcon>
-               </Button>
+                }}>
+              <SearchIcon style={{color:"royalblue"}}></SearchIcon>
+          </IconButton>
         </Container>
-        <Paper>
+        <Paper elevation={0}>
           <Scrollbars autoHide autoHideTimeout={1000}
-          style={{width:"100%", height:"200px"}}>
-          <Table>
+          style={{width:"100%", height:"370px"}}>
+          <Table style={{borderCollapse:"collapse"}} height="370px">
             <TableHead>
               <TableRow>
                  <TableCell>Id</TableCell>
@@ -271,7 +263,8 @@ function Attendance(){
                       <TableCell>{attendance.id}</TableCell>
                       <TableCell>
                         <span style={{ display: 'inline-block', 
-                          whiteSpace:"normal", wordBreak:"break-word" }}>
+                          whiteSpace:"normal", wordBreak:"break-word",
+                          }}>
                           {attendance.remark}
                         </span>
                       </TableCell>
@@ -295,7 +288,7 @@ function Attendance(){
                              setCurrAttendance(attendance);
                              handleOpenUpdateDialog();
                           }}>
-                        <PromoteIcon></PromoteIcon>
+                        <PromoteIcon style={{color:"royalblue"}}></PromoteIcon>
                         </IconButton>
                       </TableCell>
                       <TableCell>
@@ -304,7 +297,7 @@ function Attendance(){
                              setCurrAttendance(attendance);
                              handleOpenDeleteDialog();
                           }}>
-                        <TrashIcon></TrashIcon>
+                        <TrashIcon style={{color:"royalblue"}}></TrashIcon>
                         </IconButton>
                       </TableCell>
                       
@@ -326,7 +319,8 @@ function Attendance(){
         <Container sx={{textAlign:"right", marginTop:"40px",
           marginBottom:"40px", marginRight:"-21px"}}>
           <Button
-          sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}
+          sx={{backgroundColor:"#FFF", color:"royalblue",
+            border:"1px solid royalblue", marginRight:"8px"}}
            onClick={()=>{
              if(prevPage){
                setUrl(prevPage);
