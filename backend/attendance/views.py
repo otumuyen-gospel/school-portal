@@ -80,7 +80,7 @@ class AttendanceList(generics.ListAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializers
     permission_classes = [IsAuthenticated, IsInGroup,]
-    required_groups = ['admin',]
+    required_groups = ['admin','teacher','student','parent']
     name = 'attendance-list'
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]

@@ -10,7 +10,7 @@ function MessageDialogForm({open, onClose, formContent, title}){
         <DialogContent>{formContent}</DialogContent>
         <DialogActions>
             <center>
-            <Button sx={{backgroundColor:"royalblue",borderRadius:50,
+            <Button sx={{backgroundColor:"darkblue",borderRadius:50,
              color:"#FFF",}}
              onClick={onClose}>OK</Button>
              </center>

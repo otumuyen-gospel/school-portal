@@ -15,9 +15,9 @@ function ConfirmDialogForm({open, onClose, onSubmit, formContent, title}){
         <DialogContent>{formContent}</DialogContent>
         <DialogActions>
             <Button sx={{backgroundColor:"#EEE",borderRadius:50, 
-            color:"royalblue",}} 
+            color:"darkblue",}} 
             onClick={onClose}>Cancel</Button>
-            <Button sx={{backgroundColor:"royalblue",borderRadius:50,
+            <Button sx={{backgroundColor:"darkblue",borderRadius:50,
              color:"#FFF",}}
              onClick={handleSubmit}>Go</Button>
         </DialogActions>

@@ -1,14 +1,20 @@
+import CloseOutlined from "@mui/icons-material/CloseRounded";
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonOutline from "@mui/icons-material/PersonOutline";
+import StudentIcon from "@mui/icons-material/SchoolOutlined";
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
-import Fade from '@mui/material/Fade';
+import Divider from "@mui/material/Divider";
 import IconButton from '@mui/material/IconButton';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axiosInstance from './ApiRefresher';
@@ -18,14 +24,13 @@ import SideBar3 from './Sidebar3';
 import SideBar4 from './Sidebar4';
 
 function Layout(props){
-   const [scrolling, setScrolling] = useState(false);
-   const [scrollTop, setScrollTop] = useState(0);
    const [username,setUsername] = useState("username");
    const [role, setRole] = useState("role");
    const [pics, setPics] = useState("");
    const [badge, setBadge] = useState(0);
    const [open, setOpen] = useState(true);
    const navigate = useNavigate();
+   const isMobile = useMediaQuery('(max-width:700px)');
 
    const openDrawer = ()=>{
     setOpen(open ? false : true);
@@ -61,29 +66,18 @@ function Layout(props){
     const intervalId = setInterval(fetchNotification, '3600000');
 
     return ()=> clearInterval(intervalId); //clear interval when component unmount
-   },[]);
-   
-   useEffect(()=>{
-    const onScroll = (e) => {
-        setScrollTop(e.target.documentElement.scrollTop);
-        setScrolling(e.target.documentElement.scrollTop > scrollTop);
-    };
-    window.addEventListener("scroll", onScroll); //component did mount
-    return ()=>{
-        window.removeEventListener("scroll", onScroll); // component did unmount
-    }
-   },[scrollTop]); 
+   },[]); 
 
    const userSideBar = ()=>{
     const auth = JSON.parse(localStorage.getItem("auth"));
     if(auth['user'].role === 'admin'){
-       return  <SideBar open={open} onOpenDrawer={openDrawer}/> ;
+       return  <SideBar/>;
     }else if(auth['user'].role === 'teacher'){
-        return  <SideBar2 open={open} onOpenDrawer={openDrawer}/> ;
+        return  <SideBar2/> ;
     }else if(auth['user'].role === 'student'){
-        return <SideBar3 open={open} onOpenDrawer={openDrawer}/> ;
+        return <SideBar3/> ;
     }else if(auth['user'].role === 'parent'){
-        return  <SideBar4 open={open} onOpenDrawer={openDrawer}/> ;
+        return  <SideBar4/>;
     }else{
         navigate("/");
     }
@@ -92,30 +86,31 @@ function Layout(props){
 
     return(
     <div sx={{flexGrow: 1}}>
-        {/* navigation sidebar */}
-        {userSideBar()}
 
-        {/* Header or app bar*/}
-        <Fade in={!scrolling}>
-                <AppBar sx={{backgroundColor:"#FFF"}} elevation={0}>
+           {/* Header or app bar*/}
+           <AppBar sx={{backgroundColor:"#FFF",borderBottom:"1.5px solid #CCC"}} 
+           elevation={0}>
                     <Toolbar>
                         <IconButton onClick={()=> openDrawer()}
-                           sx={{color:"royalblue",  
-                            marginLeft: {sm:open ? "19.7%" : "-1%",
-                                md:open ? "19.7%" : "auto",
-                                xs:"-4.5%",
-                            } }}
+                           sx={{color:"darkblue", marginLeft:"-22px"}}
                            aria-label="Menu">
                             <MenuIcon />
                         </IconButton>
+                        <IconButton  sx={{
+                            color:"darkblue", 
+                            marginRight:"10px"
+                            }}>
+                            <StudentIcon/>
+                        </IconButton>
+                        
                         <Typography
                             variant="h6"
-                            color="#999"
-                            sx={{flex:1, marginLeft:"20px", fontSize:"15px"}}>
+                            color="darkblue"
+                            sx={{flex:1, fontSize:"15px"}}>
                             {props.title}
                         </Typography>
                         <IconButton sx={{
-                            color:"royalblue", 
+                            color:"darkblue", 
                             marginRight:"30px"
                             }}
                             component={Link} 
@@ -127,7 +122,7 @@ function Layout(props){
                         </IconButton>
                         <Box sx={{marginTop:"3px"}}>
                             <Box sx={{
-                                color:"royalblue",
+                                color:"darkblue",
                                 flex:1, 
                                 marginRight:"5px", 
                                 fontSize:"14px",
@@ -135,7 +130,7 @@ function Layout(props){
                                 }}>
                                 {username}
                                 <Typography sx={{
-                                color:"#999",
+                                color:"#666",
                                 flex:1, 
                                 marginRight:"5px", 
                                 fontSize:"10px",
@@ -150,14 +145,14 @@ function Layout(props){
                         <IconButton component={Link} 
                         to="/profile/"
                         sx={{
-                            color:"royalblue",
-                            marginRight: {sm:'auto',xs:"-3%"}
+                            color:"darkblue",
                             }}>
                            <Avatar
                             src={pics}
                             sx={{
                                 width:30,
                                 height:30,
+                                marginRight:"-22px"
                             }}
                            >
                             {!pics && <PersonOutline/>}
@@ -165,19 +160,65 @@ function Layout(props){
 
                         </IconButton>
                     </Toolbar>
-                </AppBar>
-            </Fade>
-            <Toolbar /> {/*make space between appbar and page contents */}
+            </AppBar>
+            <Toolbar/> {/*make space between appbar and page contents */}
+            <div>
+                <div  style={{
+                    display: (isMobile && open) ? "block" : "none",
+                    position:"fixed",
+                    width:"100%",
+                    height:"100vh",
+                    backgroundColor:"rgba(0,0,0,0.5)",
+                    top:0,
+                    right:0,
+                    zIndex:1200,
+                }}>
+                    <IconButton onClick={()=>setOpen(false)} 
+                    style={{position:"fixed", bottom:0, right:0, marginBottom:"10px",
+                         backgroundColor:"#FFF",marginRight:"10px"}}>
+                        <CloseOutlined style={{color:"darkblue", height:"30px", 
+                        width:"30px"}} 
+                        /></IconButton>
 
-            {/* render page contents here at the bottom and pass new props to them */}
-            {React.Children.map(props.children, child=>{
-            return React.cloneElement(child,{
-                marginLeft: open ? "21.7%" : "3%",
-                width:open ? "75.3%" : "94.0%",
-                marginRight: open ? "3%" : "3%",
-            });
+                    <div style={{width:"250px", backgroundColor:"darkblue"}}>
+                     {/* navigation sidebar */}
+                     <ListItem style={{backgroundColor:"rgb(0,0,150)",}}>
+                        <ListItemIcon>
+                            <StudentIcon style={{color:'#FFF'}}/>
+                        </ListItemIcon>
+                        <ListItemText style={{color:'#FFF', fontWeight:"bolder",
+                             fontSize:"15px", padding:"10px auto"}}>
+                            De Modern Pace
+                        </ListItemText>
+                     </ListItem>
+                     <Divider color="#555"/>
+                     {userSideBar()}
+                     </div>
+                </div>
+                <div  style={{
+                    display: (!isMobile && open) ? "block" : "none",
+                    position:"fixed",
+                    width:"23%",
+                    padding:"auto 1%",
+                    
+                }}>
+                     {/* navigation sidebar */}
+                     {userSideBar()}
+                </div>
+                <div style={{
+                    marginLeft:open ? "25%"  : "1%",
+                    width:open ? "73%" : "98%",
+                    marginRight:"1%",
+                }}>
+                     {/* render page contents here at the bottom and pass new props to them */}
+                   {React.Children.map(props.children, child=>{
+                       return React.cloneElement(child,{
+                          width:"100%",
+                        });
 
-            })}
+                    })}
+                </div>
+         </div>
             
     </div>
     );
