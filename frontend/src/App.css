@@ -2,15 +2,29 @@
   text-align: center;
   background-color: #FFF;
 }
+.form-fields{
+  height:40px;
+  width:100%;
+  border:2px solid #CCC;
+  outline:none;
+  background-color: #FFF;
+}
+.form-fields:hover{
+  box-shadow: 1px 1px 1px #CCC;
+}
+.form-fields:active{
+ box-shadow: 2px 2px 2px #CCC;
+}
+.form-fields:focus{
+ box-shadow: 1px 1px 1px #CCC;
+}
 
 .holder{
   min-height: 100vh;
   width: 100%;
   padding: 0;
   margin: 0;
-  background-image: url("bg.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
+  
 }
 .overlay{
   background-color: rgba(0,0,200,0.5);

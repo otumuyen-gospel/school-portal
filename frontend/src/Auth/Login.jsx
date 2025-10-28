@@ -1,14 +1,13 @@
-import LogoIcon from "@mui/icons-material/SchoolOutlined";
-import Box from "@mui/material/Box";
+
+import StudentIcon from "@mui/icons-material/SchoolOutlined";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import bg from "../bg.jpg";
 
 
 function Login(){
@@ -17,6 +16,7 @@ function Login(){
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
+   const isMobile = useMediaQuery('(max-width:700px)');
 
   const handleSubmit=(event)=>{
     setIsDisabled(true)  //disable button
@@ -51,6 +51,82 @@ function Login(){
   }
 
   return(
+    <div style={{backgroundColor:"#F9F9F5", minHeight:"100vh", overflow:"hidden"}}>
+      <Typography style={{color:"darkblue", textAlign:"center",fontWeight:"bolder",
+        marginTop:isMobile ? "40px" : "auto",
+      }}>
+        De Modern Pace School</Typography>
+      <div style={{backgroundColor:"#FFF", margin:isMobile ? "25px 3%" : "18px 30%",
+       width:isMobile ? "90%" :"30%",padding: isMobile ? "20px 2%" : "15px 5%"
+      }}>
+      <Grid container spacing={2}>
+         <Grid item size={{xs:12,}} textAlign="center">
+          <StudentIcon style={{color:"darkblue",
+            width:"40px", height:"40px"}}/>
+          <Typography color="darkblue">Login</Typography>
+          <Typography component="p" sx={{
+                  textAlign:"center",
+                  marginTop:1,
+                  color:error ? "red" : "#AAA",
+             }}>
+              {error ? error :"Login here"}
+            </Typography>
+         </Grid>
+          <Grid item size={{xs:12,}}>
+            <span>Username</span>
+            <input
+            required
+            id="username"
+            label="username"
+            className="form-fields"
+            type="text"
+            value={form.username}
+            onChange={(e) => setForm({ ...form,
+                username: e.target.value })}
+            name="username"
+            autoFocus/>
+          </Grid>
+          <Grid item size={{xs:12,}}>
+            <span>Password</span>
+            <input 
+            required
+            id="password"
+            className="form-fields"
+            label="password"
+            type="password"
+            value={form.password}
+            onChange={(e) => setForm({ ...form,
+                password: e.target.value })}
+            name="password"
+            />
+          </Grid>
+          <Grid item size={{xs:12,}}>
+            <Button onClick={handleSubmit}
+            type="submit"
+            variant="contained"
+            disabled={isDisabled}
+            sx={{ mt: 3, mb: 2, height:"40px",width:"100%",backgroundColor:"darkblue"}}>
+              Login</Button>
+          </Grid>
+          <Grid item size={{xs:12,}}>
+            <div className="linkContainer">
+               <Link to="/request">Forgot Password?</Link>
+            </div>
+            <div className="loaderContainer">
+              {isLoading && <CircularProgress sx={{
+                '& .MuiCircularProgress-circle': {
+                 stroke: 'darkblue', 
+                },
+               '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                stroke: 'darkblue', 
+               },
+            }}/>}
+         </div>
+          </Grid>
+      </Grid>
+      </div>
+    </div>
+    /*
     <Box style={{
             backgroundImage: `url(${bg})`, //image
             backgroundRepeat: 'no-repeat',
@@ -189,7 +265,7 @@ function Login(){
     </Grid>
     </Grid>
      </Box>
-    </Box>
+    </Box>*/
   );
 
 }
