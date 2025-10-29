@@ -1,16 +1,14 @@
-import LogoIcon from "@mui/icons-material/SchoolOutlined";
+import StudentIcon from "@mui/icons-material/SchoolOutlined";
 import MuiAlert from '@mui/material/Alert';
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from "@mui/material/Grid";
 import Snackbar from '@mui/material/Snackbar';
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useLocation, } from "react-router-dom";
-import bg from "../bg.jpg";
 
 function Password(){
   const location = useLocation()
@@ -23,6 +21,7 @@ function Password(){
   const [isDisabled, setIsDisabled] = useState(false)
   const [open, setOpen] = useState(false); // State to control Snackbar visibility
   const [popMsg, setPopMsg] = useState("")
+  const isMobile = useMediaQuery('(max-width:700px)');
 
    const handleClick = () => {
     setOpen(true); // Open the Snackbar
@@ -78,177 +77,98 @@ function Password(){
   }
 
   return(
-    <Box style={{
-                backgroundImage: `url(${bg})`, //image
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover', // Adjust as needed: 'contain', 'auto'
-                backgroundPosition: 'center', // Adjust as needed: 'top', 'bottom', 'left', 'right', 'percentage'
-                width: '100%', // Set a width for the banner
-                display: 'flex', // For content alignment within the banner
-                alignItems: 'center', // For vertical alignment of content
-                justifyContent: 'center',
-        }}>
-        <Box sx={{
-                  backgroundColor:"rgba(0,0,200,0.7)",
-                  width:"100%",
-                  minHeight:"100vh",
-                 }}>
-    <Grid container spacing={1}>
-      <Grid item size={{xs:12, sm:6}}>
-        <Box
-             sx={{
-              textAlign:"center",
-             }}
-             >
-            <Typography
-            sx={{ color: "#FFF",
-              fontWeight:"bolder", 
-              fontSize:{xs:"20px", sm:"20px", md:"40px"}
-            }}>
-              De Modern Pace
+     <div style={{backgroundColor:"#F9F9F5", minHeight:"100vh", overflow:"hidden"}}>
+      <Typography style={{color:"darkblue", textAlign:"center",fontWeight:"bolder",
+        marginTop:isMobile ? "40px" : "auto",
+      }}>
+        De Modern Pace School</Typography>
+      <form onSubmit={handleSubmit} style={{backgroundColor:"#FFF", margin:isMobile ? "25px 3%" : "18px 30%",
+       width:isMobile ? "90%" :"30%",padding: isMobile ? "20px 2%" : "15px 5%"
+      }}>
+      <Grid container spacing={2}>
+         <Grid item size={{xs:12,}} textAlign="center">
+          <StudentIcon style={{color:"darkblue",
+            width:"40px", height:"40px"}}/>
+          <Typography color="darkblue">Request New Password</Typography>
+          <Typography component="p" sx={{
+                  textAlign:"center",
+                  marginTop:1,
+                  color:error ? "red" : "#AAA",
+             }}>
+              {error ? error :"Change Password"}
             </Typography>
-            <Typography
-            style={{color:"#FFF", fontWeight:"bolder",
-              fontSize:{xs:"15px", sm:"15px", md:"30px"},
-            }}>
-              School Portal
-            </Typography>
-            </Box>
-      </Grid>
-      <Grid item size={{xs:12, sm:6}}>
-         <Box style={{textAlign:"center", marginTop:"50px", marginBottom:"50px"}}>
-         <Box
-          sx={{
-            marginBottom: '4px', // Add some padding around the icon
-            textAlign:"center",
-            color: '#FFF', // Set icon color
-          }}
-          >
-          <LogoIcon style={{height:"40px", width:"40%"}}></LogoIcon>  
-        </Box>
-         <Typography component="h1" variant="h5" color="#FFF">
-            Change Password
-          </Typography>
-         <Typography component="p" sx={{
-          textAlign:"center",
-          marginTop:1,
-          color:error ? "red" : "#FFF",
-          }}>
-          {error ? error :"Change Password "}
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit}>
-          <TextField
-            sx={{
-              width:"60%",
-              '& .MuiInputBase-root':{
-                  height:"50px",
-                  borderRadius:"10px",
-                  backgroundColor:"#FFF",
-              },
-              '& .MuiOutlinedInput-input':{
-                  height:"50px",
-                  paddingTop:0,
-                  paddingBottom:0,
-
-              },
-            }}
-            margin="normal"
+         </Grid>
+          <Grid item size={{xs:12,}}>
+            <span>New Password</span>
+            <input
             required
             id="password"
             label="password"
-            helperText={passwordError}
-            slotProps={{
-              formHelperText:{
-                sx: {
-                 color: '#CCC', // Change to your desired color
-                },
-              },
-              
-           }}
+            className="form-fields"
             type="password"
             value={form.password}
             onChange={(e) => setForm({ ...form,
                 password: e.target.value })}
             name="password"
-            autoFocus
-          /><br/>
-          <TextField
-             sx={{
-              width:"60%",
-              '& .MuiInputBase-root':{
-                  height:"50px",
-                  borderRadius:"10px",
-                  backgroundColor:"#FFF"
-              },
-              '& .MuiOutlinedInput-input':{
-                  height:"50px",
-                  paddingTop:0,
-                  paddingBottom:0,
-
-              },
-            }}
-            margin="normal"
+            autoFocus/>
+            <span style={{color:"red", fontSize:"10px"}}>{passwordError}</span>
+          </Grid>
+          <Grid item size={{xs:12,}}>
+            <span>Confirm Password</span>
+            <input 
             required
-            name="Confirm"
-            label="Confirm"
+            id="confirm"
+            className="form-fields"
+            label="confirm"
             type="password"
-            helperText={confirmError}
-            slotProps={{
-              formHelperText:{
-                sx: {
-                 color: '#CCC', // Change to your desired color
-                },
-              },
-              
-           }}
-            id="Confirm"
             value={form.confirm}
             onChange={(e) => setForm({ ...form,
                 confirm: e.target.value })}
-          /><br/>
-          <Button
+            name="confirm"
+            />
+            <span style={{color:"red", fontSize:"10px"}}>{confirmError}</span>
+          </Grid>
+          <Grid item size={{xs:12,}}>
+            <Button
             type="submit"
             variant="contained"
             disabled={isDisabled}
-            sx={{ mt: 3, mb: 2, width:"60%", height:"50px",
-             borderRadius:"10px",}}>Change</Button>
-          <div className="linkContainer" style={{color:"#CCC", '&:hover': {
-          color: 'lightblue', // Color on hover
-        },}}>
-            <Link to="/" style={{color:"#CCC", '&:hover': {
-          color: 'lightblue', // Color on hover
-        },}}>Login Here</Link>
-          </div>
-         <div className="loaderContainer">
-           {isLoading && <CircularProgress sx={{
-              '& .MuiCircularProgress-circle': {
-              stroke: '#FFF', 
-             },
-             '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
-              stroke: '#FFF', 
-             },
-           }} />}
+            sx={{ mt: 3, mb: 2, ml:0, height:"45px",width:"100%",
+            backgroundColor:"darkblue", border:"2px solid darkblue"}}>
+              Change</Button>
+          </Grid>
+          <Grid item size={{xs:12,}}>
+            <div className="linkContainer">
+               <Link to="/">Login Here</Link>
+            </div>
+            <div className="loaderContainer">
+              {isLoading && <CircularProgress sx={{
+                '& .MuiCircularProgress-circle': {
+                 stroke: 'darkblue', 
+                },
+               '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                stroke: 'darkblue', 
+               },
+            }}/>}
          </div>
-        
-        </Box>
-      </Box>
-      <Snackbar
-        open={open}
-        autoHideDuration={6000} // Automatically close after 6 seconds
-        onClose={handleClose}
-        message={popMsg}
-        // Optional: Customize position
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        >
-        {/* Optional: Use MuiAlert for styled alerts within the Snackbar */}
-        <MuiAlert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          {popMsg}
-        </MuiAlert>
-      </Snackbar>
-    </Grid>
-    </Grid>
-    </Box>
-    </Box>
+         <Snackbar
+            open={open}
+            autoHideDuration={6000} // Automatically close after 6 seconds
+            onClose={handleClose}
+            message={popMsg}
+            // Optional: Customize position
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+           >
+           {/* Optional: Use MuiAlert for styled alerts within the Snackbar */}
+           <MuiAlert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+             {popMsg}
+           </MuiAlert>
+           </Snackbar>
+          </Grid>
+      </Grid>
+      </form>
+    </div>
+
   );
 
 
