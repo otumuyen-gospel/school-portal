@@ -2,6 +2,7 @@ import StudentIcon from "@mui/icons-material/SchoolOutlined";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
@@ -60,7 +61,7 @@ function Verify(){
       <form onSubmit={handleSubmit} style={{backgroundColor:"#FFF", margin:isMobile ? "25px 3%" : "18px 30%",
        width:isMobile ? "90%" :"30%",padding: isMobile ? "20px 2%" : "15px 5%"
       }}>
-      <Grid container spacing={2}>
+      <Grid container spacing={1}>
          <Grid item size={{xs:12,}} textAlign="center">
           <StudentIcon style={{color:"darkblue",
             width:"40px", height:"40px"}}/>
@@ -74,26 +75,36 @@ function Verify(){
             </Typography>
          </Grid>
           <Grid item size={{xs:12,}}>
-            <span>OTP</span>
-            <input
+            <TextField
             required
+            fullWidth
+            sx={{
+              mt: 2, mb: 2,
+             '& .MuiInputBase-root':{
+              height:"50px",
+              },
+             '& .MuiOutlinedInput-input':{
+              height:"50px",
+              paddingTop:0,
+              paddingBottom:0,
+              },
+            }}
             id="otp"
             label="otp"
-            className="form-fields"
             type="otp"
+            helperText={otpsError}
             value={otps}
             onChange={(e) => setOtps(e.target.value)}
             name="otp"
             autoFocus/>
-            <span style={{color:"red", fontSize:"10px"}}>{otpsError}</span>
           </Grid>
           <Grid item size={{xs:12,}}>
             <Button
             type="submit"
+            fullWidth
             variant="contained"
             disabled={isDisabled}
-            sx={{ mt: 3, mb: 2, ml:0, height:"45px",width:"100%",
-            backgroundColor:"darkblue", border:"2px solid darkblue"}}>
+            sx={{mt: 2, mb: 2, height:"50px", backgroundColor:"darkblue"}}>
               Verify</Button>
           </Grid>
           <Grid item size={{xs:12,}}>
