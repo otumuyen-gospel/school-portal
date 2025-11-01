@@ -286,8 +286,10 @@ function Dashboard(){
           Dashboard</Typography>
         <Grid container spacing={3}>
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF", height:"80px"}} 
-            boxShadow={1}>
+            <Box style={{backgroundColor:"#FFF", height:"80px",
+               border:"0.5px solid #EEE",
+            }} 
+            boxShadow={0}>
                 <ListItem>
                   <ListItemText>
                     <Typography style={{color:"darkblue", fontWeight:"bolder",
@@ -307,8 +309,10 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF",height:"80px"}} 
-            boxShadow={1}>
+            <Box style={{backgroundColor:"#FFF",height:"80px",
+               border:"0.5px solid #EEE",
+            }} 
+            boxShadow={0}>
                 <ListItem>
                   <ListItemText>
                     <Typography style={{color:"darkblue", fontWeight:"bolder",
@@ -328,8 +332,10 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF",height:"80px"}} 
-            boxShadow={1}>
+            <Box style={{backgroundColor:"#FFF",height:"80px",
+               border:"0.5px solid #EEE",
+            }} 
+            boxShadow={0}>
                 <ListItem>
                   <ListItemText>
                     <Typography style={{color:"darkblue", fontWeight:"bolder",
@@ -349,8 +355,10 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF", height:"80px"}} 
-            boxShadow={1}>
+            <Box style={{backgroundColor:"#FFF", height:"80px",
+               border:"0.5px solid #EEE",
+            }} 
+            boxShadow={0}>
                 <ListItem>
                   <ListItemText>
                     <Typography style={{color:"darkblue", fontWeight:"bolder",
@@ -369,9 +377,11 @@ function Dashboard(){
             </Box>
           </Grid>
 
-          <Grid item size={{xs:12,sm:6, md:4}}>
-            <Box style={{backgroundColor:"#FFF",height:"80px"}} 
-            boxShadow={1}>
+          <Grid item size={{xs:12,sm:6, md:3}}>
+            <Box style={{backgroundColor:"#FFF",height:"80px",
+               border:"0.5px solid #EEE",
+            }} 
+            boxShadow={0}>
                 <ListItem>
                   <ListItemText>
                     <Typography style={{color:"darkblue", fontWeight:"bolder",
@@ -390,9 +400,11 @@ function Dashboard(){
             </Box>
           </Grid>
 
-          <Grid item size={{xs:12,sm:6, md:4}}>
-            <Box style={{backgroundColor:"#FFF",height:"80px"}} 
-            boxShadow={1}>
+          <Grid item size={{xs:12,sm:6, md:3}}>
+            <Box style={{backgroundColor:"#FFF",height:"80px",
+               border:"0.5px solid #EEE",
+            }} 
+            boxShadow={0}>
                 <ListItem>
                   <ListItemText>
                     <Typography style={{color:"darkblue", fontWeight:"bolder",
@@ -411,9 +423,9 @@ function Dashboard(){
             </Box>
           </Grid>
 
-          <Grid item size={{xs:12,sm:6, md:4}}>
-            <Box style={{backgroundColor:"#FFF",height:"80px"}} 
-            boxShadow={1}>
+          <Grid item size={{xs:12,sm:6, md:3}}>
+            <Box style={{backgroundColor:"#FFF",height:"80px", border:"0.5px solid #EEE",}} 
+            boxShadow={0}>
                 <ListItem>
                   <ListItemText>
                     <Typography style={{color:"darkblue", fontWeight:"bolder",
@@ -433,8 +445,10 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12, md:9}}>
-             <Box style={{backgroundColor:"#FFF", padding:"20px",}} 
-            boxShadow={1}>
+             <Box style={{backgroundColor:"#FFF", padding:"20px",
+               border:"0.5px solid #EEE",
+             }} 
+            boxShadow={0}>
               <Scrollbars autoHide autoHideTimeout={1000}
                   style={{width:"100%", height:"250px"}}>
                 <BarChart 
@@ -452,8 +466,8 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12, md:3}}>
-             <Box style={{backgroundColor:"#FFF", padding:"20px"}} 
-            boxShadow={1}>
+             <Box style={{backgroundColor:"#FFF", padding:"20px", border:"0.5px solid #EEE",}} 
+            boxShadow={0}>
                 <Typography style={{textAlign:"center",
                   fontWeight:"bold", fontSize:"14px", 
                   color:"darkblue", marginBottom:"10px"}}>
@@ -464,7 +478,9 @@ function Dashboard(){
                   <List>
                     {
                     hasClassMate ? classStudentList.map(student=>(
-                        <Paper elevation={1} style={{marginBottom:"15px", width:"100%"}}>
+                        <Paper elevation={0} style={{marginBottom:"15px", width:"100%",
+                           border:"0.5px solid #EEE",
+                        }}>
                          <ListItem key={student.pk}>
                           <ListItemIcon>
                             <Avatar

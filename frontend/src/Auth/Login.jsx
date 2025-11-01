@@ -58,7 +58,8 @@ function Login(){
       }}>
         De Modern Pace School</Typography>
       <form onSubmit={handleSubmit} style={{backgroundColor:"#FFF", margin:isMobile ? "25px 3%" : "18px 30%",
-       width:isMobile ? "90%" :"30%",padding: isMobile ? "20px 2%" : "15px 5%"
+       width:isMobile ? "90%" :"30%",padding: isMobile ? "20px 2%" : "15px 5%",
+        border:"0.5px solid #EEE",
       }}>
       <Grid container spacing={1}>
          <Grid item size={{xs:12,}} textAlign="center">

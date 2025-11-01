@@ -1,3 +1,4 @@
+import CloudUploadIcon from '@mui/icons-material/CloudUpload'; // Or any other suitable icon
 import PersonIcon from "@mui/icons-material/Person";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -8,6 +9,7 @@ import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import { styled } from '@mui/material/styles';
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -20,6 +22,17 @@ import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
 function Profile(){
+      const VisuallyHiddenInput = styled('input')({
+      clip: 'rect(0 0 0 0)',
+      clipPath: 'inset(50%)',
+      height: 1,
+      overflow: 'hidden',
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      whiteSpace: 'nowrap',
+      width: 1,
+    });
    const [auth] = useState(JSON.parse(localStorage.getItem('auth')));
    const userId = auth ? auth['user'].pk : "";
   const [isLoading, setIsLoading] = useState(false);
@@ -40,6 +53,7 @@ function Profile(){
     confirm:'',
   })
   const hasUpload = useRef("");
+  const [selectedFile, setSelectedFile] = useState("");
     const [form, setForm] = useState({
            pics:"",
            username:"",
@@ -332,8 +346,10 @@ function Profile(){
         <Box sx={{
               backgroundColor:"#FFF",
               padding:"10px",
-              boxShadow:1,
-              textAlign:"center"
+              boxShadow:0,
+              border:"0.5px solid #EEE",
+              textAlign:"center",
+              minHeight:"260px"
             }}>
               <center>
               <Avatar
@@ -358,12 +374,36 @@ function Profile(){
                 <Typography sx={{color:"darkblue",fontSize:"15px", textAlign:"center",}}>
                   {form.lastname}
                 </Typography>
+                <Box style={{textAlign:"center"}}>
+                <Button
+                   component="label" 
+                   role={undefined}
+                   variant="contained"
+                   tabIndex={-1}
+                   startIcon={<CloudUploadIcon />}
+                 >
+                  Select New Photo
+                 <VisuallyHiddenInput type="file" onChange={(e) =>{ 
+                    if(e.target.files.length){
+                         hasUpload.current = e.target.files[0];
+                         setSelectedFile(e.target.files[0].name);
+                    }else{
+                       hasUpload.current = "";
+                    }
+                          
+                  }} />
+                </Button>
+                <br/>
+                <Typography style={{color:"#666"}}>
+                  You have selected this File:{selectedFile}
+                </Typography>
+                </Box>
           </Box>
         </Grid>
 
         <Grid item size={{xs:12,sm:6}}>
             <Box component="form" onSubmit={handlePasswordSubmit} sx={{
-               backgroundColor:"#FFF", boxShadow:1, padding:"5px 10px"}}>
+               backgroundColor:"#FFF", boxShadow:0, border:"0.5px solid #EEE", padding:"5px 10px"}}>
             <Typography marginTop={1} style={{color:"darkblue", textAlign:"center"}}>
              Security Information</Typography>
             <Grid container spacing={1}>
@@ -463,9 +503,9 @@ function Profile(){
            </Box>
            </Grid>
         
-        <Grid item size={{xs:12,sm:6}} marginTop={{xs:"auto",sm:"-190px"}}>
+        <Grid item size={{xs:12,sm:6}} marginTop={{xs:"auto",sm:"-85px"}}>
         <Box component="form" onSubmit={handleSubmit} sx={{
-               backgroundColor:"#FFF", boxShadow:1, padding:"5px 10px"}}>
+               backgroundColor:"#FFF", boxShadow:0, border:"0.5px solid #EEE", padding:"5px 10px"}}>
         <Grid container spacing={1}>
           <Grid item size={{xs:12,}}>
           <Typography marginTop={1} style={{color:"darkblue", textAlign:"center"}}>
@@ -760,35 +800,6 @@ function Profile(){
                  onChange={(e) => setForm({ ...form,
                     telephone: e.target.value })}
                  name="telephone"
-                 
-              />
-            </Grid>
-            <Grid item size={{xs:12,}}>
-              <TextField
-                 fullWidth
-                 sx={{
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}
-                 margin="normal"
-                 id="pics"
-                 label="Your Photo"
-                 type="file"
-                  onChange={(e) =>{ 
-                    if(e.target.files.length){
-                         hasUpload.current = e.target.files[0];
-                    }else{
-                       hasUpload.current = "";
-                    }
-                          
-                  }}
-                  name="pics"
                  
               />
             </Grid>

@@ -88,7 +88,7 @@ function Layout(props){
     <div sx={{flexGrow: 1}}>
 
            {/* Header or app bar*/}
-           <AppBar sx={{backgroundColor:"#FFF",borderBottom:"1.5px solid #CCC"}} 
+           <AppBar sx={{backgroundColor:"#FFF",borderBottom:"0.5px solid #DDD"}} 
            elevation={0}>
                     <Toolbar>
                         <IconButton onClick={()=> openDrawer()}
