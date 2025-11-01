@@ -1,3 +1,4 @@
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import PersonIcon from "@mui/icons-material/Person";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -8,6 +9,7 @@ import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import { styled } from '@mui/material/styles';
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -21,6 +23,18 @@ import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
 function UpdateUser(){
+  const VisuallyHiddenInput = styled('input')({
+        clip: 'rect(0 0 0 0)',
+        clipPath: 'inset(50%)',
+        height: 1,
+        overflow: 'hidden',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        whiteSpace: 'nowrap',
+        width: 1,
+      });
+  const [selectedFile, setSelectedFile] = useState("");
   const userId = useLocation().state;
   const [isLoading, setIsLoading] = useState(false);
   const [isProfileLoading, setIsProfileLoading] = useState(false);
@@ -309,665 +323,653 @@ userId+"/",
     
     return (
        <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div style={{backgroundColor:"#FFF", flexGrow:1}}>
-        <Layout title="User Update">
-          <Box 
-         sx={{
-            minHeight:"100vh",
-            marginTop:"10px",
-          }}
-          >
-          <Typography component="h1" variant="h6" sx={{color:"royalblue"}}>User Update</Typography>
-         
-            <Box sx={{
-              backgroundColor:"#EFF",
-              width:"100%",
-              padding:"10px",
-              marginBottom:"70px"
-            }}>
-              <Typography component="h1" variant="h6" 
-              sx={{color:"royalblue", fontWeight:"bolder", textAlign:"center"}}>
-                {form.firstname+" "+form.lastname}
-                </Typography>
+           <div style={{backgroundColor:"#F9F9F5"}}>
+             <Layout title="De Modern Pace">
+               <Box 
+              sx={{
+                 minHeight:"97vh",
+                 paddingBottom:"3vh",
+                 paddingTop:"10px",
+               }}
+               >
+               <Typography component="h1" variant="h6" 
+               style={{marginBottom:"10px", fontWeight:"normal",
+               color:"darkblue", fontSize:"14px"}}>
+                 User Update</Typography>
+               <Grid container spacing={3}>
+               <Grid item size={{xs:12,sm:6}}>
+               <Box sx={{
+                     backgroundColor:"#FFF",
+                     padding:"10px",
+                     boxShadow:0,
+                     border:"0.5px solid #EEE",
+                     textAlign:"center",
+                     minHeight:"260px"
+                   }}>
+                     <center>
                      <Avatar
-                     src={form.pics}
-                     sx={{
-                       position:"relative",
-                       top:"50px",
-                       width: 100, // Adjust size
-                       height: 100,
-                       backgroundColor:"#EFF",
-                       border: '3px solid #FFF', // Add a gold border
-                       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', // Add a subtle shadow
-                       '&:hover': {
-                          transform: 'scale(1.05)', // Add a hover effect
-                          transition: 'transform 0.3s ease-in-out',
+                       src={form.pics}
+                       sx={{
+                         width: 100, // Adjust size
+                         height: 100,
+                         backgroundColor:"#EFF",
+                         border: '3px solid #FFF', // Add a gold border
+                         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', // Add a subtle shadow
+                         '&:hover': {
+                             transform: 'scale(1.05)', // Add a hover effect
+                             transition: 'transform 0.3s ease-in-out',
+                            },
+                         }} 
+                       >
+                         {!form.pics && <PersonIcon sx={{color:"royalblue"}}/> }
+                       </Avatar></center>
+                       <Typography sx={{color:"darkblue", fontSize:"20px", textAlign:"center",}}>
+                             {form.firstname}
+                       </Typography>
+                       <Typography sx={{color:"darkblue",fontSize:"15px", textAlign:"center",}}>
+                         {form.lastname}
+                       </Typography>
+                       <Box style={{textAlign:"center"}}>
+                       <Button
+                          component="label" 
+                          role={undefined}
+                          variant="contained"
+                          tabIndex={-1}
+                          startIcon={<CloudUploadIcon />}
+                        >
+                         Select New Photo
+                        <VisuallyHiddenInput type="file" onChange={(e) =>{ 
+                           if(e.target.files.length){
+                                hasUpload.current = e.target.files[0];
+                                setSelectedFile(e.target.files[0].name);
+                           }else{
+                              hasUpload.current = "";
+                           }
+                                 
+                         }} />
+                       </Button>
+                       <br/>
+                       <Typography style={{color:"#666"}}>
+                         You have selected this File:{selectedFile}
+                       </Typography>
+                       </Box>
+                 </Box>
+               </Grid>
+       
+               <Grid item size={{xs:12,sm:6}}>
+                   <Box component="form" onSubmit={handlePasswordSubmit} sx={{
+                      backgroundColor:"#FFF", boxShadow:0, border:"0.5px solid #EEE", padding:"5px 10px"}}>
+                   <Typography marginTop={1} style={{color:"darkblue", textAlign:"center"}}>
+                    Security Information</Typography>
+                   <Grid container spacing={1}>
+                    <Grid item size={{xs:12,}}>
+                      <TextField
+                        fullWidth
+                        sx={{
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}
+                        margin="normal"
+                        id="old_password"
+                        label="old_password"
+                        type="password"
+                        value={password.password}
+                        onChange={(e) => setPassword({ ...password,
+                           password: e.target.value })}
+                        name="old_password"
+                        
+                     />
+                     </Grid>
+                     <Grid item size={{xs:12,}}>
+                     <TextField
+                        fullWidth
+                        sx={{
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}
+                        margin="normal"
+                        id="new_password"
+                        label="new_password"
+                        type="password"
+                        value={password.new_password}
+                        onChange={(e) => setPassword({ ...password,
+                           new_password: e.target.value })}
+                        name="new_password"
+                        
+                     />
+                     </Grid>
+                     <Grid item size={{xs:12,}}>
+                     <TextField
+                        fullWidth
+                        sx={{
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}
+                        margin="normal"
+                        id="confirm_password"
+                        label="confirm_password"
+                        helperText={confirmError}
+                        type="password"
+                        value={password.confirm}
+                        onChange={(e) => setPassword({ ...password,
+                           confirm: e.target.value })}
+                        name="confirm_password"
+                        
+                     />
+                     </Grid>
+                     </Grid>
+       
+                     <div style={{textAlign:"center"}}>
+                     <Button
+                     type="submit"
+                     fullWidth
+                     variant="contained"
+                     disabled={isDisabled}
+                     sx={{mt: 2, mb: 2, height:"50px", backgroundColor:"darkblue"}}>
+                       Change</Button></div>
+                   <div className="loaderContainer" marginBottom={10}>
+                      {isLoading && <CircularProgress sx={{
+                       '& .MuiCircularProgress-circle': {
+                        stroke: 'darkblue', 
                        },
-                     }} 
-                     >
-                       {!form.pics && <PersonIcon sx={{color:"royalblue"}}/> }
-                     </Avatar>
-                   </Box>
-         
-          <Box component="form" onSubmit={handleSubmit} sx={{
-                 width:{xs:"100%",}}}>
-             <Typography marginTop={5} style={{color:"royalblue"}}>
-              Personal Information</Typography>
-          <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
-            marginTop={5} padding="10px 30px">
-            <Grid container spacing={1}>
-              <Grid item size={{xs:12, sm:6, md:6}}>
-                <TextField
-                fullWidth
-                 sx={{
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}
-                 margin="normal"
-                 required
-                 id="username"
-                 label="username"
-                 helperText={username}
-                 type="text"
-                 value={form.username}
-                 onChange={(e) => setForm({ ...form,
-                    username: e.target.value })}
-                 name="username"
-                 
-              />
-              </Grid>
-              <Grid item size={{xs:12, sm:6, md:6}}>
-              <TextField
-                 fullWidth
-                 sx={{
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}
-                 margin="normal"
-                 required
-                 id="email"
-                 label="email"
-                 type="email"
-                 helperText={email}
-                 value={form.email}
-                 onChange={(e) => setForm({ ...form,
-                    email: e.target.value })}
-                 name="email"
-                 
-              />
-              </Grid>
-              <Grid item size={{xs:12, sm:6, md:6}}>
-              <TextField
-                 fullWidth
-                 sx={{
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}
-                 margin="normal"
-                 required
-                 id="firstname"
-                 label="firstname"
-                 type="text"
-                 value={form.firstname}
-                 onChange={(e) => setForm({ ...form,
-                    firstname: e.target.value })}
-                 name="firstname"
-                 
-              />
-              </Grid>
-              <Grid item size={{xs:12, sm:6, md:6}}>
-              <TextField
-                 fullWidth
-                 sx={{
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}
-                 margin="normal"
-                 required
-                 id="lastname"
-                 label="lastname"
-                 type="text"
-                 value={form.lastname}
-                 onChange={(e) => setForm({ ...form,
-                    lastname: e.target.value })}
-                 name="lastname"
-                 
-              />
-              </Grid>
-            </Grid>
-          </Box>
-
-          <Typography marginTop={5} style={{color:"royalblue"}}>
-              Other Information</Typography>
-           <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
-            marginTop={5} padding="10px 30px">
-            <Grid container spacing={1}>
-              <Grid item size={{xs:12, sm:6, md:6}}>
-              <FormControl required fullWidth
-                 sx={{
-                   margin:"16px 0px 0px 0px",
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}>
-                <InputLabel id="gender-label">{form.gender || "gender"}</InputLabel>
-                <Select
-                    margin="normal"
-                    labelId="gender-label"
-                    id="gender"
-                    name="gender"
-                    value={form.gender}
-                    label="gender"
-                    onChange={(e) => setForm({ ...form,
-                      gender: e.target.value })}
-                     
-                    >
-                      <MenuItem value="M">Male</MenuItem>
-                      <MenuItem value="F">Female</MenuItem>
-                      <MenuItem value="O">Other</MenuItem>
-                </Select>
-              </FormControl>
-              </Grid>
-              <Grid item size={{xs:12, sm:6, md:6}}>
-              <FormControl required fullWidth
-                 sx={{
-                   margin:"16px 0px 0px 0px",
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                 id="dob"
-                 label="dob"
-                 value={dayjs(form.dob)}
-                 format="YYYY-MM-DD"
-                 onChange={(e) =>setForm({ ...form, dob: e })}
-                 name="dob"
-                
-              /></LocalizationProvider>
-              </FormControl>
-              </Grid>
-              <Grid item size={{xs:12, sm:6, md:6}}>
-              <TextField
-                 required
-                 fullWidth
-                 sx={{
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}
-                 margin="normal"
-                 id="address"
-                 label="address"
-                 type="text"
-                 value={form.address}
-                 onChange={(e) => setForm({ ...form,
-                    address: e.target.value })}
-                 name="address"
-                 
-              />
-              </Grid>
-              <Grid item size={{xs:12, sm:6, md:6}}>
-              <TextField
-                 required
-                 fullWidth
-                 sx={{
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}
-                 margin="normal"
-                 id="nationality"
-                 label="nationality"
-                 type="text"
-                 value={form.nationality}
-                 onChange={(e) => setForm({ ...form,
-                    nationality: e.target.value })}
-                 name="nationality"
-                 
-              />
-            </Grid>
-
-            <Grid item size={{xs:12, sm:6, md:6}}>
-              <TextField
-                 fullWidth
-                 sx={{
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}
-                 required
-                 margin="normal"
-                 id="state"
-                 label="state"
-                 type="text"
-                 value={form.state}
-                 onChange={(e) => setForm({ ...form,
-                    state: e.target.value })}
-                 name="state"
-                 
-              />
-              </Grid>
-              <Grid item size={{xs:12, sm:6, md:6}}>
-              <TextField
-                 fullWidth
-                 sx={{
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}
-                 required
-                 margin="normal"
-                 id="zipCode"
-                 label="zipCode"
-                 type="text"
-                 helperText={zip}
-                 value={form.zipCode}
-                 onChange={(e) => setForm({ ...form,
-                    zipCode: e.target.value })}
-                 name="zipCode"
-                 
-              />
-              </Grid>
-              <Grid item size={{xs:12, sm:6, md:6}}>
-              <TextField
-                 fullWidth
-                 sx={{
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}
-                 required
-                 margin="normal"
-                 id="telephone"
-                 label="telephone"
-                 type="text"
-                 value={form.telephone}
-                 helperText={telephone}
-                 onChange={(e) => setForm({ ...form,
-                    telephone: e.target.value })}
-                 name="telephone"
-                 
-              />
-            </Grid>
-            <Grid item size={{xs:12, sm:6, md:6}}>
-              <TextField
-                 fullWidth
-                 sx={{
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}
-                 margin="normal"
-                 id="pics"
-                 label="Your Photo"
-                 type="file"
-                  onChange={(e) =>{ 
-                    if(e.target.files.length){
-                         hasUpload.current = e.target.files[0];
-                    }else{
-                       hasUpload.current = "";
-                    }
-                          
-                  }}
-                  name="pics"
-                 
-              />
-            </Grid>
-            </Grid>
-            </Box>
-
-            <Typography marginTop={5} style={{color:"royalblue"}}>
-              Restricted Information</Typography>
-             <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
-            marginTop={5} padding="10px 30px">
-            <Grid container spacing={1}>
-              <Grid item size={{xs:12, sm:6, md:6}}>
-              <FormControl
-              required 
-              fullWidth
-                 sx={{
-                   margin:"16px 0px 0px 0px",
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}>
-                <InputLabel id="role-label">{form.role || "role"}</InputLabel>
-                <Select
-                    margin="normal"
-                    labelId="role-label"
-                    id="role"
-                    name="role"
-                    value={form.role}
-                    label="role"
-                    onChange={(e) => setForm({ ...form,
-                      role: e.target.value })}
-                     
-                    >
-                      <MenuItem value="teacher">Teacher</MenuItem>
-                      <MenuItem value="student">Student</MenuItem>
-                      <MenuItem value="parent">Parent</MenuItem>
-                      <MenuItem value="admin">Admin</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-             <Grid item size={{xs:12, sm:6, md:6}}>
-              <FormControl
-               fullWidth
-                 sx={{
-                   margin:"16px 0px 0px 0px",
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}>
-                <InputLabel id="class-label">{form.classId || "class"}</InputLabel>
-                <Select
-                    margin="normal"
-                    labelId="class-label"
-                    id="classId"
-                    name="classId"
-                    value={form.classId}
-                    label="class"
-                    onChange={(e) => setForm({ ...form,
-                      classId: e.target.value })}
-                    >
-                      <MenuItem value="">None</MenuItem>
-                      {
-                        classList.map(classlist=>(
-                          <MenuItem key={classlist.id}
-                          value={classlist.id}>{classlist.classCode}</MenuItem>
-                        ))
+                      '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                       stroke: 'darkblue', 
+                      },
+                   }}/>}
+                   </div>
+                  </Box>
+                  </Grid>
+               
+               <Grid item size={{xs:12,sm:6}} marginTop={{xs:"auto",sm:"-85px"}}>
+               <Box component="form" onSubmit={handleSubmit} sx={{
+                      backgroundColor:"#FFF", boxShadow:0, border:"0.5px solid #EEE", padding:"5px 10px"}}>
+               <Grid container spacing={1}>
+                 <Grid item size={{xs:12,}}>
+                 <Typography marginTop={1} style={{color:"darkblue", textAlign:"center"}}>
+                     Personal Information</Typography>
+                 </Grid>
+                   
+                <Grid item size={{xs:12,}}>
+                       <TextField
+                       fullWidth
+                        sx={{
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}
+                        margin="normal"
+                        required
+                        id="username"
+                        label="username"
+                        helperText={username}
+                        type="text"
+                        value={form.username}
+                        onChange={(e) => setForm({ ...form,
+                           username: e.target.value })}
+                        name="username"
                         
-                      }
-                </Select>
-              </FormControl>
-             </Grid>
-              <Grid item size={{xs:12, sm:6, md:6}}>
-              <FormControl
-               fullWidth
-                 sx={{
-                   margin:"16px 0px 0px 0px",
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}>
-                <InputLabel id="child-label">{form.childId || "child"}</InputLabel>
-                <Select
-                    margin="normal"
-                    labelId="child-label"
-                    id="childId"
-                    name="childId"
-                    value={form.childId}
-                    label="child"
-                    onChange={(e) => setForm({ ...form,
-                      childId: e.target.value })}
-                     
-                     
-                    >
-                      <MenuItem value="">None</MenuItem>
-                      {
-                        studentList.map(student=>(
-                          <MenuItem key={student.pk}
-                          value={student.pk}>{student.firstName+" "+student.lastName}</MenuItem>
-                        ))
+                     />
+                     </Grid>
+                     <Grid item size={{xs:12,}}>
+                     <TextField
+                        fullWidth
+                        sx={{
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}
+                        margin="normal"
+                        required
+                        id="email"
+                        label="email"
+                        type="email"
+                        helperText={email}
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form,
+                           email: e.target.value })}
+                        name="email"
                         
-                      }
-                </Select>
-              </FormControl>
-              </Grid>
-               <Grid item size={{xs:12, sm:6, md:6}}>
-              <FormControl 
-               required 
-               fullWidth
-                 sx={{
-                   margin:"16px 0px 0px 0px",
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}>
-                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateTimePicker
-                 id="entrance"
-                 label="entrance"
-                 value={dayjs(form.entrance)}
-                 format="YYYY-MM-DD hh:mm:ss"
-                 onChange={(e) => setForm({ ...form,
-                    entrance: e })}
-                 name="entrance"
+                     />
+                     </Grid>
+                     <Grid item size={{xs:12,}}>
+                     <TextField
+                        fullWidth
+                        sx={{
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}
+                        margin="normal"
+                        required
+                        id="firstname"
+                        label="firstname"
+                        type="text"
+                        value={form.firstname}
+                        onChange={(e) => setForm({ ...form,
+                           firstname: e.target.value })}
+                        name="firstname"
+                        
+                     />
+                     </Grid>
+                     <Grid item size={{xs:12,}}>
+                     <TextField
+                        fullWidth
+                        sx={{
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}
+                        margin="normal"
+                        required
+                        id="lastname"
+                        label="lastname"
+                        type="text"
+                        value={form.lastname}
+                        onChange={(e) => setForm({ ...form,
+                           lastname: e.target.value })}
+                        name="lastname"
+                        
+                     />
+                     </Grid>
                  
-              /></LocalizationProvider>
-              </FormControl>
-              </Grid>
-              </Grid>
-              </Box>
-
-              <div style={{textAlign:"center"}}>
-              <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled={isDisabled}
-              sx={{ mt: 2, mb: 2, height:"50px", width:"150px",
-              borderRadius:"10px" }}>Update</Button></div>
-            
-              <div className="loaderContainer" marginBottom={10}>
-                     {isProfileLoading && <CircularProgress />}
-               </div>
-            </Box>
-        
-
-            <Box component="form" onSubmit={handlePasswordSubmit} sx={{
-               width:{xs:"100%",marginTop:"40px"}}}>
-            <Typography sx={{color:"royalblue"}} component="h1" variant="h6">
-              Change Password</Typography>
-            <Typography marginTop={5} style={{color:"royalblue"}}>
-             Security Information</Typography>
-            <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
-            marginTop={5} padding="10px 30px">
-            <Grid container spacing={1}>
-             <Grid item size={{xs:12, sm:6, md:6}}>
-               <TextField
-                 fullWidth
-                 sx={{
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}
-                 margin="normal"
-                 id="old_password"
-                 label="old_password"
-                 type="password"
-                 value={password.password}
-                 onChange={(e) => setPassword({ ...password,
-                    password: e.target.value })}
-                 name="old_password"
-                 
-              />
-              </Grid>
-              <Grid item size={{xs:12, sm:6, md:6}}>
-              <TextField
-                 fullWidth
-                 sx={{
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}
-                 margin="normal"
-                 id="new_password"
-                 label="new_password"
-                 type="password"
-                 value={password.new_password}
-                 onChange={(e) => setPassword({ ...password,
-                    new_password: e.target.value })}
-                 name="new_password"
-                 
-              />
-              </Grid>
-              <Grid item size={{xs:12, sm:6, md:6}}>
-              <TextField
-                 fullWidth
-                 sx={{
-                    '& .MuiInputBase-root':{
-                    height:"50px",
-                    borderRadius:"10px",
-                  },
-                    '& .MuiOutlinedInput-input':{
-                    height:"50px",
-                    paddingTop:0,
-                    paddingBottom:0,
-                  },
-                  }}
-                 margin="normal"
-                 id="confirm_password"
-                 label="confirm_password"
-                 helperText={confirmError}
-                 type="password"
-                 value={password.confirm}
-                 onChange={(e) => setPassword({ ...password,
-                    confirm: e.target.value })}
-                 name="confirm_password"
-                 
-              />
-              </Grid>
-              </Grid>
-              </Box>
-
-              <div style={{textAlign:"center"}}>
-              <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled={isDisabled}
-              sx={{mt: 2, mb: 2, height:"50px", width:"150px",
-              borderRadius:"10px" }}>Change</Button></div>
-
-              <div className="loaderContainer" marginBottom={10}>
-                     {isLoading && <CircularProgress />}
-               </div>
-            
-           </Box>
-      </Box>
-          <MessageDialogForm open={openMsgBox} 
-          onClose={handleCloseMsgBox} 
-          formContent={<Typography>{msg}</Typography>}
-          title="Message Dialog"
-          />
-        </Layout>
-      </div>
-      </LocalizationProvider>
+                 <Grid item size={{xs:12,}}>
+                 <Typography marginTop={1} style={{color:"darkblue", textAlign:"center"}}>
+                     Other Information</Typography>
+                  </Grid>
+                     <Grid item size={{xs:12,}}>
+                     <FormControl required fullWidth
+                        sx={{
+                          margin:"16px 0px 0px 0px",
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}>
+                       <InputLabel id="gender-label">{form.gender || "gender"}</InputLabel>
+                       <Select
+                           margin="normal"
+                           labelId="gender-label"
+                           id="gender"
+                           name="gender"
+                           value={form.gender}
+                           label="gender"
+                           onChange={(e) => setForm({ ...form,
+                             gender: e.target.value })}
+                            
+                           >
+                             <MenuItem value="M">Male</MenuItem>
+                             <MenuItem value="F">Female</MenuItem>
+                             <MenuItem value="O">Other</MenuItem>
+                       </Select>
+                     </FormControl>
+                     </Grid>
+                     <Grid item size={{xs:12,}}>
+                     <FormControl required fullWidth
+                        sx={{
+                          margin:"16px 0px 0px 0px",
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}>
+                       <LocalizationProvider dateAdapter={AdapterDayjs}>
+                       <DatePicker
+                        id="dob"
+                        label="dob"
+                        value={dayjs(form.dob)}
+                        format="YYYY-MM-DD"
+                        onChange={(e) =>setForm({ ...form, dob: e })}
+                        name="dob"
+                       
+                     /></LocalizationProvider>
+                     </FormControl>
+                     </Grid>
+                     <Grid item size={{xs:12,}}>
+                     <TextField
+                        required
+                        fullWidth
+                        sx={{
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}
+                        margin="normal"
+                        id="address"
+                        label="address"
+                        type="text"
+                        value={form.address}
+                        onChange={(e) => setForm({ ...form,
+                           address: e.target.value })}
+                        name="address"
+                        
+                     />
+                     </Grid>
+                     <Grid item size={{xs:12,}}>
+                     <TextField
+                        required
+                        fullWidth
+                        sx={{
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}
+                        margin="normal"
+                        id="nationality"
+                        label="nationality"
+                        type="text"
+                        value={form.nationality}
+                        onChange={(e) => setForm({ ...form,
+                           nationality: e.target.value })}
+                        name="nationality"
+                        
+                     />
+                   </Grid>
+       
+                   <Grid item size={{xs:12,}}>
+                     <TextField
+                        fullWidth
+                        sx={{
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}
+                        required
+                        margin="normal"
+                        id="state"
+                        label="state"
+                        type="text"
+                        value={form.state}
+                        onChange={(e) => setForm({ ...form,
+                           state: e.target.value })}
+                        name="state"
+                        
+                     />
+                     </Grid>
+                     <Grid item size={{xs:12,}}>
+                     <TextField
+                        fullWidth
+                        sx={{
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}
+                        required
+                        margin="normal"
+                        id="zipCode"
+                        label="zipCode"
+                        type="text"
+                        helperText={zip}
+                        value={form.zipCode}
+                        onChange={(e) => setForm({ ...form,
+                           zipCode: e.target.value })}
+                        name="zipCode"
+                        
+                     />
+                     </Grid>
+                     <Grid item size={{xs:12,}}>
+                     <TextField
+                        fullWidth
+                        sx={{
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}
+                        required
+                        margin="normal"
+                        id="telephone"
+                        label="telephone"
+                        type="text"
+                        value={form.telephone}
+                        helperText={telephone}
+                        onChange={(e) => setForm({ ...form,
+                           telephone: e.target.value })}
+                        name="telephone"
+                        
+                     />
+                   </Grid>
+                   <Grid item size={{xs:12,}}>
+                   <Typography marginTop={1} style={{color:"darkblue", textAlign:"center"}}>
+                     Restricted Information</Typography>
+                    </Grid>
+                     <Grid item size={{xs:12,}}>
+                     <FormControl
+                     required fullWidth
+                        sx={{
+                          margin:"16px 0px 0px 0px",
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}>
+                       <InputLabel id="role-label">{form.role || "role"}</InputLabel>
+                       <Select
+                           margin="normal"
+                           labelId="role-label"
+                           id="role"
+                           name="role"
+                           value={form.role}
+                           label="role"
+                           onChange={(e) => setForm({ ...form,
+                             role: e.target.value })}
+                            
+                           >
+                             <MenuItem value="teacher">Teacher</MenuItem>
+                             <MenuItem value="student">Student</MenuItem>
+                             <MenuItem value="parent">Parent</MenuItem>
+                             <MenuItem value="admin">Admin</MenuItem>
+                       </Select>
+                     </FormControl>
+                   </Grid>
+                    <Grid item size={{xs:12,}}>
+                     <FormControl
+                      fullWidth
+                        sx={{
+                          margin:"16px 0px 0px 0px",
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}>
+                       <InputLabel id="class-label">{form.classId || "class"}</InputLabel>
+                       <Select
+                           margin="normal"
+                           labelId="class-label"
+                           id="classId"
+                           name="classId"
+                           value={form.classId}
+                           label="class"
+                           onChange={(e) => setForm({ ...form,
+                             classId: e.target.value })}
+                           >
+                             <MenuItem value="">None</MenuItem>
+                             {
+                               classList.map(classlist=>(
+                                 <MenuItem key={classlist.id}
+                                 value={classlist.id}>{classlist.classCode}</MenuItem>
+                               ))
+                               
+                             }
+                       </Select>
+                     </FormControl>
+                    </Grid>
+                     <Grid item size={{xs:12,}}>
+                     <FormControl
+                      fullWidth
+                        sx={{
+                          margin:"16px 0px 0px 0px",
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}>
+                       <InputLabel id="child-label">{form.childId || "child"}</InputLabel>
+                       <Select
+                           margin="normal"
+                           labelId="child-label"
+                           id="childId"
+                           name="childId"
+                           value={form.childId}
+                           label="child"
+                           onChange={(e) => setForm({ ...form,
+                             childId: e.target.value })}
+                            
+                            
+                           >
+                             <MenuItem value="">None</MenuItem>
+                             {
+                               studentList.map(student=>(
+                                 <MenuItem key={student.pk}
+                                 value={student.pk}>{student.firstName+" "+student.lastName}</MenuItem>
+                               ))
+                               
+                             }
+                       </Select>
+                     </FormControl>
+                     </Grid>
+                      <Grid item size={{xs:12,}}>
+                     <FormControl 
+                      required 
+                      fullWidth
+                        sx={{
+                          margin:"16px 0px 0px 0px",
+                           '& .MuiInputBase-root':{
+                           height:"50px",
+                         },
+                           '& .MuiOutlinedInput-input':{
+                           height:"50px",
+                           paddingTop:0,
+                           paddingBottom:0,
+                         },
+                         }}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                       <DateTimePicker
+                        id="entrance"
+                        label="entrance"
+                        value={dayjs(form.entrance)}
+                        format="YYYY-MM-DD hh:mm:ss"
+                        onChange={(e) => setForm({ ...form,
+                           entrance: e })}
+                        name="entrance"
+                        
+                     /></LocalizationProvider>
+                     </FormControl>
+                     </Grid>
+                     </Grid>
+       
+                     <div style={{textAlign:"center"}}>
+                     <Button
+                     type="submit"
+                     fullWidth
+                     variant="contained"
+                     disabled={isDisabled}
+                     sx={{ mt: 2, mb: 2, height:"50px", backgroundColor:"darkblue" }}>Update</Button></div>
+                   
+                     <div className="loaderContainer" marginBottom={10}>
+                            {isProfileLoading && <CircularProgress sx={{
+                       '& .MuiCircularProgress-circle': {
+                        stroke: 'darkblue', 
+                       },
+                      '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                       stroke: 'darkblue', 
+                      },
+                   }}/>}
+                      </div>
+                    </Box>
+                  </Grid>
+                  </Grid>
+                  </Box>
+             
+               <MessageDialogForm open={openMsgBox} 
+               onClose={handleCloseMsgBox} 
+               formContent={<Typography>{msg}</Typography>}
+               title="Message Dialog"
+               />
+             </Layout>
+           </div>
+           </LocalizationProvider>
   );
   
   }
