@@ -212,47 +212,49 @@ function Attendance(){
   },[url, query])
   
   return (
-    <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="Attendance">
+    <div style={{backgroundColor:"#F9F9F5"}}>
+      <Layout title="De Modern Pace">
         <Box 
        sx={{
-          minHeight:"100vh",
-          marginTop:"10px",
+          minHeight:"97vh",
+          paddingBottom:"3vh",
+          paddingTop:"10px",
         }}
         >
         <Typography component="h1" variant="h6" 
-         style={{marginBottom:"10px", fontWeight:"normal",color:"#999",
-         }}>
+        style={{marginBottom:"10px", fontWeight:"normal",
+        color:"darkblue", fontSize:"14px"}}>
           Attendance</Typography>
-        <Container style={{textAlign:"center", float:"right", marginBottom:"20px",
-          width:{sm:"100%", md:"250px"}
-        }}>
+        <Box component="form" sx={{backgroundColor:"#FFF", boxShadow:0, 
+          border:"0.5px solid #EEE", padding:"5px 10px"}}>
+        <div style={{marginBottom:"20px",width:"250px",float:"right",
+           marginTop:"20px"}}>
           <input type="text" required placeholder="Search" 
-          style={{padding:"10px", width:"70%",border:"none",
-            outline:"none", color:"#999", backgroundColor:"#EFF"
+          style={{padding:"10px",border:"1px solid #CCC",
+            outline:"none", color:"#999", backgroundColor:"#FFF"
           }} value={params}
                onChange={(e) =>setParams(e.target.value)}
                name="params" id="params"/>
           <IconButton onClick={()=>{
                    setQuery({...query,search:params});
                 }}>
-              <SearchIcon style={{color:"royalblue"}}></SearchIcon>
+              <SearchIcon style={{color:"#666", width:"30px", height:"30px"}}/>
           </IconButton>
-        </Container>
+        </div>
         <Paper elevation={0}>
           <Scrollbars autoHide autoHideTimeout={1000}
           style={{width:"100%", height:"370px"}}>
-          <Table style={{borderCollapse:"collapse"}} height="370px">
+          <Table style={{border:"1px solid #DDD"}} height="370px">
             <TableHead>
               <TableRow>
-                 <TableCell>Id</TableCell>
-                 <TableCell>Remark</TableCell>
-                 <TableCell>Date</TableCell>
-                 <TableCell>Class</TableCell>
-                 <TableCell>Username</TableCell>
-                 <TableCell>Status</TableCell>
-                 <TableCell>Update</TableCell>
-                 <TableCell>Delete</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Id</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Remark</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Date</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Class</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Username</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Status</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Update</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Delete</TableCell>
                  
               </TableRow>
             </TableHead>
@@ -260,45 +262,48 @@ function Attendance(){
               {
                   attendanceList.map(attendance=>(
                     <TableRow key={attendance.id}>
-                      <TableCell>{attendance.id}</TableCell>
+                      <TableCell style={{color:"darkblue"}}>{attendance.id}</TableCell>
                       <TableCell>
                         <span style={{ display: 'inline-block', 
-                          whiteSpace:"normal", wordBreak:"break-word",
+                          whiteSpace:"normal", wordBreak:"break-word", color:"darkblue",
                           }}>
                           {attendance.remark}
                         </span>
                       </TableCell>
                       <TableCell>
-                        <span>
+                        <span style={{color:"darkblue"}}>
                           {attendance.date}
                         </span>
                       </TableCell>
-                      <TableCell>
+                      <TableCell style={{color:"darkblue"}}>
                         {
                            getClassCode(attendance)
                         }
                       </TableCell>
-                      <TableCell>{getUsername(attendance)}</TableCell>
+                      <TableCell style={{color:"darkblue"}}>{getUsername(attendance)}</TableCell>
                       <TableCell>
                         <Checkbox disabled checked={attendance.attendance}/>
                       </TableCell>
                       <TableCell>
-                        <IconButton title="update"
+                        <Button style={{backgroundColor:"darkblue", 
+                        height:"30px", width:"15px"}} title="update"
                          onClick={()=>{
                              setCurrAttendance(attendance);
                              handleOpenUpdateDialog();
                           }}>
-                        <PromoteIcon style={{color:"royalblue"}}></PromoteIcon>
-                        </IconButton>
+                        <PromoteIcon style={{color:"#FFF"}}></PromoteIcon>
+                        </Button>
                       </TableCell>
                       <TableCell>
-                         <IconButton title="update"
+                         <Button title="delete" style={{backgroundColor:"darkblue",
+                          height:"30px", width:"15px"
+                         }}
                          onClick={()=>{
                              setCurrAttendance(attendance);
                              handleOpenDeleteDialog();
                           }}>
-                        <TrashIcon style={{color:"royalblue"}}></TrashIcon>
-                        </IconButton>
+                        <TrashIcon style={{color:"#FFF",}}/>
+                        </Button>
                       </TableCell>
                       
                     </TableRow>
@@ -309,7 +314,14 @@ function Attendance(){
             </TableBody>
           </Table>
           <div className="loaderContainer">
-            {isLoading && <CircularProgress />}
+            {isLoading && <CircularProgress x={{
+                '& .MuiCircularProgress-circle': {
+                 stroke: 'darkblue', 
+                },
+               '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                stroke: 'darkblue', 
+               },
+            }}/>}
           </div>
           <div className="loaderContainer">
             <Typography color="error">{msg}</Typography>
@@ -319,8 +331,8 @@ function Attendance(){
         <Container sx={{textAlign:"right", marginTop:"40px",
           marginBottom:"40px", marginRight:"-21px"}}>
           <Button
-          sx={{backgroundColor:"#FFF", color:"royalblue",
-            border:"1px solid royalblue", marginRight:"8px"}}
+          sx={{backgroundColor:"#FFF", color:"darkblue",
+            border:"1px solid darkblue", marginRight:"8px", height:"30px", width:"15px"}}
            onClick={()=>{
              if(prevPage){
                setUrl(prevPage);
@@ -329,7 +341,8 @@ function Attendance(){
             Prev
           </Button>
           <Button 
-            sx={{backgroundColor:"royalblue", color:"#FFF"}}
+            sx={{backgroundColor:"darkblue", color:"#FFF", 
+              border:"1px solid darkblue",height:"30px", width:"15px"}}
           onClick={()=>{
             if(nextPage){
                setUrl(nextPage);
@@ -338,6 +351,7 @@ function Attendance(){
             Next
           </Button>
         </Container>
+        </Box>
         </Box>
       </Layout>
 
