@@ -222,27 +222,29 @@ function UserLists(){
               Attendance</Typography>
             <Box component="form" sx={{backgroundColor:"#FFF", boxShadow:0, 
               border:"0.5px solid #EEE", padding:"5px 10px"}}>
-            <div style={{marginBottom:"20px",width:"250px",float:"right",
-               marginTop:"20px", marginRight:"-21px"}}>
+            <div style={{marginBottom:"20px",float:"right",
+               marginTop:"20px", marginRight:"auto"}}>
+              <Button style={{backgroundColor:"#FFF",border:"1px solid #CCC",
+                height:"37px", marginRight:"8px"
+               }}
+               title="Export To Excel"
+               disabled={disabled}
+                onClick={Download}
+               >
+                <ExcelIcon style={{color:"darkblue", width:"30px", height:"30px"}} />
+               </Button>
               <input type="text" required placeholder="Search" 
               style={{padding:"10px",border:"1px solid #CCC",
                 outline:"none", color:"#999", backgroundColor:"#FFF"
               }} value={params}
                    onChange={(e) =>setParams(e.target.value)}
                    name="params" id="params"/>
+              
               <IconButton onClick={()=>{
                        setQuery({...query,search:params});
                     }}>
                   <SearchIcon style={{color:"#666", width:"30px", height:"30px"}}/>
               </IconButton>
-
-               <IconButton 
-               title="Export To Excel"
-               disabled={disabled}
-                onClick={Download}
-               >
-                <ExcelIcon style={{color:"#666", width:"30px", height:"30px"}} />
-               </IconButton>
         </div>
         <Paper elevation={0}>
           <Scrollbars autoHide autoHideTimeout={1000}
@@ -327,7 +329,7 @@ function UserLists(){
             </TableBody>
           </Table>
           <div className="loaderContainer">
-            {isLoading && <CircularProgress  x={{
+            {isLoading && <CircularProgress  sx={{
                 '& .MuiCircularProgress-circle': {
                  stroke: 'darkblue', 
                 },
@@ -355,7 +357,7 @@ function UserLists(){
           </Button>
           <Button 
             sx={{backgroundColor:"#FFF", color:"darkblue",fontSize:"12px",
-            border:"1px solid darkblue", marginRight:"8px", height:"30px", width:"15px"}}
+            border:"1px solid darkblue", height:"30px", width:"15px"}}
           onClick={()=>{
             if(nextPage){
                setUrl(nextPage);

@@ -227,8 +227,8 @@ function Attendance(){
           Attendance</Typography>
         <Box component="form" sx={{backgroundColor:"#FFF", boxShadow:0, 
           border:"0.5px solid #EEE", padding:"5px 10px"}}>
-        <div style={{marginBottom:"20px",width:"250px",float:"right",
-           marginTop:"20px", marginRight:"-21px"}}>
+        <div style={{marginBottom:"20px",float:"right",
+           marginTop:"20px", marginRight:"auto"}}>
           <input type="text" required placeholder="Search" 
           style={{padding:"10px",border:"1px solid #CCC",
             outline:"none", color:"#999", backgroundColor:"#FFF"
@@ -342,7 +342,7 @@ function Attendance(){
           </Button>
           <Button 
             sx={{backgroundColor:"#FFF", color:"darkblue",fontSize:"12px",
-            border:"1px solid darkblue", marginRight:"8px", height:"30px", width:"15px"}}
+            border:"1px solid darkblue", height:"30px", width:"15px"}}
           onClick={()=>{
             if(nextPage){
                setUrl(nextPage);
