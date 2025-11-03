@@ -286,55 +286,49 @@ function ClassUsers(){
 
   
   return (
-    <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="All Users">
-        <Box 
-       sx={{
-          minHeight:"100vh",
-          marginTop:"10px",
-        }}
-        >
-        <Typography component="h1" variant="h6">All Users</Typography>
-        <Container sx={{textAlign:"right", marginRight:"-25px"}} >
-          <TextField
-               minWidth="200px"
-               margin="normal"
-               required
-               id="params"
-               label="params"
-               type="text"
-               value={params}
-               onChange={(e) =>setParams(e.target.value)}
-               name="params"/>
-               <Button 
-               sx={{backgroundColor:"royalblue",
-                color:"#FFFFFF",
-                border:"1px",
-                borderRadius:"0px",
-                marginTop:"16px",
-                '& .hover':{backgroundColor:"dodgerblue"},
-                minHeight:"56px"}}
-                onClick={()=>{
-                   setQuery({...query,search:params});
-                }}
-               >
-                <SearchIcon></SearchIcon>
-               </Button>
-        </Container>
-        <Paper>
-           <Scrollbars autoHide autoHideTimeout={1000}
-                            style={{width:"100%", height:"200px"}}>
-          <Table>
+    <div style={{backgroundColor:"#F9F9F5"}}>
+          <Layout title="De Modern Pace">
+            <Box 
+           sx={{
+              minHeight:"97vh",
+              paddingBottom:"3vh",
+              paddingTop:"10px",
+            }}
+            >
+            <Typography component="h1" variant="h6" 
+            style={{marginBottom:"10px", fontWeight:"normal",
+            color:"darkblue", fontSize:"14px"}}>
+              Attendance</Typography>
+            <Box component="form" sx={{backgroundColor:"#FFF", boxShadow:0, 
+              border:"0.5px solid #EEE", padding:"5px 10px"}}>
+            <div style={{marginBottom:"20px",width:"250px",float:"right",
+               marginTop:"20px", marginRight:"-21px"}}>
+              <input type="text" required placeholder="Search" 
+              style={{padding:"10px",border:"1px solid #CCC",
+                outline:"none", color:"#999", backgroundColor:"#FFF"
+              }} value={params}
+                   onChange={(e) =>setParams(e.target.value)}
+                   name="params" id="params"/>
+              <IconButton onClick={()=>{
+                       setQuery({...query,search:params});
+                    }}>
+                  <SearchIcon style={{color:"#666", width:"30px", height:"30px"}}/>
+              </IconButton>
+        </div>
+        <Paper elevation={0}>
+          <Scrollbars autoHide autoHideTimeout={1000}
+          style={{width:"100%", height:"200px"}}>
+          <Table style={{border:"1px solid #DDD"}}>
             <TableHead>
               <TableRow>
-                 <TableCell>Id</TableCell>
-                 <TableCell>Username</TableCell>
-                 <TableCell>FirstName</TableCell>
-                 <TableCell>LastName</TableCell>
-                 <TableCell>Class</TableCell>
-                 <TableCell>Role</TableCell>
-                 <TableCell>Promote</TableCell>
-                 <TableCell>Attendance</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Id</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Username</TableCell>
+                 <TableCell style={{color:"darkblue"}}>FirstName</TableCell>
+                 <TableCell style={{color:"darkblue"}}>LastName</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Class</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Role</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Promote</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Attendance</TableCell>
                  
               </TableRow>
             </TableHead>
@@ -342,36 +336,38 @@ function ClassUsers(){
               {
                   userList.map(user=>(
                     <TableRow key={user.pk}>
-                      <TableCell>{user.pk}</TableCell>
-                      <TableCell>{user.username}</TableCell>
+                      <TableCell style={{color:"darkblue"}}>{user.pk}</TableCell>
+                      <TableCell style={{color:"darkblue"}}>{user.username}</TableCell>
                       <TableCell>
-                        <span style={{ display: 'inline-block', 
+                        <span style={{ display: 'inline-block', color:"darkblue",
                           whiteSpace:"normal", wordBreak:"break-word" }}>
                           {user.firstName}
                         </span>
                       </TableCell>
                       <TableCell>
-                        <span style={{ display: 'inline-block', 
+                        <span style={{ display: 'inline-block', color:"darkblue",
                           whiteSpace:"normal", wordBreak:"break-word" }}>
                           {user.lastName}
                         </span>
                       </TableCell>
-                      <TableCell>
+                      <TableCell style={{color:"darkblue"}}>
                         {
                            getClassCode(user)
                         }
                       </TableCell>
-                      <TableCell>{user.role}</TableCell>
+                      <TableCell style={{color:"darkblue"}}>{user.role}</TableCell>
                       <TableCell>
-                        <IconButton title="promote"
+                        <Button style={{backgroundColor:"darkblue", 
+                                                height:"30px", width:"15px"}}
+                                                 title="promote"
                          onClick={()=>{
                              setCurrUser(user);
                              handleOpenPromoteDialog();
                           }}>
-                        <PromoteIcon></PromoteIcon>
-                        </IconButton>
+                        <PromoteIcon style={{color:"#FFF"}}></PromoteIcon>
+                        </Button>
                       </TableCell>
-                      <TableCell>
+                      <TableCell style={{color:"darkblue"}}>
                         {getMarkedAttendance(user)}
                       </TableCell>
                       
@@ -383,18 +379,25 @@ function ClassUsers(){
             </TableBody>
           </Table>
           <div className="loaderContainer">
-            {isLoading && <CircularProgress />}
+            {isLoading && <CircularProgress   sx={{
+                '& .MuiCircularProgress-circle': {
+                 stroke: 'darkblue', 
+                },
+               '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                stroke: 'darkblue', 
+               },
+            }}/>}
           </div>
           <div className="loaderContainer">
             <Typography color="error">{msg}</Typography>
           </div>
            </Scrollbars>
         </Paper>
-        <Container sx={{textAlign:"right", marginTop:"40px",
-          marginBottom:"40px", marginRight:"-21px"
-        }}>
+        <Container sx={{textAlign:"right", marginTop:"20px",
+          marginBottom:"20px", marginRight:"-21px"}}>
           <Button
-          sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}
+          sx={{backgroundColor:"#FFF", color:"darkblue",fontSize:"12px",
+            border:"1px solid darkblue", marginRight:"8px", height:"30px", width:"15px"}}
            onClick={()=>{
              if(prevPage){
                setUrl(prevPage);
@@ -403,7 +406,8 @@ function ClassUsers(){
             Prev
           </Button>
           <Button 
-            sx={{backgroundColor:"royalblue", color:"#FFF"}}
+            sx={{backgroundColor:"#FFF", color:"darkblue",fontSize:"12px",
+            border:"1px solid darkblue", marginRight:"8px", height:"30px", width:"15px"}}
           onClick={()=>{
             if(nextPage){
                setUrl(nextPage);
@@ -412,6 +416,7 @@ function ClassUsers(){
             Next
           </Button>
         </Container>
+        </Box>
         </Box>
       </Layout>
 
@@ -425,8 +430,7 @@ function ClassUsers(){
           <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "100%" }}>
               <InputLabel id="class-label"/>
               <Select
-                  sx={{ height:"50px",
-                              borderRadius:"10px",}}
+                  sx={{ height:"50px",}}
                   fullWidth
                   margin="normal"
                   labelId="class-label"
@@ -456,7 +460,6 @@ function ClassUsers(){
                    sx={{
                              '& .MuiInputBase-root':{
                               height:"50px",
-                              borderRadius:"10px",
                           },
                            '& .MuiOutlinedInput-input':{
                               height:"50px",

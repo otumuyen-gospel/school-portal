@@ -4,13 +4,13 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
@@ -109,53 +109,47 @@ function UserAttendance(){
   },[url, query, authUser])
   
   return (
-    <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="My Attendance">
+    <div style={{backgroundColor:"#F9F9F5"}}>
+      <Layout title="De Modern Pace">
         <Box 
        sx={{
-          minHeight:"100vh",
-          marginTop:"10px",
+          minHeight:"97vh",
+          paddingBottom:"3vh",
+          paddingTop:"10px",
         }}
         >
-        <Typography component="h1" variant="h6">My Attendance</Typography>
-        <Container sx={{textAlign:"right",marginRight:"-25px"}} >
-          <TextField
-               minWidth="200px"
-               margin="normal"
-               required
-               id="params"
-               label="params"
-               type="text"
-               value={params}
+        <Typography component="h1" variant="h6" 
+        style={{marginBottom:"10px", fontWeight:"normal",
+        color:"darkblue", fontSize:"14px"}}>
+         My Attendance</Typography>
+        <Box component="form" sx={{backgroundColor:"#FFF", boxShadow:0, 
+          border:"0.5px solid #EEE", padding:"5px 10px"}}>
+        <div style={{marginBottom:"20px",width:"250px",float:"right",
+           marginTop:"20px", marginRight:"-21px"}}>
+          <input type="text" required placeholder="Search" 
+          style={{padding:"10px",border:"1px solid #CCC",
+            outline:"none", color:"#999", backgroundColor:"#FFF"
+          }} value={params}
                onChange={(e) =>setParams(e.target.value)}
-               name="params"/>
-               <Button 
-               sx={{backgroundColor:"royalblue",
-                color:"#FFFFFF",
-                border:"1px",
-                borderRadius:"0px",
-                marginTop:"16px",
-                '& .hover':{backgroundColor:"dodgerblue"},
-                minHeight:"56px"}}
-                onClick={()=>{
+               name="params" id="params"/>
+          <IconButton onClick={()=>{
                    setQuery({...query,search:params});
-                }}
-               >
-                <SearchIcon></SearchIcon>
-               </Button>
-        </Container>
-        <Paper>
-           <Scrollbars autoHide autoHideTimeout={1000}
-                            style={{width:"100%", height:"200px"}}>
-          <Table>
+                }}>
+              <SearchIcon style={{color:"#666", width:"30px", height:"30px"}}/>
+          </IconButton>
+        </div>
+        <Paper elevation={0}>
+          <Scrollbars autoHide autoHideTimeout={1000}
+          style={{width:"100%", height:"200px"}}>
+          <Table style={{border:"1px solid #DDD"}}>
             <TableHead>
               <TableRow>
-                 <TableCell>Id</TableCell>
-                 <TableCell>Remark</TableCell>
-                 <TableCell>Date</TableCell>
-                 <TableCell>Class</TableCell>
-                 <TableCell>Username</TableCell>
-                 <TableCell>Status</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Id</TableCell>
+                <TableCell style={{color:"darkblue"}}>Remark</TableCell>
+                <TableCell style={{color:"darkblue"}}>Date</TableCell>
+                <TableCell style={{color:"darkblue"}}>Class</TableCell>
+                <TableCell style={{color:"darkblue"}}>Username</TableCell>
+                <TableCell style={{color:"darkblue"}}>Status</TableCell>
                  
                  
               </TableRow>
@@ -164,24 +158,24 @@ function UserAttendance(){
               {
                   attendanceList.map(attendance=>(
                     <TableRow key={attendance.id}>
-                      <TableCell>{attendance.id}</TableCell>
+                      <TableCell style={{color:"darkblue"}}>{attendance.id}</TableCell>
                       <TableCell>
-                        <span style={{ display: 'inline-block', 
+                        <span style={{ display: 'inline-block', color:"darkblue", 
                           whiteSpace:"normal", wordBreak:"break-word" }}>
                           {attendance.remark}
                         </span>
                       </TableCell>
-                      <TableCell>
-                        <span>
+                      <TableCell >
+                        <span style={{color:"darkblue"}}>
                           {attendance.date}
                         </span>
                       </TableCell>
-                      <TableCell>
+                      <TableCell style={{color:"darkblue"}}>
                         {
                            getClassCode(attendance)
                         }
                       </TableCell>
-                      <TableCell>{
+                      <TableCell style={{color:"darkblue"}}>{
                         authUserChild.firstName + " "+  authUserChild.lastName
                        }
                       </TableCell>
@@ -197,17 +191,25 @@ function UserAttendance(){
             </TableBody>
           </Table>
           <div className="loaderContainer">
-            {isLoading && <CircularProgress />}
+            {isLoading && <CircularProgress x={{
+                '& .MuiCircularProgress-circle': {
+                 stroke: 'darkblue', 
+                },
+               '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                stroke: 'darkblue', 
+               },
+            }}/>}
           </div>
           <div className="loaderContainer">
             <Typography color="error">{msg}</Typography>
           </div>
            </Scrollbars>
         </Paper>
-        <Container sx={{textAlign:"right", marginTop:"40px",
-          marginBottom:"40px", marginRight:"-21px"}}>
+        <Container sx={{textAlign:"right", marginTop:"20px",
+          marginBottom:"20px", marginRight:"-21px"}}>
           <Button
-          sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}
+          sx={{backgroundColor:"#FFF", color:"darkblue",fontSize:"12px",
+            border:"1px solid darkblue", marginRight:"8px", height:"30px", width:"15px"}}
            onClick={()=>{
              if(prevPage){
                setUrl(prevPage);
@@ -216,7 +218,8 @@ function UserAttendance(){
             Prev
           </Button>
           <Button 
-            sx={{backgroundColor:"royalblue", color:"#FFF"}}
+            sx={{backgroundColor:"#FFF", color:"darkblue",fontSize:"12px",
+            border:"1px solid darkblue", marginRight:"8px", height:"30px", width:"15px"}}
           onClick={()=>{
             if(nextPage){
                setUrl(nextPage);
@@ -225,6 +228,7 @@ function UserAttendance(){
             Next
           </Button>
         </Container>
+        </Box>
         </Box>
       </Layout>
     </div>

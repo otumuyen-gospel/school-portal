@@ -228,7 +228,7 @@ function Attendance(){
         <Box component="form" sx={{backgroundColor:"#FFF", boxShadow:0, 
           border:"0.5px solid #EEE", padding:"5px 10px"}}>
         <div style={{marginBottom:"20px",width:"250px",float:"right",
-           marginTop:"20px"}}>
+           marginTop:"20px", marginRight:"-21px"}}>
           <input type="text" required placeholder="Search" 
           style={{padding:"10px",border:"1px solid #CCC",
             outline:"none", color:"#999", backgroundColor:"#FFF"
@@ -243,8 +243,8 @@ function Attendance(){
         </div>
         <Paper elevation={0}>
           <Scrollbars autoHide autoHideTimeout={1000}
-          style={{width:"100%", height:"370px"}}>
-          <Table style={{border:"1px solid #DDD"}} height="370px">
+          style={{width:"100%", height:"200px"}}>
+          <Table style={{border:"1px solid #DDD"}}>
             <TableHead>
               <TableRow>
                  <TableCell style={{color:"darkblue"}}>Id</TableCell>
@@ -314,7 +314,7 @@ function Attendance(){
             </TableBody>
           </Table>
           <div className="loaderContainer">
-            {isLoading && <CircularProgress x={{
+            {isLoading && <CircularProgress sx={{
                 '& .MuiCircularProgress-circle': {
                  stroke: 'darkblue', 
                 },
@@ -328,10 +328,10 @@ function Attendance(){
           </div>
           </Scrollbars>
         </Paper>
-        <Container sx={{textAlign:"right", marginTop:"40px",
-          marginBottom:"40px", marginRight:"-21px"}}>
+        <Container sx={{textAlign:"right", marginTop:"20px",
+          marginBottom:"20px", marginRight:"-21px"}}>
           <Button
-          sx={{backgroundColor:"#FFF", color:"darkblue",
+          sx={{backgroundColor:"#FFF", color:"darkblue",fontSize:"12px",
             border:"1px solid darkblue", marginRight:"8px", height:"30px", width:"15px"}}
            onClick={()=>{
              if(prevPage){
@@ -341,8 +341,8 @@ function Attendance(){
             Prev
           </Button>
           <Button 
-            sx={{backgroundColor:"darkblue", color:"#FFF", 
-              border:"1px solid darkblue",height:"30px", width:"15px"}}
+            sx={{backgroundColor:"#FFF", color:"darkblue",fontSize:"12px",
+            border:"1px solid darkblue", marginRight:"8px", height:"30px", width:"15px"}}
           onClick={()=>{
             if(nextPage){
                setUrl(nextPage);
@@ -364,7 +364,6 @@ function Attendance(){
                    sx={{
                              '& .MuiInputBase-root':{
                               height:"50px",
-                              borderRadius:"10px",
                           },
                            '& .MuiOutlinedInput-input':{
                               height:"50px",
