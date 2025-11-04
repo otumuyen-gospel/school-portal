@@ -217,7 +217,7 @@ function UserMarks(){
           marginTop:"10px",
         }}
         >
-        <Typography component="h1" variant="h6">My Grades</Typography>
+        <Typography component="h1" variant="h6">Grades Information</Typography>
         <Container sx={{textAlign:"right", marginRight:"-25px"}} >
           <TextField
                minWidth="200px"

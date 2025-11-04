@@ -162,29 +162,32 @@ function SubjectList(){
   
   
   return (
-    <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="Subject Lists">
-        <Box 
-       sx={{
-          minHeight:"100vh",
-          marginTop:"10px",
-        }}
-        >
-        <Typography component="h1" variant="h6" marginBottom={5}>
-          Subject Lists</Typography>
+    <div style={{backgroundColor:"#F9F9F5"}}>
+          <Layout title="De Modern Pace">
+            <Box 
+           sx={{
+              minHeight:"97vh",
+              paddingBottom:"3vh",
+              paddingTop:"10px",
+            }}
+            >
+            <Typography component="h1" variant="h6" 
+            style={{marginBottom:"10px", fontWeight:"normal",
+            color:"darkblue", fontSize:"14px"}}>
+              Subject Lists</Typography>
         <Grid container spacing={4} marginBottom={5}>
           {
             subjectList.map(subjectlist=>(
               <Grid item size={{xs:12, sm:12}} key={subjectlist.id}>
-                <Box boxShadow={1}>
+                <Box boxShadow={1} style={{backgroundColor:"#FFF"}}>
                   <Box padding="15px 5px">
                   <Grid container spacing={4}>
                     <Grid item size={{xs:6,}}>
-                      <Typography color="royalblue" fontWeight="bolder"  
+                      <Typography color="darkblue" fontWeight="bolder"  
                          textAlign="left" fontSize={15}>
                          {subjectlist.subjectCode}
                       </Typography>
-                       <Typography color="royalblue" fontWeight="bolder"  
+                       <Typography color="darkblue" fontWeight="bolder"  
                           fontSize={12} textAlign="left">
                          {subjectlist.subjectName}
                       </Typography>
@@ -212,7 +215,7 @@ function SubjectList(){
                     </Grid>
                   </Grid>
                   </Box>
-                  <Box padding="10px 5px" backgroundColor="#FCFCF9" >
+                  <Box padding="10px 5px" backgroundColor="#EEE" >
                     <Typography color="#333">{getClassCode(subjectlist)}</Typography>
                   </Box>
                 </Box>
@@ -222,7 +225,14 @@ function SubjectList(){
            }
         </Grid>
           <div className="loaderContainer">
-            {isLoading && <CircularProgress />}
+            {isLoading && <CircularProgress sx={{
+                '& .MuiCircularProgress-circle': {
+                 stroke: 'darkblue', 
+                },
+               '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                stroke: 'darkblue', 
+               },
+            }}/>}
           </div>
           <div className="loaderContainer">
             <Typography color="error">{msg}</Typography>
@@ -254,7 +264,6 @@ function SubjectList(){
                            sx={{
                              '& .MuiInputBase-root':{
                               height:"50px",
-                              borderRadius:"10px",
                           },
                            '& .MuiOutlinedInput-input':{
                               height:"50px",
@@ -276,7 +285,6 @@ function SubjectList(){
                           sx={{
                              '& .MuiInputBase-root':{
                               height:"50px",
-                              borderRadius:"10px",
                           },
                            '& .MuiOutlinedInput-input':{
                               height:"50px",
@@ -300,7 +308,6 @@ function SubjectList(){
                         <Select
                           sx={{
                               height:"50px",
-                              borderRadius:"10px",
                           }}
                           fullWidth
                           margin="normal"

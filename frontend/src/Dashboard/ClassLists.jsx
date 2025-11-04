@@ -125,28 +125,32 @@ function ClassList(){
   
   
   return (
-    <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="Class Lists">
-        <Box 
-       sx={{
-          minHeight:"100vh",
-          marginTop:"10px",
-        }}
-        >
-        <Typography component="h1" variant="h6">Class Lists</Typography>
+    <div style={{backgroundColor:"#F9F9F5"}}>
+          <Layout title="De Modern Pace">
+            <Box 
+           sx={{
+              minHeight:"97vh",
+              paddingBottom:"3vh",
+              paddingTop:"10px",
+            }}
+            >
+            <Typography component="h1" variant="h6" 
+            style={{marginBottom:"10px", fontWeight:"normal",
+            color:"darkblue", fontSize:"14px"}}>
+              Class Lists</Typography>
         <Grid container spacing={4} marginBottom={5}>
           {
             classList.map(classlist=>(
               <Grid item size={{xs:12, sm:12}} key={classlist.id}>
-                <Box boxShadow={1}>
+                <Box boxShadow={1} style={{backgroundColor:"#FFF"}}>
                   <Box padding="15px 5px">
                   <Grid container spacing={5}>
                     <Grid item size={{xs:6,}}>
-                      <Typography color="royalblue" fontWeight="bolder"  
+                      <Typography color="darkblue" fontWeight="bolder"  
                          textAlign="left" fontSize={15}>
                          {classlist.classCode}
                       </Typography>
-                       <Typography color="royalblue" fontWeight="bolder"  
+                       <Typography color="darkblue" fontWeight="bolder"  
                           fontSize={12} textAlign="left">
                          {classlist.className}
                       </Typography>
@@ -174,7 +178,7 @@ function ClassList(){
                     </Grid>
                   </Grid>
                   </Box>
-                  <Box padding="10px 5px" backgroundColor="#FCFCF9" >
+                  <Box padding="10px 5px" backgroundColor="#EEE" >
                     <Typography color="#333">ID : {classlist.id}</Typography>
                   </Box>
                 </Box>
@@ -184,7 +188,14 @@ function ClassList(){
            }
         </Grid>
           <div className="loaderContainer">
-            {isLoading && <CircularProgress />}
+            {isLoading && <CircularProgress sx={{
+                '& .MuiCircularProgress-circle': {
+                 stroke: 'darkblue', 
+                },
+               '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                stroke: 'darkblue', 
+               },
+            }}/>}
           </div>
           <div className="loaderContainer">
             <Typography color="error">{msg}</Typography>
@@ -216,7 +227,6 @@ function ClassList(){
                           sx={{
                              '& .MuiInputBase-root':{
                               height:"50px",
-                              borderRadius:"10px",
                           },
                            '& .MuiOutlinedInput-input':{
                               height:"50px",
@@ -238,7 +248,6 @@ function ClassList(){
                           sx={{
                              '& .MuiInputBase-root':{
                               height:"50px",
-                              borderRadius:"10px",
                           },
                            '& .MuiOutlinedInput-input':{
                               height:"50px",
