@@ -11,7 +11,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import DOMPurify from 'dompurify';
 import draftToHtml from 'draftjs-to-html';
@@ -107,50 +106,43 @@ function ScheduleList(){
   },[url, query])
   
   return (
-    <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="All Schedule">
-        <Box 
-       sx={{
-          minHeight:"100vh",
-          marginTop:"10px",
-        }}
-        >
-        <Typography component="h1" variant="h6">All Schedule</Typography>
-        <Container sx={{textAlign:"right", marginRight:"-25px"}} >
-          <TextField
-               minWidth="200px"
-               margin="normal"
-               required
-               id="params"
-               label="params"
-               type="text"
-               value={params}
+    <div style={{backgroundColor:"#F9F9F5"}}>
+          <Layout title="De Modern Pace">
+            <Box 
+           sx={{
+              minHeight:"97vh",
+              paddingBottom:"3vh",
+              paddingTop:"10px",
+            }}
+            >
+            <Typography component="h1" variant="h6" 
+            style={{marginBottom:"10px", fontWeight:"normal",
+            color:"darkblue", fontSize:"14px"}}>
+              Schedule Lists</Typography>
+        <div style={{marginBottom:"20px",textAlign:"right",
+           marginTop:"20px", marginRight:"auto"}}>
+          <input type="text" required placeholder="Search" 
+          style={{padding:"10px",border:"1px solid #CCC",
+            outline:"none", color:"#999", backgroundColor:"#FFF"
+          }} value={params}
                onChange={(e) =>setParams(e.target.value)}
-               name="params"/>
-               <Button 
-               sx={{backgroundColor:"royalblue",
-                color:"#FFFFFF",
-                border:"1px",
-                borderRadius:"0px",
-                marginTop:"16px",
-                '& .hover':{backgroundColor:"dodgerblue"},
-                minHeight:"56px"}}
-                onClick={()=>{
+               name="params" id="params"/>
+          <IconButton onClick={()=>{
                    setQuery({...query,search:params});
-                }}
-               >
-                <SearchIcon></SearchIcon>
-               </Button>
-        </Container>
+                }}>
+              <SearchIcon style={{color:"#666", width:"30px", height:"30px"}}/>
+          </IconButton>
+        </div>
+        <Box minHeight={70}>
         <Grid container spacing={4} marginBottom={5}>
           {
             scheduleList.map(schedule=>(
               <Grid item size={{xs:12, sm:12}} key={schedule.id}>
-                  <Box>
+                  <Box boxShadow={0} style={{backgroundColor:"#FFF"}}>
                     <Box padding="15px 5px">
                       <Grid container spacing={4}>
                         <Grid item size={{xs:6,}}>
-                          <Typography color="royalblue" fontWeight="bolder"  
+                          <Typography color="darkblue" fontWeight="bolder"  
                             textAlign="left" fontSize={15}>
                              {schedule.title}
                          </Typography>
@@ -182,7 +174,7 @@ function ScheduleList(){
                       </Grid>
                       </Grid>
                     </Box>
-                    <Box padding="10px 5px">
+                    <Box>
                         <Accordion width="100%">
                           <AccordionSummary
                           expandIcon={<ExpandMoreIcon />}
@@ -206,17 +198,26 @@ function ScheduleList(){
             ))
           }
         </Grid>
+        </Box>
         
          <div className="loaderContainer">
-            {isLoading && <CircularProgress />}
+            {isLoading && <CircularProgress  sx={{
+                '& .MuiCircularProgress-circle': {
+                 stroke: 'darkblue', 
+                },
+               '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                stroke: 'darkblue', 
+               },
+            }}/>}
          </div>
          <div className="loaderContainer">
             <Typography color="error">{msg}</Typography>
         </div>
-        <Container sx={{textAlign:"right", marginRight:"-21px", marginBottom:"40px",
-          marginTop:"40px"}}>
+        <Container sx={{textAlign:"right", marginTop:"20px",
+          marginBottom:"20px", marginRight:"-21px"}}>
           <Button
-          sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}
+          sx={{backgroundColor:"#FFF", color:"darkblue",fontSize:"12px",
+            border:"1px solid darkblue", marginRight:"8px", height:"30px", width:"15px"}}
            onClick={()=>{
              if(prevPage){
                setUrl(prevPage);
@@ -225,7 +226,8 @@ function ScheduleList(){
             Prev
           </Button>
           <Button 
-            sx={{backgroundColor:"royalblue", color:"#FFF"}}
+            sx={{backgroundColor:"#FFF", color:"darkblue",fontSize:"12px",
+            border:"1px solid darkblue", height:"30px", width:"15px"}}
           onClick={()=>{
             if(nextPage){
                setUrl(nextPage);

@@ -77,16 +77,26 @@ function Backups(){
   
   return (
      
-    <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="Backups">
-        <Box 
-       sx={{
-          minHeight:"100vh",
-          marginTop:"10px",
-        }}
-        >
-        <Typography component="h1" variant="h6">Backup / Restore</Typography>
-        <Box sx={{width:{xs:"100%", textAlign:"center"}}}>
+    <div style={{backgroundColor:"#F9F9F5"}}>
+          <Layout title="De Modern Pace">
+            <Box 
+           sx={{
+              minHeight:"97vh",
+              paddingBottom:"3vh",
+              paddingTop:"10px",
+            }}
+            >
+            <Typography component="h1" variant="h6" 
+            style={{marginBottom:"10px", fontWeight:"normal",
+            color:"darkblue", fontSize:"14px"}}>
+              Backup / Restore</Typography>
+        <Box sx={{
+              backgroundColor:"#FFF",
+              padding:"20px",
+              boxShadow:0,
+              border:"0.5px solid #EEE",
+              textAlign:"center",
+            }}>
             <Button
                 type="submit"
                 fullWidth
@@ -94,10 +104,10 @@ function Backups(){
                 disabled={isDisabled}
                 onClick={handleOpenBackupDialog}
                 sx={{ mt: 2, mb: 2, margin:"10px", height:"50px", width:"150px",
-                borderRadius:"10px", backgroundColor:"#FFF", color:"royalblue" }}>
+                borderRadius:"10px", backgroundColor:"#FFF", color:"darkblue" }}>
                     Backup
             </Button>
-
+            <br/>
             <Button
                 type="submit"
                 fullWidth
@@ -108,18 +118,25 @@ function Backups(){
                 borderRadius:"10px" }}>
                     Restore
             </Button>
-
-
-            <div className="loaderContainer" marginBottom={10}>
-                {isLoading && <CircularProgress />}
-            </div>
-
-            <Box className="loaderContainer" padding={7} boxShadow={1} borderRadius={5}>
-                <Typography component="h3" color="royalblue">
-                    You can find your backups at this location {location}
+            <Box className="loaderContainer" marginTop={10}>
+                <Typography component="h3" color="darkblue">
+                    BACKUP LOCATION ALWAYS DISPLAYED HERE: {location}
+                </Typography><br/>
+                 <Typography component="h5" color="darkblue">
+                    {location}
                 </Typography>
             </Box>
 
+            <div className="loaderContainer" marginBottom={10}>
+                {isLoading && <CircularProgress  sx={{
+                '& .MuiCircularProgress-circle': {
+                 stroke: 'darkblue', 
+                },
+               '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                stroke: 'darkblue', 
+               },
+            }}/>}
+            </div>
         </Box>
         </Box>
 

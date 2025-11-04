@@ -90,30 +90,32 @@ function CreateSchedule(){
   
   return (
      <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="New Schedule">
-        <Box 
-       sx={{
-          minHeight:"100vh",
-          marginTop:"10px",
-        }}
-        >
-        <Typography component="h1" variant="h6">New Schedule</Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{
-           width:{xs:"100%",}}}>
+               <div style={{backgroundColor:"#F9F9F5"}}>
+                 <Layout title="De Modern Pace">
+                   <Box 
+                  sx={{
+                     minHeight:"97vh",
+                     paddingBottom:"3vh",
+                     paddingTop:"10px",
+                   }}
+                   >
+                   <Typography component="h1" variant="h6" 
+                   style={{marginBottom:"10px", fontWeight:"normal",
+                   color:"darkblue", fontSize:"14px"}}>
+                     New Schedule</Typography>
+                   <Box component="form" onSubmit={handleSubmit} sx={{
+                          backgroundColor:"#FFF", boxShadow:0, border:"0.5px solid #EEE", padding:"5px 10px"}}>
 
-             <Typography marginTop={5} style={{color:"royalblue"}}>
-              Title And Date</Typography>
-             <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
-                        marginTop={5} padding="10px 30px">
-
-                <Grid container spacing={1}>
-                   <Grid item size={{xs:12, sm:6, md:6}}>
+                <Grid container spacing={2}>
+                  <Grid item size={{sx:12,}}>
+                    <Typography marginTop={5} style={{color:"darkblue"}}>
+                      Title And Date</Typography>
+                  </Grid>
+                   <Grid item size={{xs:12,}}>
                       <TextField
                         sx={{
                            '& .MuiInputBase-root':{
                             height:"50px",
-                            borderRadius:"10px",
                          },
                          '& .MuiOutlinedInput-input':{
                          height:"50px",
@@ -134,7 +136,7 @@ function CreateSchedule(){
                  
                       />
                    </Grid>
-                   <Grid item size={{xs:12, sm:6, md:6}}>
+                   <Grid item size={{xs:12,}}>
                       <FormControl 
                       required  
                       fullWidth
@@ -142,7 +144,6 @@ function CreateSchedule(){
                             margin:"16px 0px 0px 0px",
                            '& .MuiInputBase-root':{
                             height:"50px",
-                            borderRadius:"10px",
                          },
                          '& .MuiOutlinedInput-input':{
                          height:"50px",
@@ -164,7 +165,7 @@ function CreateSchedule(){
                      </FormControl>
                    </Grid>
 
-                   <Grid item size={{xs:12, sm:6, md:6}}>
+                   <Grid item size={{xs:12, }}>
                       <FormControl 
                       required  
                       fullWidth
@@ -172,7 +173,6 @@ function CreateSchedule(){
                             margin:"16px 0px 0px 0px",
                            '& .MuiInputBase-root':{
                             height:"50px",
-                            borderRadius:"10px",
                          },
                          '& .MuiOutlinedInput-input':{
                          height:"50px",
@@ -193,14 +193,11 @@ function CreateSchedule(){
                        /></LocalizationProvider>
                      </FormControl>
                    </Grid>
-                </Grid>
-              </Box>
-              
-              <Typography marginTop={5} style={{color:"royalblue"}}>
-              Schedule Detail</Typography>
-             <Box marginBottom={5} marginTop={5}>
-                <Grid container>
-                   <Grid item size={{xs:12, sm:12, md:12}}>
+                  <Grid item size={{xs:12,}}>
+                    <Typography marginTop={5} style={{color:"darkblue"}}>
+                     Schedule Detail</Typography>
+                  </Grid>
+                   <Grid item size={{xs:12,}}>
                     <span>{detailsMsg}</span>
                     <Editor
                      minHeight="150px"
@@ -209,20 +206,26 @@ function CreateSchedule(){
                     />
                    </Grid>
                 </Grid>
-              </Box>
 
               <div style={{textAlign:"center"}}>
-              <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled={isDisabled}
-              sx={{mt: 2, mb: 2, height:"50px", width:"150px",
-              borderRadius:"10px" }}>Create</Button></div>
-
-              <div className="loaderContainer" marginBottom={20}>
-                     {isLoading && <CircularProgress />}
-               </div>
+                         <Button
+                         fullWidth
+                         type="submit"
+                         variant="contained"
+                         disabled={isDisabled}
+                         sx={{ mt: 2, mb: 2, height:"50px", backgroundColor:"darkblue" }}>
+                          Create Schedule</Button></div>
+                       
+                         <div className="loaderContainer" marginBottom={10}>
+                                {isLoading && <CircularProgress sx={{
+                           '& .MuiCircularProgress-circle': {
+                            stroke: 'darkblue', 
+                           },
+                          '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                           stroke: 'darkblue', 
+                          },
+                       }}/>}
+                          </div>
 
         </Box>
 
