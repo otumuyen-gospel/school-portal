@@ -88,7 +88,7 @@ function Register(){
      }
     }
 
-    const url = "http://localhost:8000/classes/class-list/";
+    const url = "classes/class-list/";
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
@@ -115,7 +115,7 @@ function Register(){
      }
     }
 
-    const url = "http://localhost:8000/accounts/users-list/";
+    const url = "accounts/users-list/";
     const query = {role:"student"};
     listStudents(url, query).then(allData=>{
       setStudentList(allData)

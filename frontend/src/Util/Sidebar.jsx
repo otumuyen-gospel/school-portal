@@ -15,7 +15,6 @@ import ScheduleIcon from "@mui/icons-material/ScheduleOutlined";
 import SubjectIcon from "@mui/icons-material/SubjectOutlined";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
-import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -140,12 +139,12 @@ function Sidebar(props){
                 
                 <ListItemIcon>
                     <Icon style={{
-                       color:"#FFF",
+                       color:"darkblue",
                        width:"17px",
                        height:"17px"}}/>
                 </ListItemIcon>
                 <ListItemText style={{
-                      color:"#FFF",
+                      color:"darkblue",
                       fontWeight:"normal",
                       fontSize:"5px"}}>
                        {label}
@@ -165,12 +164,12 @@ function Sidebar(props){
             >
                <ListItemIcon>
                <Icon style={{
-                color:"#FFF",
+                color:"darkblue",
                 width:"17px",
                 height:"17px"}}/>
                </ListItemIcon>
                <ListItemText style={{
-                color:"#FFF",
+                color:"darkblue",
                 fontWeight:"normal",
                 fontSize:"5px"}}>{sectionTitle}</ListItemText>
             </ListItem>
@@ -194,9 +193,10 @@ function Sidebar(props){
     }
 
     return <div style={{
-        backgroundColor:"darkblue",
+        backgroundColor:"#FFF",
         height:"100vh",
         padding:"auto 10px",
+        borderRight:"0.5px solid #DDD"
     }}
     >
           {/* page links */}
@@ -208,12 +208,12 @@ function Sidebar(props){
           }}
           button onClick={()=>{navigate("/dashboard/")}} >
                <ListItemIcon><DashboardIcon style={{
-                color:"#FFF",
+                color:"darkblue",
                 width:"17px",
                 height:"17px"
             }}/></ListItemIcon><br/>
               <ListItemText style={{
-                color:"#FFF",
+                color:"darkblue",
                 fontWeight:"normal",
                 fontSize:"5px"
             }}>Dashboard</ListItemText>  
@@ -239,7 +239,6 @@ function Sidebar(props){
         />
 
         {/* logout section*/}
-        <Divider color="#555"/>
         <ListItem sx={{
             cursor:"pointer",
         }} button onClick={()=>{
@@ -247,12 +246,12 @@ function Sidebar(props){
             
         }}>
             <ListItemIcon><LogoutIcon style={{
-                color:"#FFF",
+                color:"darkblue",
                 width:"17px",
                 height:"17px"
             }}/></ListItemIcon><br/>
               <ListItemText style={{
-                color:"#FFF",
+                color:"darkblue",
                 fontWeight:"normal",
                 fontSize:"5px"
             }}>Logout</ListItemText>

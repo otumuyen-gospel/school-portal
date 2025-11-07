@@ -8,7 +8,6 @@ import QuizIcon from "@mui/icons-material/QuizOutlined";
 import ScheduleIcon from "@mui/icons-material/ScheduleOutlined";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
-import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -113,12 +112,12 @@ const ListItems = ({ items}) =>
                 
                 <ListItemIcon>
                     <Icon style={{
-                       color:"#FFF",
+                       color:"darkblue",
                        width:"17px",
                        height:"17px"}}/>
                 </ListItemIcon>
                 <ListItemText style={{
-                      color:"#FFF",
+                      color:"darkblue",
                       fontWeight:"bold",
                       fontSize:"5px"}}>
                        {label}
@@ -138,12 +137,12 @@ const ListItems = ({ items}) =>
             >
                <ListItemIcon>
                <Icon style={{
-                color:"#FFF",
+                color:"darkblue",
                 width:"17px",
                 height:"17px"}}/>
                </ListItemIcon>
                <ListItemText style={{
-                color:"#FFF",
+                color:"darkblue",
                 fontWeight:"bold",
                 fontSize:"5px"}}>{sectionTitle}</ListItemText>
             </ListItem>
@@ -167,9 +166,10 @@ const ListItems = ({ items}) =>
     }
 
    return <div style={{
-        backgroundColor:"darkblue",
+        backgroundColor:"#FFF",
         height:"100vh",
         padding:"auto 10px",
+        borderBottom:"0.5px solid #DDD"
     }}
     >
           {/* page links */}
@@ -181,12 +181,12 @@ const ListItems = ({ items}) =>
           }}
           button onClick={()=>{navigate("/dashboard/")}} >
                <ListItemIcon><DashboardIcon style={{
-                color:"#FFF",
+                color:"darkblue",
                 width:"17px",
                 height:"17px"
             }}/></ListItemIcon><br/>
               <ListItemText style={{
-                color:"#FFF",
+                color:"darkblue",
                 fontWeight:"normal",
                 fontSize:"5px"
             }}>Dashboard</ListItemText>  
@@ -212,7 +212,6 @@ const ListItems = ({ items}) =>
         />
 
         {/* logout section*/}
-        <Divider color="#555"/>
         <ListItem sx={{
             cursor:"pointer",
         }} button onClick={()=>{
@@ -220,12 +219,12 @@ const ListItems = ({ items}) =>
             
         }}>
             <ListItemIcon><LogoutIcon style={{
-                color:"#FFF",
+                color:"darkblue",
                 width:"17px",
                 height:"17px"
             }}/></ListItemIcon><br/>
               <ListItemText style={{
-                color:"#FFF",
+                color:"darkblue",
                 fontWeight:"normal",
                 fontSize:"5px"
             }}>Logout</ListItemText>

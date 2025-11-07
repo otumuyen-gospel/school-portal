@@ -32,6 +32,15 @@ function Layout(props){
    const navigate = useNavigate();
    const isMobile = useMediaQuery('(max-width:700px)');
 
+
+   /*ensure sidebar is hidden at first view on mobile  */
+   useEffect(()=>{
+    if(isMobile){
+        setOpen(false);
+    }
+   },[isMobile])
+
+   
    const openDrawer = ()=>{
     setOpen(open ? false : true);
    }
@@ -57,6 +66,7 @@ function Layout(props){
         setBadge(0); //reset notification badge
       })
    }
+
    useEffect(()=>{
      setUser();
    },[])

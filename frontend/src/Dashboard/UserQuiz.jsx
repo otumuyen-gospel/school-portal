@@ -171,7 +171,7 @@ const convertToHtml = (content)=>{
                    onChange={(e) =>setParams(e.target.value)}
                    name="params" id="params">
             
-             <option value="None" selected>None</option>
+             <option value="None">None</option>
                     {
                       subjectList.map(list=>(
                         <option key={list.id}
