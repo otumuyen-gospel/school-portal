@@ -174,7 +174,7 @@ const ListItems = ({ items}) =>
     }
 
     return <div style={{
-        backgroundColor:"darkblue",
+        backgroundColor:"#FFF",
         height:"100vh",
         padding:"auto 10px",
         borderRight:"0.5px solid #DDD"
