@@ -36,7 +36,7 @@ function Request(){
      
     }
     setIsLoading(true);
-    axios.post("http://192.168.1.9:8000/auth/reset/request/",
+    axios.post("http://192.168.1.11:8000/auth/reset/request/",
       {email}).then((res) => {
         setIsLoading(false)
         navigate("/verify/", {state:{ userEmail:email, }});

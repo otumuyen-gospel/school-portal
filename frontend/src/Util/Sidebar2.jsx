@@ -77,7 +77,7 @@ function Sidebar2(props){
                 to:"/create-schedule/", hidden:false},
             {label:"Schedules", Icon:ScheduleIcon, 
                 to:"/schedule-list/", hidden:false},
-            {label:"Tickets", Icon:ClassIcon, 
+            {label:"Complaints", Icon:ClassIcon, 
                 to:"/class-complaint-list/", hidden:false},
             
         ],

@@ -62,7 +62,7 @@ function Password(){
       }
     }
     setIsLoading(true);
-    axios.post("http://192.168.1.9:8000/auth/reset/password/",
+    axios.post("http://192.168.1.11:8000/auth/reset/password/",
       data).then((res) => {
         setIsLoading(false)
         setPopMsg(res.data.message + ". you can login now");

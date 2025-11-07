@@ -3,11 +3,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
-import Select from "@mui/material/Select";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -150,56 +147,48 @@ const convertToHtml = (content)=>{
   }
   
   return (
-    <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="My Quizzes">
-        <Box 
-       sx={{
-          minHeight:"100vh",
-          marginTop:"10px",
-        }}
-        >
-        <Typography component="h1" variant="h6">Practice Quiz</Typography>
-        <Container sx={{textAlign:"right", marginRight:"-25px"}} >
-          <FormControl sx={{margin:"16px 0px 0px 0px", minWidth: "200px" }}>
-              <InputLabel id="params">{params || "subject"}</InputLabel>
-              <Select
-                minWidth="200px"
-                margin="normal"
-                required
-                id="params"
-                labelId="params"
-                name='params'
-                value={params}
-                onChange={(e) => {
-                  setParams(e.target.value)
-                }}
-                >
-                  <MenuItem value="">None</MenuItem>
+    <div style={{backgroundColor:"#F9F9F5"}}>
+          <Layout title="De Modern Pace">
+            <Box 
+           sx={{
+              minHeight:"97vh",
+              paddingBottom:"3vh",
+              paddingTop:"10px",
+            }}
+            >
+            <Typography component="h1" variant="h6" 
+            style={{marginBottom:"10px", fontWeight:"normal",
+            color:"darkblue", fontSize:"14px"}}>
+             Practice Quiz</Typography>
+       <Box sx={{backgroundColor:"#FFF", boxShadow:0, 
+              border:"0.5px solid #EEE", padding:"5px 10px"}}>
+            <div style={{marginBottom:"20px",float:"right",
+               marginTop:"20px", marginRight:"auto"}}>
+          <select required placeholder="Search" 
+              style={{padding:"10px",border:"1px solid #CCC",
+                outline:"none", color:"#999", backgroundColor:"#FFF"
+              }} value={params}
+                   onChange={(e) =>setParams(e.target.value)}
+                   name="params" id="params">
+            
+             <option value="None" selected>None</option>
                     {
                       subjectList.map(list=>(
-                        <MenuItem key={list.id}
-                          value={list.id}>{list.subjectCode}</MenuItem>
+                        <option key={list.id}
+                          value={list.id}>{list.subjectCode}</option>
                         ))
                                   
                     }
-               </Select>
-          </FormControl>
-          <Button 
-               sx={{backgroundColor:"royalblue",
-                color:"#FFFFFF",
-                border:"1px",
-                borderRadius:"0px",
-                marginTop:"16px",
-                '& .hover':{backgroundColor:"dodgerblue"},
-                minHeight:"56px"}}
+          </select>
+          <IconButton
                 onClick={()=>{
                    setReportList([]);
                    setQuery({...query,search:params});
                 }}
                >
-                <SearchIcon></SearchIcon>
-               </Button>
-        </Container>
+                <SearchIcon style={{color:"#666", width:"30px", height:"30px"}}/>
+               </IconButton>
+        </div>
         <Container>
           <div>
              <Typography variant="h3"  
@@ -293,15 +282,24 @@ const convertToHtml = (content)=>{
             </Scrollbars>
         }
         </Container>
+        </Box>
         <Container>
           <div className="loaderContainer">
-            {isLoading && <CircularProgress />}
+            {isLoading && <CircularProgress  x={{
+                                    '& .MuiCircularProgress-circle': {
+                                     stroke: 'darkblue', 
+                                    },
+                                   '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                                    stroke: 'darkblue', 
+                                   },
+                                }}/>}
           </div>
         </Container>
-        <Container sx={{textAlign:"right", marginTop:"40px", 
-          marginRight:"-21px",marginBottom:"40px"}}>
+        <Container sx={{textAlign:"right", marginTop:"20px",
+                              marginBottom:"20px", marginRight:"-21px"}}>
           <Button disabled={quizList.length ? false : true }
-            sx={{backgroundColor:"royalblue", color:"#FFF"}}
+            sx={{backgroundColor:"#FFF", color:"darkblue",fontSize:"12px",
+                                border:"1px solid darkblue", height:"30px", width:"15px"}}
           onClick={()=>{
              let c = counter;
              if(c >= quizList.length - 1){

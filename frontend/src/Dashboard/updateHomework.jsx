@@ -1,21 +1,36 @@
+import CloudUploadIcon from '@mui/icons-material/CloudUpload'; // Or any other suitable icon
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
+import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 import MessageDialogForm from "../Util/MessageDialogForm";
 
 function UpdateHomework(){
+  const VisuallyHiddenInput = styled('input')({
+          clip: 'rect(0 0 0 0)',
+          clipPath: 'inset(50%)',
+          height: 1,
+          overflow: 'hidden',
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          whiteSpace: 'nowrap',
+          width: 1,
+        });
+    const hasUpload = useRef("");
+    const [selectedFile, setSelectedFile] = useState("");
   const homework = useLocation().state;
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -42,7 +57,9 @@ function UpdateHomework(){
     }
     
    const data = new FormData();
-       data.append('link',form.link);
+       if(hasUpload.current){
+      data.append('link',hasUpload.current);
+    }
        data.append('title',form.title);
        data.append('userId',homework?.userId);
        data.append('classId',homework?.classId);
@@ -71,30 +88,31 @@ function UpdateHomework(){
   }
   
   return (
-     <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="Update Work">
-        <Box 
-       sx={{
-          minHeight:"100vh",
-          marginTop:"10px",
-        }}
-        >
-        <Typography component="h1" variant="h6">Update Work</Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{
-           width:{xs:"100%",}}}>
-
-            <Typography marginTop={5} style={{color:"royalblue"}}>
-              Update Homework</Typography>
-             <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
-                        marginTop={5} padding="10px 30px">
-
-                <Grid container spacing={1}>
-                   <Grid item size={{xs:12, sm:6, md:6}}>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <div style={{backgroundColor:"#F9F9F5"}}>
+                 <Layout title="De Modern Pace">
+                   <Box 
+                  sx={{
+                     minHeight:"97vh",
+                     paddingBottom:"3vh",
+                     paddingTop:"10px",
+                   }}
+                   >
+                   <Typography component="h1" variant="h6" 
+                   style={{marginBottom:"10px", fontWeight:"normal",
+                   color:"darkblue", fontSize:"14px"}}>
+                     Update Homework</Typography>
+                   <Box component="form" onSubmit={handleSubmit} sx={{
+                          backgroundColor:"#FFF", boxShadow:0, border:"0.5px solid #EEE", padding:"5px 10px"}}>
+                  <Grid container spacing={2} textAlign="center">
+                  <Grid item size={{xs:12,}}>
+                     <Typography marginTop={1} style={{color:"darkblue", textAlign:"left"}}>
+                        Homework Data</Typography>
+                  </Grid>
+                   <Grid item size={{xs:12,}}>
                       <TextField
                         sx={{
                            '& .MuiInputBase-root':{
-                            borderRadius:"10px",
                             height:"50px",
                          },
                          '& .MuiOutlinedInput-input':{
@@ -116,39 +134,13 @@ function UpdateHomework(){
                  
                       />
                    </Grid>
-                   <Grid item size={{xs:12, sm:6, md:6}}>
-                     <TextField
-                        sx={{
-                           '& .MuiInputBase-root':{
-                            borderRadius:"10px",
-                            height:"50px",
-                         },
-                         '& .MuiOutlinedInput-input':{
-                          height:"50px",
-                         paddingTop:0,
-                         paddingBottom:0,
-                         },
-                        }}
-                      fullWidth
-                      margin="normal"
-                      required
-                      id="link"
-                      type="file"
-                      onChange={(e) => setForm({ ...form,
-                           link: e.target.files[0] })}
-                      name="link"
-                 
-                      />
-                      
-                   </Grid>
-                   <Grid item size={{xs:12, sm:6, md:6}}>
+                   <Grid item size={{xs:12,}}>
                       <FormControl 
                       required  
                       fullWidth
                       sx={{
                             margin:"16px 0px",
                            '& .MuiInputBase-root':{
-                            borderRadius:"10px",
                             height:"50px",
                          },
                          '& .MuiOutlinedInput-input':{
@@ -170,29 +162,63 @@ function UpdateHomework(){
                        /></LocalizationProvider>
                      </FormControl>
                    </Grid>
-                   <Grid item size={{xs:12, sm:6, md:6}}>
+                   <Grid item size={{xs:12,}}>
                     <Typography style={{ display: 'inline-block', 
                           whiteSpace:"normal", wordBreak:"break-word" }}>
                         Previous File : <a href={homework?.link}>{homework?.link}</a>
                         </Typography>
                    </Grid>
+                   <Grid item size={{xs:12,}}>
+                                         <Box style={{textAlign:"center"}}>
+                                                         <Button
+                                                            fullWidth
+                                                            component="label" 
+                                                            role={undefined}
+                                                            variant="contained"
+                                                            tabIndex={-1}
+                                                            startIcon={<CloudUploadIcon />}
+                                                            style={{backgroundColor:"#FFF", color:"darkblue"}}
+                                                          >
+                                                           Select New File
+                                                          <VisuallyHiddenInput type="file" onChange={(e) =>{ 
+                                                             if(e.target.files.length){
+                                                                  hasUpload.current = e.target.files[0];
+                                                                  setSelectedFile(e.target.files[0].name);
+                                                             }else{
+                                                                hasUpload.current = "";
+                                                             }
+                                                                   
+                                                           }} />
+                                                         </Button>
+                                                         <br/>
+                                                         <Typography style={{color:"#666"}}>
+                                                           You have selected this File:{selectedFile}
+                                                         </Typography>
+                                                         </Box>
+                                      </Grid>
                 </Grid>
-              </Box>
               
               <div style={{textAlign:"center"}}>
-              <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled={isDisabled}
-              sx={{mt: 2, mb: 2, width:"150px",
-              borderRadius:"10px" }}>Upload</Button></div>
-
-              <div className="loaderContainer" marginBottom={10}>
-                     {isLoading && <CircularProgress />}
-               </div>
+                         <Button
+                         fullWidth
+                         type="submit"
+                         variant="contained"
+                         disabled={isDisabled}
+                         sx={{ mt: 2, mb: 2, height:"50px", backgroundColor:"darkblue" }}>
+                          Upload</Button></div>
+                       
+                         <div className="loaderContainer" marginBottom={10}>
+                                {isLoading && <CircularProgress sx={{
+                           '& .MuiCircularProgress-circle': {
+                            stroke: 'darkblue', 
+                           },
+                          '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                           stroke: 'darkblue', 
+                          },
+                       }}/>}
+              </div>
+              </Box>
           </Box>
-      </Box>
 
         <MessageDialogForm open={openMsgBox} 
         onClose={handleCloseMsgBox} 

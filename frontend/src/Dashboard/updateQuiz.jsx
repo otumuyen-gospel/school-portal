@@ -135,25 +135,27 @@ function UpdateQuiz(){
   }
   
   return (
-    <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="Update Quiz">
-        <Box 
-       sx={{
-          minHeight:"100vh",
-          marginTop:"10px",
-        }}
-        >
-        <Typography component="h1" variant="h6">Update Quiz</Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{
-           width:{xs:"100%",}}}>
-
-            <Typography marginTop={5} style={{color:"royalblue"}}>
-              Quiz details</Typography>
-             <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
-                        marginTop={5} padding="10px 30px">
-
-                <Grid container spacing={1}>
-                   <Grid item size={{xs:12, sm:12, md:12}}>
+    <div style={{backgroundColor:"#F9F9F5"}}>
+                 <Layout title="De Modern Pace">
+                   <Box 
+                  sx={{
+                     minHeight:"97vh",
+                     paddingBottom:"3vh",
+                     paddingTop:"10px",
+                   }}
+                   >
+                   <Typography component="h1" variant="h6" 
+                   style={{marginBottom:"10px", fontWeight:"normal",
+                   color:"darkblue", fontSize:"14px"}}>
+                     Update Quiz</Typography>
+                   <Box component="form" onSubmit={handleSubmit} sx={{
+                          backgroundColor:"#FFF", boxShadow:0, border:"0.5px solid #EEE", padding:"5px 10px"}}>
+                  <Grid container spacing={2} textAlign="center">
+                  <Grid item size={{xs:12,}}>
+                     <Typography marginTop={1} style={{color:"darkblue", textAlign:"left"}}>
+                        Quiz Details</Typography>
+                  </Grid>
+                   <Grid item size={{xs:12,}}>
                       <span style={{display:"inline"}}>
                         {detailsMsg ? detailsMsg : "Quiz Question"}
                         </span>
@@ -163,12 +165,11 @@ function UpdateQuiz(){
                         onEditorStateChange={onEditorStateChange}
                       />
                    </Grid>
-                   <Grid item size={{xs:12, sm:6, md:6}}>
+                   <Grid item size={{xs:12,}}>
                       <TextField
                         sx={{
                            '& .MuiInputBase-root':{
                             height:"50px",
-                            borderRadius:"10px",
                          },
                          '& .MuiOutlinedInput-input':{
                          height:"50px",
@@ -189,12 +190,11 @@ function UpdateQuiz(){
                  
                       />
                    </Grid>
-                   <Grid item size={{xs:12, sm:6, md:6}}>
+                   <Grid item size={{xs:12,}}>
                       <TextField
                         sx={{
                            '& .MuiInputBase-root':{
                             height:"50px",
-                            borderRadius:"10px",
                          },
                          '& .MuiOutlinedInput-input':{
                          height:"50px",
@@ -215,12 +215,11 @@ function UpdateQuiz(){
                  
                       />
                    </Grid>
-                   <Grid item size={{xs:12, sm:6, md:6}}>
+                   <Grid item size={{xs:12,}}>
                       <TextField
                         sx={{
                            '& .MuiInputBase-root':{
                             height:"50px",
-                            borderRadius:"10px",
                          },
                          '& .MuiOutlinedInput-input':{
                          height:"50px",
@@ -241,12 +240,11 @@ function UpdateQuiz(){
                  
                       />
                    </Grid>
-                   <Grid item size={{xs:12, sm:6, md:6}}>
+                   <Grid item size={{xs:12,}}>
                       <TextField
                         sx={{
                            '& .MuiInputBase-root':{
                             height:"50px",
-                            borderRadius:"10px",
                          },
                          '& .MuiOutlinedInput-input':{
                          height:"50px",
@@ -267,22 +265,15 @@ function UpdateQuiz(){
                  
                       />
                    </Grid>
-                </Grid>
-              </Box>
-
-              <Typography marginTop={5} style={{color:"royalblue"}}>
-              Other details</Typography>
-             <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
-                        marginTop={5} padding="10px 30px">
-
-                <Grid container spacing={1}>
-                   <Grid item size={{xs:12, sm:6, md:6}}>
+              <Grid item size={{xs:12,}}><Typography marginTop={1} style={{
+                color:"darkblue", textAlign:"left"}}>
+              Other details</Typography></Grid>
+                   <Grid item size={{xs:12,}}>
                       <Checkbox
                         sx={{
                            display:"inline",
                            '& .MuiInputBase-root':{
                             height:"50px",
-                            borderRadius:"10px",
                          },
                          '& .MuiOutlinedInput-input':{
                          height:"50px",
@@ -306,7 +297,7 @@ function UpdateQuiz(){
                         Remember to reset start and end date.
                      </Typography>
                    </Grid>
-                   <Grid item size={{xs:12, sm:6, md:6}}>
+                   <Grid item size={{xs:12,}}>
                       <FormControl 
                       required  
                       fullWidth
@@ -314,7 +305,6 @@ function UpdateQuiz(){
                             margin:"16px 0px",
                            '& .MuiInputBase-root':{
                             height:"50px",
-                            borderRadius:"10px",
                          },
                          '& .MuiOutlinedInput-input':{
                          height:"50px",
@@ -335,7 +325,7 @@ function UpdateQuiz(){
                      </FormControl>
                    </Grid>
 
-                    <Grid item size={{xs:12, sm:6, md:6}}>
+                    <Grid item size={{xs:12,}}>
                       <FormControl 
                       required  
                       fullWidth
@@ -343,7 +333,6 @@ function UpdateQuiz(){
                             margin:"16px 0px",
                            '& .MuiInputBase-root':{
                             height:"50px",
-                            borderRadius:"10px",
                          },
                          '& .MuiOutlinedInput-input':{
                          height:"50px",
@@ -364,7 +353,7 @@ function UpdateQuiz(){
                      </FormControl>
                    </Grid>
 
-                   <Grid item size={{xs:12, sm:6, md:6}}>
+                   <Grid item size={{xs:12,}}>
                       <FormControl 
                       required  
                       fullWidth
@@ -372,7 +361,6 @@ function UpdateQuiz(){
                             margin:"16px 0px",
                            '& .MuiInputBase-root':{
                             height:"50px",
-                            borderRadius:"10px",
                          },
                          '& .MuiOutlinedInput-input':{
                          height:"50px",
@@ -404,22 +392,28 @@ function UpdateQuiz(){
                      </FormControl>
                    </Grid>
                 </Grid>
-              </Box>
               
               <div style={{textAlign:"center"}}>
-              <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled={isDisabled}
-              sx={{mt: 2, mb: 2, height:"50px", width:"150px",
-              borderRadius:"10px" }}>Update</Button></div>
-
-              <div className="loaderContainer" marginBottom={10}>
-                     {isLoading && <CircularProgress />}
-               </div>
+                         <Button
+                         fullWidth
+                         type="submit"
+                         variant="contained"
+                         disabled={isDisabled}
+                         sx={{ mt: 2, mb: 2, height:"50px", backgroundColor:"darkblue" }}>
+                          Upload</Button></div>
+                       
+                         <div className="loaderContainer" marginBottom={10}>
+                                {isLoading && <CircularProgress sx={{
+                           '& .MuiCircularProgress-circle': {
+                            stroke: 'darkblue', 
+                           },
+                          '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                           stroke: 'darkblue', 
+                          },
+                       }}/>}
+              </div>
+            </Box>
           </Box>
-      </Box>
 
         <MessageDialogForm open={openMsgBox} 
         onClose={handleCloseMsgBox} 

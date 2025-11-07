@@ -87,7 +87,7 @@ function Sidebar(props){
                 to:"/create-schedule/", hidden:false},
             {label:"Schedules", Icon:ScheduleIcon, 
                 to:"/schedule-list/", hidden:false},
-            {label:"Tickets", Icon:TicketIcon, 
+            {label:"Complaints", Icon:TicketIcon, 
                 to:"/complaint-list/", hidden:false},
             {label:"Backups", Icon:BackupIcon, 
                 to:"/backups/", hidden:false},

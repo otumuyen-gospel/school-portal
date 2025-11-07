@@ -12,8 +12,10 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
 import { useNavigate } from "react-router-dom";
@@ -126,54 +128,49 @@ function UserHomeworkList(){
   },[url, query])
   
   return (
-    <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="Homeworks">
-        <Box 
-       sx={{
-          minHeight:"100vh",
-          marginTop:"10px",
-        }}
-        >
-        <Typography component="h1" variant="h6">Homeworks</Typography>
-        <Container sx={{textAlign:"right", marginRight:"-25px"}} >
-          <TextField
-               minWidth="200px"
-               margin="normal"
-               required
-               id="params"
-               label="params"
-               type="text"
-               value={params}
-               onChange={(e) =>setParams(e.target.value)}
-               name="params"/>
-               <Button 
-               sx={{backgroundColor:"royalblue",
-                color:"#FFFFFF",
-                border:"1px",
-                borderRadius:"0px",
-                marginTop:"16px",
-                '& .hover':{backgroundColor:"dodgerblue"},
-                minHeight:"56px"}}
-                onClick={()=>{
-                   setQuery({...query,search:params});
-                }}
-               >
-                <SearchIcon></SearchIcon>
-               </Button>
-        </Container>
-        <Paper>
-           <Scrollbars autoHide autoHideTimeout={1000}
-                            style={{width:"100%", height:"200px"}}>
-          <Table>
+    <div style={{backgroundColor:"#F9F9F5"}}>
+          <Layout title="De Modern Pace">
+            <Box 
+           sx={{
+              minHeight:"97vh",
+              paddingBottom:"3vh",
+              paddingTop:"10px",
+            }}
+            >
+            <Typography component="h1" variant="h6" 
+            style={{marginBottom:"10px", fontWeight:"normal",
+            color:"darkblue", fontSize:"14px"}}>
+              Homeworks</Typography>
+            <Box component="form" sx={{backgroundColor:"#FFF", boxShadow:0, 
+              border:"0.5px solid #EEE", padding:"5px 10px"}}>
+            <div style={{marginBottom:"20px",float:"right",
+               marginTop:"20px", marginRight:"auto"}}>
+              <input type="text" required placeholder="Search" 
+              style={{padding:"10px",border:"1px solid #CCC",
+                outline:"none", color:"#999", backgroundColor:"#FFF"
+              }} value={params}
+                   onChange={(e) =>setParams(e.target.value)}
+                   name="params" id="params"/>
+              
+              <IconButton onClick={()=>{
+                       setQuery({...query,search:params});
+                    }}>
+                  <SearchIcon style={{color:"#666", width:"30px", height:"30px"}}/>
+              </IconButton>
+        </div>
+        <Paper elevation={0}>
+          <Scrollbars autoHide autoHideTimeout={1000}
+          style={{width:"100%", height:"200px"}}>
+          <Table style={{border:"1px solid #DDD"}}>
             <TableHead>
               <TableRow>
-                 <TableCell>Id</TableCell>
-                 <TableCell>Class</TableCell>
-                 <TableCell>Title</TableCell>
-                 <TableCell>Link</TableCell>
-                 <TableCell>Date</TableCell>
-                 <TableCell>Update</TableCell>
-                 <TableCell>Delete</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Id</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Class</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Title</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Link</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Date</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Update</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Delete</TableCell>
                  
               </TableRow>
             </TableHead>
@@ -181,44 +178,50 @@ function UserHomeworkList(){
               {
                   homeworkList.map(homework=>(
                     <TableRow key={homework.id}>
-                      <TableCell>{homework.id}</TableCell>
-                      <TableCell>{userClass.className}</TableCell>
+                      <TableCell style={{color:"darkblue"}}>{homework.id}</TableCell>
+                      <TableCell style={{color:"darkblue"}}>{userClass.className}</TableCell>
                       <TableCell>
-                        <span style={{ display: 'inline-block', 
+                        <span style={{ display: 'inline-block', color:"darkblue",
                           whiteSpace:"normal", wordBreak:"break-word" }}>
                           {homework.title}
                         </span>
                       </TableCell>
                       <TableCell>
                         <a href={homework.link}  style={{ display: 'inline-block', 
-                          whiteSpace:"normal", wordBreak:"break-word" }}>
+                          whiteSpace:"normal", wordBreak:"break-word", color:"darkblue" }}>
                           {homework.link}
                         </a>
                       </TableCell>
                       <TableCell>
-                        <span style={{ display: 'inline-block', 
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <span style={{ display: 'inline-block', color:"darkblue",
                           whiteSpace:"normal", wordBreak:"break-word" }}>
-                          {homework.submission}
+                          {dayjs(homework.submission).format("YYYY-MM-DD HH:mm.ss")}
                         </span>
+                        </LocalizationProvider>
                       </TableCell>
                       <TableCell>
-                        <IconButton title="update"
+                        <Button style={{backgroundColor:"darkblue", 
+                                                height:"30px", width:"15px"}}
+                                                 title="update"
                          onClick={()=>{
                              setCurrHomework(homework);
                              navigate('/homework-update',{state:homework});
                            
                           }}>
-                        <PromoteIcon></PromoteIcon>
-                        </IconButton>
+                        <PromoteIcon style={{color:"#FFF"}}></PromoteIcon>
+                        </Button>
                       </TableCell>
                       <TableCell>
-                         <IconButton title="delete"
+                        <Button style={{backgroundColor:"darkblue", 
+                                                height:"30px", width:"15px"}}
+                                                 title="delete"
                          onClick={()=>{
                              setCurrHomework(homework);
                              handleOpenDeleteDialog();  
                           }}>
-                        <TrashIcon></TrashIcon>
-                        </IconButton>
+                        <TrashIcon style={{color:"#FFF"}}></TrashIcon>
+                        </Button>
                       </TableCell>
                       
                     </TableRow>
@@ -229,17 +232,25 @@ function UserHomeworkList(){
             </TableBody>
           </Table>
           <div className="loaderContainer">
-            {isLoading && <CircularProgress />}
+            {isLoading && <CircularProgress  sx={{
+                '& .MuiCircularProgress-circle': {
+                 stroke: 'darkblue', 
+                },
+               '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                stroke: 'darkblue', 
+               },
+            }}/>}
           </div>
           <div className="loaderContainer">
             <Typography color="error">{msg}</Typography>
           </div>
            </Scrollbars>
         </Paper>
-        <Container sx={{textAlign:"right", marginTop:"40px",
-          marginBottom:"40px", marginRight:"-21px"}}>
+        <Container sx={{textAlign:"right", marginTop:"20px",
+          marginBottom:"20px", marginRight:"-21px"}}>
           <Button
-          sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}
+          sx={{backgroundColor:"#FFF", color:"darkblue",fontSize:"12px",
+            border:"1px solid darkblue", marginRight:"8px", height:"30px", width:"15px"}}
            onClick={()=>{
              if(prevPage){
                setUrl(prevPage);
@@ -248,7 +259,8 @@ function UserHomeworkList(){
             Prev
           </Button>
           <Button 
-            sx={{backgroundColor:"royalblue", color:"#FFF"}}
+            sx={{backgroundColor:"#FFF", color:"darkblue",fontSize:"12px",
+            border:"1px solid darkblue", height:"30px", width:"15px"}}
           onClick={()=>{
             if(nextPage){
                setUrl(nextPage);
@@ -257,6 +269,7 @@ function UserHomeworkList(){
             Next
           </Button>
         </Container>
+        </Box>
         </Box>
       </Layout>
 

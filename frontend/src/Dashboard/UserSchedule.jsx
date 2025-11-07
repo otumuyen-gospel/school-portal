@@ -11,6 +11,9 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs from 'dayjs';
 import DOMPurify from 'dompurify';
 import draftToHtml from 'draftjs-to-html';
 import { useEffect, useState } from "react";
@@ -93,10 +96,13 @@ function UserSchedule(){
                             textAlign="left" fontSize={15}>
                              {schedule.title}
                          </Typography>
+                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                          <Typography color="darkblue" fontWeight="bolder"  
                           fontSize={12} textAlign="left">
-                           {schedule.startDateTime} - {schedule.endDateTime}
+                           {dayjs(schedule.startDateTime).format("YYYY-MM-DD HH:mm.ss")} - 
+                           {dayjs(schedule.sendDateTime).format("YYYY-MM-DD HH:mm.ss")}
                           </Typography>
+                          </LocalizationProvider>
                         </Grid>
                         <Grid item size={{xs:6,}}>
                           <Box textAlign="right">

@@ -169,31 +169,32 @@ function UpdateMark(){
   }
   
   return (
-    <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="Update Grade">
-        <Box 
-       sx={{
-          minHeight:"100vh",
-          marginTop:"10px",
-        }}
-        >
-        <Typography component="h1" variant="h6">Update Grade</Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{
-           width:{xs:"100%",}}}>
-
-
-            <Typography marginTop={5} style={{color:"royalblue"}}>
-                Exam and Test Scores </Typography>
-            <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
-                        marginTop={5} padding="10px 30px">
-                 <Grid container spacing={1}>
-                  <Grid item size={{xs:12, sm:6, md:6}}>
+    <div style={{backgroundColor:"#F9F9F5"}}>
+                 <Layout title="De Modern Pace">
+                   <Box 
+                  sx={{
+                     minHeight:"97vh",
+                     paddingBottom:"3vh",
+                     paddingTop:"10px",
+                   }}
+                   >
+                   <Typography component="h1" variant="h6" 
+                   style={{marginBottom:"10px", fontWeight:"normal",
+                   color:"darkblue", fontSize:"14px"}}>
+                     Update Grades</Typography>
+                   <Box component="form" onSubmit={handleSubmit} sx={{
+                          backgroundColor:"#FFF", boxShadow:0, border:"0.5px solid #EEE", padding:"5px 10px"}}>
+                  <Grid container spacing={2} textAlign="center">
+                  <Grid item size={{xs:12,}}>
+                     <Typography marginTop={1} style={{color:"darkblue", textAlign:"left"}}>
+                        Exam & Test Scores</Typography>
+                  </Grid>
+                  <Grid item size={{xs:12,}}>
                     <TextField
                       fullWidth
                         sx={{
                           '& .MuiInputBase-root':{
                           height:"50px",
-                           borderRadius:"10px",
                           },
                           '& .MuiOutlinedInput-input':{
                            height:"50px",
@@ -213,13 +214,12 @@ function UpdateMark(){
                                      
                           />
                   </Grid>
-                  <Grid item size={{xs:12, sm:6, md:6}}>
+                  <Grid item size={{xs:12,}}>
                     <TextField
                       fullWidth
                         sx={{
                           '& .MuiInputBase-root':{
                           height:"50px",
-                           borderRadius:"10px",
                           },
                           '& .MuiOutlinedInput-input':{
                            height:"50px",
@@ -239,13 +239,12 @@ function UpdateMark(){
                                      
                           />
                   </Grid>
-                  <Grid item size={{xs:12, sm:6, md:6}}>
+                  <Grid item size={{xs:12,}}>
                     <TextField
                       fullWidth
                         sx={{
                           '& .MuiInputBase-root':{
                           height:"50px",
-                           borderRadius:"10px",
                           },
                           '& .MuiOutlinedInput-input':{
                            height:"50px",
@@ -265,13 +264,12 @@ function UpdateMark(){
                                      
                           />
                   </Grid>
-                  <Grid item size={{xs:12, sm:6, md:6}}>
+                  <Grid item size={{xs:12,}}>
                     <TextField
                       fullWidth
                         sx={{
                           '& .MuiInputBase-root':{
                           height:"50px",
-                           borderRadius:"10px",
                           },
                           '& .MuiOutlinedInput-input':{
                            height:"50px",
@@ -291,21 +289,15 @@ function UpdateMark(){
                                      
                           />
                   </Grid>
-                 </Grid>
-            </Box>
-
-            <Typography marginTop={5} style={{color:"royalblue"}}>
-                Assignment Scores</Typography>
-            <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
-                        marginTop={5} padding="10px 30px">
-                 <Grid container spacing={1}>
-                  <Grid item size={{xs:12, sm:6, md:6}}>
+                  <Grid item size={{xs:12,}}>
+                  <Typography marginTop={5} style={{color:"darkblue", textAlign:"left"}}>
+                Assignment Scores</Typography></Grid>
+                  <Grid item size={{xs:12,}}>
                     <TextField
                       fullWidth
                         sx={{
                           '& .MuiInputBase-root':{
                           height:"50px",
-                           borderRadius:"10px",
                           },
                           '& .MuiOutlinedInput-input':{
                            height:"50px",
@@ -325,13 +317,12 @@ function UpdateMark(){
                                      
                           />
                   </Grid>
-                  <Grid item size={{xs:12, sm:6, md:6}}>
+                  <Grid item size={{xs:12,}}>
                     <TextField
                       fullWidth
                         sx={{
                           '& .MuiInputBase-root':{
                           height:"50px",
-                           borderRadius:"10px",
                           },
                           '& .MuiOutlinedInput-input':{
                            height:"50px",
@@ -351,13 +342,12 @@ function UpdateMark(){
                                      
                           />
                   </Grid>
-                  <Grid item size={{xs:12, sm:6, md:6}}>
+                  <Grid item size={{xs:12,}}>
                     <TextField
                       fullWidth
                         sx={{
                           '& .MuiInputBase-root':{
                           height:"50px",
-                           borderRadius:"10px",
                           },
                           '& .MuiOutlinedInput-input':{
                            height:"50px",
@@ -377,28 +367,23 @@ function UpdateMark(){
                                      
                           />
                   </Grid>
-                 </Grid>
-            </Box>
 
-            <Typography marginTop={5} style={{color:"royalblue"}}>
-                Subject / Student</Typography>
-            <Box boxShadow={1} marginBottom={5} borderTop="5px solid royalblue"
-                        marginTop={5} padding="10px 30px">
-                 <Grid container spacing={1} textAlign="center">
-                  <Grid item size={{xs:12, sm:12, md:12}}>
+            <Typography marginTop={1} style={{color:"darkblue", textAlign:"left"}}>
+                Other Information</Typography>
+                  <Grid item size={{xs:12,}}>
                     <FormControl  sx={{
-                            width:"60%",
                             margin:"16px 0px",
                           '& .MuiInputBase-root':{
                           height:"50px",
-                           borderRadius:"10px",
                           },
                           '& .MuiOutlinedInput-input':{
                            height:"50px",
                            paddingTop:0,
                            paddingBottom:0,
                            },
-                          }}>
+                          }}
+                          fullWidth
+                          >
                       <InputLabel id="subject-label">{form.subjectId || "subject"}</InputLabel>
                      <Select
                       fullWidth
@@ -422,21 +407,21 @@ function UpdateMark(){
                      </Select>
                    </FormControl>
                   </Grid>
-                  <Grid item size={{xs:12, sm:12, md:12}}>
+                  <Grid item size={{xs:12,}}>
                     <FormControl  sx={{
-                            width:"60%",
                             margin:"16px 0px 0px 0px",
                           '& .MuiInputBase-root':{
                           height:"50px",
-                           borderRadius:"10px",
                           },
                           '& .MuiOutlinedInput-input':{
                            height:"50px",
                            paddingTop:0,
                            paddingBottom:0,
                            },
-                          }}>
-                      <InputLabel id="child-label">{form.userId || "child"}</InputLabel>
+                          }} 
+                          fullWidth
+                          >
+                      <InputLabel id="child-label">{form.userId || "student"}</InputLabel>
                       <Select
                       fullWidth
                       margin="normal"
@@ -444,7 +429,7 @@ function UpdateMark(){
                       id="childId"
                        name="childId"
                        value={form.userId}
-                       label="child"
+                       label="student"
                         onChange={(e) => setForm({ ...form,
                          userId: e.target.value })}
                      
@@ -461,24 +446,29 @@ function UpdateMark(){
                       </Select>
                      </FormControl>
                   </Grid>
-                 </Grid>
-            </Box>
+                  </Grid>
 
-             <div style={{textAlign:"center"}}>
-              <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled={isDisabled}
-              sx={{ mt: 2, mb: 2, height:"50px", width:"150px",
-              borderRadius:"10px" }}>Upload</Button></div>
-            
-              <div className="loaderContainer" marginBottom={10}>
-                     {isLoading && <CircularProgress />}
-               </div>
+            <div style={{textAlign:"center"}}>
+                         <Button
+                         fullWidth
+                         type="submit"
+                         variant="contained"
+                         disabled={isDisabled}
+                         sx={{ mt: 2, mb: 2, height:"50px", backgroundColor:"darkblue" }}>
+                          Upload</Button></div>
+                       
+                         <div className="loaderContainer" marginBottom={10}>
+                                {isLoading && <CircularProgress sx={{
+                           '& .MuiCircularProgress-circle': {
+                            stroke: 'darkblue', 
+                           },
+                          '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                           stroke: 'darkblue', 
+                          },
+                       }}/>}
+              </div>
             </Box>
-
-      </Box>
+          </Box>
 
 
         <MessageDialogForm open={openMsgBox} 
@@ -488,7 +478,6 @@ function UpdateMark(){
         />
       </Layout>
     </div>
-    
 );
 
 }

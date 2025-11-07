@@ -37,7 +37,7 @@ function Verify(){
     
     const data =  {email:receivedData.userEmail, otp:otps};
     setIsLoading(true);
-    axios.post("http://192.168.1.9:8000/auth/reset/verify/",
+    axios.post("http://192.168.1.11:8000/auth/reset/verify/",
      data).then((res) => {
         setIsLoading(false)
         navigate("/password/", {state:{ userEmail:data.email, }});

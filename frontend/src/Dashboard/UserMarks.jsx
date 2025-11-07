@@ -4,13 +4,13 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
@@ -209,89 +209,76 @@ function UserMarks(){
       }
   
   return (
-    <div style={{backgroundColor:"#FFF"}}>
-      <Layout title="My Grades">
-        <Box 
-       sx={{
-          minHeight:"100vh",
-          marginTop:"10px",
-        }}
-        >
-        <Typography component="h1" variant="h6">Grades Information</Typography>
-        <Container sx={{textAlign:"right", marginRight:"-25px"}} >
-          <TextField
-               minWidth="200px"
-               margin="normal"
-               required
-               id="params"
-               label="params"
-               type="text"
-               value={params}
-               onChange={(e) =>setParams(e.target.value)}
-               name="params"/>
-               <Button 
-               sx={{backgroundColor:"royalblue",
-                color:"#FFFFFF",
-                border:"1px",
-                borderRadius:"0px",
-                marginTop:"16px",
-                '& .hover':{backgroundColor:"dodgerblue"},
-                minHeight:"56px"}}
-                onClick={initializeQuery}
-               >
-                <SearchIcon></SearchIcon>
-               </Button>
-
-               <Button 
+    <div style={{backgroundColor:"#F9F9F5"}}>
+          <Layout title="De Modern Pace">
+            <Box 
+           sx={{
+              minHeight:"97vh",
+              paddingBottom:"3vh",
+              paddingTop:"10px",
+            }}
+            >
+            <Typography component="h1" variant="h6" 
+            style={{marginBottom:"10px", fontWeight:"normal",
+            color:"darkblue", fontSize:"14px"}}>
+              Attendance</Typography>
+            <Box component="form" sx={{backgroundColor:"#FFF", boxShadow:0, 
+              border:"0.5px solid #EEE", padding:"5px 10px"}}>
+            <div style={{marginBottom:"20px",float:"right",
+               marginTop:"20px", marginRight:"auto"}}>
+              <Button style={{backgroundColor:"#FFF",border:"1px solid #CCC",
+                height:"37px", marginRight:"8px"
+               }}
                title="Export To Excel"
                disabled={disabled}
-               variant="contained"
-               sx={{backgroundColor:"#FFF",
-                color:"royalblue",
-                border:"1px",
-                borderRadius:"0px",
-                marginTop:"16px",
-                marginLeft:"10px",
-                '& .hover':{backgroundColor:"#FFF", color:"dodgerblue"},
-                minHeight:"54px"}}
                 onClick={Download}
                >
-                <ExcelIcon />
+                <ExcelIcon style={{color:"darkblue", width:"30px", height:"30px"}} />
                </Button>
-        </Container>
-        <Paper>
-           <Scrollbars autoHide autoHideTimeout={1000}
-                            style={{width:"100%", height:"200px"}}>
-          <Table>
+              <input type="text" required placeholder="Search" 
+              style={{padding:"10px",border:"1px solid #CCC",
+                outline:"none", color:"#999", backgroundColor:"#FFF"
+              }} value={params}
+                   onChange={(e) =>setParams(e.target.value)}
+                   name="params" id="params"/>
+              
+              <IconButton onClick={initializeQuery}>
+                  <SearchIcon style={{color:"#666", width:"30px", height:"30px"}}/>
+              </IconButton>
+        </div>
+        <Paper elevation={0}>
+          <Scrollbars autoHide autoHideTimeout={1000}
+          style={{width:"100%", height:"200px"}}>
+          <Table style={{border:"1px solid #DDD"}}>
             <TableHead>
               <TableRow>
-                 <TableCell>Id</TableCell>
-                 <TableCell>Test1</TableCell>
-                 <TableCell>Test2</TableCell>
-                 <TableCell>Test3</TableCell>
-                 <TableCell>Work1</TableCell>
-                 <TableCell>Work2</TableCell>
-                 <TableCell>Work3</TableCell>
-                 <TableCell>Exam</TableCell>
-                 <TableCell>Total</TableCell>
-                 <TableCell>Grade</TableCell>
-                 <TableCell>Subject</TableCell>
-                 <TableCell>Class</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Id</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Test1</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Test2</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Test3</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Work1</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Work2</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Work3</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Exam</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Total</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Grade</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Subject</TableCell>
+                 <TableCell style={{color:"darkblue"}}>Class</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {
                   markList.map(mark=>(
                     <TableRow key={mark.id}>
-                      <TableCell>{mark.id}</TableCell>
-                      <TableCell>{mark.test_score1}</TableCell>
-                      <TableCell>{mark.test_score2}</TableCell>
-                      <TableCell>{mark.test_score3}</TableCell>
-                      <TableCell>{mark.homework_score1}</TableCell>
-                      <TableCell>{mark.homework_score2}</TableCell>
-                      <TableCell>{mark.homework_score3}</TableCell>
-                      <TableCell>{mark.examScore}</TableCell>
-                      <TableCell>
+                      <TableCell style={{color:"darkblue"}}>{mark.id}</TableCell>
+                      <TableCell style={{color:"darkblue"}}>{mark.test_score1}</TableCell>
+                      <TableCell style={{color:"darkblue"}}>{mark.test_score2}</TableCell>
+                      <TableCell v>{mark.test_score3}</TableCell>
+                      <TableCell style={{color:"darkblue"}}>{mark.homework_score1}</TableCell>
+                      <TableCell style={{color:"darkblue"}}>{mark.homework_score2}</TableCell>
+                      <TableCell style={{color:"darkblue"}}>{mark.homework_score3}</TableCell>
+                      <TableCell style={{color:"darkblue"}}>{mark.examScore}</TableCell>
+                      <TableCell style={{color:"darkblue"}}>
                         {
                           (parseInt(mark.test_score1) + 
                           parseInt(mark.test_score2) + 
@@ -300,7 +287,7 @@ function UserMarks(){
                         }
                       
                       </TableCell>
-                      <TableCell>
+                      <TableCell style={{color:"darkblue"}}>
                        {
                         getGrade((parseInt(mark.test_score1) + 
                           parseInt(mark.test_score2) + 
@@ -308,12 +295,12 @@ function UserMarks(){
                           parseInt(mark.examScore)))
                        }
                       </TableCell>
-                      <TableCell>
+                      <TableCell style={{color:"darkblue"}}>
                        {
                            getSubjectCode(mark)
                         }
                       </TableCell>
-                      <TableCell>
+                      <TableCell style={{color:"darkblue"}}>
                         {
                            getClassCode(mark)
                         }
@@ -327,17 +314,25 @@ function UserMarks(){
             </TableBody>
           </Table>
           <div className="loaderContainer">
-            {isLoading && <CircularProgress />}
+            {isLoading && <CircularProgress  sx={{
+                '& .MuiCircularProgress-circle': {
+                 stroke: 'darkblue', 
+                },
+               '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                stroke: 'darkblue', 
+               },
+            }}/>}
           </div>
           <div className="loaderContainer">
             <Typography color="error">{msg}</Typography>
           </div>
            </Scrollbars>
         </Paper>
-        <Container sx={{textAlign:"right", marginTop:"40px", 
-          marginRight:"-21px",marginBottom:"40px"}}>
+        <Container sx={{textAlign:"right", marginTop:"20px",
+          marginBottom:"20px", marginRight:"-21px"}}>
           <Button
-          sx={{backgroundColor:"royalblue", color:"#FFF", marginRight:"8px"}}
+          sx={{backgroundColor:"#FFF", color:"darkblue",fontSize:"12px",
+            border:"1px solid darkblue", marginRight:"8px", height:"30px", width:"15px"}}
            onClick={()=>{
              if(prevPage){
                setUrl(prevPage);
@@ -346,7 +341,8 @@ function UserMarks(){
             Prev
           </Button>
           <Button 
-            sx={{backgroundColor:"royalblue", color:"#FFF"}}
+            sx={{backgroundColor:"#FFF", color:"darkblue",fontSize:"12px",
+            border:"1px solid darkblue", height:"30px", width:"15px"}}
           onClick={()=>{
             if(nextPage){
                setUrl(nextPage);
@@ -356,6 +352,8 @@ function UserMarks(){
           </Button>
         </Container>
         </Box>
+        </Box>
+      </Layout>
 
 
          <MessageDialogForm open={openMsgBox} 
@@ -363,7 +361,6 @@ function UserMarks(){
                 formContent={<Typography>{msg}</Typography>}
                 title="Message Dialog"
                 />
-      </Layout>
 
     </div>
 );

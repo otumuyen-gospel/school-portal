@@ -17,6 +17,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
 import axiosInstance from "../Util/ApiRefresher";
@@ -318,7 +321,11 @@ function ClassAttendance(){
                       </TableCell>
                       <TableCell>
                         <span style={{color:"darkblue"}}>
-                          {attendance.date}
+                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <span style={{color:"darkblue"}}>
+                                {dayjs(attendance.date).format("YYYY-MM-DD HH:mm.ss")}
+                              </span>
+                          </LocalizationProvider>
                         </span>
                       </TableCell>
                       <TableCell style={{color:"darkblue"}}>

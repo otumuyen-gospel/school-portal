@@ -12,6 +12,9 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
 import axiosInstance from "../Util/ApiRefresher";
@@ -166,9 +169,11 @@ function UserAttendance(){
                         </span>
                       </TableCell>
                       <TableCell >
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <span style={{color:"darkblue"}}>
-                          {attendance.date}
+                          {dayjs(attendance.date).format("YYYY-MM-DD HH:mm.ss")}
                         </span>
+                        </LocalizationProvider>
                       </TableCell>
                       <TableCell style={{color:"darkblue"}}>
                         {

@@ -61,9 +61,9 @@ function Sidebar4(props){
         Others:[
             {label:"Schedules", Icon:ScheduleIcon, 
                 to:"/user-schedule/", hidden:false},
-            {label:"New Ticket", Icon:AddIcon, 
+            {label:"New Complaint", Icon:AddIcon, 
                 to:"/create-complaint/", hidden:false},
-            {label:"Tickets", Icon:AccountIcon,
+            {label:"Complaints", Icon:AccountIcon,
                  to:"/user-complaint-list/", hidden:false},
             
         ],

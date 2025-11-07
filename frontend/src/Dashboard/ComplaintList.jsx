@@ -14,6 +14,9 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
 import DOMPurify from 'dompurify';
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
@@ -210,7 +213,11 @@ function ComplaintList(){
                          </Typography>
                          <Typography color="darkblue" fontWeight="bolder"  
                           fontSize={12} textAlign="left">
-                           {complaint.date}
+                           <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                  <span style={{color:"darkblue"}}>
+                                      {dayjs(complaint.date).format("YYYY-MM-DD HH:mm.ss")}
+                                  </span>
+                          </LocalizationProvider>
                           </Typography>
                         </Grid>
                         <Grid item size={{xs:6,}}>
