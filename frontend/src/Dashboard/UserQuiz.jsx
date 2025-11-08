@@ -37,6 +37,13 @@ function UserQuiz(){
   const [selectMsg, setSelectMsg] = useState("");
   const [subjectName, setSubjectName]  = useState('')
 
+  const autoDeselectRadioInput = ()=>{
+    const inputs = document.getElementsByName("quiz");
+    for(var i = 0; i < inputs.length; i++){
+      inputs[i].checked = false;
+    }
+  }
+
 const convertToHtml = (content)=>{
         const unsafeHtml = draftToHtml(JSON.parse(content));
         return DOMPurify.sanitize(unsafeHtml);
@@ -103,7 +110,7 @@ const convertToHtml = (content)=>{
             if(allData.length){
                setShowQuiz(true);
                setSelectMsg("")
-               setSubjectName(getSubjectCode(query.search))
+               setSubjectName(getSubjectCode(parseInt(query.search)))
                setMsg("");
             }else{
              setShowQuiz(false)
@@ -311,6 +318,7 @@ const convertToHtml = (content)=>{
             }else{
               c = counter + 1;  //increment counter
               setCounter(c);
+              autoDeselectRadioInput();
 
             }
           }}>
