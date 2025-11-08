@@ -1,4 +1,5 @@
 import AdminIcon from "@mui/icons-material/AdminPanelSettings";
+import CircleIcon from "@mui/icons-material/CircleOutlined";
 import ClassIcon from "@mui/icons-material/ClassOutlined";
 import ParentIcon from "@mui/icons-material/Man2Outlined";
 import AttendanceIcon from "@mui/icons-material/PagesOutlined";
@@ -378,6 +379,29 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
+            <Box style={{backgroundColor:"#FFF", height:"80px",
+               border:"0.5px solid #EEE",
+            }} 
+            boxShadow={0}>
+                <ListItem>
+                  <ListItemText>
+                    <Typography style={{color:"darkblue", fontWeight:"bolder",
+                     fontSize:"20px"}}>
+                      {(adminCount + studentCount + teacherCount + parentCount)}
+                    </Typography>
+                     <Typography style={{fontWeight:"normal", color:"#666",
+                     fontSize:"12px"}}>
+                      Total Users
+                    </Typography>
+                  </ListItemText>
+                  <ListItemIcon>
+                    <CircleIcon  style={{color:"darkblue", fontSize:"45px"}}/>
+                  </ListItemIcon>
+                </ListItem>
+            </Box>
+          </Grid>
+
+          <Grid item size={{xs:12,sm:6, md:3}}>
             <Box style={{backgroundColor:"#FFF",height:"80px",
                border:"0.5px solid #EEE",
             }} 
@@ -429,7 +453,7 @@ function Dashboard(){
                 <ListItem>
                   <ListItemText>
                     <Typography style={{color:"darkblue", fontWeight:"bolder",
-                     fontSize:"20px"}}>
+                     fontSize:"15px"}}>
                       {attendanceCount} {studentCount}
                     </Typography>
                      <Typography style={{fontWeight:"normal", color:"#666",
@@ -447,7 +471,7 @@ function Dashboard(){
           <Grid item size={{xs:12, md:9}}>
              <Box style={{backgroundColor:"#FFF", padding:"20px",
                border:"0.5px solid #EEE",
-             }} 
+             }}  
             boxShadow={0}>
               <Scrollbars autoHide autoHideTimeout={1000}
                   style={{width:"100%", height:"250px"}}>

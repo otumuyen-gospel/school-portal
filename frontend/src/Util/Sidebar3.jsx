@@ -182,7 +182,7 @@ const ListItems = ({ items}) =>
     >
           {/* page links */}
           <Scrollbars autoHide autoHideTimeout={2000}
-                  style={{width:"100%", height:"330px",}}>
+                  style={{width:"100%", height:"inherit",}}>
           <Box>
          <ListItem  sx={{
             cursor:"pointer",
@@ -199,25 +199,9 @@ const ListItems = ({ items}) =>
                 fontSize:"5px"
             }}>Dashboard</ListItemText>  
          </ListItem>
-
          {/*Collapsible categories*/}
         <Categories />
-        </Box>
-        </Scrollbars>
 
-        {/*Dialog window */}
-        <ConfirmDialogForm open={openDialog} 
-        onClose={handleCloseDialog} 
-        onSubmit={logout}
-        formContent={<Typography>This action will log you out</Typography>}
-        title="Confirm Dialog"
-        />
-
-        <MessageDialogForm open={openMsgBox} 
-        onClose={handleCloseMsgBox} 
-        formContent={<Typography>{error}</Typography>}
-        title="Message Dialog"
-        />
         
         {/* logout section*/}
         <ListItem sx={{
@@ -237,6 +221,22 @@ const ListItems = ({ items}) =>
                 fontSize:"5px"
             }}>Logout</ListItemText>
         </ListItem>
+        </Box>
+        </Scrollbars>
+
+        {/*Dialog window */}
+        <ConfirmDialogForm open={openDialog} 
+        onClose={handleCloseDialog} 
+        onSubmit={logout}
+        formContent={<Typography>This action will log you out</Typography>}
+        title="Confirm Dialog"
+        />
+
+        <MessageDialogForm open={openMsgBox} 
+        onClose={handleCloseMsgBox} 
+        formContent={<Typography>{error}</Typography>}
+        title="Message Dialog"
+        />
     
     </div>
 }

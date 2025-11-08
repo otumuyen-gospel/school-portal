@@ -7,11 +7,7 @@ import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
-import Divider from "@mui/material/Divider";
 import IconButton from '@mui/material/IconButton';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -190,18 +186,8 @@ function Layout(props){
                         width:"30px"}} 
                         /></IconButton>
 
-                    <div style={{width:"250px", backgroundColor:"darkblue"}}>
+                    <div style={{width:"250px", backgroundColor:"#FFF"}}>
                      {/* navigation sidebar */}
-                     <ListItem style={{backgroundColor:"rgb(0,0,150)",}}>
-                        <ListItemIcon>
-                            <StudentIcon style={{color:'#FFF'}}/>
-                        </ListItemIcon>
-                        <ListItemText style={{color:'#FFF', fontWeight:"bolder",
-                             fontSize:"15px", padding:"10px auto"}}>
-                            De Modern Pace
-                        </ListItemText>
-                     </ListItem>
-                     <Divider color="#555"/>
                      {userSideBar()}
                      </div>
                 </div>

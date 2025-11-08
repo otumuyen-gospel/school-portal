@@ -180,71 +180,71 @@ const ListItems = ({ items}) =>
     }
 
     return <div style={{
-            backgroundColor:"#FFF",
-            height:"100vh",
-            padding:"auto 10px",
-            borderRight:"0.5px solid #DDD"
-        }}
-        >
-              {/* page links */}
-              <Scrollbars autoHide autoHideTimeout={2000}
-                      style={{width:"100%", height:"330px",}}>
-              <Box>
-             <ListItem  sx={{
-                cursor:"pointer",
-              }}
-              button onClick={()=>{navigate("/dashboard/")}} >
-                   <ListItemIcon><DashboardIcon style={{
-                    color:"darkblue",
-                    width:"17px",
-                    height:"17px"
-                }}/></ListItemIcon><br/>
-                  <ListItemText style={{
-                    color:"darkblue",
-                    fontWeight:"normal",
-                    fontSize:"5px"
-                }}>Dashboard</ListItemText>  
-             </ListItem>
-    
-             {/*Collapsible categories*/}
-            <Categories />
-            </Box>
-            </Scrollbars>
-    
-            {/*Dialog window */}
-            <ConfirmDialogForm open={openDialog} 
-            onClose={handleCloseDialog} 
-            onSubmit={logout}
-            formContent={<Typography>This action will log you out</Typography>}
-            title="Confirm Dialog"
-            />
-    
-            <MessageDialogForm open={openMsgBox} 
-            onClose={handleCloseMsgBox} 
-            formContent={<Typography>{error}</Typography>}
-            title="Message Dialog"
-            />
-    
-            {/* logout section*/}
-            <ListItem sx={{
-                cursor:"pointer",
-            }} button onClick={()=>{
-                handleOpenDialog()
-                
-            }}>
-                <ListItemIcon><LogoutIcon style={{
-                    color:"darkblue",
-                    width:"17px",
-                    height:"17px"
-                }}/></ListItemIcon><br/>
-                  <ListItemText style={{
-                    color:"darkblue",
-                    fontWeight:"normal",
-                    fontSize:"5px"
-                }}>Logout</ListItemText>
-            </ListItem>
+        backgroundColor:"#FFF",
+        height:"100vh",
+        padding:"auto 10px",
+        borderRight:"0.5px solid #DDD"
+    }}
+    >
+          {/* page links */}
+          <Scrollbars autoHide autoHideTimeout={2000}
+                  style={{width:"100%", height:"inherit",}}>
+          <Box>
+         <ListItem  sx={{
+            cursor:"pointer",
+          }}
+          button onClick={()=>{navigate("/dashboard/")}} >
+               <ListItemIcon><DashboardIcon style={{
+                color:"darkblue",
+                width:"17px",
+                height:"17px"
+            }}/></ListItemIcon><br/>
+              <ListItemText style={{
+                color:"darkblue",
+                fontWeight:"normal",
+                fontSize:"5px"
+            }}>Dashboard</ListItemText>  
+         </ListItem>
+         {/*Collapsible categories*/}
+        <Categories />
+
         
-        </div>
+        {/* logout section*/}
+        <ListItem sx={{
+            cursor:"pointer",
+        }} button onClick={()=>{
+            handleOpenDialog()
+            
+        }}>
+            <ListItemIcon><LogoutIcon style={{
+                color:"darkblue",
+                width:"17px",
+                height:"17px"
+            }}/></ListItemIcon><br/>
+              <ListItemText style={{
+                color:"darkblue",
+                fontWeight:"normal",
+                fontSize:"5px"
+            }}>Logout</ListItemText>
+        </ListItem>
+        </Box>
+        </Scrollbars>
+
+        {/*Dialog window */}
+        <ConfirmDialogForm open={openDialog} 
+        onClose={handleCloseDialog} 
+        onSubmit={logout}
+        formContent={<Typography>This action will log you out</Typography>}
+        title="Confirm Dialog"
+        />
+
+        <MessageDialogForm open={openMsgBox} 
+        onClose={handleCloseMsgBox} 
+        formContent={<Typography>{error}</Typography>}
+        title="Message Dialog"
+        />
+    
+    </div>
     }
 
 export default Sidebar2;

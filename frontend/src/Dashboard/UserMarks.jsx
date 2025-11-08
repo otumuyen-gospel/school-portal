@@ -221,7 +221,7 @@ function UserMarks(){
             <Typography component="h1" variant="h6" 
             style={{marginBottom:"10px", fontWeight:"normal",
             color:"darkblue", fontSize:"14px"}}>
-              Attendance</Typography>
+              Statement Of Results </Typography>
             <Box component="form" sx={{backgroundColor:"#FFF", boxShadow:0, 
               border:"0.5px solid #EEE", padding:"5px 10px"}}>
             <div style={{marginBottom:"20px",float:"right",
