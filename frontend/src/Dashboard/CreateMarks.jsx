@@ -97,8 +97,13 @@ function CreateMark(){
        listStudents(url,query).then(allData=>{
          setStudentList(allData)
       }).catch((error)=>{
+          if(error.response){
          setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load students List`);
          handleOpenMsgBox();
+        }else{
+          setMsg(JSON.stringify(error.message));
+          handleOpenMsgBox();
+        }
       })
     }
   },[authUser])
@@ -158,9 +163,11 @@ function CreateMark(){
     }).catch((err) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button
-            if (err) {
+            if (err.response) {
               setMsg(JSON.stringify(err.response.data));
                  handleOpenMsgBox();
+            }else{
+              setMsg(JSON.stringify(err.message))
             }
     })
         

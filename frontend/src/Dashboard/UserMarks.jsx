@@ -71,7 +71,11 @@ function UserMarks(){
     listClass(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
+      if(error.response){
        setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+      }else{
+        setMsg(JSON.stringify(error.message));
+      }
      })
     }
    
@@ -109,7 +113,11 @@ function UserMarks(){
     listSubjects(url).then(allData=>{
       setSubjectList(allData)
      }).catch((error)=>{
+      if(error.response){
        setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load subject List`);
+      }else{
+        setMsg(JSON.stringify(error.message));
+      }
      })
     }
    

@@ -87,7 +87,11 @@ function UserLists(){
           setUserList(remainingUsers);
       }catch(error){
           setIsLoading(false);
+          if(error.response){
           setDialogMsg(JSON.stringify(error.response.data));
+          }else{
+             setDialogMsg(JSON.stringify(error.message));
+          }
           handleOpenMsgBox();
     }
       
@@ -109,7 +113,11 @@ function UserLists(){
           updateUserFromList();
       }catch(error){
           setIsLoading(false);
+          if(error.response){
           setDialogMsg(JSON.stringify(error.response.data));
+          }else{
+             setDialogMsg(JSON.stringify(error.message));
+          }
           handleOpenMsgBox();
     }
       
@@ -143,7 +151,11 @@ function UserLists(){
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
+      if(error.response){
        setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+      }else{
+        setMsg(JSON.stringify(error.message));
+      }
      })
   },[])
 
@@ -219,7 +231,7 @@ function UserLists(){
             <Typography component="h1" variant="h6" 
             style={{marginBottom:"10px", fontWeight:"normal",
             color:"darkblue", fontSize:"14px"}}>
-              Attendance</Typography>
+              Users' Lists</Typography>
             <Box component="form" sx={{backgroundColor:"#FFF", boxShadow:0, 
               border:"0.5px solid #EEE", padding:"5px 10px"}}>
             <div style={{marginBottom:"20px",float:"right",

@@ -78,7 +78,11 @@ function Attendance(){
           updateAttendanceFromList();
       }catch(error){
           setIsLoading(false);
-          setDialogMsg(JSON.stringify(error.response.data));
+          if(error.response){
+             setDialogMsg(JSON.stringify(error.response.data));
+           }else{
+            setDialogMsg(error.message)
+           }
           handleOpenMsgBox();
     }
       
@@ -115,7 +119,11 @@ function Attendance(){
 
       }catch(error){
           setIsLoading(false);
-          setDialogMsg(JSON.stringify(error.response.data));
+           if(error.response){
+             setDialogMsg(JSON.stringify(error.response.data));
+           }else{
+            setDialogMsg(error.message)
+           }
           handleOpenMsgBox();
     }
       
@@ -150,7 +158,11 @@ function Attendance(){
          listUsers(url).then(allData=>{
              setUserList(allData)
          }).catch((error)=>{
-            setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load users List`);
+            if(error.response){
+             setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load user List`);
+           }else{
+             setMsg(error.message)
+           }
          })
     
   },[])
@@ -184,7 +196,11 @@ function Attendance(){
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
+      if(error.response){
        setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+      }else{
+        setMsg(error.message)
+      }
      })
   },[])
 

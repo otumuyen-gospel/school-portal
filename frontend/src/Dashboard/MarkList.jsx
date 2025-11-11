@@ -66,8 +66,13 @@ function MarkList(){
           setMarkList(remainingMarks);
       }catch(error){
           setIsLoading(false);
-          setDialogMsg(JSON.stringify(error.response.data));
+           if(error.response){
+         setDialogMsg(JSON.stringify(error.response.data));
+         handleOpenMsgBox();
+        }else{
+          setDialogMsg(JSON.stringify(error.message));
           handleOpenMsgBox();
+        }
     }
       
    }
@@ -100,7 +105,11 @@ function MarkList(){
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
-       setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+        if(error.response){
+         setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+        }else{
+          setMsg(JSON.stringify(error.message));
+        }
      })
   },[])
 
@@ -137,7 +146,11 @@ function MarkList(){
     listStudents(url, queries).then(allData=>{
       setStudentList(allData)
      }).catch((error)=>{
-       setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load students List`);
+        if(error.response){
+         setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load students List`);
+        }else{
+          setMsg(JSON.stringify(error.message));
+        }
      })
   },[])
 
@@ -175,7 +188,11 @@ function MarkList(){
     listSubjects(url).then(allData=>{
       setSubjectList(allData)
      }).catch((error)=>{
-       setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load subject List`);
+        if(error.response){
+         setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load subject List`);
+        }else{
+          setMsg(JSON.stringify(error.message));
+        }
      })
   },[])
 

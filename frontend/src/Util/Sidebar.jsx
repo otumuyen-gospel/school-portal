@@ -201,7 +201,7 @@ function Sidebar(props){
     >
           {/* page links */}
           <Scrollbars autoHide autoHideTimeout={2000}
-                  style={{width:"100%", height:"inherit",}}>
+                  style={{width:"100%", height:"85vh",}}>
           <Box>
          <ListItem  sx={{
             cursor:"pointer",

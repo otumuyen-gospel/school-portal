@@ -72,7 +72,7 @@ function Dashboard(){
            const remainingUsers = removeUserFromList(currUser, allData);
            setClassStudentList(remainingUsers)
         }).catch((error)=>{
-           setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load students List`);
+          setMsg("Oops! sorry can't load students List");
         })
       }else {
         setHasClassMate(false); // is either an admin, teacher or parent

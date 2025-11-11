@@ -62,7 +62,11 @@ function ClassList(){
             updateClassFromList();
         }catch(error){
             setIsLoading(false);
+            if(error.response){
             setDialogMsg(JSON.stringify(error.response.data));
+            }else{
+              setDialogMsg(JSON.stringify(error.message));
+            }
             handleOpenMsgBox();
       }
         
@@ -85,7 +89,11 @@ function ClassList(){
           deleteClassFromList();
       }catch(error){
           setIsLoading(false);
+          if(error.response){
           setDialogMsg(JSON.stringify(error.response.data));
+          }else{
+            setDialogMsg(JSON.stringify(error.message));
+          }
           handleOpenMsgBox();
     }
       
@@ -119,7 +127,11 @@ function ClassList(){
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
+      if(error.response){
        setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+      }else{
+        setMsg(JSON.stringify(error.message));
+      }
      })
   },[])
   

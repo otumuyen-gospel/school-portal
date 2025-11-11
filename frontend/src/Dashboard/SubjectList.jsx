@@ -72,7 +72,11 @@ function SubjectList(){
             updateSubjectFromList();
         }catch(error){
             setIsLoading(false);
+            if(error.response){
             setDialogMsg(JSON.stringify(error.response.data));
+            }else{
+              setDialogMsg(JSON.stringify(error.message));
+            }
             handleOpenMsgBox();
       }
         
@@ -95,7 +99,11 @@ function SubjectList(){
           deleteSubjectFromList();
       }catch(error){
           setIsLoading(false);
+          if(error.response){
           setDialogMsg(JSON.stringify(error.response.data));
+          }else{
+            setDialogMsg(JSON.stringify(error.message));
+          }
           handleOpenMsgBox();
     }
       
@@ -129,7 +137,11 @@ function SubjectList(){
     listSubjects(url).then(allData=>{
       setSubjectList(allData)
      }).catch((error)=>{
+      if(error.response){
        setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load subject List`);
+      }else{
+        setMsg(JSON.stringify(error.message));
+      }
      })
   },[])
   
@@ -156,7 +168,11 @@ function SubjectList(){
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
+      if(error.response){
        setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+      }else{
+        setMsg(JSON.stringify(error.message));
+      }
      })
   },[])
   

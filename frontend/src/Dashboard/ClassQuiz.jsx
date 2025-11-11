@@ -79,7 +79,11 @@ function ClassQuiz(){
           setQuizList(remainingQuizzes);
       }catch(error){
           setIsLoading(false);
+          if(error.response){
           setDialogMsg(JSON.stringify(error.response.data));
+          }else{
+            setDialogMsg(JSON.stringify(error.message));
+          }
           handleOpenMsgBox();
     }
       
@@ -113,7 +117,11 @@ function ClassQuiz(){
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
+       if(error.response){
        setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+      }else{
+        setMsg(JSON.stringify(error.message));
+      }
      })
   },[])
 
@@ -146,7 +154,11 @@ function ClassQuiz(){
     listSubjects(url).then(allData=>{
       setSubjectList(allData)
      }).catch((error)=>{
+      if(error.response){
        setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load subject List`);
+      }else{
+        setMsg(JSON.stringify(error.message));
+      }
      })
     }
    
@@ -172,7 +184,7 @@ function ClassQuiz(){
            setIsLoading(false);
           }catch(error){
            setIsLoading(false);
-           setMsg(JSON.stringify(error)+`Oops! sorry can't load quiz List`);
+           setMsg(JSON.stringify(error.message)+`Oops! sorry can't load quiz List`);
           }
       }
       quizzes(url, query);

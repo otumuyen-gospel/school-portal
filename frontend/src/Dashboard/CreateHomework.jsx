@@ -50,7 +50,6 @@ function CreateHomework(){
   
  const handleSubmit = (event)=>{
     event.preventDefault();
-    alert("inside");
     if(!event.target.checkValidity()){
        setMsg("Please ensure to enter all your data correctly");
         handleOpenMsgBox();
@@ -81,8 +80,11 @@ function CreateHomework(){
     }).catch((err) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button
-            if (err) {
+            if (err.response) {
               setMsg(JSON.stringify(err.response.data));
+                 handleOpenMsgBox();
+            }else{
+               setMsg(JSON.stringify(err.message));
                  handleOpenMsgBox();
             }
     })

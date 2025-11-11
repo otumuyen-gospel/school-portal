@@ -72,8 +72,11 @@ function ClassMarks(){
           setMarkList(remainingMarks);
       }catch(error){
           setIsLoading(false);
-          setDialogMsg(JSON.stringify(error.response.data));
-          handleOpenMsgBox();
+           if(error.response){
+         setMsg(JSON.stringify(error.response.data));
+        }else{
+          setMsg(JSON.stringify(error.message));
+        }
     }
       
    }
@@ -106,7 +109,11 @@ function ClassMarks(){
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
-       setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+        if(error.response){
+         setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+        }else{
+          setMsg(JSON.stringify(error.message));
+        }
      })
   },[])
 
@@ -141,7 +148,11 @@ function ClassMarks(){
        listStudents(url, queries).then(allData=>{
       setStudentList(allData)
        }).catch((error)=>{
+          if(error.response){
          setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load students List`);
+        }else{
+          setMsg(JSON.stringify(error.message));
+        }
        })
     }
    
@@ -183,7 +194,11 @@ function ClassMarks(){
     listSubjects(url).then(allData=>{
       setSubjectList(allData)
      }).catch((error)=>{
-       setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load subject List`);
+        if(error.response){
+         setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load subject List`);
+        }else{
+          setMsg(JSON.stringify(error.message));
+        }
      })
     }
    

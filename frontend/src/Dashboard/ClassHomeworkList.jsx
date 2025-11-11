@@ -72,7 +72,11 @@ function ClassHomeworkList(){
 
       }catch(error){
           setIsLoading(false);
+          if(error.response){
           setDialogMsg(JSON.stringify(error.response.data));
+          }else{
+            setDialogMsg(JSON.stringify(error.message));
+          }
           handleOpenMsgBox();
     }
       
@@ -107,7 +111,11 @@ function ClassHomeworkList(){
       listClasses(url).then(allData=>{
         setClassList(allData)
        }).catch((error)=>{
+         if(error.response){
          setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+        }else{
+          setMsg(JSON.stringify(error.message));
+        }
        })
     },[])
   
@@ -140,7 +148,11 @@ function ClassHomeworkList(){
       listStudents(url, queries).then(allData=>{
         setStudentList(allData)
        }).catch((error)=>{
+        if(error.response){
          setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load students List`);
+        }else{
+          setMsg(JSON.stringify(error.message));
+        }
        })
     },[authUser])
   

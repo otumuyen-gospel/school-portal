@@ -74,7 +74,11 @@ function ScheduleList(){
 
       }catch(error){
           setIsLoading(false);
+          if(error.response){
           setDialogMsg(JSON.stringify(error.response.data.detail));
+          }else{
+             setDialogMsg(JSON.stringify(error.message));
+          }
           handleOpenMsgBox();
     }
       

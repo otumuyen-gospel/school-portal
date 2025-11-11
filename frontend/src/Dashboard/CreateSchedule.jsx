@@ -80,8 +80,11 @@ function CreateSchedule(){
     }).catch((err) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button
-            if (err) {
+            if (err.response) {
               setMsg(JSON.stringify(err.response.data));
+                 handleOpenMsgBox();
+            }else{
+              setMsg(JSON.stringify(err.message));
                  handleOpenMsgBox();
             }
     })

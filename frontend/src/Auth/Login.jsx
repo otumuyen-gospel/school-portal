@@ -45,8 +45,10 @@ function Login(){
       }).catch((err) => {
         setIsLoading(false)
         setIsDisabled(false)  //re-enable button
-        if (err) {
+        if (err.response) {
           setError(JSON.stringify(err.response.data['detail']));
+        }else{
+          setError("Error : Unable to connnect to servers");
         }
       })
   }

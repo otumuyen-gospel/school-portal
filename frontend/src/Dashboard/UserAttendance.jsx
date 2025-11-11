@@ -58,7 +58,11 @@ function UserAttendance(){
       listClass(url).then(allData=>{
         setClassList(allData)
        }).catch((error)=>{
+        if(error.response){
          setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+        }else{
+          setMsg(JSON.stringify(error.message));
+        }
        })
       }
      

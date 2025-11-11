@@ -138,8 +138,13 @@ function Profile(){
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
+      if(error.response){
        setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
        handleOpenMsgBox();
+      }else{
+        setMsg(JSON.stringify(error.message));
+                 handleOpenMsgBox();
+      }
      })
   },[])
 
@@ -219,8 +224,11 @@ function Profile(){
     }).catch((err) => {
             setIsLoading(false)
             setIsDisabled(false)  //re-enable button
-            if (err) {
+            if (err.response) {
               setMsg(JSON.stringify(err.response.data));
+                 handleOpenMsgBox();
+            }else{
+              setMsg(JSON.stringify(err.message));
                  handleOpenMsgBox();
             }
     })
@@ -318,8 +326,11 @@ function Profile(){
     }).catch((err) => {
             setIsProfileLoading(false)
             setIsDisabled(false)  //re-enable button
-            if (err) {
+            if (err.response) {
               setMsg(JSON.stringify(err.response.data));
+                 handleOpenMsgBox();
+            }else{
+              setMsg(JSON.stringify(err.message));
                  handleOpenMsgBox();
             }
     })

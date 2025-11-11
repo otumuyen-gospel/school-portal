@@ -90,7 +90,11 @@ function ClassUsers(){
   
         }catch(error){
             setIsLoading(false);
+            if(error.response){
             setDialogMsg(JSON.stringify(error.response.data));
+            }else{
+              setDialogMsg(JSON.stringify(error.message));
+            }
             handleOpenMsgBox();
       }
         
@@ -114,7 +118,11 @@ function ClassUsers(){
           setIsLoading(false);
       }catch(error){
           setIsLoading(false);
+          if(error.response){
           setDialogMsg(JSON.stringify(error.response.data));
+          }else{
+            setDialogMsg(JSON.stringify(error.message));
+          }
           handleOpenMsgBox();
     }
       
@@ -151,7 +159,11 @@ function ClassUsers(){
           }
       }catch(error){
           setIsLoading(false);
+          if(error.response){
           setDialogMsg(JSON.stringify(error.response.data));
+          }else{
+            setDialogMsg(JSON.stringify(error.message));
+          }
           handleOpenMsgBox();
     }
       
@@ -199,7 +211,11 @@ function ClassUsers(){
     listClasses(url).then(allData=>{
       setClassList(allData)
      }).catch((error)=>{
+      if(error.response){
        setMsg(JSON.stringify(error.response.data)+` Oops! sorry can't load class List`);
+      }else{
+        setMsg(JSON.stringify(error.message));
+      }
      })
   },[])
 
@@ -278,7 +294,7 @@ function ClassUsers(){
       listAttendance(url, queries).then(allData=>{
          setMarkedAttendance(allData)
       }).catch((error)=>{
-         setMsg(` Oops! sorry can't load class attendance List`);
+         setMsg(` Oops! sorry can't load class data`);
       })
     }
     
@@ -298,7 +314,7 @@ function ClassUsers(){
             <Typography component="h1" variant="h6" 
             style={{marginBottom:"10px", fontWeight:"normal",
             color:"darkblue", fontSize:"14px"}}>
-              Attendance</Typography>
+              Students' Lists</Typography>
             <Box component="form" sx={{backgroundColor:"#FFF", boxShadow:0, 
               border:"0.5px solid #EEE", padding:"5px 10px"}}>
             <div style={{marginBottom:"20px",float:"right",
