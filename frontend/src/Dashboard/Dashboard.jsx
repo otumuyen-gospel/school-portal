@@ -25,13 +25,13 @@ import Layout from "../Util/Layout";
 
 function Dashboard(){
   const [authUser] = useState(JSON.parse(localStorage.getItem('auth')));
-   const [studentCount, setStudentCount] = useState("");
-   const [parentCount, setParentCount] = useState("");
-   const [teacherCount, setTeacherCount] = useState("");
-   const [adminCount, setAdminCount] = useState("");
-   const [classCount, setClassCount] = useState("");
-   const [subjectCount, setSubjectCount] = useState("");
-   const [attendanceCount, setAttendanceCount] = useState("");
+   const [studentCount, setStudentCount] = useState(0);
+   const [parentCount, setParentCount] = useState(0);
+   const [teacherCount, setTeacherCount] = useState(0);
+   const [adminCount, setAdminCount] = useState(0);
+   const [classCount, setClassCount] = useState(0);
+   const [subjectCount, setSubjectCount] = useState(0);
+   const [attendanceCount, setAttendanceCount] = useState(0);
    const [msg, setMsg] = useState('');
    const [isLoading, setIsLoading] = useState(false);
   const [studentList, setStudentList] = useState([]);
@@ -134,15 +134,15 @@ function Dashboard(){
            const response = await axiosInstance.get(endpoint,{params:queries})
            const data = response.data.count;
            if(data){
-            setAttendanceCount(data + " / ");  
+            setAttendanceCount(data);  
            }else{
-            setAttendanceCount("0 / ")
+            setAttendanceCount(0)
            }
             setIsLoading(false)
           }catch(error){
             setIsLoading(false);
             setMsg("an error has occured");
-            setAttendanceCount("0 / ")
+            setAttendanceCount(0)
           }
       }
       const now = new Date();
@@ -157,6 +157,14 @@ function Dashboard(){
       const query = {search:date};
       users(url, query);
   },[])
+
+  const formatAttendanceCount = (attendance, student)=>{
+    if(attendance > 0){
+      return attendance + " / " + student;
+    }
+    return;
+  }
+
 
    /* fetch student count*/
    useEffect(()=>{
@@ -387,7 +395,7 @@ function Dashboard(){
                   <ListItemText>
                     <Typography style={{color:"darkblue", fontWeight:"bolder",
                      fontSize:"20px"}}>
-                      {(adminCount + studentCount + teacherCount + parentCount)}
+                      {(studentCount + parentCount + adminCount + teacherCount)}
                     </Typography>
                      <Typography style={{fontWeight:"normal", color:"#666",
                      fontSize:"12px"}}>
@@ -454,7 +462,7 @@ function Dashboard(){
                   <ListItemText>
                     <Typography style={{color:"darkblue", fontWeight:"bolder",
                      fontSize:"15px"}}>
-                      {attendanceCount} {studentCount}
+                      {formatAttendanceCount(attendanceCount, studentCount)}
                     </Typography>
                      <Typography style={{fontWeight:"normal", color:"#666",
                      fontSize:"12px"}}>
