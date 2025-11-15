@@ -139,14 +139,14 @@ function Sidebar(props){
                 
                 <ListItemIcon>
                     <Icon style={{
-                       color:"darkblue",
-                       width:"17px",
-                       height:"17px"}}/>
+                       color:"#FFF",
+                       width:"15px",
+                       height:"15px"}}/>
                 </ListItemIcon>
                 <ListItemText style={{
-                      color:"darkblue",
+                      color:"#FFF",
                       fontWeight:"normal",
-                      fontSize:"5px"}}>
+                      fontSize:"25px"}}>
                        {label}
                     </ListItemText>
                 </ListItemButton>
@@ -164,12 +164,12 @@ function Sidebar(props){
             >
                <ListItemIcon>
                <Icon style={{
-                color:"darkblue",
-                width:"17px",
-                height:"17px"}}/>
+                color:"#FFF",
+                width:"15px",
+                height:"15px"}}/>
                </ListItemIcon>
                <ListItemText style={{
-                color:"darkblue",
+                color:"#FFF",
                 fontWeight:"normal",
                 fontSize:"5px"}}>{sectionTitle}</ListItemText>
             </ListItem>
@@ -193,10 +193,9 @@ function Sidebar(props){
     }
 
     return <div style={{
-        backgroundColor:"#FFF",
+        backgroundColor:"darkblue",
         height:"100vh",
-        padding:"auto 10px",
-        borderRight:"0.5px solid #DDD"
+        padding:"auto 10px"
     }}
     >
           {/* page links */}
@@ -208,12 +207,12 @@ function Sidebar(props){
           }}
           button onClick={()=>{navigate("/dashboard/")}} >
                <ListItemIcon><DashboardIcon style={{
-                color:"darkblue",
-                width:"17px",
-                height:"17px"
+                color:"#FFF",
+                width:"15px",
+                height:"15px"
             }}/></ListItemIcon><br/>
               <ListItemText style={{
-                color:"darkblue",
+                color:"#FFF",
                 fontWeight:"normal",
                 fontSize:"5px"
             }}>Dashboard</ListItemText>  
@@ -230,12 +229,12 @@ function Sidebar(props){
             
         }}>
             <ListItemIcon><LogoutIcon style={{
-                color:"darkblue",
-                width:"17px",
-                height:"17px"
+                color:"#FFF",
+                width:"15px",
+                height:"15px"
             }}/></ListItemIcon><br/>
               <ListItemText style={{
-                color:"darkblue",
+                color:"#FFF",
                 fontWeight:"normal",
                 fontSize:"5px"
             }}>Logout</ListItemText>

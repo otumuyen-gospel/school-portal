@@ -104,7 +104,8 @@ function Sidebar3(props){
         navigate("/");
       }
    };
-const ListItems = ({ items}) =>
+
+   const ListItems = ({ items}) =>
         items.filter(({ hidden }) => !hidden).map((
             { label, Icon, to, }, i) => (
             <ListItem 
@@ -120,14 +121,14 @@ const ListItems = ({ items}) =>
                 
                 <ListItemIcon>
                     <Icon style={{
-                       color:"darkblue",
-                       width:"17px",
-                       height:"17px"}}/>
+                       color:"#FFF",
+                       width:"15px",
+                       height:"15px"}}/>
                 </ListItemIcon>
                 <ListItemText style={{
-                      color:"darkblue",
-                      fontWeight:"bold",
-                      fontSize:"5px"}}>
+                      color:"#FFF",
+                      fontWeight:"normal",
+                      fontSize:"25px"}}>
                        {label}
                     </ListItemText>
                 </ListItemButton>
@@ -145,13 +146,13 @@ const ListItems = ({ items}) =>
             >
                <ListItemIcon>
                <Icon style={{
-                color:"darkblue",
-                width:"17px",
-                height:"17px"}}/>
+                color:"#FFF",
+                width:"15px",
+                height:"15px"}}/>
                </ListItemIcon>
                <ListItemText style={{
-                color:"darkblue",
-                fontWeight:"bold",
+                color:"#FFF",
+                fontWeight:"normal",
                 fontSize:"5px"}}>{sectionTitle}</ListItemText>
             </ListItem>
             <Collapse in={section}>
@@ -174,10 +175,9 @@ const ListItems = ({ items}) =>
     }
 
     return <div style={{
-        backgroundColor:"#FFF",
+        backgroundColor:"darkblue",
         height:"100vh",
-        padding:"auto 10px",
-        borderRight:"0.5px solid #DDD"
+        padding:"auto 10px"
     }}
     >
           {/* page links */}
@@ -189,12 +189,12 @@ const ListItems = ({ items}) =>
           }}
           button onClick={()=>{navigate("/dashboard/")}} >
                <ListItemIcon><DashboardIcon style={{
-                color:"darkblue",
-                width:"17px",
-                height:"17px"
+                color:"#FFF",
+                width:"15px",
+                height:"15px"
             }}/></ListItemIcon><br/>
               <ListItemText style={{
-                color:"darkblue",
+                color:"#FFF",
                 fontWeight:"normal",
                 fontSize:"5px"
             }}>Dashboard</ListItemText>  
@@ -211,12 +211,12 @@ const ListItems = ({ items}) =>
             
         }}>
             <ListItemIcon><LogoutIcon style={{
-                color:"darkblue",
-                width:"17px",
-                height:"17px"
+                color:"#FFF",
+                width:"15px",
+                height:"15px"
             }}/></ListItemIcon><br/>
               <ListItemText style={{
-                color:"darkblue",
+                color:"#FFF",
                 fontWeight:"normal",
                 fontSize:"5px"
             }}>Logout</ListItemText>

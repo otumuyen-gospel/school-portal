@@ -197,19 +197,21 @@ class UserPromotion(generics.UpdateAPIView):
 #this class will handle GET method to generate student distribution for
 #four consecutive years backward for the various classes beginning from the current year
 class UserAnalytics(APIView):
-    classes = Class.objects.all()
     currYear = datetime.now().year
     data = []
     permission_classes = [IsAuthenticated,IsInGroup,]
     required_groups = ['admin','teacher','parent','student']
     name = 'user-analytics'
     def get(self, request, *args, **kwargs):
-        for cl in self.classes:
+        classes = Class.objects.all()
+        for cl in classes:
             dataCount = []
             for i in range(4):
-                count = User.objects.filter(role='student', 
+                users = User.objects.filter(role='student', 
                                             classId__id=cl.id,
-                        entrance__icontains=(self.currYear - i)).count()
+                        entrance__icontains=(self.currYear - i))
+                usersQuerySet = users.all()
+                count = usersQuerySet.count()
                 dataCount.append(count)
             classData = {
                 'data':dataCount,

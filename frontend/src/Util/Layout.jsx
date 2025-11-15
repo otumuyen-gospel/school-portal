@@ -94,8 +94,7 @@ function Layout(props){
     <div sx={{flexGrow: 1}}>
 
            {/* Header or app bar*/}
-           <AppBar sx={{backgroundColor:"#FFF",borderBottom:"0.5px solid #DDD"}} 
-           elevation={0}>
+           <AppBar sx={{backgroundColor:"#FFF",}} elevation={1}>
                     <Toolbar>
                         <IconButton onClick={()=> openDrawer()}
                            sx={{color:"darkblue", marginLeft:"-22px"}}
@@ -104,15 +103,14 @@ function Layout(props){
                         </IconButton>
                         <IconButton  sx={{
                             color:"darkblue", 
-                            marginRight:"10px"
+                            marginRight:"10px",
                             }}>
                             <StudentIcon/>
                         </IconButton>
                         
                         <Typography
-                            variant="h6"
-                            color="darkblue"
-                            sx={{flex:1, fontSize:"15px"}}>
+                            color="#333"
+                            sx={{flex:1, fontSize:"13px"}}>
                             {props.title}
                         </Typography>
                         <IconButton sx={{
@@ -128,10 +126,10 @@ function Layout(props){
                         </IconButton>
                         <Box sx={{marginTop:"3px"}}>
                             <Box sx={{
-                                color:"darkblue",
+                                color:"#333",
                                 flex:1, 
                                 marginRight:"5px", 
-                                fontSize:"14px",
+                                fontSize:"13px",
                                 textAlign:"center",
                                 }}>
                                 {username}
@@ -174,7 +172,7 @@ function Layout(props){
                     position:"fixed",
                     width:"100%",
                     height:"100vh",
-                    backgroundColor:"rgba(0,0,0,0.5)",
+                    backgroundColor:"rgba(0,0,200,0.5)",
                     top:0,
                     right:0,
                     zIndex:1200,

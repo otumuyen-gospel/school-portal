@@ -1,16 +1,22 @@
 import TrashIcon from "@mui/icons-material/DeleteOutline";
 import UpdateIcon from "@mui/icons-material/MarkChatReadOutlined";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import FormControl from "@mui/material/FormControl";
-import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
+import Paper from "@mui/material/Paper";
 import Select from "@mui/material/Select";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
+import Scrollbars from "react-custom-scrollbars-2";
 import axiosInstance from "../Util/ApiRefresher";
 import ConfirmDialogForm from "../Util/ConfirmDialogForm";
 import Layout from "../Util/Layout";
@@ -178,7 +184,8 @@ function SubjectList(){
   
   
   return (
-    <div style={{backgroundColor:"#F9F9F5"}}>
+    
+    <div style={{backgroundColor:"#FDFDFB"}}>
           <Layout title="De Modern Pace">
             <Box 
            sx={{
@@ -191,69 +198,91 @@ function SubjectList(){
             style={{marginBottom:"10px", fontWeight:"normal",
             color:"darkblue", fontSize:"14px"}}>
               Subject Lists</Typography>
-        <Grid container spacing={4} marginBottom={5}>
-          {
-            subjectList.map(subjectlist=>(
-              <Grid item size={{xs:12, sm:12}} key={subjectlist.id}>
-                <Box boxShadow={1} style={{backgroundColor:"#FFF"}}>
-                  <Box padding="15px 5px">
-                  <Grid container spacing={4}>
-                    <Grid item size={{xs:6,}}>
-                      <Typography color="darkblue" fontWeight="bolder"  
-                         textAlign="left" fontSize={15}>
-                         {subjectlist.subjectCode}
-                      </Typography>
-                       <Typography color="darkblue" fontWeight="bolder"  
-                          fontSize={12} textAlign="left">
-                         {subjectlist.subjectName}
-                      </Typography>
-                    </Grid>
-                    <Grid item size={{xs:6,}}>
-                      <Box textAlign="right">
-                      <IconButton title="update" 
-                         onClick={()=>{
-                            setCurrSubject(subjectlist);
-                            handleOpenUpdateDialog();
-                          }}>
-                          <UpdateIcon sx={{color:"#888", 
-                            width:"16px", height:"16px"}}></UpdateIcon>
-                         </IconButton>
-                          <IconButton title="delete"
-                         onClick={()=>{
-                            setCurrSubject(subjectlist);
-                            handleOpenDeleteDialog();
-                          }}>
-                          <TrashIcon sx={{color:"#888",
-                              width:"16px", height:"16px"
-                          }}></TrashIcon>
-                         </IconButton>
-                         </Box>
-                    </Grid>
-                  </Grid>
-                  </Box>
-                  <Box padding="10px 5px" backgroundColor="#EEE" >
-                    <Typography color="#333">{getClassCode(subjectlist)}</Typography>
-                  </Box>
-                </Box>
-                
-              </Grid> 
-            ))      
-           }
-        </Grid>
-          <div className="loaderContainer">
-            {isLoading && <CircularProgress sx={{
-                '& .MuiCircularProgress-circle': {
-                 stroke: 'darkblue', 
-                },
-               '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
-                stroke: 'darkblue', 
-               },
-            }}/>}
-          </div>
-          <div className="loaderContainer">
-            <Typography color="error">{msg}</Typography>
-          </div>
+        <Box component="form" sx={{backgroundColor:"#FFF", padding:"5px 10px"}}
+                boxShadow={1}>
+                <Paper elevation={0}>
+                          <Scrollbars autoHide autoHideTimeout={1000}
+                          style={{width:"100%", height:"350px"}}>
+                          <Table>
+                            <TableHead>
+                              <TableRow>
+                                 <TableCell style={{color:"#333",fontSize:"13px"}}>Id</TableCell>
+                                 <TableCell style={{color:"#333",fontSize:"13px"}}>SubjectCode</TableCell>
+                                 <TableCell style={{color:"#333",fontSize:"13px"}}>Subjectname</TableCell>
+                                  <TableCell style={{color:"#333",fontSize:"13px"}}>ClassCode</TableCell>
+                                 <TableCell style={{color:"#333", fontSize:"13px"}}>Update</TableCell>
+                                 <TableCell style={{color:"#333", fontSize:"13px"}}>Delete</TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {
+                                   subjectList.map(subjectlist=>(
+                                    <TableRow key={subjectlist.id}>
+                                       <TableCell style={{color:"#333",fontSize:"13px"}}>
+                                       {
+                                           subjectlist.id
+                                        }
+                                      </TableCell>
+                                      <TableCell style={{color:"#333",fontSize:"13px"}}>
+                                       {
+                                           subjectlist.subjectCode
+                                        }
+                                      </TableCell>
+                                      <TableCell style={{color:"#333",fontSize:"13px"}}>
+                                        {subjectlist.subjectName}</TableCell>
+                                       <TableCell style={{color:"#333",fontSize:"13px"}}>
+                                        {getClassCode(subjectlist)}</TableCell>
+                                     
+                                      <TableCell>
+                                         <Button style={{backgroundColor:"darkblue", 
+                                                               border:"1px solid darkblue",
+                                                                height:"30px", width:"15px"}}
+                                                                 title="update"
+                                         onClick={()=>{
+                                            setCurrSubject(subjectlist);
+                                            handleOpenUpdateDialog();
+                                            
+                                          }}>
+                                          <UpdateIcon style={{color:"#FFF"}}></UpdateIcon>
+                                         </Button>
+                                      </TableCell>
+                                      <TableCell>
+                                         <Button style={{backgroundColor:"darkblue", 
+                                                               border:"1px solid darkblue",
+                                                                height:"30px", width:"15px"}}
+                                                                 title="delete"
+                                         onClick={()=>{
+                                            setCurrSubject(subjectlist);
+                                            handleOpenDeleteDialog();
+                                          }}>
+                                          <TrashIcon style={{color:"#FFF"}}></TrashIcon>
+                                         </Button>
+                                      </TableCell>
+                                    </TableRow>
+                                    
+                                 ))
+                                        
+                              }
+                            </TableBody>
+                          </Table>
+                          
+                          </Scrollbars>
         
+                          <div className="loaderContainer">
+                                      {isLoading && <CircularProgress  sx={{
+                                          '& .MuiCircularProgress-circle': {
+                                           stroke: 'darkblue', 
+                                          },
+                                         '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                                          stroke: 'darkblue', 
+                                         },
+                                      }}/>}
+                                    </div>
+                                    <div className="loaderContainer">
+                                      <Typography color="error">{msg}</Typography>
+                                    </div>
+                    </Paper>
+                </Box>
         </Box>
       </Layout>
 

@@ -1,4 +1,5 @@
 import StudentIcon from "@mui/icons-material/SchoolOutlined";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from "@mui/material/Grid";
@@ -52,15 +53,17 @@ function Verify(){
   }
 
   return(
-    <div style={{backgroundColor:"#F9F9F5", minHeight:"100vh", overflow:"hidden"}}>
+    <div style={{backgroundColor:"#FDFDFB", minHeight:"100vh", overflow:"hidden"}}>
       <Typography style={{color:"darkblue", textAlign:"center",fontWeight:"bolder",
         marginTop:isMobile ? "40px" : "auto",
       }}>
         De Modern Pace School</Typography>
-      <form onSubmit={handleSubmit} style={{backgroundColor:"#FFF", margin:isMobile ? "25px 3%" : "18px 30%",
+       <form onSubmit={handleSubmit}>
+      <Box style={{backgroundColor:"#FFF", margin:isMobile ? "25px 3%" : "18px 30%",
        width:isMobile ? "90%" :"30%",padding: isMobile ? "20px 2%" : "15px 5%",
-        border:"0.5px solid #EEE",
-      }}>
+      }} 
+      boxShadow={1}
+      >
       <Grid container spacing={1}>
          <Grid item size={{xs:12,}} textAlign="center">
           <StudentIcon style={{color:"darkblue",
@@ -123,6 +126,7 @@ function Verify(){
          </div>
           </Grid>
       </Grid>
+      </Box>
       </form>
     </div>
   );

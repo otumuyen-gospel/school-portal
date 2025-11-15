@@ -96,7 +96,8 @@ function Sidebar4(props){
         navigate("/");
       }
    };
-const ListItems = ({ items}) =>
+
+   const ListItems = ({ items}) =>
         items.filter(({ hidden }) => !hidden).map((
             { label, Icon, to, }, i) => (
             <ListItem 
@@ -112,14 +113,14 @@ const ListItems = ({ items}) =>
                 
                 <ListItemIcon>
                     <Icon style={{
-                       color:"darkblue",
-                       width:"17px",
-                       height:"17px"}}/>
+                       color:"#FFF",
+                       width:"15px",
+                       height:"15px"}}/>
                 </ListItemIcon>
                 <ListItemText style={{
-                      color:"darkblue",
-                      fontWeight:"bold",
-                      fontSize:"5px"}}>
+                      color:"#FFF",
+                      fontWeight:"normal",
+                      fontSize:"25px"}}>
                        {label}
                     </ListItemText>
                 </ListItemButton>
@@ -137,13 +138,13 @@ const ListItems = ({ items}) =>
             >
                <ListItemIcon>
                <Icon style={{
-                color:"darkblue",
-                width:"17px",
-                height:"17px"}}/>
+                color:"#FFF",
+                width:"15px",
+                height:"15px"}}/>
                </ListItemIcon>
                <ListItemText style={{
-                color:"darkblue",
-                fontWeight:"bold",
+                color:"#FFF",
+                fontWeight:"normal",
                 fontSize:"5px"}}>{sectionTitle}</ListItemText>
             </ListItem>
             <Collapse in={section}>
@@ -165,72 +166,71 @@ const ListItems = ({ items}) =>
         });
     }
 
-   return <div style={{
-           backgroundColor:"#FFF",
-           height:"100vh",
-           padding:"auto 10px",
-           borderRight:"0.5px solid #DDD"
-       }}
-       >
-             {/* page links */}
-             <Scrollbars autoHide autoHideTimeout={2000}
-                     style={{width:"100%", height:"85vh",}}>
-             <Box>
-            <ListItem  sx={{
-               cursor:"pointer",
-             }}
-             button onClick={()=>{navigate("/dashboard/")}} >
-                  <ListItemIcon><DashboardIcon style={{
-                   color:"darkblue",
-                   width:"17px",
-                   height:"17px"
-               }}/></ListItemIcon><br/>
-                 <ListItemText style={{
-                   color:"darkblue",
-                   fontWeight:"normal",
-                   fontSize:"5px"
-               }}>Dashboard</ListItemText>  
-            </ListItem>
-            {/*Collapsible categories*/}
-           <Categories />
-   
-           
-           {/* logout section*/}
-           <ListItem sx={{
-               cursor:"pointer",
-           }} button onClick={()=>{
-               handleOpenDialog()
-               
-           }}>
-               <ListItemIcon><LogoutIcon style={{
-                   color:"darkblue",
-                   width:"17px",
-                   height:"17px"
-               }}/></ListItemIcon><br/>
-                 <ListItemText style={{
-                   color:"darkblue",
-                   fontWeight:"normal",
-                   fontSize:"5px"
-               }}>Logout</ListItemText>
-           </ListItem>
-           </Box>
-           </Scrollbars>
-   
-           {/*Dialog window */}
-           <ConfirmDialogForm open={openDialog} 
-           onClose={handleCloseDialog} 
-           onSubmit={logout}
-           formContent={<Typography>This action will log you out</Typography>}
-           title="Confirm Dialog"
-           />
-   
-           <MessageDialogForm open={openMsgBox} 
-           onClose={handleCloseMsgBox} 
-           formContent={<Typography>{error}</Typography>}
-           title="Message Dialog"
-           />
-       
-       </div>
+    return <div style={{
+        backgroundColor:"darkblue",
+        height:"100vh",
+        padding:"auto 10px"
+    }}
+    >
+          {/* page links */}
+          <Scrollbars autoHide autoHideTimeout={2000}
+                  style={{width:"100%", height:"85vh",}}>
+          <Box>
+         <ListItem  sx={{
+            cursor:"pointer",
+          }}
+          button onClick={()=>{navigate("/dashboard/")}} >
+               <ListItemIcon><DashboardIcon style={{
+                color:"#FFF",
+                width:"15px",
+                height:"15px"
+            }}/></ListItemIcon><br/>
+              <ListItemText style={{
+                color:"#FFF",
+                fontWeight:"normal",
+                fontSize:"5px"
+            }}>Dashboard</ListItemText>  
+         </ListItem>
+         {/*Collapsible categories*/}
+        <Categories />
+
+        
+        {/* logout section*/}
+        <ListItem sx={{
+            cursor:"pointer",
+        }} button onClick={()=>{
+            handleOpenDialog()
+            
+        }}>
+            <ListItemIcon><LogoutIcon style={{
+                color:"#FFF",
+                width:"15px",
+                height:"15px"
+            }}/></ListItemIcon><br/>
+              <ListItemText style={{
+                color:"#FFF",
+                fontWeight:"normal",
+                fontSize:"5px"
+            }}>Logout</ListItemText>
+        </ListItem>
+        </Box>
+        </Scrollbars>
+
+        {/*Dialog window */}
+        <ConfirmDialogForm open={openDialog} 
+        onClose={handleCloseDialog} 
+        onSubmit={logout}
+        formContent={<Typography>This action will log you out</Typography>}
+        title="Confirm Dialog"
+        />
+
+        <MessageDialogForm open={openMsgBox} 
+        onClose={handleCloseMsgBox} 
+        formContent={<Typography>{error}</Typography>}
+        title="Message Dialog"
+        />
+    
+    </div>
 }
 
 export default Sidebar4;

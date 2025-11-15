@@ -252,35 +252,32 @@ function Dashboard(){
       const query = {role:"parent"};
       users(url, query);
   },[])
-  
-
    useEffect(()=>{
        setIsLoading(true);
       const users = async(endpoint)=>{
         try{
            const response = await axiosInstance.get(endpoint);
-           return response.data;
-          }catch(error){
-             throw error; //rethrow consequent error
-          }
-      }
-      const url = "accounts/user-analytics/";
-      users(url).then(data=>{
-           setIsLoading(false)
+           const data = response.data;
+            setIsLoading(false)
+           if(data){
            //remove duplication in the data array
            const uniqueArray = data.filter((obj, index, self) =>
                index === self.findIndex((o) => o.label === obj.label)
            );
-           setStudentList(uniqueArray); 
-        }).catch((error)=>{
+           setStudentList(uniqueArray);
+          }
+          }catch(error){
             setIsLoading(false);
             setMsg("an error has occured");
-        })
+          }
+      }
+      const url = "accounts/user-analytics/";
+      users(url);
       
   },[])
 
   return (
-    <div style={{backgroundColor:"#F9F9F5"}}>
+    <div style={{backgroundColor:"#FDFDFB"}}>
       <Layout title="De Modern Pace">
         <Box 
        sx={{
@@ -295,192 +292,193 @@ function Dashboard(){
           Dashboard</Typography>
         <Grid container spacing={3}>
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF", height:"80px",
-               border:"0.5px solid #EEE",
-            }} 
-            boxShadow={0}>
+            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            boxShadow={1}>
                 <ListItem>
                   <ListItemText>
-                    <Typography style={{color:"darkblue", fontWeight:"bolder",
-                     fontSize:"20px"}}>
-                      {studentCount}
-                    </Typography>
-                     <Typography style={{fontWeight:"normal", color:"#666",
-                     fontSize:"12px"}}>
+                    <Typography style={{fontWeight:"normal", color:"#666",
+                     fontSize:"13px"}}>
                       Students
                     </Typography>
+                    <Typography style={{color:"darkblue", fontWeight:"bolder",
+                     fontSize:"12px"}}>
+                      {studentCount}
+                    </Typography>
                   </ListItemText>
                   <ListItemIcon>
-                    <StudentIcon  style={{color:"darkblue", fontSize:"45px"}}/>
+                    <StudentIcon  style={{color:"darkblue", fontSize:"20px", position:"absolute",
+                      right:"0", top:"0"
+                    }}/>
                   </ListItemIcon>
                 </ListItem>
             </Box>
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF",height:"80px",
-               border:"0.5px solid #EEE",
-            }} 
-            boxShadow={0}>
+            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            boxShadow={1}>
                 <ListItem>
                   <ListItemText>
-                    <Typography style={{color:"darkblue", fontWeight:"bolder",
-                     fontSize:"20px"}}>
-                      {parentCount}
-                    </Typography>
-                     <Typography style={{fontWeight:"normal", color:"#666",
-                     fontSize:"12px"}}>
+                    <Typography style={{fontWeight:"normal", color:"#666",
+                     fontSize:"13px"}}>
                       Parents
                     </Typography>
+                    <Typography style={{color:"darkblue", fontWeight:"bolder",
+                     fontSize:"12px"}}>
+                      {parentCount}
+                    </Typography>
                   </ListItemText>
                   <ListItemIcon>
-                    <ParentIcon  style={{color:"darkblue", fontSize:"45px"}}/>
+                    <ParentIcon  style={{color:"darkblue", fontSize:"20px", position:"absolute",
+                      right:"0", top:"0"
+                    }}/>
                   </ListItemIcon>
                 </ListItem>
             </Box>
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF",height:"80px",
-               border:"0.5px solid #EEE",
-            }} 
-            boxShadow={0}>
+            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            boxShadow={1}>
                 <ListItem>
                   <ListItemText>
-                    <Typography style={{color:"darkblue", fontWeight:"bolder",
-                     fontSize:"20px"}}>
-                      {teacherCount}
-                    </Typography>
-                     <Typography style={{fontWeight:"normal", color:"#666",
-                     fontSize:"12px"}}>
+                    <Typography style={{fontWeight:"normal", color:"#666",
+                     fontSize:"13px"}}>
                       Teachers
                     </Typography>
+                    <Typography style={{color:"darkblue", fontWeight:"bolder",
+                     fontSize:"12px"}}>
+                      {teacherCount}
+                    </Typography>
                   </ListItemText>
                   <ListItemIcon>
-                    <TeacherIcon  style={{color:"darkblue", fontSize:"45px"}}/>
+                    <TeacherIcon  style={{color:"darkblue", fontSize:"20px", position:"absolute",
+                      right:"0", top:"0"
+                    }}/>
                   </ListItemIcon>
                 </ListItem>
             </Box>
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF", height:"80px",
-               border:"0.5px solid #EEE",
-            }} 
-            boxShadow={0}>
+            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            boxShadow={1}>
                 <ListItem>
                   <ListItemText>
-                    <Typography style={{color:"darkblue", fontWeight:"bolder",
-                     fontSize:"20px"}}>
-                      {adminCount}
-                    </Typography>
-                     <Typography style={{fontWeight:"normal", color:"#666",
-                     fontSize:"12px"}}>
+                    <Typography style={{fontWeight:"normal", color:"#666",
+                     fontSize:"13px"}}>
                       Administrators
                     </Typography>
+                    <Typography style={{color:"darkblue", fontWeight:"bolder",
+                     fontSize:"12px"}}>
+                      {adminCount}
+                    </Typography>
                   </ListItemText>
                   <ListItemIcon>
-                    <AdminIcon  style={{color:"darkblue", fontSize:"45px"}}/>
+                    <AdminIcon  style={{color:"darkblue", fontSize:"20px", position:"absolute",
+                      right:"0", top:"0"
+                    }}/>
                   </ListItemIcon>
                 </ListItem>
             </Box>
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF", height:"80px",
-               border:"0.5px solid #EEE",
-            }} 
-            boxShadow={0}>
+            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            boxShadow={1}>
                 <ListItem>
                   <ListItemText>
-                    <Typography style={{color:"darkblue", fontWeight:"bolder",
-                     fontSize:"20px"}}>
-                      {(studentCount + parentCount + adminCount + teacherCount)}
-                    </Typography>
-                     <Typography style={{fontWeight:"normal", color:"#666",
-                     fontSize:"12px"}}>
+                    <Typography style={{fontWeight:"normal", color:"#666",
+                     fontSize:"13px"}}>
                       Total Users
                     </Typography>
+                    <Typography style={{color:"darkblue", fontWeight:"bolder",
+                     fontSize:"12px"}}>
+                      {(studentCount + parentCount + adminCount + teacherCount)}
+                    </Typography>
                   </ListItemText>
                   <ListItemIcon>
-                    <CircleIcon  style={{color:"darkblue", fontSize:"45px"}}/>
+                    <CircleIcon  style={{color:"darkblue", fontSize:"20px", position:"absolute",
+                      right:"0", top:"0"
+                    }}/>
                   </ListItemIcon>
                 </ListItem>
             </Box>
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF",height:"80px",
-               border:"0.5px solid #EEE",
-            }} 
-            boxShadow={0}>
+            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            boxShadow={1}>
                 <ListItem>
                   <ListItemText>
-                    <Typography style={{color:"darkblue", fontWeight:"bolder",
-                     fontSize:"20px"}}>
-                      {classCount}
-                    </Typography>
-                     <Typography style={{fontWeight:"normal", color:"#666",
-                     fontSize:"12px"}}>
+                    <Typography style={{fontWeight:"normal", color:"#666",
+                     fontSize:"13px"}}>
                       Classes
                     </Typography>
+                    <Typography style={{color:"darkblue", fontWeight:"bolder",
+                     fontSize:"12px"}}>
+                      {classCount}
+                    </Typography>
                   </ListItemText>
                   <ListItemIcon>
-                    <ClassIcon  style={{color:"darkblue", fontSize:"45px"}}/>
+                    <ClassIcon  style={{color:"darkblue", fontSize:"20px", position:"absolute",
+                      right:"0", top:"0"
+                    }}/>
                   </ListItemIcon>
                 </ListItem>
             </Box>
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF",height:"80px",
-               border:"0.5px solid #EEE",
-            }} 
-            boxShadow={0}>
+            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            boxShadow={1}>
                 <ListItem>
                   <ListItemText>
+                    <Typography style={{fontWeight:"normal", color:"#666",
+                     fontSize:"13px"}}>
+                      Subjects
+                    </Typography>
                     <Typography style={{color:"darkblue", fontWeight:"bolder",
-                     fontSize:"20px"}}>
+                     fontSize:"12px"}}>
                       {subjectCount}
                     </Typography>
-                     <Typography style={{fontWeight:"normal", color:"#666",
-                     fontSize:"12px"}}>
-                     Subjects 
-                    </Typography>
                   </ListItemText>
                   <ListItemIcon>
-                    <SubjectIcon style={{color:"darkblue", fontSize:"45px"}}/>
+                    <SubjectIcon  style={{color:"darkblue", fontSize:"20px", position:"absolute",
+                      right:"0", top:"0"
+                    }}/>
                   </ListItemIcon>
                 </ListItem>
             </Box>
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF",height:"80px", border:"0.5px solid #EEE",}} 
-            boxShadow={0}>
+            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            boxShadow={1}>
                 <ListItem>
                   <ListItemText>
-                    <Typography style={{color:"darkblue", fontWeight:"bolder",
-                     fontSize:"15px"}}>
-                      {formatAttendanceCount(attendanceCount, studentCount)}
-                    </Typography>
-                     <Typography style={{fontWeight:"normal", color:"#666",
-                     fontSize:"12px"}}>
+                    <Typography style={{fontWeight:"normal", color:"#666",
+                     fontSize:"13px"}}>
                       Today's Attendance
+                    </Typography>
+                    <Typography style={{color:"darkblue", fontWeight:"bolder",
+                     fontSize:"12px"}}>
+                      {formatAttendanceCount(attendanceCount, studentCount)}
                     </Typography>
                   </ListItemText>
                   <ListItemIcon>
-                    <AttendanceIcon  style={{color:"darkblue", fontSize:"45px"}}/>
+                    <AttendanceIcon  style={{color:"darkblue", fontSize:"20px", position:"absolute",
+                      right:"0", top:"0"
+                    }}/>
                   </ListItemIcon>
                 </ListItem>
             </Box>
           </Grid>
 
           <Grid item size={{xs:12, md:9}}>
-             <Box style={{backgroundColor:"#FFF", padding:"20px",
-               border:"0.5px solid #EEE",
-             }}  
-            boxShadow={0}>
+             <Box style={{backgroundColor:"#FFF", height:"270px",
+              padding:"15px 10px",}} 
+            boxShadow={1}>
               <Scrollbars autoHide autoHideTimeout={1000}
                   style={{width:"100%", height:"250px"}}>
                 <BarChart 
@@ -490,28 +488,28 @@ function Dashboard(){
                  ]}
                  yAxis={[{width:50}]}
                 />
-                <Typography style={{textAlign:"center", color:"#666"}}>
+                </Scrollbars>
+                <Typography style={{textAlign:"center", color:"#333",
+                  fontSize:"14px",
+                }}>
                   Distribution of students in various Classes
                   </Typography>
-                </Scrollbars>
                </Box>
           </Grid>
 
           <Grid item size={{xs:12, md:3}}>
-             <Box style={{backgroundColor:"#FFF", padding:"20px", border:"0.5px solid #EEE",}} 
-            boxShadow={0}>
-                <Typography style={{textAlign:"center",
-                  fontWeight:"bold", fontSize:"14px", 
-                  color:"darkblue", marginBottom:"10px"}}>
+             <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            boxShadow={1}>
+                <Typography style={{textAlign:"center",fontSize:"13px", 
+                  color:"#333", marginBottom:"10px"}}>
                     CLASS MATES
                   </Typography>
                   <Scrollbars autoHide autoHideTimeout={1000}
-                  style={{width:"100%", height:"220px"}}>
+                  style={{width:"100%", height:"240px"}}>
                   <List>
                     {
                     hasClassMate ? classStudentList.map(student=>(
-                        <Paper elevation={0} style={{marginBottom:"15px", width:"100%",
-                           border:"0.5px solid #EEE",
+                        <Paper elevation={1} style={{marginBottom:"15px", width:"100%",
                         }}>
                          <ListItem key={student.pk}>
                           <ListItemIcon>
@@ -530,8 +528,8 @@ function Dashboard(){
                             </Avatar>
                           </ListItemIcon>
                           <ListItemText>
-                            <Typography style={{fontWeight:"bold",
-                              fontSize:"13px", color:"darkblue", wordWrap:"break-word",
+                            <Typography style={{
+                              fontSize:"13px", color:"#333", wordWrap:"break-word",
                             }}>
                               {student.lastName}
                               </Typography>
@@ -545,7 +543,7 @@ function Dashboard(){
                          </Paper>
                         ))
                         : <ListItem>
-                          <ListItemText style={{color:"#666", 
+                          <ListItemText style={{color:"#666", fontSize:"12",
                             textAlign:"center", marginTop:"70px"}}>
                             No Data
                           </ListItemText>

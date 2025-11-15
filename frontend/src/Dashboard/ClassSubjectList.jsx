@@ -1,10 +1,16 @@
 import QuizIcon from "@mui/icons-material/QuizOutlined";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
-import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
+import Scrollbars from "react-custom-scrollbars-2";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
@@ -88,7 +94,7 @@ function ClassSubjectList(){
   
   
   return (
-    <div style={{backgroundColor:"#F9F9F5"}}>
+      <div style={{backgroundColor:"#FDFDFB"}}>
           <Layout title="De Modern Pace">
             <Box 
            sx={{
@@ -101,63 +107,82 @@ function ClassSubjectList(){
             style={{marginBottom:"10px", fontWeight:"normal",
             color:"darkblue", fontSize:"14px"}}>
               Subject Information</Typography>
-        <Grid container spacing={4} marginBottom={5}>
-          {
-            subjectList.map(subjectlist=>(
-              <Grid item size={{xs:12, sm:12}} key={subjectlist.id}>
-                <Box boxShadow={1} style={{backgroundColor:"#FFF"}}>
-                  <Box padding="15px 5px">
-                  <Grid container spacing={4}>
-                    <Grid item size={{xs:6,}}>
-                      <Typography color="darkblue" fontWeight="bolder"  
-                         textAlign="left" fontSize={15}>
-                         {subjectlist.subjectCode}
-                      </Typography>
-                       <Typography color="darkblue" fontWeight="bolder"  
-                          fontSize={12} textAlign="left">
-                         {subjectlist.subjectName}
-                      </Typography>
-                    </Grid>
-                    <Grid item size={{xs:6,}}>
-                      <Box textAlign="right">
-                      <IconButton title="Take the Quiz" 
-                         onClick={()=>{
-                             navigate('/user-quiz',{state:subjectlist});
-                          }}>
-                          <QuizIcon sx={{color:"#888", 
-                            width:"16px", height:"16px"}}/>
-                         </IconButton>
+        <Box component="form" sx={{backgroundColor:"#FFF", padding:"5px 10px"}}
+                boxShadow={1}>
+                <Paper elevation={0}>
+                          <Scrollbars autoHide autoHideTimeout={1000}
+                          style={{width:"100%", height:"350px"}}>
+                          <Table>
+                            <TableHead>
+                              <TableRow>
+                                 <TableCell style={{color:"#333",fontSize:"13px"}}>Id</TableCell>
+                                 <TableCell style={{color:"#333",fontSize:"13px"}}>SubjectCode</TableCell>
+                                 <TableCell style={{color:"#333",fontSize:"13px"}}>Subjectname</TableCell>
+                                  <TableCell style={{color:"#333",fontSize:"13px"}}>ClassCode</TableCell>
+                                 <TableCell style={{color:"#333", fontSize:"13px"}}>Quizzes</TableCell>
+                                 
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {
+                                   subjectList.map(subjectlist=>(
+                                    <TableRow key={subjectlist.id}>
+                                       <TableCell style={{color:"#333",fontSize:"13px"}}>
+                                       {
+                                           subjectlist.id
+                                        }
+                                      </TableCell>
+                                      <TableCell style={{color:"#333",fontSize:"13px"}}>
+                                       {
+                                           subjectlist.subjectCode
+                                        }
+                                      </TableCell>
+                                      <TableCell style={{color:"#333",fontSize:"13px"}}>
+                                        {subjectlist.subjectName}</TableCell>
+                                       <TableCell style={{color:"#333",fontSize:"13px"}}>
+                                        {getClassCode(subjectlist)}</TableCell>
+                                     
+                                      <TableCell>
+                                         <Button style={{backgroundColor:"darkblue", 
+                                                               border:"1px solid darkblue",
+                                                                height:"30px", width:"15px"}}
+                                                                 title="update"
+                                         onClick={()=>{
+                                            navigate('/user-quiz',{state:subjectlist});
+                                            
+                                          }}>
+                                          <QuizIcon style={{color:"#FFF"}}></QuizIcon>
+                                         </Button>
+                                      </TableCell>
+                                     
+                                    </TableRow>
+                                    
+                                 ))
+                                        
+                              }
+                            </TableBody>
+                          </Table>
                           
-                         </Box>
-                    </Grid>
-                  </Grid>
-                  </Box>
-                  <Box padding="10px 5px" backgroundColor="#EEE" >
-                    <Typography color="#333">{getClassCode(subjectlist)}</Typography>
-                  </Box>
-                </Box>
-                
-              </Grid> 
-            ))      
-           }
-        </Grid>
-          <div className="loaderContainer">
-            {isLoading && <CircularProgress sx={{
-                '& .MuiCircularProgress-circle': {
-                 stroke: 'darkblue', 
-                },
-               '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
-                stroke: 'darkblue', 
-               },
-            }}/>}
-          </div>
-          <div className="loaderContainer">
-            <Typography color="error">{msg}</Typography>
-          </div>
+                          </Scrollbars>
         
+                          <div className="loaderContainer">
+                                      {isLoading && <CircularProgress  sx={{
+                                          '& .MuiCircularProgress-circle': {
+                                           stroke: 'darkblue', 
+                                          },
+                                         '& .MuiCircularProgress-circle.MuiCircularProgress-circleDeterminate': {
+                                          stroke: 'darkblue', 
+                                         },
+                                      }}/>}
+                                    </div>
+                                    <div className="loaderContainer">
+                                      <Typography color="error">{msg}</Typography>
+                                    </div>
+                    </Paper>
+                </Box>
         </Box>
       </Layout>
-
+     
         
     </div>
 );
