@@ -116,7 +116,7 @@ function UserAttendance(){
   },[url, query, authUser])
   
   return (
-    <div style={{backgroundColor:"#F9F9F5"}}>
+    <div style={{backgroundColor:"#FDFDFB"}}>
       <Layout title="De Modern Pace">
         <Box 
        sx={{
@@ -148,15 +148,15 @@ function UserAttendance(){
         <Paper elevation={0}>
           <Scrollbars autoHide autoHideTimeout={1000}
           style={{width:"100%", height:"200px"}}>
-          <Table style={{border:"1px solid #DDD"}}>
+          <Table>
             <TableHead>
               <TableRow>
-                 <TableCell style={{color:"darkblue"}}>Id</TableCell>
-                <TableCell style={{color:"darkblue"}}>Remark</TableCell>
-                <TableCell style={{color:"darkblue"}}>Date</TableCell>
-                <TableCell style={{color:"darkblue"}}>Class</TableCell>
-                <TableCell style={{color:"darkblue"}}>Username</TableCell>
-                <TableCell style={{color:"darkblue"}}>Status</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Id</TableCell>
+                <TableCell style={{color:"#333", fontSize:"13px"}}>Remark</TableCell>
+                <TableCell style={{color:"#333", fontSize:"13px"}}>Date</TableCell>
+                <TableCell style={{color:"#333", fontSize:"13px"}}>Class</TableCell>
+                <TableCell style={{color:"#333", fontSize:"13px"}}>Username</TableCell>
+                <TableCell style={{color:"#333", fontSize:"13px"}}>Status</TableCell>
                  
                  
               </TableRow>
@@ -165,26 +165,27 @@ function UserAttendance(){
               {
                   attendanceList.map(attendance=>(
                     <TableRow key={attendance.id}>
-                      <TableCell style={{color:"darkblue"}}>{attendance.id}</TableCell>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>{attendance.id}</TableCell>
                       <TableCell>
-                        <span style={{ display: 'inline-block', color:"darkblue", 
+                        <span style={{ display: 'inline-block', fontSize:"13px",
+                         color:"#333", 
                           whiteSpace:"normal", wordBreak:"break-word" }}>
                           {attendance.remark}
                         </span>
                       </TableCell>
                       <TableCell >
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <span style={{color:"darkblue"}}>
+                        <span style={{color:"#333", fontSize:"13px"}}>
                           {dayjs(attendance.date).format("YYYY-MM-DD HH:mm.ss")}
                         </span>
                         </LocalizationProvider>
                       </TableCell>
-                      <TableCell style={{color:"darkblue"}}>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>
                         {
                            getClassCode(attendance)
                         }
                       </TableCell>
-                      <TableCell style={{color:"darkblue"}}>{
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>{
                         authUserChild.firstName + " "+  authUserChild.lastName
                        }
                       </TableCell>

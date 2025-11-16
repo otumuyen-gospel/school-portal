@@ -302,7 +302,7 @@ function ClassUsers(){
 
   
   return (
-    <div style={{backgroundColor:"#F9F9F5"}}>
+    <div style={{backgroundColor:"#FDFDFB"}}>
           <Layout title="De Modern Pace">
             <Box 
            sx={{
@@ -315,8 +315,8 @@ function ClassUsers(){
             style={{marginBottom:"10px", fontWeight:"normal",
             color:"darkblue", fontSize:"14px"}}>
               Students' Lists</Typography>
-            <Box component="form" sx={{backgroundColor:"#FFF", boxShadow:0, 
-              border:"0.5px solid #EEE", padding:"5px 10px"}}>
+            <Box component="form" sx={{backgroundColor:"#FFF",padding:"5px 10px"}} 
+            boxShadow={1}>
             <div style={{marginBottom:"20px",float:"right",
                marginTop:"20px", marginRight:"auto"}}>
               <input type="text" required placeholder="Search" 
@@ -334,17 +334,17 @@ function ClassUsers(){
         <Paper elevation={0}>
           <Scrollbars autoHide autoHideTimeout={1000}
           style={{width:"100%", height:"200px"}}>
-          <Table style={{border:"1px solid #DDD"}}>
+          <Table>
             <TableHead>
               <TableRow>
-                 <TableCell style={{color:"darkblue"}}>Id</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Username</TableCell>
-                 <TableCell style={{color:"darkblue"}}>FirstName</TableCell>
-                 <TableCell style={{color:"darkblue"}}>LastName</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Class</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Role</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Promote</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Attendance</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Id</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Username</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>FirstName</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>LastName</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Class</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Role</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Promote</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Attendance</TableCell>
                  
               </TableRow>
             </TableHead>
@@ -352,26 +352,28 @@ function ClassUsers(){
               {
                   userList.map(user=>(
                     <TableRow key={user.pk}>
-                      <TableCell style={{color:"darkblue"}}>{user.pk}</TableCell>
-                      <TableCell style={{color:"darkblue"}}>{user.username}</TableCell>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>{user.pk}</TableCell>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>{user.username}</TableCell>
                       <TableCell>
-                        <span style={{ display: 'inline-block', color:"darkblue",
+                        <span style={{ display: 'inline-block', color:"#333",
+                          fontSize:"13px",
                           whiteSpace:"normal", wordBreak:"break-word" }}>
                           {user.firstName}
                         </span>
                       </TableCell>
                       <TableCell>
-                        <span style={{ display: 'inline-block', color:"darkblue",
+                        <span style={{ display: 'inline-block', color:"#333",
+                          fontSize:"#333",
                           whiteSpace:"normal", wordBreak:"break-word" }}>
                           {user.lastName}
                         </span>
                       </TableCell>
-                      <TableCell style={{color:"darkblue"}}>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>
                         {
                            getClassCode(user)
                         }
                       </TableCell>
-                      <TableCell style={{color:"darkblue"}}>{user.role}</TableCell>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>{user.role}</TableCell>
                       <TableCell>
                         <Button style={{backgroundColor:"darkblue", 
                                                 height:"30px", width:"15px"}}

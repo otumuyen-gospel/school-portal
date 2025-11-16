@@ -93,7 +93,7 @@ function CreateSchedule(){
   
   return (
      <LocalizationProvider dateAdapter={AdapterDayjs}>
-               <div style={{backgroundColor:"#F9F9F5"}}>
+               <div style={{backgroundColor:"#FDFDFB"}}>
                  <Layout title="De Modern Pace">
                    <Box 
                   sx={{
@@ -107,7 +107,7 @@ function CreateSchedule(){
                    color:"darkblue", fontSize:"14px"}}>
                      New Schedule</Typography>
                    <Box component="form" onSubmit={handleSubmit} sx={{
-                          backgroundColor:"#FFF", boxShadow:0, border:"0.5px solid #EEE", padding:"5px 10px"}}>
+                          backgroundColor:"#FFF", padding:"5px 10px"}} boxShadow={1}>
 
                 <Grid container spacing={2}>
                   <Grid item size={{sx:12,}}>

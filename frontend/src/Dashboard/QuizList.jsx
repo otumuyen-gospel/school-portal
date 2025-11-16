@@ -182,7 +182,7 @@ function QuizList(){
   },[url, query])
   
   return (
-    <div style={{backgroundColor:"#F9F9F5"}}>
+    <div style={{backgroundColor:"#FDFDFB"}}>
           <Layout title="De Modern Pace">
             <Box 
            sx={{
@@ -195,8 +195,7 @@ function QuizList(){
             style={{marginBottom:"10px", fontWeight:"normal",
             color:"darkblue", fontSize:"14px"}}>
               Quizzes</Typography>
-            <Box sx={{backgroundColor:"#FFF", boxShadow:0, 
-              border:"0.5px solid #EEE", padding:"5px 10px"}}>
+            <Box sx={{backgroundColor:"#FFF",padding:"5px 10px"}} boxShadow={1}>
             <div style={{marginBottom:"20px",float:"right",
                marginTop:"20px", marginRight:"auto"}}>
               <input type="text" required placeholder="Search" 
@@ -215,45 +214,45 @@ function QuizList(){
         <Paper elevation={0}>
           <Scrollbars autoHide autoHideTimeout={1000}
           style={{width:"100%", height:"200px"}}>
-          <Table style={{border:"1px solid #DDD"}}>
+          <Table>
             <TableHead>
               <TableRow>
-                 <TableCell style={{color:"darkblue"}}>Id</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Question</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Option1</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Option2</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Option3</TableCell>
-                 <TableCell style={{color:"darkblue"}}>answer</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Start Date</TableCell>
-                 <TableCell style={{color:"darkblue"}}>End Date</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Subject</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Class</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Delete</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Id</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Question</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Option1</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Option2</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Option3</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>answer</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Start Date</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>End Date</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Subject</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Class</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {
                   quizList.map(quiz=>(
                     <TableRow key={quiz.id}>
-                      <TableCell style={{color:"darkblue"}}>{quiz.id}</TableCell>
-                      <TableCell style={{color:"darkblue"}}>
-                        <div style={{color:"darkblue"}} dangerouslySetInnerHTML
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>{quiz.id}</TableCell>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>
+                        <div style={{color:"#333", fontSize:"13px"}} dangerouslySetInnerHTML
                                ={{__html:convertToHtml(quiz.question).substring(0,50)
                                }}/> ...
                       </TableCell>
-                      <TableCell style={{color:"darkblue"}}>{quiz.option1}</TableCell>
-                      <TableCell style={{color:"darkblue"}}>{quiz.option2}</TableCell>
-                      <TableCell style={{color:"darkblue"}}>{quiz.option3}</TableCell>
-                      <TableCell style={{color:"darkblue"}}>{quiz.answer}</TableCell>
-                      <TableCell style={{color:"darkblue"}}>{quiz.startDate}</TableCell>
-                      <TableCell style={{color:"darkblue"}}>{quiz.endDate}</TableCell>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>{quiz.option1}</TableCell>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>{quiz.option2}</TableCell>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>{quiz.option3}</TableCell>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>{quiz.answer}</TableCell>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>{quiz.startDate}</TableCell>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>{quiz.endDate}</TableCell>
                       
-                      <TableCell style={{color:"darkblue"}}>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>
                        {
                            getSubjectCode(quiz)
                         }
                       </TableCell>
-                      <TableCell style={{color:"darkblue"}}>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>
                         {
                            getClassCode(quiz)
                         }

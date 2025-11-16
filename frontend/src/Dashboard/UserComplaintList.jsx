@@ -118,7 +118,7 @@ function UserComplaintList(){
   },[url, query])
   
   return (
-    <div style={{backgroundColor:"#F9F9F5"}}>
+    <div style={{backgroundColor:"#FDFDFB"}}>
           <Layout title="De Modern Pace">
             <Box 
            sx={{

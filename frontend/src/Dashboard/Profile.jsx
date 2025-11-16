@@ -339,7 +339,7 @@ function Profile(){
   
   return (
      <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <div style={{backgroundColor:"#F9F9F5"}}>
+    <div style={{backgroundColor:"#FDFDFB"}}>
       <Layout title="De Modern Pace">
         <Box 
        sx={{
@@ -357,11 +357,11 @@ function Profile(){
         <Box sx={{
               backgroundColor:"#FFF",
               padding:"10px",
-              boxShadow:0,
-              border:"0.5px solid #EEE",
               textAlign:"center",
               minHeight:"260px"
-            }}>
+            }}
+            boxShadow={1}
+            >
               <center>
               <Avatar
                 src={form.pics}
@@ -414,7 +414,7 @@ function Profile(){
 
         <Grid item size={{xs:12,sm:6}}>
             <Box component="form" onSubmit={handlePasswordSubmit} sx={{
-               backgroundColor:"#FFF", boxShadow:0, border:"0.5px solid #EEE", padding:"5px 10px"}}>
+               backgroundColor:"#FFF", padding:"5px 10px"}} boxShadow={1}>
             <Typography marginTop={1} style={{color:"darkblue", textAlign:"center"}}>
              Security Information</Typography>
             <Grid container spacing={1}>
@@ -516,7 +516,7 @@ function Profile(){
         
         <Grid item size={{xs:12,sm:6}} marginTop={{xs:"auto",sm:"-85px"}}>
         <Box component="form" onSubmit={handleSubmit} sx={{
-               backgroundColor:"#FFF", boxShadow:0, border:"0.5px solid #EEE", padding:"5px 10px"}}>
+               backgroundColor:"#FFF",padding:"5px 10px"}} boxShadow={1}>
         <Grid container spacing={1}>
           <Grid item size={{xs:12,}}>
           <Typography marginTop={1} style={{color:"darkblue", textAlign:"center"}}>

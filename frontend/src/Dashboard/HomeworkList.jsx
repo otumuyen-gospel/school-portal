@@ -194,8 +194,8 @@ function HomeworkList(){
             style={{marginBottom:"10px", fontWeight:"normal",
             color:"darkblue", fontSize:"14px"}}>
               Homeworks</Typography>
-            <Box component="form" sx={{backgroundColor:"#FFF", boxShadow:0, 
-              border:"0.5px solid #EEE", padding:"5px 10px"}}>
+            <Box component="form" sx={{backgroundColor:"#FFF",padding:"5px 10px"}}
+            boxShadow={1}>
             <div style={{marginBottom:"20px",float:"right",
                marginTop:"20px", marginRight:"auto"}}>
               <input type="text" required placeholder="Search" 
@@ -214,16 +214,16 @@ function HomeworkList(){
         <Paper elevation={0}>
           <Scrollbars autoHide autoHideTimeout={1000}
           style={{width:"100%", height:"200px"}}>
-          <Table style={{border:"1px solid #DDD"}}>
+          <Table>
             <TableHead>
               <TableRow>
-                 <TableCell style={{color:"darkblue"}}>Id</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Student</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Class</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Title</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Link</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Date</TableCell>
-                 <TableCell style={{color:"darkblue"}}>Delete</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Id</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Student</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Class</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Title</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Link</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Date</TableCell>
+                 <TableCell style={{color:"#333", fontSize:"13px"}}>Delete</TableCell>
                  
               </TableRow>
             </TableHead>
@@ -231,24 +231,26 @@ function HomeworkList(){
               {
                   homeworkList.map(homework=>(
                     <TableRow key={homework.id}>
-                      <TableCell style={{color:"darkblue"}}>{homework.id}</TableCell>
-                      <TableCell style={{color:"darkblue"}}>{getStudentName(homework)}</TableCell>
-                      <TableCell style={{color:"darkblue"}}>{getClassCode(homework)}</TableCell>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>{homework.id}</TableCell>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>{getStudentName(homework)}</TableCell>
+                      <TableCell style={{color:"#333", fontSize:"13px"}}>{getClassCode(homework)}</TableCell>
                       <TableCell>
-                        <span style={{ display: 'inline-block', color:"darkblue",
+                        <span style={{ display: 'inline-block', color:"#333",
+                         fontSize:"13px",
                           whiteSpace:"normal", wordBreak:"break-word" }}>
                           {homework.title}
                         </span>
                       </TableCell>
                       <TableCell>
                         <a href={homework.link}  style={{ display: 'inline-block', 
-                          whiteSpace:"normal", wordBreak:"break-word",color:"darkblue" }}>
+                          whiteSpace:"normal", wordBreak:"break-word",color:"", fontSize:"13px" }}>
                           {homework.link}
                         </a>
                       </TableCell>
                       <TableCell>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                <span style={{ display: 'inline-block',color:"darkblue", 
+                                                <span style={{ display: 'inline-block',color:"#333",
+                                                 fontSize:"13px", 
                                                   whiteSpace:"normal", wordBreak:"break-word" }}>
                                                   {dayjs(homework.submission).format("YYYY-MM-DD HH:mm.ss")}
                                                 </span>

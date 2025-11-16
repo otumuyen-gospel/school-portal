@@ -83,7 +83,7 @@ function Backups(){
   
   return (
      
-    <div style={{backgroundColor:"#F9F9F5"}}>
+    <div style={{backgroundColor:"#FDFDFB"}}>
           <Layout title="De Modern Pace">
             <Box 
            sx={{
@@ -98,11 +98,10 @@ function Backups(){
               Backup / Restore</Typography>
         <Box sx={{
               backgroundColor:"#FFF",
-              padding:"20px",
-              boxShadow:0,
-              border:"0.5px solid #EEE",
+              padding:"30px 10px",
               textAlign:"center",
-            }}>
+            }}
+            boxShadow={1}>
             <Button
                 type="submit"
                 fullWidth

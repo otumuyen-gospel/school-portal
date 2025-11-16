@@ -158,7 +158,7 @@ const convertToHtml = (content)=>{
   }
   
   return (
-    <div style={{backgroundColor:"#F9F9F5"}}>
+    <div style={{backgroundColor:"#FDFDFB"}}>
           <Layout title="De Modern Pace">
             <Box 
            sx={{
@@ -171,8 +171,7 @@ const convertToHtml = (content)=>{
             style={{marginBottom:"10px", fontWeight:"normal",
             color:"darkblue", fontSize:"14px"}}>
              Practice Quiz</Typography>
-       <Box sx={{backgroundColor:"#FFF", boxShadow:0, 
-              border:"0.5px solid #EEE", padding:"5px 10px"}}>
+       <Box sx={{backgroundColor:"#FFF", padding:"5px 10px"}} boxShadow={1}>
             <div style={{marginBottom:"20px",float:"right",
                marginTop:"20px", marginRight:"auto"}}>
           <select required placeholder="Search" 
@@ -220,7 +219,7 @@ const convertToHtml = (content)=>{
         </Container>
         <Container>
           {
-            showQuiz ? <Paper style={{padding:"20px"}}>
+            showQuiz ? <Paper style={{padding:"20px"}} elevation={0}>
               <Typography style={{color:"#888",fontSize:"20px", marginBottom:"20px"}}>
                Question #{counter} :  <span dangerouslySetInnerHTML
                                ={{__html:convertToHtml(quizList[counter].question)}}/>
