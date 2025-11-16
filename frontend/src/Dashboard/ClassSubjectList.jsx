@@ -146,7 +146,7 @@ function ClassSubjectList(){
                                          <Button style={{backgroundColor:"darkblue", 
                                                                border:"1px solid darkblue",
                                                                 height:"30px", width:"15px"}}
-                                                                 title="update"
+                                                                 title="Take Quiz"
                                          onClick={()=>{
                                             navigate('/user-quiz',{state:subjectlist});
                                             

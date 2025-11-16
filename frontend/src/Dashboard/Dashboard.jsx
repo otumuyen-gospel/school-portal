@@ -292,7 +292,7 @@ function Dashboard(){
           Dashboard</Typography>
         <Grid container spacing={3}>
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            <Box style={{backgroundColor:"#FFF", height:"60px", padding:"15px 10px",}} 
             boxShadow={1}>
                 <ListItem>
                   <ListItemText>
@@ -315,7 +315,7 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            <Box style={{backgroundColor:"#FFF",height:"60px", padding:"15px 10px",}} 
             boxShadow={1}>
                 <ListItem>
                   <ListItemText>
@@ -338,7 +338,7 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            <Box style={{backgroundColor:"#FFF", height:"60px", padding:"15px 10px",}} 
             boxShadow={1}>
                 <ListItem>
                   <ListItemText>
@@ -361,7 +361,7 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            <Box style={{backgroundColor:"#FFF", height:"60px", padding:"15px 10px",}} 
             boxShadow={1}>
                 <ListItem>
                   <ListItemText>
@@ -384,7 +384,7 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            <Box style={{backgroundColor:"#FFF", height:"60px", padding:"15px 10px",}} 
             boxShadow={1}>
                 <ListItem>
                   <ListItemText>
@@ -407,7 +407,7 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            <Box style={{backgroundColor:"#FFF", height:"60px", padding:"15px 10px",}} 
             boxShadow={1}>
                 <ListItem>
                   <ListItemText>
@@ -430,7 +430,7 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            <Box style={{backgroundColor:"#FFF", height:"60px", padding:"15px 10px",}} 
             boxShadow={1}>
                 <ListItem>
                   <ListItemText>
@@ -453,7 +453,7 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            <Box style={{backgroundColor:"#FFF", height:"60px", padding:"15px 10px",}} 
             boxShadow={1}>
                 <ListItem>
                   <ListItemText>
