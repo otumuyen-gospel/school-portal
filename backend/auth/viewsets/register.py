@@ -13,7 +13,7 @@ class SignupViewset(ViewSet):
     in our case(school portal) only an admin can 
     register a new user
     '''
-    permission_classes = [IsAuthenticated, IsInGroup,]
+    permission_classes = [IsAuthenticated,IsInGroup,]
     required_groups = ['admin']
     http_method_names = ['post']        
     

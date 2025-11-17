@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from rest_framework import status
 from .models import User
-from .serializers import UserSerializers, UserAnalytics
+from .serializers import UserSerializers
 from rest_framework.reverse import reverse
 from rest_framework import generics
 from rest_framework.response import Response
@@ -191,40 +191,6 @@ class UserPromotion(generics.UpdateAPIView):
         else:
             raise PermissionDenied("You do not have permission to edit this object.")
 
-
-
-
-#this class will handle GET method to generate student distribution for
-#four consecutive years backward for the various classes beginning from the current year
-class UserAnalytics(APIView):
-    currYear = datetime.now().year
-    data = []
-    permission_classes = [IsAuthenticated,IsInGroup,]
-    required_groups = ['admin','teacher','parent','student']
-    name = 'user-analytics'
-    def get(self, request, *args, **kwargs):
-        classes = Class.objects.all()
-        for cl in classes:
-            dataCount = []
-            for i in range(4):
-                users = User.objects.filter(role='student', 
-                                            classId__id=cl.id,
-                        entrance__icontains=(self.currYear - i))
-                usersQuerySet = users.all()
-                count = usersQuerySet.count()
-                dataCount.append(count)
-            classData = {
-                'data':dataCount,
-                'label': cl.classCode,
-                'id':str(uuid.uuid4()),
-            }
-            self.data.append(classData)
-        try:
-             serializer = UserAnalytics(data=self.data, many=True)
-             return Response(serializer.data, status=status.HTTP_200_OK)
-        except Exception as e:
-             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-       
 
 # API for issuing command prompt to the server or os
 class BackupDatabaseAPIView(APIView):

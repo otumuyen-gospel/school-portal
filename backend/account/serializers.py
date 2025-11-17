@@ -10,11 +10,6 @@ class UserSerializers(serializers.ModelSerializer):
                    'otp_exp','otp_verified','is_active','is_superuser','is_staff')
         
 
-class UserAnalytics(serializers.Serializer):
-    id = serializers.CharField()
-    label = serializers.CharField()
-    data = serializers.ListField(child=serializers.IntegerField())
-
 
 class ExportUsers(serializers.Serializer):
     SN = serializers.IntegerField()
