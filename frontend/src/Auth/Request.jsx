@@ -9,6 +9,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Config } from "../Util/Configs";
 
 function Request(){
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ function Request(){
      
     }
     setIsLoading(true);
-    axios.post("http://192.168.1.11:8000/auth/reset/request/",
+    axios.post(Config.SERVER_BASE_URL+"/auth/reset/request/",
       {email}).then((res) => {
         setIsLoading(false)
         navigate("/verify/", {state:{ userEmail:email, }});

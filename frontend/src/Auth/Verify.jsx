@@ -9,6 +9,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Config } from "../Util/Configs";
 
 function Verify(){
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ function Verify(){
     
     const data =  {email:receivedData.userEmail, otp:otps};
     setIsLoading(true);
-    axios.post("http://192.168.1.11:8000/auth/reset/verify/",
+    axios.post(Config.SERVER_BASE_URL+"/auth/reset/verify/",
      data).then((res) => {
         setIsLoading(false)
         navigate("/password/", {state:{ userEmail:data.email, }});

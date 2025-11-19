@@ -11,6 +11,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useLocation, } from "react-router-dom";
+import { Config } from "../Util/Configs";
 
 function Password(){
   const location = useLocation()
@@ -63,7 +64,7 @@ function Password(){
       }
     }
     setIsLoading(true);
-    axios.post("http://192.168.1.11:8000/auth/reset/password/",
+    axios.post(Config.SERVER_BASE_URL+"/auth/reset/password/",
       data).then((res) => {
         setIsLoading(false)
         setPopMsg(res.data.message + ". you can login now");

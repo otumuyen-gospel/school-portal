@@ -10,6 +10,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Config } from "../Util/Configs";
 
 
 function Login(){
@@ -32,7 +33,7 @@ function Login(){
       return;
     }
     setIsLoading(true);
-    axios.post("http://192.168.1.11:8000/auth/login/",
+    axios.post(Config.SERVER_BASE_URL+"/auth/login/",
       data).then((res) => {
         // Registering the account and tokens in the store
         localStorage.setItem("auth", JSON.stringify({

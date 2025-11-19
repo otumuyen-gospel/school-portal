@@ -23,7 +23,6 @@ import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
 
 function Dashboard(){
-  const [authUser] = useState(JSON.parse(localStorage.getItem('auth')));
    const [studentCount, setStudentCount] = useState(0);
    const [parentCount, setParentCount] = useState(0);
    const [teacherCount, setTeacherCount] = useState(0);
@@ -34,7 +33,7 @@ function Dashboard(){
    const [msg, setMsg] = useState('');
    const [isLoading, setIsLoading] = useState(false);
   const [classStudentList, setClassStudentList] = useState([]);
-  const [hasClassMate, setHasClassMate] = useState(false);
+  const [hasStudent, setHasStudent] = useState(false);
 
   const removeUserFromList = (theUser, data)=>{
    const remainingUsers = data.filter(user => user.pk !== theUser.pk);
@@ -57,25 +56,18 @@ function Dashboard(){
            throw error; //rethrow consequent error
        }
       }
-  
-     if(authUser){
-        if(authUser['user'].role === "student"){
-          setHasClassMate(true); //is a student
-         const url = "accounts/class-users/"+
-         authUser['user'].classId+"/";
-         const query = {role:"student"}
-         listStudents(url,query).then(allData=>{
+      const url = "accounts/users-list/";
+      const query = {role:"student"}
+      listStudents(url,query).then(allData=>{
            const currUser = JSON.parse(localStorage.getItem("auth"))['user'];
            const remainingUsers = removeUserFromList(currUser, allData);
            setClassStudentList(remainingUsers)
+           setHasStudent(true)
         }).catch((error)=>{
           setMsg("Oops! sorry can't load students List");
+          setHasStudent(false)
         })
-      }else {
-        setHasClassMate(false); // is either an admin, teacher or parent
-      }
-      }
-    },[authUser])
+    },[])
 
 
      /* fetch subject count*/
@@ -290,7 +282,7 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"green",height:"60px", padding:"15px 10px",}} 
+            <Box style={{backgroundColor:"purple",height:"60px", padding:"15px 10px",}} 
             boxShadow={1}>
                 <ListItem>
                   <ListItemText>
@@ -428,7 +420,7 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"orange", height:"60px", padding:"15px 10px",}} 
+            <Box style={{backgroundColor:"royalblue", height:"60px", padding:"15px 10px",}} 
             boxShadow={1}>
                 <ListItem>
                   <ListItemText>
@@ -455,13 +447,13 @@ function Dashboard(){
             boxShadow={1}>
                 <Typography style={{textAlign:"center",fontSize:"13px", 
                   color:"#333", marginBottom:"10px"}}>
-                    CLASS MATES
+                    Students' Profile Listing
                   </Typography>
                   <Scrollbars autoHide autoHideTimeout={1000}
                   style={{width:"100%", height:"240px"}}>
                   <List>
                     {
-                    hasClassMate ? classStudentList.map(student=>(
+                    hasStudent ? classStudentList.map(student=>(
                         <Paper elevation={1} style={{marginBottom:"15px", width:"100%",
                         }}>
                          <ListItem key={student.pk}>
@@ -495,12 +487,14 @@ function Dashboard(){
                          </ListItem>
                          </Paper>
                         ))
-                        : <ListItem>
+                        :  <Paper elevation={1} style={{marginBottom:"15px", width:"100%",}}>
+                        <ListItem>
                           <ListItemText style={{color:"#666", fontSize:"12",
                             textAlign:"center", marginTop:"70px"}}>
-                            No Data
+                            No Student Information In Portal
                           </ListItemText>
                         </ListItem>
+                        </Paper>
                          
                     }
                   </List>
