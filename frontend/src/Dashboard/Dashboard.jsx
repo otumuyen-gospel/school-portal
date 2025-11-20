@@ -21,8 +21,10 @@ import { useEffect, useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import axiosInstance from "../Util/ApiRefresher";
 import Layout from "../Util/Layout";
+import {BarChart} from "@mui/x-charts/BarChart";
 
 function Dashboard(){
+  const [chartData, setChartData] = useState([]);
    const [studentCount, setStudentCount] = useState(0);
    const [parentCount, setParentCount] = useState(0);
    const [teacherCount, setTeacherCount] = useState(0);
@@ -39,6 +41,39 @@ function Dashboard(){
    const remainingUsers = data.filter(user => user.pk !== theUser.pk);
     return remainingUsers;
   }
+  useEffect(()=>{
+    setIsLoading(true);
+    const arr = [];
+      const count = async(year, endpoint,query)=>{
+        try{
+         
+           const response = await axiosInstance.get(endpoint, {params:query})
+           const data = response.data.count;
+           if(data){
+            arr.push( { name: year, value: data },)
+           }
+            setIsLoading(false)
+          }catch(error){
+            setIsLoading(false);
+            setMsg("an error has occured");
+
+          }
+      }
+      const url = "accounts/users-list/";
+      const now = new Date();
+      // Get current year
+
+      //student count for five consecutive year
+      for(var i = 0; i < 5; i++){
+          const year = now.getFullYear() - i;
+          const query = {role:"student", search:year};
+          count(year, url, query);
+      }
+
+      setChartData(arr);
+
+  },[])
+
   useEffect(()=>{
       //fetch all paginated students data by recursively calling page by page
       const listStudents = async(url,query)=>{
@@ -72,7 +107,7 @@ function Dashboard(){
 
      /* fetch subject count*/
    useEffect(()=>{
-       setIsLoading(true);
+      setIsLoading(true);
       const subject = async(endpoint)=>{
         try{
          
@@ -442,7 +477,26 @@ function Dashboard(){
             </Box>
           </Grid>
 
-          <Grid item size={{xs:12, md:12}}>
+          <Grid item size={{xs:12, md:9}}>
+             <Box style={{backgroundColor:"#FFF", padding:"15px 10px",}} 
+            boxShadow={1}>
+                <Typography style={{textAlign:"center",fontSize:"13px", 
+                  color:"#333", marginBottom:"10px"}}>
+                    Distribution of students' for five consecutive years
+                  </Typography>
+                  <Scrollbars autoHide autoHideTimeout={1000}
+                  style={{width:"100%", height:"260px"}}>
+                  <BarChart 
+                  xAxis={[{ scaleType: 'band', data: chartData.map(item => item.name) }]}
+                  series={[{ data: chartData.map(item => item.value) }]}
+                  width={600}
+                  height={300}
+                  />
+                  </Scrollbars>
+               </Box>
+          </Grid>
+
+           <Grid item size={{xs:12, md:3}}>
              <Box style={{backgroundColor:"#FDFDFB", padding:"15px 10px",}} 
             boxShadow={1}>
                 <Typography style={{textAlign:"center",fontSize:"13px", 
@@ -450,7 +504,7 @@ function Dashboard(){
                     Students' Profile Listing
                   </Typography>
                   <Scrollbars autoHide autoHideTimeout={1000}
-                  style={{width:"100%", height:"240px"}}>
+                  style={{width:"100%", height:"260px"}}>
                   <List>
                     {
                     hasStudent ? classStudentList.map(student=>(
