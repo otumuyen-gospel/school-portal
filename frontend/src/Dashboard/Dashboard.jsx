@@ -386,21 +386,21 @@ function Dashboard(){
           </Grid>
 
           <Grid item size={{xs:12,sm:6, md:3}}>
-            <Box style={{backgroundColor:"#FFF", height:"60px", padding:"15px 10px",}} 
+            <Box style={{backgroundColor:"blue", height:"60px", padding:"15px 10px",}} 
             boxShadow={1}>
                 <ListItem>
                   <ListItemText>
-                    <Typography style={{fontWeight:"normal", color:"#666",
+                    <Typography style={{fontWeight:"normal", color:"#FFF",
                      fontSize:"13px"}}>
                       Total Users
                     </Typography>
-                    <Typography style={{color:"darkblue", fontWeight:"bolder",
+                    <Typography style={{color:"#FFF", fontWeight:"bolder",
                      fontSize:"12px"}}>
                       {(studentCount + parentCount + adminCount + teacherCount)}
                     </Typography>
                   </ListItemText>
                   <ListItemIcon>
-                    <CircleIcon  style={{color:"darkblue", fontSize:"20px", position:"absolute",
+                    <CircleIcon  style={{color:"#FFF", fontSize:"20px", position:"absolute",
                       right:"0", top:"0"
                     }}/>
                   </ListItemIcon>
@@ -482,10 +482,10 @@ function Dashboard(){
             boxShadow={1}>
                 <Typography style={{textAlign:"center",fontSize:"13px", 
                   color:"#333", marginBottom:"10px"}}>
-                    Distribution of students' for five consecutive years
+                    Chart showing the rate of admission of students for five consecutive years
                   </Typography>
                   <Scrollbars autoHide autoHideTimeout={1000}
-                  style={{width:"100%", height:"260px"}}>
+                  style={{width:"100%", height:"280px"}}>
                   <BarChart 
                   xAxis={[{ scaleType: 'band', data: chartData.map(item => item.name) }]}
                   series={[{ data: chartData.map(item => item.value) }]}
@@ -504,7 +504,7 @@ function Dashboard(){
                     Students' Profile Listing
                   </Typography>
                   <Scrollbars autoHide autoHideTimeout={1000}
-                  style={{width:"100%", height:"260px"}}>
+                  style={{width:"100%", height:"280px"}}>
                   <List>
                     {
                     hasStudent ? classStudentList.map(student=>(

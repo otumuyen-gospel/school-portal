@@ -23,7 +23,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font
-from io import BytesIO
+from io import BytesIO, StringIO
 from .serializers import UserSerializers
 from .models import User
 from classes.models import Class
@@ -202,7 +202,7 @@ class BackupDatabaseAPIView(APIView):
             call_command('dbbackup')  # db backup
             call_command('mediabackup')  # file and media backups
             return Response({"message": "backup initiated successfully.", 
-                             'location':settings.DBBACKUP_STORAGE_OPTIONS})
+                             'location':settings.STORAGES['dbbackup']['OPTIONS']['location']})
         except Exception as e:
             return Response({"error": str(e)}, status=500)
         
@@ -217,7 +217,7 @@ class RestoreDatabaseAPIView(APIView):
             call_command('dbrestore','--noinput')  # db restore
             call_command('mediarestore','--noinput')  # file and media restore
             return Response({"message": "restore initiated successfully.",
-                             'location':settings.DBBACKUP_STORAGE_OPTIONS})
+                            'location':settings.STORAGES['dbbackup']['OPTIONS']['location']})
         except Exception as e:
             return Response({"error": str(e)}, status=500)
          

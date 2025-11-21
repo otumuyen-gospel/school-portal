@@ -125,11 +125,8 @@ function Backups(){
             </Button>
             <Box className="loaderContainer" marginTop={10}>
                 <Typography component="h3" color="darkblue">
-                    BACKUP LOCATION ALWAYS DISPLAYED HERE: {location}
+                    Database & Media Backup and Restore Location: {location}
                 </Typography><br/>
-                 <Typography component="h5" color="darkblue">
-                    {location}
-                </Typography>
             </Box>
 
             <div className="loaderContainer" marginBottom={10}>
