@@ -192,7 +192,7 @@ function Layout(props){
                 <div  style={{
                     display: (!isMobile && open) ? "block" : "none",
                     position:"fixed",
-                    width:"23%",
+                    width:"20%",
                     padding:"auto 1%",
                     
                 }}>
@@ -200,8 +200,8 @@ function Layout(props){
                      {userSideBar()}
                 </div>
                 <div style={{
-                    marginLeft:open ? "25%"  : "1%",
-                    width:open ? "73%" : "98%",
+                    marginLeft:open ? "22%"  : "1%",
+                    width:open ? "76%" : "98%",
                     marginRight:"1%",
                 }}>
                      {/* render page contents here at the bottom and pass new props to them */}
